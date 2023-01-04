@@ -1,0 +1,19 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./client
+      args:
+        NODE_ENV: production
+    environment:
+      - NODE_ENV=production
+    # command: production command here
+
+  backend:
+    build:
+      context: ./server
+      args:
+        NODE_ENV: production
+    environment:
+      - NODE_ENV=production
+    # command: production command here

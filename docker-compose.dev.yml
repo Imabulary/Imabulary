@@ -1,0 +1,25 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./client
+      args:
+        NODE_ENV: development
+    volumes:
+      - ./client:/client
+      # - /client/node_modules
+    environment:
+      - NODE_ENV=development
+    # command: start command here
+
+  backend:
+    build:
+      context: ./server
+      args:
+        NODE_ENV: development
+    volumes:
+      - ./server:/server
+      # - /server/node_modules
+    environment:
+      - NODE_ENV=development
+    # command: start command here
