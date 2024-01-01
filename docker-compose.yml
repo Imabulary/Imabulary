@@ -4,7 +4,7 @@ services:
     build: ./client
     ports:
       - 3001:3000
-    container_name: project-tag_frontend
+    container_name: imabulary_frontend
     env_file:
       - ./client/.env
     depends_on:
@@ -14,7 +14,7 @@ services:
     build: ./server
     ports:
       - 5001:5000
-    container_name: project-tag_backend
+    container_name: imabulary_backend
     env_file:
       - ./server/.env
     depends_on:
@@ -22,13 +22,13 @@ services:
 
   database:
     image: postgres
-    container_name: project-tag_database
+    container_name: imabulary_database
     ports:
       - 5433:5432
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - imabulary_db_data:/var/lib/postgresql/data
     env_file:
       - ./server/.env
 
 volumes:
-  db_data:
+  imabulary_db_data:
