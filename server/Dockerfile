@@ -9,4 +9,4 @@ RUN if [ "$NODE_ENV" = "development" ]; \
     fi
 
 COPY . ./
-# CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start:dev"]
