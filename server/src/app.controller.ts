@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AppService } from './app.service';
-import { ImageCompressPipe } from './pipes';
+import { ImageCompressPipe, ImageCompressionResult } from './pipes';
 
 @Controller()
 export class AppController {
@@ -14,9 +14,9 @@ export class AppController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  upload(@UploadedFile(ImageCompressPipe) file: Buffer) {
-    console.log(file);
-
-    return this.appService.getHello();
+  upload(
+    @UploadedFile(ImageCompressPipe) { file, fileName }: ImageCompressionResult,
+  ) {
+    return this.appService.uploadToExternalStorage(fileName, file);
   }
 }
