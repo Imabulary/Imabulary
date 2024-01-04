@@ -14,9 +14,9 @@ export class AppController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  upload(
+  handleImage(
     @UploadedFile(ImageCompressPipe) { file, fileName }: ImageCompressionResult,
   ) {
-    return this.appService.uploadToExternalStorage(fileName, file);
+    return this.appService.handleImage(fileName, file);
   }
 }

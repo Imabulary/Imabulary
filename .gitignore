@@ -46,3 +46,4 @@ versioning/preferences
 .vscode
 
 service-account.json
+admin-account.json
