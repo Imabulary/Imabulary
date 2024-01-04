@@ -44,3 +44,5 @@ versioning/preferences
 ./server/config
 ./client/config
 .vscode
+
+service-account.json
