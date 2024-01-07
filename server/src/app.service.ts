@@ -8,9 +8,14 @@ import {
   HarmBlockThreshold,
 } from '@google-cloud/vertexai';
 import * as adminAccount from '../admin-account.json';
+import { v3 } from '@google-cloud/translate';
+
+const { TranslationServiceClient } = v3;
 
 @Injectable()
 export class AppService {
+  private location = 'us-central1';
+
   private visionClient = new vision.ImageAnnotatorClient({
     credentials: adminAccount,
   });
@@ -19,8 +24,8 @@ export class AppService {
     googleAuthOptions: {
       credentials: adminAccount,
     },
-    project: process.env.GCP_PROJECT_ID,
-    location: 'us-central1',
+    project: process.env.PROJECT_ID,
+    location: this.location,
   });
 
   private generativeModel = this.vertexAI.preview.getGenerativeModel({
@@ -34,6 +39,10 @@ export class AppService {
     ],
   });
 
+  private translator = new TranslationServiceClient({
+    credentials: adminAccount,
+  });
+
   async handleImage(fileName: string, file: Buffer) {
     const imageUrl = await this.uploadToExternalStorage(fileName, file);
 
@@ -41,19 +50,51 @@ export class AppService {
 
     const relatedPhrase = await this.generateWordRelatedPhrase(objectOnImage);
 
+    const [translatedWord, translatedPhrase] = await this.translate([
+      objectOnImage,
+      relatedPhrase,
+    ]);
+
     return {
-      result: relatedPhrase,
+      result: {
+        word: objectOnImage,
+        phrase: relatedPhrase,
+        translatedWord,
+        translatedPhrase,
+      },
     };
   }
 
+  private async translate(text: string[]) {
+    const [response] = await this.translator.translateText({
+      contents: text,
+      mimeType: 'text/plain',
+      sourceLanguageCode: 'en-US',
+      targetLanguageCode: 'uk-UA',
+      parent: `projects/${process.env.PROJECT_ID}/locations/${this.location}`,
+    });
+
+    return response.translations.map(
+      (translation) => translation.translatedText,
+    );
+  }
+
   private async generateWordRelatedPhrase(word: string) {
+    const prompt = `Generate a creative and coherent phrase using the word ${word.toLowerCase()}.`;
+
+    const rules = [
+      'The length of the phrase must be maximum of 10 words',
+      'Do not cover a string in quotes',
+      'Phrase must contain the word itself',
+    ].join('. ');
+
     const responseStream = await this.generativeModel.generateContentStream({
       contents: [
         {
           role: 'user',
           parts: [
             {
-              text: `Generate a creative and coherent phrase using the word ${word.toLowerCase()}. The length of the phrase must be maximum of 10 words. Do not cover a string in quotes`,
+              text: `${prompt} ${rules}`,
             },
           ],
         },
