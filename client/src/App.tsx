@@ -1,7 +1,8 @@
 import { CloudUpload } from '@mui/icons-material';
-import { Button, styled } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, Stack, Typography, styled } from '@mui/material';
 import { fileAPI } from './redux/api';
 import { useEffect } from 'react';
+import { yellow } from '@mui/material/colors';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -42,10 +43,42 @@ function App() {
   useEffect(() => console.log(data), [data]);
 
   return (
-    <Button component="label" variant="contained" startIcon={<CloudUpload />} disabled={isLoading}>
-      Upload file
-      <VisuallyHiddenInput type="file" accept="image/*" onChange={handleFileUpload} />
-    </Button>
+    <Stack gap={2} width={345}>
+      <Button component="label" variant="contained" startIcon={<CloudUpload />} disabled={isLoading}>
+        Upload file
+        <VisuallyHiddenInput type="file" accept="image/*" onChange={handleFileUpload} />
+      </Button>
+      {data?.result && (
+        <Card sx={{ maxWidth: 345 }}>
+          <CardMedia sx={{ height: 250 }} image={data.result.image_url} title={data.result.word} />
+          <CardContent>
+            <Typography variant="h5" component="div">
+              {data.result.translated_word}
+            </Typography>
+            <Typography gutterBottom color="text.secondary" variant="body2">
+              {data.result.word}
+            </Typography>
+            <Typography gutterBottom variant="body2" color={yellow[600]}>
+              Related Phrases
+            </Typography>
+            <Stack gap={1}>
+              <Box>
+                <Typography variant="body2">{data.result.phrase}</Typography>
+                <Typography variant="caption" color="text.secondary">
+                  English
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant="body2">{data.result.translated_phrase}</Typography>
+                <Typography variant="caption" color="text.secondary">
+                  Ukrainian
+                </Typography>
+              </Box>
+            </Stack>
+          </CardContent>
+        </Card>
+      )}
+    </Stack>
   );
 }
 

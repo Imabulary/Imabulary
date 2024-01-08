@@ -9,11 +9,15 @@ import {
 } from '@google-cloud/vertexai';
 import * as adminAccount from '../admin-account.json';
 import { v3 } from '@google-cloud/translate';
+import { PrismaService } from './prisma';
+import { Prisma } from '@prisma/client';
 
 const { TranslationServiceClient } = v3;
 
 @Injectable()
 export class AppService {
+  constructor(private prisma: PrismaService) {}
+
   private location = 'us-central1';
 
   private visionClient = new vision.ImageAnnotatorClient({
@@ -50,27 +54,42 @@ export class AppService {
 
     const relatedPhrase = await this.generateWordRelatedPhrase(objectOnImage);
 
-    const [translatedWord, translatedPhrase] = await this.translate([
-      objectOnImage,
-      relatedPhrase,
-    ]);
+    const sourceLanguageCode = 'en-US';
+    const targetLanguageCode = 'uk-UA';
+
+    const [translatedWord, translatedPhrase] = await this.translate(
+      [objectOnImage, relatedPhrase],
+      { sourceLanguageCode, targetLanguageCode },
+    );
+
+    const card = await this.saveToDB({
+      word: objectOnImage,
+      phrase: relatedPhrase,
+      translated_phrase: translatedPhrase,
+      translated_word: translatedWord,
+      target_language: targetLanguageCode,
+      source_language: sourceLanguageCode,
+      image_url: imageUrl,
+    });
 
     return {
-      result: {
-        word: objectOnImage,
-        phrase: relatedPhrase,
-        translatedWord,
-        translatedPhrase,
-      },
+      result: card,
     };
   }
 
-  private async translate(text: string[]) {
+  private async saveToDB(data: Prisma.CardsCreateInput) {
+    return this.prisma.cards.create({ data });
+  }
+
+  private async translate(
+    text: string[],
+    options: { sourceLanguageCode: string; targetLanguageCode: string },
+  ) {
     const [response] = await this.translator.translateText({
       contents: text,
       mimeType: 'text/plain',
-      sourceLanguageCode: 'en-US',
-      targetLanguageCode: 'uk-UA',
+      sourceLanguageCode: options.sourceLanguageCode,
+      targetLanguageCode: options.targetLanguageCode,
       parent: `projects/${process.env.PROJECT_ID}/locations/${this.location}`,
     });
 
@@ -120,6 +139,6 @@ export class AppService {
   private async analyze(imageUrl: string) {
     const [result] = await this.visionClient.objectLocalization(imageUrl);
 
-    return result.localizedObjectAnnotations[0].name;
+    return result.localizedObjectAnnotations[0]?.name;
   }
 }
