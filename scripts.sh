@@ -27,3 +27,14 @@ prodStart() {
 prodDown() {
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml down
 }
+
+# Run migration inside backend docker container
+runMigration() {
+  MIGRATION_NAME=$1
+
+  if [ -z $MIGRATION_NAME ]; then
+    docker exec -it imabulary_backend sh -c "npx prisma migrate dev"
+  fi
+
+  docker exec -it imabulary_backend sh -c "npx prisma migrate dev --name $MIGRATION_NAME"
+}

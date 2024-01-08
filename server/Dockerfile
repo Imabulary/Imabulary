@@ -9,6 +9,7 @@ RUN if [ "$NODE_ENV" = "development" ]; \
     fi
 
 RUN npm install --force @img/sharp-linuxmusl-arm64
+RUN npx prisma generate
 
 COPY . ./
 CMD ["npm", "run", "start:dev"]
