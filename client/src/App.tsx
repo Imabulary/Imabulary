@@ -40,7 +40,6 @@ function App() {
   };
 
   useEffect(() => console.log(error), [error]);
-  useEffect(() => console.log(data), [data]);
 
   return (
     <Stack gap={2} width={345}>

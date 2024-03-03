@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/atoms/colors.dart';
+import 'package:mobile/widgets/add_bottom_sheet.dart';
 
 class FloatingButton extends StatelessWidget {
   const FloatingButton({super.key});
@@ -12,25 +13,7 @@ class FloatingButton extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(0)),
       ),
-      builder: (context) => ListView(
-        shrinkWrap: true,
-        children: [
-          ListTile(
-            leading: const Icon(Icons.camera),
-            title: const Text('Take a photo'),
-            onTap: () {
-              print('You decided to take a photo');
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.collections),
-            title: const Text('Choose from gallery'),
-            onTap: () {
-              print('You decided to choose from gallery');
-            },
-          ),
-        ],
-      ),
+      builder: (context) => const AddBottomSheet(),
     );
   }
 

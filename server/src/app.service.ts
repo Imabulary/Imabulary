@@ -1,16 +1,12 @@
+import { v3 } from '@google-cloud/translate';
+import { VertexAI } from '@google-cloud/vertexai';
+import vision from '@google-cloud/vision';
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import admin from 'firebase-admin';
 import { getDownloadURL } from 'firebase-admin/storage';
-import vision from '@google-cloud/vision';
-import {
-  VertexAI,
-  HarmCategory,
-  HarmBlockThreshold,
-} from '@google-cloud/vertexai';
 import * as adminAccount from '../admin-account.json';
-import { v3 } from '@google-cloud/translate';
 import { PrismaService } from './prisma';
-import { Prisma } from '@prisma/client';
 
 const { TranslationServiceClient } = v3;
 
@@ -32,15 +28,9 @@ export class AppService {
     location: this.location,
   });
 
-  private generativeModel = this.vertexAI.preview.getGenerativeModel({
+  private generativeModel = this.vertexAI.getGenerativeModel({
     model: 'gemini-pro',
     generation_config: { max_output_tokens: 20, temperature: 1 },
-    safety_settings: [
-      {
-        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-        threshold: HarmBlockThreshold.BLOCK_NONE,
-      },
-    ],
   });
 
   private translator = new TranslationServiceClient({
@@ -99,30 +89,35 @@ export class AppService {
   }
 
   private async generateWordRelatedPhrase(word: string) {
-    const prompt = `Generate a creative and coherent phrase using the word ${word.toLowerCase()}.`;
+    try {
+      const prompt = `Generate a creative and coherent phrase using the word ${word.toLowerCase()}.`;
 
-    const rules = [
-      'The length of the phrase must be maximum of 10 words',
-      'Do not cover a string in quotes',
-      'Phrase must contain the word itself',
-    ].join('. ');
+      const rules = [
+        'The length of the phrase must be maximum of 10 words',
+        'Do not cover a string in quotes',
+        'Phrase must contain the word itself',
+      ].join('. ');
 
-    const responseStream = await this.generativeModel.generateContentStream({
-      contents: [
-        {
-          role: 'user',
-          parts: [
-            {
-              text: `${prompt} ${rules}`,
-            },
-          ],
-        },
-      ],
-    });
+      const responseStream = await this.generativeModel.generateContentStream({
+        contents: [
+          {
+            role: 'user',
+            parts: [
+              {
+                text: `${prompt} ${rules}`,
+              },
+            ],
+          },
+        ],
+      });
 
-    const response = await responseStream.response;
+      const response = await responseStream.response;
 
-    return response.candidates[0].content.parts[0].text;
+      return response.candidates[0].content.parts[0].text;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   private async uploadToExternalStorage(fileName: string, file: Buffer) {
