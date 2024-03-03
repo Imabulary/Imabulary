@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile/app/home.dart';
+import 'package:mobile/atoms/colors.dart';
 
 void main() {
   runApp(const App());
@@ -14,21 +16,22 @@ class App extends StatelessWidget {
       title: 'Imabulary',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromRGBO(255, 240, 6, 1),
+          seedColor: colors['primary'] as Color,
           brightness: Brightness.dark,
         ),
-      ),
-      home: Scaffold(
-        body: SafeArea(
-          child: Text(
-            'Welcome to Imabulary!',
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Colors.white,
-                  fontFamily: GoogleFonts.sourceSans3().fontFamily,
-                ),
+        textTheme: TextTheme(
+          titleLarge: GoogleFonts.sourceSans3(fontSize: 32),
+          headlineLarge: GoogleFonts.sourceSans3(fontSize: 24),
+          headlineMedium: GoogleFonts.sourceSans3(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
+          bodyLarge: GoogleFonts.sourceSans3(fontSize: 16),
+          labelLarge: GoogleFonts.sourceSans3(fontSize: 14),
+          bodySmall: GoogleFonts.sourceSans3(fontSize: 12),
         ),
       ),
+      home: const HomeScreen(),
     );
   }
 }
