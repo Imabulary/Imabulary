@@ -1,5 +1,7 @@
 import {
   Controller,
+  MaxFileSizeValidator,
+  ParseFilePipe,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -8,6 +10,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { AppService } from './app.service';
 import { ImageCompressPipe, ImageCompressionResult } from './pipes';
 
+const MAX_PROFILE_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
+
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -15,7 +19,17 @@ export class AppController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   handleImage(
-    @UploadedFile(ImageCompressPipe) { file, fileName }: ImageCompressionResult,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({
+            maxSize: MAX_PROFILE_PICTURE_SIZE_IN_BYTES,
+          }),
+        ],
+      }),
+      ImageCompressPipe,
+    )
+    { file, fileName }: ImageCompressionResult,
   ) {
     return this.appService.handleImage(fileName, file);
   }
