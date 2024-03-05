@@ -10,6 +10,18 @@ import { PrismaService } from './prisma';
 
 const { TranslationServiceClient } = v3;
 
+const DEMO_CARD = {
+  id: '1',
+  word: 'Apple',
+  phrase: 'An apple a day keeps doctor away',
+  translated_phrase: 'Яблуко щодня береже від лікаря',
+  translated_word: 'Яблуко',
+  target_language: 'uk-UA',
+  source_language: 'en-US',
+  image_url:
+    'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+};
+
 @Injectable()
 export class AppService {
   constructor(private prisma: PrismaService) {}
@@ -65,6 +77,10 @@ export class AppService {
     return {
       result: card,
     };
+
+    // return {
+    //   result: DEMO_CARD,
+    // };
   }
 
   private async saveToDB(data: Prisma.CardsCreateInput) {
@@ -93,7 +109,7 @@ export class AppService {
       const prompt = `Generate a creative and coherent phrase using the word ${word.toLowerCase()}.`;
 
       const rules = [
-        'The length of the phrase must be maximum of 10 words',
+        'The length of the phrase must be maximum of 20 words',
         'Do not cover a string in quotes',
         'Phrase must contain the word itself',
       ].join('. ');

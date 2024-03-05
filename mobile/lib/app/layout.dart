@@ -3,7 +3,7 @@ import 'package:mobile/widgets/bottom_navigation.dart';
 import 'package:mobile/widgets/floating_button.dart';
 
 class Layout extends StatelessWidget {
-  const Layout(this.page, {super.key, required this.currentScreen});
+  const Layout(this.page, {super.key, this.currentScreen = 0});
 
   final Widget page;
   final int currentScreen;
@@ -13,7 +13,7 @@ class Layout extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(16),
           child: page,
         ),
       ),
