@@ -20,7 +20,7 @@ class FlashCardScreen extends StatelessWidget {
             flashCard.image_url,
             width: double.infinity,
             height: 256,
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
           ),
         ),
         const SizedBox(
