@@ -105,35 +105,30 @@ export class AppService {
   }
 
   private async generateWordRelatedPhrase(word: string) {
-    try {
-      const prompt = `Generate a creative and coherent phrase using the word ${word.toLowerCase()}.`;
+    const prompt = `Generate a creative and coherent phrase using the word ${word.toLowerCase()}.`;
 
-      const rules = [
-        'The length of the phrase must be maximum of 20 words',
-        'Do not cover a string in quotes',
-        'Phrase must contain the word itself',
-      ].join('. ');
+    const rules = [
+      'The length of the phrase must be maximum of 20 words',
+      'Do not cover a string in quotes',
+      'Phrase must contain the word itself',
+    ].join('. ');
 
-      const responseStream = await this.generativeModel.generateContentStream({
-        contents: [
-          {
-            role: 'user',
-            parts: [
-              {
-                text: `${prompt} ${rules}`,
-              },
-            ],
-          },
-        ],
-      });
+    const responseStream = await this.generativeModel.generateContentStream({
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            {
+              text: `${prompt} ${rules}`,
+            },
+          ],
+        },
+      ],
+    });
 
-      const response = await responseStream.response;
+    const response = await responseStream.response;
 
-      return response.candidates[0].content.parts[0].text;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    return response.candidates[0].content.parts[0].text;
   }
 
   private async uploadToExternalStorage(fileName: string, file: Buffer) {

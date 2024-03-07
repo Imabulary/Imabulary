@@ -9,7 +9,22 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Layout(
-      const TypeSetting('Welcome to Imabulary!'),
+      const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TypeSetting(
+            'Welcome to Imabulary!',
+            variant: TextVariants.headlineLarge,
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          TypeSetting('Your latest scans'),
+          SizedBox(
+            height: 12,
+          ),
+        ],
+      ),
       currentScreen: CurrentScreens.home.value,
     );
   }
