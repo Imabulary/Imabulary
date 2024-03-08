@@ -7,9 +7,11 @@ export class FlashCardsService {
   constructor(private readonly prisma: PrismaClient) {}
 
   async findAll(pagination: ServerPagination) {
-    // return this.prisma.cards.findMany({ ...pagination });
     const [cards, total] = await this.prisma.$transaction([
-      this.prisma.cards.findMany({ ...pagination }),
+      this.prisma.cards.findMany({
+        ...pagination,
+        orderBy: { createdAt: 'desc' },
+      }),
       this.prisma.cards.count(),
     ]);
 

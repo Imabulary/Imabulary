@@ -1,7 +1,7 @@
 import { v3 } from '@google-cloud/translate';
 import { VertexAI } from '@google-cloud/vertexai';
 import vision from '@google-cloud/vision';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import admin from 'firebase-admin';
 import { getDownloadURL } from 'firebase-admin/storage';
@@ -145,6 +145,12 @@ export class AppService {
   private async analyze(imageUrl: string) {
     const [result] = await this.visionClient.objectLocalization(imageUrl);
 
-    return result.localizedObjectAnnotations[0]?.name;
+    if (!result.localizedObjectAnnotations[0]?.name) {
+      throw new BadRequestException(
+        `Unfortunately we couldn't recognize the object that is shown on the photo. Try again later.`,
+      );
+    }
+
+    return result.localizedObjectAnnotations[0].name;
   }
 }

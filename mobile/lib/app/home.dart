@@ -106,19 +106,20 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 12,
           ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProfileScreen(),
-                  ),
-                );
-              },
-              child: const TypeSetting('View all'),
-            ),
-          )
+          if (_flashCards.isNotEmpty)
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfileScreen(),
+                    ),
+                  );
+                },
+                child: const TypeSetting('View all'),
+              ),
+            )
         ],
       ),
       currentScreen: CurrentScreens.home.value,

@@ -6,7 +6,9 @@
 	<string>Allow the app to access your camera so you can take pictures of objects you want to learn</string>
   <key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow the app to access your gallery so you can choose a photo with the object you would like to learn</string>
-	<key>NSPhotoLibraryUsageDescription</key>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>We don't process videos, so probably you won't need to approve this permission</string>
+	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Mobile</string>
@@ -28,6 +30,12 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow the app to access your camera so you can take pictures of objects you want to learn</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -46,8 +54,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>
 </plist>
