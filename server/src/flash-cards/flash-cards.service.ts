@@ -6,7 +6,20 @@ import { ServerPagination } from 'src/shared/types';
 export class FlashCardsService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  findAll(pagination: ServerPagination) {
-    return this.prisma.cards.findMany({ ...pagination });
+  async findAll(pagination: ServerPagination) {
+    // return this.prisma.cards.findMany({ ...pagination });
+    const [cards, total] = await this.prisma.$transaction([
+      this.prisma.cards.findMany({ ...pagination }),
+      this.prisma.cards.count(),
+    ]);
+
+    return {
+      result: cards,
+      meta: {
+        pagination: {
+          total,
+        },
+      },
+    };
   }
 }
