@@ -20,7 +20,7 @@ export class AssistantService {
   });
 
   async generatePhrase(word: string) {
-    const prompt = `Generate a creative and coherent phrase using the word ${word.toLowerCase()}.`;
+    const prompt = `Generate a creative yet simple phrase using the word ${word.toLowerCase()}.`;
 
     const rules = [
       'The length of the phrase must be maximum of 20 words',

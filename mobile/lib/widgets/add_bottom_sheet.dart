@@ -25,15 +25,18 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
       context: context,
       builder: (context) => const AlertDialog(
         content: Padding(
-          padding: EdgeInsets.all(24),
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               CircularProgressIndicator(),
               SizedBox(
-                height: 20,
+                height: 24,
               ),
-              TypeSetting('Your image is being processed.'),
+              TypeSetting(
+                'Your image is being processed.',
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
@@ -73,8 +76,8 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
   void _pickPhoto(ImageSource source) async {
     final image = await picker.pickImage(
       source: source,
-      imageQuality: 50,
-      maxWidth: 500,
+      imageQuality: 80,
+      maxWidth: 800,
     );
 
     if (image == null) return;

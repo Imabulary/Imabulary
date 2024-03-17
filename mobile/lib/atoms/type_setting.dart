@@ -15,6 +15,7 @@ class TypeSetting extends Text {
     this.text, {
     super.key,
     super.style,
+    super.textAlign,
     this.variant = TextVariants.bodyLarge,
   }) : super(text);
 
@@ -34,9 +35,10 @@ class TypeSetting extends Text {
 
     return Text(
       text,
-      textAlign: TextAlign.left,
+      textAlign: textAlign ?? TextAlign.left,
       style: variants[variant]!.copyWith(
         color: style?.color ?? Colors.white,
+        // : style?.color ?? Colors.white,
         fontFamily: GoogleFonts.sourceSans3().fontFamily,
       ),
     );

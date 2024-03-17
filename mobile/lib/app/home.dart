@@ -51,76 +51,82 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Layout(
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const TypeSetting(
-            'Welcome to Imabulary!',
-            variant: TextVariants.headlineLarge,
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          const TypeSetting('Your latest scans'),
-          const SizedBox(
-            height: 12,
-          ),
-          ListView.separated(
-            itemBuilder: (context, index) => ListTile(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FlashCardScreen(
-                      flashCard: _flashCards[index],
-                    ),
-                  ),
-                );
-              },
-              contentPadding: const EdgeInsets.only(left: 10, right: 10),
-              tileColor: colors['muted'],
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              leading: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  _flashCards[index].image_url,
-                  width: 55,
-                  height: 60,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              title: TypeSetting(_flashCards[index].word),
-              subtitle: TypeSetting(
-                _flashCards[index].translated_word,
-                variant: TextVariants.bodySmall,
-              ),
+      SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const TypeSetting(
+              'Welcome to Imabulary!',
+              variant: TextVariants.headlineLarge,
             ),
-            itemCount: _flashCards.length,
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            separatorBuilder: (BuildContext context, int index) =>
-                const SizedBox(height: 12),
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          if (_flashCards.isNotEmpty)
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
+            const SizedBox(
+              height: 40,
+            ),
+            const TypeSetting('Your latest scans'),
+            const SizedBox(
+              height: 12,
+            ),
+            ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => ListTile(
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ProfileScreen(),
+                      builder: (context) => FlashCardScreen(
+                        flashCard: _flashCards[index],
+                      ),
                     ),
                   );
                 },
-                child: const TypeSetting('View all'),
+                contentPadding: const EdgeInsets.only(left: 10, right: 10),
+                tileColor: colors['muted'],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    _flashCards[index].image_url,
+                    width: 55,
+                    height: 60,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                title: TypeSetting(_flashCards[index].word),
+                subtitle: TypeSetting(
+                  _flashCards[index].translated_word,
+                  variant: TextVariants.bodySmall,
+                ),
               ),
-            )
-        ],
+              itemCount: _flashCards.length,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              separatorBuilder: (BuildContext context, int index) =>
+                  const SizedBox(height: 12),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            if (_flashCards.isNotEmpty)
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 24),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ProfileScreen(),
+                        ),
+                      );
+                    },
+                    child: const TypeSetting('View all'),
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
       currentScreen: CurrentScreens.home.value,
     );

@@ -6,6 +6,7 @@ devBuild() {
 # Start containers for development
 devStart() {
   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+  prismaGenerate
 }
 
 # Shutdown containers that was run for development
@@ -37,4 +38,9 @@ runMigration() {
   fi
 
   docker exec -it imabulary_backend sh -c "npx prisma migrate dev --name $MIGRATION_NAME"
+}
+
+# Generate TypeScript types based on prisma schema
+prismaGenerate() {
+  docker exec -it imabulary_backend sh -c "npx prisma generate"
 }

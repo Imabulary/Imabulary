@@ -11,48 +11,53 @@ class FlashCardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Layout(Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Image.network(
-            flashCard.image_url,
-            width: double.infinity,
-            height: 256,
-            fit: BoxFit.cover,
+    return Layout(SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              flashCard.image_url,
+              width: double.infinity,
+              height: 256,
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 24,
-        ),
-        TypeSetting(flashCard.word, variant: TextVariants.titleLarge),
-        const SizedBox(
-          height: 16,
-        ),
-        TypeSetting(
-          'Relate phrases',
-          style: TextStyle(
-            color: colors['primary'],
+          const SizedBox(
+            height: 24,
           ),
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        TypeSetting(flashCard.phrase),
-        const TypeSetting(
-          'English',
-          variant: TextVariants.bodySmall,
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        TypeSetting(flashCard.translated_phrase),
-        const TypeSetting(
-          'Ukrainian',
-          variant: TextVariants.bodySmall,
-        ),
-      ],
+          TypeSetting(flashCard.word, variant: TextVariants.titleLarge),
+          const SizedBox(
+            height: 16,
+          ),
+          TypeSetting(
+            'Relate phrases',
+            style: TextStyle(
+              color: colors['primary'],
+            ),
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          TypeSetting(flashCard.phrase),
+          const TypeSetting(
+            'English',
+            variant: TextVariants.bodySmall,
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          TypeSetting(flashCard.translated_phrase),
+          const TypeSetting(
+            'Ukrainian',
+            variant: TextVariants.bodySmall,
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+        ],
+      ),
     ));
   }
 }
