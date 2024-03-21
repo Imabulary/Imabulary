@@ -1,14 +1,15 @@
 version: '3'
 services:
-  frontend:
-    build: ./client
-    ports:
-      - 3001:3000
-    container_name: imabulary_frontend
-    env_file:
-      - ./client/.env
-    depends_on:
-      - backend
+  # TEMPORARELY DISABLE AS WE'RE NOT FOCUSED ON THE WEB AT THE MOMENT
+  # frontend:
+  #   build: ./client
+  #   ports:
+  #     - 3001:3000
+  #   container_name: imabulary_frontend
+  #   env_file:
+  #     - ./client/.env
+  #   depends_on:
+  #     - backend
 
   backend:
     build: ./server

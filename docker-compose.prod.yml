@@ -1,13 +1,14 @@
 version: '3'
 services:
-  frontend:
-    build:
-      context: ./client
-      args:
-        NODE_ENV: production
-    environment:
-      - NODE_ENV=production
-    # command: production command here
+  # TEMPORARELY DISABLE AS WE'RE NOT FOCUSED ON THE WEB AT THE MOMENT
+  # frontend:
+  #   build:
+  #     context: ./client
+  #     args:
+  #       NODE_ENV: production
+  #   environment:
+  #     - NODE_ENV=production
+  #   # command: production command here
 
   backend:
     build:

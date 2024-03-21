@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile/app/flash_card.dart';
-import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/app/FlashCard/domain/card.dart';
+import 'package:mobile/app/FlashCard/presentation/flash_card.dart';
+import 'package:mobile/components/dialogs.dart';
 import 'package:mobile/components/pick_in_gallery.dart';
 import 'package:mobile/components/take_photo.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mobile/shared/models/Card/card.dart';
+import 'package:mobile/shared/models/ServerError/server_error.dart';
+import 'package:mobile/utils/maybe.dart';
 
 class AddBottomSheet extends StatefulWidget {
   const AddBottomSheet({super.key});
@@ -19,44 +21,13 @@ final dio = Dio();
 final picker = ImagePicker();
 
 class _AddBottomSheetState extends State<AddBottomSheet> {
-  void _showLoadingDialog() {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) => const AlertDialog(
-        content: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(
-                height: 24,
-              ),
-              TypeSetting(
-                'Your image is being processed.',
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  late final Dialogs _dialogs;
 
-  void _showErrorDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => const AlertDialog(
-        title: TypeSetting(
-          'Oh no! We\'re sorry :(',
-          variant: TextVariants.headlineLarge,
-        ),
-        content: TypeSetting(
-          'Something went wrong during image processing. Please, try again later.',
-        ),
-      ),
-    );
+  @override
+  void initState() {
+    _dialogs = Dialogs(context);
+
+    super.initState();
   }
 
   void redirectToFlashCardScreen(FlashCard flashCard) {
@@ -89,7 +60,7 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
       'file': file,
     });
 
-    _showLoadingDialog();
+    _dialogs.showLoadingDialog('Your image is being processed.');
 
     try {
       final response = await dio.post(
@@ -105,9 +76,13 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
     } on DioException catch (error) {
       closeDialogs();
 
-      _showErrorDialog();
+      final errorMessage = Maybe.fromValue(error.response)
+          .map((response) => response!.data)
+          .map((data) => ServerError.fromJson(data))
+          .map((serverError) => serverError.message)
+          .getOrElse('');
 
-      print(error);
+      _dialogs.showErrorDialog(errorMessage);
     }
   }
 

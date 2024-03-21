@@ -10,9 +10,6 @@ class FloatingButton extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       clipBehavior: Clip.hardEdge,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(0)),
-      ),
       builder: (context) => const AddBottomSheet(),
     );
   }

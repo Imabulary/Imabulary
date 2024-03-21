@@ -16,23 +16,25 @@ const isFirebaseError = (error: FirebaseError): error is FirebaseError => {
 
 export const handleUploadException = (error: any) => {
   if (isFirebaseError(error)) {
+    const options = {
+      cause: error,
+    };
+
     const firebaseExceptionsMap = {
-      'storage/unknown': new InternalServerErrorException(UNKNOWN_ERROR, {
-        cause: error,
-      }),
-      'storage/unauthenticated': new UnauthorizedException(UNAUTHORIZED_ERROR, {
-        cause: error,
-      }),
-      'storage/unauthorized': new ForbiddenException(FORBIDDEN_ERROR, {
-        cause: error,
-      }),
+      'storage/unknown': new InternalServerErrorException(
+        UNKNOWN_ERROR,
+        options,
+      ),
+      'storage/unauthenticated': new UnauthorizedException(
+        UNAUTHORIZED_ERROR,
+        options,
+      ),
+      'storage/unauthorized': new ForbiddenException(FORBIDDEN_ERROR, options),
     };
 
     throw (
       firebaseExceptionsMap[error.code] ||
-      new InternalServerErrorException(UNKNOWN_ERROR, {
-        cause: error,
-      })
+      new InternalServerErrorException(UNKNOWN_ERROR, options)
     );
   }
 

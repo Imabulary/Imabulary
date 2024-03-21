@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/home.dart';
+import 'package:mobile/app/Home/presentation/home.dart';
 import 'package:mobile/app/profile.dart';
 
 enum CurrentScreens {
