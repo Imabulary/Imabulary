@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/widgets/bottom_navigation.dart';
-import 'package:mobile/widgets/floating_button.dart';
+import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
+import 'package:mobile/app/Layout/widgets/floating_button.dart';
 
 class Layout extends StatelessWidget {
   const Layout(this.page, {super.key, this.currentScreen = 0});

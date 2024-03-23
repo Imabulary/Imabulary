@@ -1,6 +1,6 @@
-import 'package:mobile/app/FlashCard/flash_card_repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/app/FlashCard/data/flash_card_repository.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
-import 'package:riverpod/riverpod.dart';
 
 final homeFlashCardsProvider = FutureProvider.autoDispose((ref) => ref
     .watch(flashCardRepositoryProvider)

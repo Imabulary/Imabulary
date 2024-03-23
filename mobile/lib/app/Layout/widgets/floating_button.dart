@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/widgets/add_bottom_sheet.dart';
+import 'AddBottomSheet/add_bottom_sheet.dart';
 
 class FloatingButton extends StatelessWidget {
   const FloatingButton({super.key});

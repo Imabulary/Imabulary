@@ -2,15 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
 class Dialogs {
-  const Dialogs(this.context);
-
-  final BuildContext context;
-
-  void showLoadingDialog(String? message) {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) => AlertDialog(
+  static Widget loading(String? message) => AlertDialog(
         content: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: Column(
@@ -27,14 +19,9 @@ class Dialogs {
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
 
-  void showErrorDialog(String? error) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
+  static Widget error(String? error) => AlertDialog(
         title: const TypeSetting(
           "Oops! We're sorry",
           variant: TextVariants.headlineLarge,
@@ -44,7 +31,5 @@ class Dialogs {
           error ?? "Something hiccuped. We're on it! Try again later.",
           textAlign: TextAlign.center,
         ),
-      ),
-    );
-  }
+      );
 }

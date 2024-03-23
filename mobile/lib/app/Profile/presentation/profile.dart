@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/layout.dart';
+import 'package:mobile/app/Layout/presentation/layout.dart';
+import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/widgets/bottom_navigation.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

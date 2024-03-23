@@ -12,6 +12,9 @@ class ServerError with _$ServerError {
     String? error,
   }) = _ServerError;
 
+  static const defaultError =
+      'Some unexpected error happened. Try again later.';
+
   factory ServerError.fromJson(Map<String, dynamic> json) =>
       _$ServerErrorFromJson(json);
 }

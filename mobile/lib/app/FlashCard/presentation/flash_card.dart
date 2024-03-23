@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/app/FlashCard/domain/card.dart';
-import 'package:mobile/app/layout.dart';
+import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
