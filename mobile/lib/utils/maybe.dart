@@ -19,20 +19,20 @@ class Maybe<T> {
     return value != null ? Maybe.some(value) : Maybe.none<T>();
   }
 
-  Maybe<R> map<R>(R Function(T) f) {
+  Maybe<R> map<R>(R Function(T) handler) {
     if (_value == null) {
       return Maybe.none<R>();
     }
 
-    return Maybe.fromValue(f(_value));
+    return Maybe.fromValue(handler(_value));
   }
 
-  Maybe<R> flatMap<R>(Maybe<R> Function(T) f) {
+  Maybe<R> flatMap<R>(Maybe<R> Function(T) handler) {
     if (_value == null) {
       return Maybe.none<R>();
     }
 
-    return f(_value);
+    return handler(_value);
   }
 
   T getOrElse(T defaultValue) {

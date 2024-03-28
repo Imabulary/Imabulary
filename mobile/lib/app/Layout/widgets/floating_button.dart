@@ -5,7 +5,7 @@ import 'AddBottomSheet/add_bottom_sheet.dart';
 class FloatingButton extends StatelessWidget {
   const FloatingButton({super.key});
 
-  void handleAdd(BuildContext context) {
+  void _handleAdd(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -18,7 +18,7 @@ class FloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        handleAdd(context);
+        _handleAdd(context);
       },
       backgroundColor: colors['primary'],
       foregroundColor: Colors.black,

@@ -61,4 +61,6 @@ class FlashCardRepository {
 
 @riverpod
 FlashCardRepository flashCardRepository(FlashCardRepositoryRef ref) =>
-    FlashCardRepository(client: Dio());
+    FlashCardRepository(
+      client: Dio(),
+    );

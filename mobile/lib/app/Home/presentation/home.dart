@@ -36,14 +36,16 @@ class HomeScreen extends ConsumerWidget {
               height: 12,
             ),
             flashCards.when(
-                data: (flashCards) => FlashCardsList(flashCards: flashCards),
-                error: (error, _) => const Center(
-                      child: TypeSetting(
-                        'No scans yet',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                loading: () => const Center(child: CircularProgressIndicator()))
+              data: (flashCards) => FlashCardsList(flashCards: flashCards),
+              error: (error, _) => const Center(
+                child: TypeSetting(
+                  "Oops! An error occurred during loading. But don't worry, we're on it! Try again later.",
+                  style: TextStyle(color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              loading: () => const Center(child: CircularProgressIndicator()),
+            )
           ],
         ),
       ),

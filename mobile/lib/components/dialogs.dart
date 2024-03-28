@@ -28,7 +28,8 @@ class Dialogs {
           textAlign: TextAlign.center,
         ),
         content: TypeSetting(
-          error ?? "Something hiccuped. We're on it! Try again later.",
+          error ??
+              "Something hiccuped. Don't worry, we're on it! Try again later.",
           textAlign: TextAlign.center,
         ),
       );

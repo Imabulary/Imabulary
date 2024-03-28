@@ -29,13 +29,15 @@ class _FlashCardsListState extends State<FlashCardsList> {
       children: [
         ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) =>
-              FlashCardListItem(widget.flashCards[index]),
+          itemBuilder: (context, index) => FlashCardListItem(
+            widget.flashCards[index],
+          ),
           itemCount: widget.flashCards.length,
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          separatorBuilder: (BuildContext context, int index) =>
-              const SizedBox(height: 12),
+          separatorBuilder: (BuildContext context, int index) => const SizedBox(
+            height: 12,
+          ),
         ),
         const SizedBox(
           height: 12,
