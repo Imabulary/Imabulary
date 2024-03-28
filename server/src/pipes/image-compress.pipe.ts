@@ -16,6 +16,7 @@ export class ImageCompressPipe
 
     const file = await sharp(image.buffer)
       .resize(800)
+      .png({ quality: 80, effort: 3 })
       .jpeg({ progressive: true, quality: 80 })
       .webp({ effort: 3, quality: 80 })
       .toBuffer();

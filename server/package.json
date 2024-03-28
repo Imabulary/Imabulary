@@ -33,12 +33,12 @@
     "@types/lodash": "^4.14.202",
     "firebase-admin": "^12.0.0",
     "lodash": "^4.17.21",
-    "lodash.get": "^4.4.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "sharp": "^0.33.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",

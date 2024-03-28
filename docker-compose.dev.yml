@@ -1,16 +1,17 @@
 version: '3'
 services:
-  frontend:
-    build:
-      context: ./client
-      args:
-        NODE_ENV: development
-    volumes:
-      - ./client:/client
-      - /client/node_modules
-    environment:
-      - NODE_ENV=development
-    command: npm run dev
+  # TEMPORARELY DISABLE AS WE'RE NOT FOCUSED ON THE WEB AT THE MOMENT
+  # frontend:
+  #   build:
+  #     context: ./client
+  #     args:
+  #       NODE_ENV: development
+  #   volumes:
+  #     - ./client:/client
+  #     - /client/node_modules
+  #   environment:
+  #     - NODE_ENV=development
+  #   command: npm run dev
 
   backend:
     build:

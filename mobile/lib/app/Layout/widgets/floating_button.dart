@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/widgets/add_bottom_sheet.dart';
+import 'AddBottomSheet/add_bottom_sheet.dart';
 
 class FloatingButton extends StatelessWidget {
   const FloatingButton({super.key});
 
-  void handleAdd(BuildContext context) {
+  void _handleAdd(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       clipBehavior: Clip.hardEdge,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(0)),
-      ),
       builder: (context) => const AddBottomSheet(),
     );
   }
@@ -21,7 +18,7 @@ class FloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        handleAdd(context);
+        _handleAdd(context);
       },
       backgroundColor: colors['primary'],
       foregroundColor: Colors.black,

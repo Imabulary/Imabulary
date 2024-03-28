@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/home.dart';
-import 'package:mobile/app/profile.dart';
 
 enum CurrentScreens {
   home(0),
@@ -12,25 +10,25 @@ enum CurrentScreens {
 }
 
 class BottomNavigation extends StatefulWidget {
-  const BottomNavigation({super.key, this.currentScreen = 0});
+  const BottomNavigation({
+    super.key,
+    this.currentScreen = 0,
+    required this.screens,
+  });
 
   final int currentScreen;
+  final List<Widget> screens;
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  static const _screens = [
-    HomeScreen(),
-    ProfileScreen(),
-  ];
-
   void _navigate(int index) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => _screens[index],
+        builder: (context) => widget.screens[index],
       ),
     );
   }
