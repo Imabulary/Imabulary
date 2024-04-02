@@ -24,6 +24,7 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authStateProvider).value;
+
     final avatar = Maybe.fromValue(user?.photoURL)
         .map<ImageProvider>((photo) => NetworkImage(photo!))
         .getOrElse(const AssetImage('assets/images/account.png'));
@@ -33,7 +34,6 @@ class ProfileScreen extends ConsumerWidget {
       currentScreen: CurrentScreens.profile.value,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        leading: const AutoLeadingButton(),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),

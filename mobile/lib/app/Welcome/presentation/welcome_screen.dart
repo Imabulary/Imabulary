@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,22 +5,18 @@ import 'package:mobile/app/Welcome/presentation/welcome_screen_controller.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
-@RoutePage()
-class WelcomeScreen extends ConsumerStatefulWidget {
+class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _WelcomeScreenState();
-}
-
-class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(welcomeScreenControllerProvider);
 
     final handleGoogleSignIn = state.isLoading
         ? null
         : ref.read(welcomeScreenControllerProvider.notifier).loginWithGoogle;
+
+    print(state.isLoading);
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -48,7 +43,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                   height: 12,
                 ),
                 const TypeSetting(
-                  "We've been waiting for you!",
+                  "You're the one we've been waiting for!",
                   variant: TextVariants.headlineLarge,
                   textAlign: TextAlign.center,
                 ),
@@ -56,6 +51,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                   height: 88,
                 ),
                 ElevatedButton(
+                  key: const Key('google-login'),
                   onPressed: handleGoogleSignIn,
                   child: state.isLoading
                       ? const TypeSetting('Logging in...')

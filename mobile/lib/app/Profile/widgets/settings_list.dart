@@ -14,6 +14,7 @@ class SettingsList extends ConsumerWidget {
       shrinkWrap: true,
       children: [
         ListTile(
+          key: const Key('logout'),
           onTap: signOut,
           title: const TypeSetting('Log out'),
         )
