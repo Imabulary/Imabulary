@@ -10,14 +10,16 @@ const screens = [
 ];
 
 class Layout extends StatelessWidget {
-  const Layout(this.page, {super.key, this.currentScreen = 0});
+  const Layout(this.page, {super.key, this.currentScreen = 0, this.appBar});
 
   final Widget page;
   final int currentScreen;
+  final PreferredSizeWidget? appBar;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: appBar,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),

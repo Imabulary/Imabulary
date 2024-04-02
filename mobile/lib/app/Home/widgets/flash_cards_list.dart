@@ -1,6 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/app/FlashCard/domain/card.dart';
-import 'package:mobile/app/Profile/presentation/profile.dart';
+import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/widgets/flash_card_list_item.dart';
 
@@ -15,11 +16,8 @@ class FlashCardsList extends StatefulWidget {
 
 class _FlashCardsListState extends State<FlashCardsList> {
   void redirectToProfileScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ProfileScreen(),
-      ),
+    context.router.push(
+      const ProfileRoute(),
     );
   }
 

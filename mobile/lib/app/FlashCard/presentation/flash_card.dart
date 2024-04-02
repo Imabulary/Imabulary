@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/app/FlashCard/domain/card.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
+@RoutePage()
 class FlashCardScreen extends StatelessWidget {
   const FlashCardScreen({super.key, required this.flashCard});
 

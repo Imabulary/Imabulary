@@ -2,12 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Allow the app to access your camera so you can take pictures of objects you want to learn</string>
-  <key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow the app to access your gallery so you can choose a photo with the object you would like to learn</string>
-  <key>NSMicrophoneUsageDescription</key>
-  <string>We don't process videos, so probably you won't need to approve this permission</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -26,12 +22,25 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.222626452683-gpqqh6k9lmndj9r4grokf9e2qkrsccld</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow the app to access your camera so you can take pictures of objects you want to learn</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We don't process videos, so probably you won't need to approve this permission</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
@@ -53,7 +62,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
 </dict>
 </plist>
