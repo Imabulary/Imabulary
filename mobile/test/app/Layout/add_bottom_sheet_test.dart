@@ -39,9 +39,7 @@ void main() {
 
     when(
       () => flashCardRepository.pickPhoto(ImageSource.camera),
-    ).thenAnswer(
-      (_) async => xFile,
-    );
+    ).thenAnswer((_) async => xFile);
 
     return xFile;
   }

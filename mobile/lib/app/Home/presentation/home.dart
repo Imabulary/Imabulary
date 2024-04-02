@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/FlashCard/application/flash_card_providers.dart';
@@ -7,6 +8,7 @@ import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 
+@RoutePage()
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 

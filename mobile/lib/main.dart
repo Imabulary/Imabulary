@@ -1,22 +1,36 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile/app/Home/presentation/home.dart';
+import 'package:mobile/app/Welcome/application/auth_provider.dart';
+import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mobile/firebase_options.dart';
 
 Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const ProviderScope(child: App()));
 }
 
-class App extends StatelessWidget {
+class App extends ConsumerStatefulWidget {
   const App({super.key});
 
   @override
+  ConsumerState<App> createState() => _AppState();
+}
+
+class _AppState extends ConsumerState<App> {
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Imabulary',
       theme: ThemeData(
@@ -36,7 +50,8 @@ class App extends StatelessWidget {
           bodySmall: GoogleFonts.sourceSans3(fontSize: 12),
         ),
       ),
-      home: const HomeScreen(),
+      routerConfig:
+          AppRouter(user: ref.watch(authStateProvider).value).config(),
     );
   }
 }
