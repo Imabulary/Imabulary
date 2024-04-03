@@ -13,7 +13,14 @@ class WelcomeScreenController extends _$WelcomeScreenController {
   Future loginWithGoogle() async {
     final authRepository = ref.read(authRepositoryProvider);
 
+    final userCredentials = await authRepository.loginWithGoogle();
+    final user = userCredentials.user;
+
+    if (user == null) return;
+
     state = const AsyncLoading();
-    state = await AsyncValue.guard(authRepository.loginWithGoogle);
+    state = await AsyncValue.guard(
+      () => authRepository.createUser(user.uid, user.email!),
+    );
   }
 }

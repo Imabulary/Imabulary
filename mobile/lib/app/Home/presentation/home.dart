@@ -27,13 +27,9 @@ class HomeScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const TypeSetting(
-              'Welcome to Imabulary!',
-              variant: TextVariants.headlineLarge,
+              'Your latest scans',
+              variant: TextVariants.headlineMedium,
             ),
-            const SizedBox(
-              height: 40,
-            ),
-            const TypeSetting('Your latest scans'),
             const SizedBox(
               height: 12,
             ),

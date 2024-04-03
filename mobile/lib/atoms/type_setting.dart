@@ -38,7 +38,7 @@ class TypeSetting extends Text {
       textAlign: textAlign ?? TextAlign.left,
       style: variants[variant]!.copyWith(
         color: style?.color ?? Colors.white,
-        fontWeight: style?.fontWeight ?? FontWeight.normal,
+        fontWeight: style?.fontWeight,
         fontFamily: GoogleFonts.sourceSans3().fontFamily,
       ),
     );

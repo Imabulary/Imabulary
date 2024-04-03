@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,7 +45,7 @@ void main() {
 
           print('User was logged in with Google!');
 
-          return true;
+          return true as UserCredential;
         });
 
         final googleLoginButton = find.byKey(const Key('google-login'));

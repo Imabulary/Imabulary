@@ -10,6 +10,7 @@ import { PrismaService } from './prisma/prisma.service';
 import { TranslatorModule } from './translator/translator.module';
 import { VisionModule } from './vision/vision.module';
 import { StorageModule } from './storage/storage.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { StorageModule } from './storage/storage.module';
     VisionModule,
     TranslatorModule,
     StorageModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

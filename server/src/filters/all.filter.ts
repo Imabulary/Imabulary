@@ -1,7 +1,7 @@
 import { ArgumentsHost, Catch, HttpException, Logger } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
-import { Request } from 'express';
-import { assign } from 'lodash/fp';
+import { Request, Response } from 'express';
+import { getMaybe } from 'src/utils';
 
 @Catch()
 export class AllExceptionsFilter extends BaseExceptionFilter {
@@ -10,23 +10,31 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const request = ctx.getRequest<Request>();
+    const response = ctx.getResponse<Response>();
 
-    const errorFoundation = {
-      timestamp: new Date().toISOString(),
-      path: request.url,
-    };
+    if (exception instanceof HttpException) {
+      const error = {
+        timestamp: new Date().toISOString(),
+        path: request.url,
+        statusCode: exception.getStatus(),
+        cause: exception.cause,
+        error: exception.message,
+        message: getMaybe('message', exception.getResponse())
+          .map((message) => (Array.isArray(message) ? message[0] : message))
+          .unwrapOr(undefined),
+      };
 
-    const error =
-      exception instanceof HttpException
-        ? assign(errorFoundation, {
-            statusCode: exception.getStatus(),
-            cause: exception.cause,
-            message: exception.message,
-          })
-        : exception;
+      this.logger.error(error);
+
+      return response.status(error.statusCode).json({
+        statusCode: error.statusCode,
+        error: error.error,
+        message: error.message ?? error.error,
+      });
+    }
 
     // TODO: send errors to external logging system
-    this.logger.error(error);
+    this.logger.error(exception);
     super.catch(exception, host);
   }
 }
