@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile/app/Profile/data/dto/profile_dto.dart';
-import 'package:mobile/app/Welcome/data/auth_repository.dart';
+import 'package:mobile/app/Auth/data/auth_repository.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen.dart';
 import 'package:mocktail/mocktail.dart';
 

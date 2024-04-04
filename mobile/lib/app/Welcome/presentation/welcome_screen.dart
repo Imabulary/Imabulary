@@ -13,6 +13,7 @@ class WelcomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // TODO: add tests verifying whether the dialog is showed in case of an error
     ref.listen((welcomeScreenControllerProvider), (_, state) {
       state.showErrorDialog(context, false);
     });

@@ -17,6 +17,7 @@ class AuthRepository {
 
   Stream<User?> get authStateChange => client.idTokenChanges();
 
+  // TODO: Add tests
   Future<ProfileDTO> loginWithGoogle() {
     return request(() async {
       final googleAuthProvider = GoogleAuthProvider();
