@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen_controller.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/utils/async_value_ui.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
 @RoutePage()
@@ -12,6 +13,10 @@ class WelcomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen((welcomeScreenControllerProvider), (_, state) {
+      state.showErrorDialog(context, false);
+    });
+
     final state = ref.watch(welcomeScreenControllerProvider);
 
     final handleGoogleSignIn = state.isLoading
@@ -53,7 +58,7 @@ class WelcomeScreen extends ConsumerWidget {
                 ElevatedButton(
                   key: const Key('google-login'),
                   onPressed: handleGoogleSignIn,
-                  child: state.isLoading
+                  child: state.isLoading && !state.hasError
                       ? const TypeSetting('Logging in...')
                       : const TypeSetting('Sign in with Google'),
                 )

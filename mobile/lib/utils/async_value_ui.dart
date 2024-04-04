@@ -14,11 +14,13 @@ extension AsyncValueUI on AsyncValue {
     }
   }
 
-  showErrorDialog(BuildContext context) {
+  showErrorDialog(BuildContext context, bool doPop) {
     if (!isLoading && hasError && hasValue) {
       final exception = error as ServerError;
 
-      Navigator.pop(context);
+      if (doPop) {
+        Navigator.pop(context);
+      }
 
       showDialog(
         context: context,

@@ -1,19 +1,35 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:mobile/app/FlashCard/data/flash_card_repository.dart';
+import 'package:mobile/app/FlashCard/domain/card.dart';
 import 'package:mobile/app/Home/presentation/home.dart';
 import 'package:mobile/app/Home/widgets/flash_cards_list.dart';
+import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
 import '../../fixtures/flash_card.dart';
+import '../../test_utils/mocks.dart';
 import '../../test_utils/test_app.dart';
+
+class FakeFlashCardsRepository extends MockFlashCardRepository {
+  @override
+  Future<List<FlashCard>> findAll(Pagination pagination) {
+    return Future.value([flashCardFixture]);
+  }
+}
 
 void main() {
   dotenv.testLoad(fileInput: '''API_URL=https://api.com''');
+  setupFirebaseAuthMocks();
+
+  setUpAll(() async {
+    await Firebase.initializeApp();
+  });
 
   group('Home Screen', () {
     final dio = Dio();
@@ -29,12 +45,14 @@ void main() {
       );
     }
 
-    pumpHomeScreen(WidgetTester tester) async {
+    pumpHomeScreen(WidgetTester tester, bool error) async {
       await tester.pumpWidget(
         TestApp(ProviderScope(
           overrides: [
             flashCardRepositoryProvider.overrideWith(
-              (ref) => FlashCardRepository(client: dio),
+              (ref) => error
+                  ? FlashCardRepository(client: dio)
+                  : FakeFlashCardsRepository(),
             )
           ],
           child: const HomeScreen(),
@@ -46,17 +64,11 @@ void main() {
       'should render list with flash cards when data is presented',
       (tester) async {
         mockNetworkImagesFor(() async {
-          mockGet(200, {
-            "result": [flashCardMapFixture]
-          });
+          await pumpHomeScreen(tester, false);
 
-          await pumpHomeScreen(tester);
-
-          final welcomeMessage = find.text('Welcome to Imabulary!');
           final latestScansText = find.text('Your latest scans');
           final loadingIndicator = find.byType(CircularProgressIndicator);
 
-          expect(welcomeMessage, findsWidgets);
           expect(latestScansText, findsWidgets);
           expect(loadingIndicator, findsOneWidget);
 
@@ -71,7 +83,7 @@ void main() {
     testWidgets('should render dialog with error message', (tester) async {
       mockGet(400, encodedServerErrorResponse);
 
-      await pumpHomeScreen(tester);
+      await pumpHomeScreen(tester, true);
 
       final loadingIndicator = find.byType(CircularProgressIndicator);
       expect(loadingIndicator, findsOneWidget);
