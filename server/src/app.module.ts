@@ -11,6 +11,7 @@ import { TranslatorModule } from './translator/translator.module';
 import { VisionModule } from './vision/vision.module';
 import { StorageModule } from './storage/storage.module';
 import { UsersModule } from './users/users.module';
+import { UsersService } from './users';
 
 @Module({
   imports: [
@@ -26,6 +27,6 @@ import { UsersModule } from './users/users.module';
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService, UsersService],
 })
 export class AppModule {}

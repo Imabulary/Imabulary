@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from 'src/prisma';
 import { ServerPagination } from 'src/shared/types';
 
 @Injectable()
 export class FlashCardsService {
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findAll(pagination: ServerPagination) {
     const [cards, total] = await this.prisma.$transaction([

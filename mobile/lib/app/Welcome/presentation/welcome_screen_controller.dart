@@ -6,11 +6,14 @@ part 'welcome_screen_controller.g.dart';
 @riverpod
 class WelcomeScreenController extends _$WelcomeScreenController {
   @override
-  FutureOr<void> build() {
+  FutureOr<void> build() async {
     // no-op
   }
 
-  Future loginWithGoogle() async {
+  Future<void> loginWithGoogle() async {
+    // TODO: fix the bad state exception
+    state = const AsyncLoading();
+
     final authRepository = ref.read(authRepositoryProvider);
 
     final userCredentials = await authRepository.loginWithGoogle();
@@ -18,7 +21,6 @@ class WelcomeScreenController extends _$WelcomeScreenController {
 
     if (user == null) return;
 
-    state = const AsyncLoading();
     state = await AsyncValue.guard(
       () => authRepository.createUser(user.uid, user.email!),
     );

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/FlashCard/domain/card.dart';
@@ -15,13 +16,18 @@ class FlashCardRepository {
 
   final Dio client;
 
-  String get endpoint => '${dotenv.env['API_URL']}/flash-cards';
-
   Future<List<FlashCard>> findAll(Pagination pagination) {
     return request(() async {
+      final url = '${dotenv.env['API_URL']}/flash-cards';
+      // TODO: move this to request interceptor
+      final token = await FirebaseAuth.instance.currentUser!.getIdToken();
+
       final response = await client.get(
-        endpoint,
+        url,
         queryParameters: {"pagination": pagination.toJson()},
+        options: Options(
+          headers: {"authorization": 'Bearer $token'},
+        ),
       );
 
       final List<dynamic> result = response.data!['result'];
@@ -49,9 +55,15 @@ class FlashCardRepository {
         'file': file,
       });
 
+      // TODO: move this to request interceptor
+      final token = await FirebaseAuth.instance.currentUser!.getIdToken();
+
       final response = await client.post(
         uploadUrl,
         data: data,
+        options: Options(
+          headers: {"authorization": 'Bearer $token'},
+        ),
       );
 
       return FlashCard.fromJson(response.data!['result']);

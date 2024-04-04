@@ -27,7 +27,7 @@ class AuthRepository {
 
   Future createUser(String uid, String email) {
     return request(() async {
-      final url = '${dotenv.env['API_URL']}/users/create';
+      final url = '${dotenv.env['API_URL']}/users';
 
       final response = await dio.post(url, data: {
         'uid': uid,
