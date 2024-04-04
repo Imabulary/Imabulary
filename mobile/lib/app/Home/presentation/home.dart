@@ -6,7 +6,6 @@ import 'package:mobile/app/Home/widgets/flash_cards_list.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/utils/async_value_ui.dart';
 
 @RoutePage()
 class HomeScreen extends ConsumerWidget {
@@ -14,11 +13,6 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen(
-      homeFlashCardsProvider,
-      (_, state) => state.showErrorDialog(context),
-    );
-
     final flashCards = ref.watch(homeFlashCardsProvider);
 
     return Layout(
@@ -27,13 +21,9 @@ class HomeScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const TypeSetting(
-              'Welcome to Imabulary!',
-              variant: TextVariants.headlineLarge,
+              'Your latest scans',
+              variant: TextVariants.headlineMedium,
             ),
-            const SizedBox(
-              height: 40,
-            ),
-            const TypeSetting('Your latest scans'),
             const SizedBox(
               height: 12,
             ),

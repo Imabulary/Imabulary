@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
 import 'package:mobile/app/Profile/widgets/settings_list.dart';
-import 'package:mobile/app/Welcome/application/auth_provider.dart';
+import 'package:mobile/app/Auth/application/auth_provider.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/utils/maybe.dart';
 

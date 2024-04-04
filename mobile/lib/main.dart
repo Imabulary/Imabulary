@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile/app/Welcome/application/auth_provider.dart';
+import 'package:mobile/app/Auth/application/auth_provider.dart';
 import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/firebase_options.dart';

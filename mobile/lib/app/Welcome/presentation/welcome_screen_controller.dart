@@ -1,4 +1,4 @@
-import 'package:mobile/app/Welcome/data/auth_repository.dart';
+import 'package:mobile/app/Auth/data/auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'welcome_screen_controller.g.dart';
@@ -14,6 +14,10 @@ class WelcomeScreenController extends _$WelcomeScreenController {
     final authRepository = ref.read(authRepositoryProvider);
 
     state = const AsyncLoading();
-    state = await AsyncValue.guard(authRepository.loginWithGoogle);
+    state = await AsyncValue.guard(() async {
+      final profile = await authRepository.loginWithGoogle();
+
+      return authRepository.createUser(profile);
+    });
   }
 }

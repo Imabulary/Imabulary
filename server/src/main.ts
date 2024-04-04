@@ -4,6 +4,7 @@ import admin, { ServiceAccount } from 'firebase-admin';
 import * as serviceAccount from '../service-account.json';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './filters';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -17,6 +18,7 @@ async function bootstrap() {
   });
 
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
+  app.useGlobalPipes(new ValidationPipe({ stopAtFirstError: true }));
 
   const PORT = configService.get<string>('PORT') || 5000;
 

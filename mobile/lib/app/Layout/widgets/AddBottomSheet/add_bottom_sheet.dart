@@ -14,7 +14,7 @@ class AddBottomSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(addBottomSheetControllerProvider, (_, state) {
       state.showLoadingDialog(context);
-      state.showErrorDialog(context);
+      state.showErrorDialog(context, true);
 
       state.whenData((value) {
         final flashCard = value as FlashCard;

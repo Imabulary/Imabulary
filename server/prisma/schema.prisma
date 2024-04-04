@@ -20,3 +20,11 @@ model Cards {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
+
+model Users {
+  id         String   @id @default(uuid()) @db.VarChar()
+  externalId String   @unique
+  email      String   @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
