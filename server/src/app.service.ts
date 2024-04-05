@@ -15,7 +15,7 @@ export class AppService {
     private readonly translator: TranslatorService,
   ) {}
 
-  async handleImage(fileName: string, file: Buffer) {
+  async handleImage(userId: string, fileName: string, file: Buffer) {
     const imageUrl = await this.storage.upload(fileName, file);
 
     const objectOnImage = await this.vision.analyze(imageUrl);
@@ -40,6 +40,7 @@ export class AppService {
         target_language: targetLanguageCode,
         source_language: sourceLanguageCode,
         image_url: imageUrl,
+        userId,
       },
     });
 

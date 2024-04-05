@@ -30,7 +30,9 @@ export class VisionService {
     }
 
     if (!object) {
-      throw new BadRequestException(OBJECT_IS_NOT_RECOGNIZABLE_ERROR);
+      throw new BadRequestException(OBJECT_IS_NOT_RECOGNIZABLE_ERROR, {
+        cause: `Image: ${imageUrl}`,
+      });
     }
 
     return object;

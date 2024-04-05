@@ -6,11 +6,14 @@ import {
   UploadedFile,
   UseInterceptors,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Request } from 'express';
 import { AppService } from './app.service';
 import { ImageCompressPipe, ImageCompressionResult } from './pipes';
 import { AuthGuard } from './guards';
+import { Users } from '@prisma/client';
 
 const MAX_PROFILE_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
@@ -22,6 +25,7 @@ export class AppController {
   @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   handleImage(
+    @Req() request: Request,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
@@ -34,6 +38,8 @@ export class AppController {
     )
     { file, fileName }: ImageCompressionResult,
   ) {
-    return this.appService.handleImage(fileName, file);
+    const user: Users = request['user'];
+
+    return this.appService.handleImage(user.id, fileName, file);
   }
 }

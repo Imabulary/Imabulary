@@ -4,6 +4,7 @@ import { PaginationPipe } from 'src/pipes/pagination.pipe';
 import { ServerPagination } from 'src/shared/types';
 import { Request } from 'express';
 import { FlashCardsService } from './flash-cards.service';
+import type { Users } from '@prisma/client';
 
 @Controller('flash-cards')
 export class FlashCardsController {
@@ -15,6 +16,8 @@ export class FlashCardsController {
     @Req() request: Request,
     @Query('pagination', PaginationPipe) pagination: ServerPagination,
   ) {
-    return this.flashCardsService.findAll(pagination);
+    const user: Users = request['user'];
+
+    return this.flashCardsService.findAll(user.id, pagination);
   }
 }
