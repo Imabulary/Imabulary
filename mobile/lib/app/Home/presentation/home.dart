@@ -28,6 +28,7 @@ class HomeScreen extends ConsumerWidget {
               height: 12,
             ),
             flashCards.when(
+              skipLoadingOnRefresh: false,
               data: (flashCards) => FlashCardsList(flashCards: flashCards),
               error: (error, _) => const Center(
                 child: TypeSetting(
