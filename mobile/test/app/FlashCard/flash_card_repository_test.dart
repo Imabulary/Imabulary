@@ -1,20 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:mobile/app/FlashCard/data/flash_card_repository.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../../fixtures/flash_card.dart';
 import '../../test_utils/utils.dart';
-
-class MockFirebaseAuth extends Mock implements FirebaseAuth {
-  // static get instance {
-
-  // }
-}
 
 void main() {
   dotenv.testLoad(fileInput: '''API_URL=https://api.com''');

@@ -6,11 +6,12 @@ import { ServerPagination } from 'src/shared/types';
 export class FlashCardsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(pagination: ServerPagination) {
+  async findAll(userId: string, pagination: ServerPagination) {
     const [cards, total] = await this.prisma.$transaction([
       this.prisma.cards.findMany({
         ...pagination,
         orderBy: { createdAt: 'desc' },
+        where: { userId },
       }),
       this.prisma.cards.count(),
     ]);
