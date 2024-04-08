@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'welcome_screen_controller.dart';
+part of 'profile_screen_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$welcomeScreenControllerHash() =>
-    r'38846360c422ba8ce64b63af419892d55027908e';
+String _$profileScreenControllerHash() =>
+    r'bfd089d8b607b9f877b10e84e99efa1a87224fe0';
 
-/// See also [WelcomeScreenController].
-@ProviderFor(WelcomeScreenController)
-final welcomeScreenControllerProvider =
-    AutoDisposeAsyncNotifierProvider<WelcomeScreenController, void>.internal(
-  WelcomeScreenController.new,
-  name: r'welcomeScreenControllerProvider',
+/// See also [ProfileScreenController].
+@ProviderFor(ProfileScreenController)
+final profileScreenControllerProvider =
+    AutoDisposeAsyncNotifierProvider<ProfileScreenController, void>.internal(
+  ProfileScreenController.new,
+  name: r'profileScreenControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$welcomeScreenControllerHash,
+      : _$profileScreenControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$WelcomeScreenController = AutoDisposeAsyncNotifier<void>;
+typedef _$ProfileScreenController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

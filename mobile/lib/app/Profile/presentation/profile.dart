@@ -1,53 +1,63 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:mobile/app/FlashCard/domain/card.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
-import 'package:mobile/app/Profile/widgets/settings_list.dart';
-import 'package:mobile/app/Auth/application/auth_provider.dart';
-import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/utils/maybe.dart';
+import 'package:mobile/app/Profile/presentation/profile_screen_controller.dart';
+import 'package:mobile/app/Profile/widgets/ProfileAppBar/profile_app_bar.dart';
+import 'package:mobile/widgets/flash_card_masonry_item.dart';
 
 @RoutePage()
-class ProfileScreen extends ConsumerWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
-  _showSettingsBottomSheet(BuildContext context, WidgetRef ref) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      clipBehavior: Clip.hardEdge,
-      context: context,
-      builder: (context) => const SettingsList(),
-    );
+  @override
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  final _pagingController = PagingController<int, FlashCard>(firstPageKey: 1);
+
+  @override
+  void initState() {
+    final findUserFlashcards =
+        ref.read(profileScreenControllerProvider.notifier).findUserFlashcards;
+
+    _pagingController.addPageRequestListener((pageKey) {
+      findUserFlashcards(pageKey, _pagingController);
+    });
+
+    super.initState();
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authStateProvider).value;
+  void dispose() {
+    _pagingController.dispose();
 
-    final avatar = Maybe.fromValue(user?.photoURL)
-        .map<ImageProvider>((photo) => NetworkImage(photo!))
-        .getOrElse(const AssetImage('assets/images/account.png'));
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Layout(
-      const TypeSetting('Welcome to your profile!'),
-      currentScreen: CurrentScreens.profile.value,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: GestureDetector(
-              onTap: () {
-                _showSettingsBottomSheet(context, ref);
-              },
-              child: CircleAvatar(
-                backgroundImage: avatar,
-              ),
-            ),
-          )
-        ],
+      RefreshIndicator(
+        onRefresh: () => Future.sync(
+          () => _pagingController.refresh(),
+        ),
+        child: PagedMasonryGridView.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 12,
+          pagingController: _pagingController,
+          builderDelegate: PagedChildBuilderDelegate<FlashCard>(
+            itemBuilder: (context, item, index) => FlashCardMasonryItem(item),
+          ),
+        ),
       ),
+      currentScreen: CurrentScreens.profile.value,
+      appBar: const ProfileAppBar(),
     );
   }
 }

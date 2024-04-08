@@ -28,7 +28,10 @@ class HomeScreen extends ConsumerWidget {
               height: 12,
             ),
             flashCards.when(
-              data: (flashCards) => FlashCardsList(flashCards: flashCards),
+              skipLoadingOnRefresh: false,
+              data: (flashCards) => FlashCardsList(
+                flashCards: flashCards.result,
+              ),
               error: (error, _) => const Center(
                 child: TypeSetting(
                   "Oops! An error occurred during loading. But don't worry, we're on it! Try again later.",

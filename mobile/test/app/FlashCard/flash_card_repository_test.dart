@@ -27,7 +27,12 @@ void main() {
 
   group('FlashCardRepository.findAll', () {
     const encodedFlashCardsJsonResponse = {
-      "result": [flashCardMapFixture]
+      "result": [flashCardMapFixture],
+      "meta": {
+        "pagination": {
+          "total": 1,
+        }
+      }
     };
 
     const expectedFlashCardsFromJson = [flashCardFixture];
@@ -43,7 +48,8 @@ void main() {
 
       final flashCards = await callMethod();
 
-      expect(flashCards, expectedFlashCardsFromJson);
+      expect(flashCards.result, expectedFlashCardsFromJson);
+      expect(flashCards.totalItems, 1);
     });
 
     test(
