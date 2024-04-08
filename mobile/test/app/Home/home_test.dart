@@ -10,6 +10,7 @@ import 'package:mobile/app/FlashCard/domain/card.dart';
 import 'package:mobile/app/Home/presentation/home.dart';
 import 'package:mobile/app/Home/widgets/flash_cards_list.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
+import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
 import '../../fixtures/flash_card.dart';
@@ -18,8 +19,8 @@ import '../../test_utils/test_app.dart';
 
 class FakeFlashCardsRepository extends MockFlashCardRepository {
   @override
-  Future<List<FlashCard>> findAll(Pagination pagination) {
-    return Future.value([flashCardFixture]);
+  Future<ServerResponse<List<FlashCard>>> findAll(Pagination pagination) {
+    return Future.value(ServerResponse(result: [flashCardFixture]));
   }
 }
 

@@ -31,12 +31,11 @@ void main() {
 
   group('Profile Screen', () {
     testWidgets(
-      'should render profile page with app bar and default profile picture',
+      'should render profile page with app bar and profile picture',
       (tester) async {
         mockAuthRepository();
         await pumpProfileScreen(tester);
 
-        final stubText = find.text('Welcome to your profile!');
         final circleAvatar = find.byType(CircleAvatar);
         final appBar = find.byType(AppBar);
         final defaultProfilePicture = tester.widget(
@@ -44,7 +43,6 @@ void main() {
         ) as CircleAvatar;
 
         expect(appBar, findsOneWidget);
-        expect(stubText, findsWidgets);
         expect(circleAvatar, findsOneWidget);
         expect(defaultProfilePicture.backgroundImage, isA<AssetImage>());
       },

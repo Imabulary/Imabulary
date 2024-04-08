@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/app/FlashCard/domain/card.dart';
-import 'package:mobile/app/FlashCard/presentation/flash_card.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/widgets/flash_card_item_controller.dart';
 
 class FlashCardListItem extends StatelessWidget {
   const FlashCardListItem(this.flashCard, {super.key});
 
   final FlashCard flashCard;
 
-  void redirectToFlashCardScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => FlashCardScreen(flashCard: flashCard),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final flashCardScreenController = FlashCardItemController(flashCard);
+
     return ListTile(
-      onTap: () {
-        redirectToFlashCardScreen(context);
-      },
+      onTap: flashCardScreenController.redirectToFlashCardScreen(context),
       contentPadding: const EdgeInsets.only(left: 10, right: 10),
       tileColor: colors['muted'],
       shape: RoundedRectangleBorder(
