@@ -17,8 +17,10 @@ class ProfileScreen extends ConsumerStatefulWidget {
   ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+class _ProfileScreenState extends ConsumerState<ProfileScreen>
+    with TickerProviderStateMixin {
   final _pagingController = PagingController<int, FlashCard>(firstPageKey: 1);
+  late TabController _tabController;
 
   @override
   void initState() {
@@ -29,12 +31,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       findUserFlashcards(pageKey, _pagingController);
     });
 
+    _tabController = TabController(length: 2, vsync: this);
+
     super.initState();
   }
 
   @override
   void dispose() {
     _pagingController.dispose();
+    _tabController.dispose();
 
     super.dispose();
   }
@@ -42,22 +47,28 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Layout(
-      RefreshIndicator(
-        onRefresh: () => Future.sync(
-          () => _pagingController.refresh(),
-        ),
-        child: PagedMasonryGridView.count(
-          crossAxisCount: 2,
-          mainAxisSpacing: 16,
-          crossAxisSpacing: 12,
-          pagingController: _pagingController,
-          builderDelegate: PagedChildBuilderDelegate<FlashCard>(
-            itemBuilder: (context, item, index) => FlashCardMasonryItem(item),
+      TabBarView(
+        controller: _tabController,
+        children: [
+          RefreshIndicator(
+            onRefresh: () => Future.sync(
+              () => _pagingController.refresh(),
+            ),
+            child: PagedMasonryGridView.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 12,
+              pagingController: _pagingController,
+              builderDelegate: PagedChildBuilderDelegate<FlashCard>(
+                itemBuilder: (context, item, index) =>
+                    FlashCardMasonryItem(item),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
       currentScreen: CurrentScreens.profile.value,
-      appBar: const ProfileAppBar(),
+      appBar: ProfileAppBar(_tabController),
     );
   }
 }

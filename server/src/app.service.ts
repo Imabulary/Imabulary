@@ -4,6 +4,7 @@ import { PrismaService } from './prisma';
 import { StorageService } from './storage/storage.service';
 import { TranslatorService } from './translator/translator.service';
 import { VisionService } from './vision/vision.service';
+import { ServerPagination } from './shared';
 
 @Injectable()
 export class AppService {
@@ -14,6 +15,32 @@ export class AppService {
     private readonly assistant: AssistantService,
     private readonly translator: TranslatorService,
   ) {}
+
+  async findAll(
+    entity: 'cards' | 'sets',
+    userId: string,
+    pagination: ServerPagination,
+  ) {
+    const [result, total] = await this.prisma.$transaction([
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.prisma[entity].findMany({
+        ...pagination,
+        orderBy: { createdAt: 'desc' },
+        where: { userId },
+      }),
+      this.prisma.cards.count(),
+    ]);
+
+    return {
+      result,
+      meta: {
+        pagination: {
+          total,
+        },
+      },
+    };
+  }
 
   async handleImage(userId: string, fileName: string, file: Buffer) {
     const imageUrl = await this.storage.upload(fileName, file);

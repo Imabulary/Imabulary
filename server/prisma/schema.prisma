@@ -9,18 +9,20 @@ datasource db {
 }
 
 model Cards {
-  id                String   @id @default(uuid()) @db.VarChar()
-  word              String   @db.VarChar()
+  id                String        @id @default(uuid()) @db.VarChar()
+  word              String        @db.VarChar()
   phrase            String
-  translated_word   String   @db.VarChar()
+  translated_word   String        @db.VarChar()
   translated_phrase String
-  target_language   String   @db.VarChar()
-  source_language   String   @db.VarChar()
-  image_url         String   @db.VarChar()
-  user              Users?   @relation(fields: [userId], references: [id])
-  userId            String?  @db.VarChar()
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  target_language   String        @db.VarChar()
+  source_language   String        @db.VarChar()
+  image_url         String        @db.VarChar()
+  user              Users?        @relation(fields: [userId], references: [id])
+  userId            String?       @db.VarChar()
+  sets              Sets[]
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  CardsOnSets       CardsOnSets[]
 }
 
 model Users {
@@ -28,6 +30,29 @@ model Users {
   externalId String   @unique
   email      String   @unique
   flashcards Cards[]
+  sets       Sets[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+model Sets {
+  id          String        @id @default(uuid()) @db.VarChar()
+  name        String        @db.VarChar()
+  description String?       @db.Text()
+  user        Users?        @relation(fields: [userId], references: [id])
+  userId      String?       @db.VarChar()
+  flashcards  Cards[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  CardsOnSets CardsOnSets[]
+}
+
+model CardsOnSets {
+  set         Sets     @relation(fields: [setId], references: [id])
+  setId       String
+  flashcard   Cards    @relation(fields: [flashcardId], references: [id])
+  flashcardId String
+  createdAt   DateTime @default(now())
+
+  @@id([setId, flashcardId])
 }

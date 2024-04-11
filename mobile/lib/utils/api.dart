@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -8,6 +10,8 @@ class DioInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     final token = await FirebaseAuth.instance.currentUser!.getIdToken();
+
+    log(token.toString());
 
     if (token != null) {
       options.headers['authorization'] = 'Bearer $token';
