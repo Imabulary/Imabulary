@@ -25,6 +25,8 @@ class SetForm extends ConsumerWidget {
 
         ref.read(setServiceProvider.notifier).openSet(set);
 
+        Navigator.pop(context); // close form
+
         Navigator.push(
           context,
           MaterialPageRoute(

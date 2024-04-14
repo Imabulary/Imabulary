@@ -8,7 +8,9 @@ part of 'set_service.dart';
 
 String _$setServiceHash() => r'079a89081f4ee1c162a9f711dc2f12b4ae85de5e';
 
-/// See also [SetService].
+/// State might be `null` if user is not on the set page
+///
+/// Copied from [SetService].
 @ProviderFor(SetService)
 final setServiceProvider = NotifierProvider<SetService, Set?>.internal(
   SetService.new,

@@ -17,7 +17,7 @@ class FlashCardsList extends StatefulWidget {
 class _FlashCardsListState extends State<FlashCardsList> {
   void redirectToProfileScreen() {
     context.router.push(
-      const ProfileRoute(),
+      ProfileRoute(),
     );
   }
 

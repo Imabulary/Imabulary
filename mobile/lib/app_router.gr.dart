@@ -32,9 +32,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     ProfileRoute.name: (routeData) {
+      final args = routeData.argsAs<ProfileRouteArgs>(
+          orElse: () => const ProfileRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ProfileScreen(),
+        child: ProfileScreen(
+          key: args.key,
+          initialTabIndex: args.initialTabIndex,
+        ),
       );
     },
     WelcomeRoute.name: (routeData) {
@@ -100,16 +105,40 @@ class HomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ProfileScreen]
-class ProfileRoute extends PageRouteInfo<void> {
-  const ProfileRoute({List<PageRouteInfo>? children})
-      : super(
+class ProfileRoute extends PageRouteInfo<ProfileRouteArgs> {
+  ProfileRoute({
+    Key? key,
+    int initialTabIndex = 0,
+    List<PageRouteInfo>? children,
+  }) : super(
           ProfileRoute.name,
+          args: ProfileRouteArgs(
+            key: key,
+            initialTabIndex: initialTabIndex,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ProfileRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ProfileRouteArgs> page =
+      PageInfo<ProfileRouteArgs>(name);
+}
+
+class ProfileRouteArgs {
+  const ProfileRouteArgs({
+    this.key,
+    this.initialTabIndex = 0,
+  });
+
+  final Key? key;
+
+  final int initialTabIndex;
+
+  @override
+  String toString() {
+    return 'ProfileRouteArgs{key: $key, initialTabIndex: $initialTabIndex}';
+  }
 }
 
 /// generated route for
