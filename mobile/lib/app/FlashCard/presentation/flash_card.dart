@@ -34,7 +34,7 @@ class FlashCardScreen extends StatelessWidget {
             height: 16,
           ),
           TypeSetting(
-            'Relate phrases',
+            'Related phrases',
             style: TextStyle(
               color: colors['primary'],
             ),

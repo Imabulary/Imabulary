@@ -1,32 +1,28 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  UseGuards,
-  Req,
+  Get,
+  Param,
+  Patch,
+  Post,
   Query,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
-import { Request } from 'express';
-import { SetsService } from './sets.service';
-import { CreateSetDto, UpdateSetDto } from './dto/set.dto';
-import { AuthGuard } from 'src/guards';
 import { Users } from '@prisma/client';
-import { AppService } from 'src/app.service';
+import { Request } from 'express';
+import { AuthGuard } from 'src/guards';
 import { PaginationPipe } from 'src/pipes';
 import { ServerPagination } from 'src/shared';
+import { CreateSetDto, UpdateSetDto } from './dto/set.dto';
+import { SetsService } from './sets.service';
 
+@UseGuards(AuthGuard)
 @Controller('sets')
 export class SetsController {
-  constructor(
-    private readonly setsService: SetsService,
-    private readonly appService: AppService,
-  ) {}
+  constructor(private readonly setsService: SetsService) {}
 
-  @UseGuards(AuthGuard)
   @Post()
   create(@Req() request: Request, @Body() createSetDto: CreateSetDto) {
     const user: Users = request['user'];
@@ -34,7 +30,6 @@ export class SetsController {
     return this.setsService.create(user.id, createSetDto);
   }
 
-  @UseGuards(AuthGuard)
   @Get()
   findAll(
     @Req() request: Request,
@@ -42,16 +37,14 @@ export class SetsController {
   ) {
     const user: Users = request['user'];
 
-    return this.appService.findAll('sets', user.id, pagination);
+    return this.setsService.findAll(user.id, pagination);
   }
 
-  @UseGuards(AuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.setsService.findOne({ id });
   }
 
-  @UseGuards(AuthGuard)
   @Patch(':id')
   update(
     @Req() request: Request,
@@ -63,7 +56,6 @@ export class SetsController {
     return this.setsService.update(id, user.id, updateSetDto);
   }
 
-  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Req() request: Request, @Param('id') id: string) {
     const user: Users = request['user'];

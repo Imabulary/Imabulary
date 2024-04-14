@@ -29,16 +29,14 @@ export class AppService {
         orderBy: { createdAt: 'desc' },
         where: { userId },
       }),
-      this.prisma.cards.count(),
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.prisma[entity].count(),
     ]);
 
     return {
       result,
-      meta: {
-        pagination: {
-          total,
-        },
-      },
+      total,
     };
   }
 

@@ -7,6 +7,7 @@ import { CreateSetDto, UpdateSetDto } from './dto/set.dto';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma';
 import { SET_NOT_FOUND_ERROR_MESSAGE } from './utils';
+import { ServerPagination } from 'src/shared';
 
 @Injectable()
 export class SetsService {
@@ -20,10 +21,27 @@ export class SetsService {
     return this.prisma.sets.create({ data: { userId, name, description } });
   }
 
-  async findOne(where: Prisma.SetsWhereInput) {
+  async findAll(userId: string, pagination: ServerPagination) {
+    const [result, total] = await this.prisma.$transaction([
+      this.prisma.sets.findMany({
+        ...pagination,
+        orderBy: { createdAt: 'desc' },
+        where: { userId },
+        include: { flashcards: { select: { image_url: true } } },
+      }),
+      this.prisma.sets.count(),
+    ]);
+
+    return {
+      result,
+      total,
+    };
+  }
+
+  async findOne(where: Prisma.SetsWhereInput, throwWhenSetIsNull = true) {
     const set = await this.prisma.sets.findFirst({ where });
 
-    if (!set) {
+    if (!set && throwWhenSetIsNull) {
       throw new NotFoundException(SET_NOT_FOUND_ERROR_MESSAGE, {
         cause: `Provided condition: ${JSON.stringify(where, null, 2)}`,
       });
@@ -45,12 +63,14 @@ export class SetsService {
     });
   }
 
-  remove(id: string, userId: string) {
+  async remove(id: string, userId: string) {
+    await this.prisma.cardsOnSets.deleteMany({ where: { setId: id } });
+
     return this.prisma.sets.delete({ where: { id, userId } });
   }
 
   private async throwIfSetExists(userId: string, name: string) {
-    const set = await this.findOne({ userId, name });
+    const set = await this.findOne({ userId, name }, false);
 
     if (set) {
       throw new BadRequestException(

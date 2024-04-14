@@ -4,12 +4,13 @@ import 'package:mobile/components/dialogs.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
 
 extension AsyncValueUI on AsyncValue {
-  showLoadingDialog(BuildContext context) {
+  showLoadingDialog(BuildContext context,
+      {String message = 'Your image is being processed'}) {
     if (isLoading) {
       showDialog(
         barrierDismissible: true,
         context: context,
-        builder: (context) => Dialogs.loading('Your image is being processed'),
+        builder: (context) => Dialogs.loading(message),
       );
     }
   }
