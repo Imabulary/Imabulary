@@ -12,6 +12,7 @@ import { VisionModule } from './vision/vision.module';
 import { StorageModule } from './storage/storage.module';
 import { UsersModule } from './users/users.module';
 import { UsersService } from './users';
+import { SetsModule } from './sets/sets.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { UsersService } from './users';
     TranslatorModule,
     StorageModule,
     UsersModule,
+    SetsModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, UsersService],

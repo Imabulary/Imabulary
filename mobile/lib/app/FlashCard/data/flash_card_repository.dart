@@ -5,8 +5,6 @@ import 'package:mobile/app/FlashCard/domain/card.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:mobile/utils/api.dart';
-import 'package:mobile/utils/fp.dart';
-import 'package:mobile/utils/maybe.dart';
 import 'package:mobile/utils/request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -28,16 +26,7 @@ class FlashCardRepository {
         queryParameters: {"pagination": pagination.toJson()},
       );
 
-      final List<dynamic> result = response.data!['result'];
-      final int totalItems =
-          Maybe.fromValue(response.data!['meta']['pagination']['total'])
-              .map(identity)
-              .getOrElse(0);
-
-      return ServerResponse<List<FlashCard>>(
-        result: result.map((result) => FlashCard.fromJson(result)).toList(),
-        totalItems: totalItems,
-      );
+      return ServerResponse.extract<FlashCard>(response, FlashCard.fromJson);
     });
   }
 

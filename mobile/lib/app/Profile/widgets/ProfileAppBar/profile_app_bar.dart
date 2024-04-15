@@ -5,7 +5,9 @@ import 'package:mobile/app/Profile/widgets/ProfileAppBar/profile_app_bar_control
 import 'package:mobile/utils/maybe.dart';
 
 class ProfileAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  const ProfileAppBar({super.key});
+  const ProfileAppBar(this.tabController, {super.key});
+
+  final TabController tabController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,9 +30,16 @@ class ProfileAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ),
         )
       ],
+      bottom: TabBar(
+        tabs: const [
+          Tab(text: 'Flashcards'),
+          Tab(text: 'Sets'),
+        ],
+        controller: tabController,
+      ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.8);
 }

@@ -14,6 +14,8 @@ import '../../test_utils/test_app.dart';
 class MockProfileAppBarController extends Mock
     implements ProfileAppBarController {}
 
+class MockTabController extends Mock implements TabController {}
+
 void main() {
   setupFirebaseAuthMocks();
 
@@ -22,20 +24,22 @@ void main() {
   });
 
   final mockedAuthRepository = MockAuthRepository();
+  final mockedTabController = MockTabController();
 
   pumpProfileAppBar(WidgetTester tester) async {
     await tester.pumpWidget(ProviderScope(
       overrides: [
         authRepositoryProvider.overrideWithValue(mockedAuthRepository)
       ],
-      child: const TestApp(
+      child: TestApp(
         Scaffold(
-          appBar: ProfileAppBar(),
+          appBar: ProfileAppBar(mockedTabController),
         ),
       ),
     ));
   }
 
+  // FIXME: fix tests
   group('ProfileAppBar', () {
     testWidgets(
       'should render profile app bar with predefined profile photo',
