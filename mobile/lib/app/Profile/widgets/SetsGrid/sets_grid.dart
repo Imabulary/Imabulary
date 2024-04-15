@@ -5,6 +5,7 @@ import 'package:mobile/app/Profile/presentation/profile_screen_controller.dart';
 import 'package:mobile/app/Profile/widgets/SetsGrid/sets_grid_controller.dart';
 import 'package:mobile/app/Profile/widgets/no_sets.dart';
 import 'package:mobile/app/Profile/widgets/set_grid_item.dart';
+import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
@@ -20,6 +21,13 @@ class _SetsGridState extends ConsumerState<SetsGrid> {
 
   @override
   void initState() {
+    // FIXME: move this to onTap handler when user clicks on the SetGridItem (cover the widget into the GestureDetector, probably)
+    Future(() {
+      ref
+          .read(setsPagingControllerProvider.notifier)
+          .addController(_pagingController);
+    });
+
     final findUserSets =
         ref.read(profileScreenControllerProvider.notifier).findUserSets;
 
@@ -53,6 +61,7 @@ class _SetsGridState extends ConsumerState<SetsGrid> {
         ),
         Expanded(
           child: RefreshIndicator(
+            // TODO: Add tests for 2 states: data is presented and not presented. Example on writing tests: https://github.com/EdsonBueno/infinite_scroll_pagination/tree/master/test
             child: PagedMasonryGridView.count(
               crossAxisCount: 2,
               mainAxisSpacing: 16,

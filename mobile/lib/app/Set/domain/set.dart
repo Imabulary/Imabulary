@@ -9,14 +9,15 @@ typedef SetsFlashcards = ({String image_url});
 
 @freezed
 class Set with _$Set {
-  const factory Set(
-      {required String id,
-      required String name,
-      String? description,
-      required String userId,
-      required DateTime createdAt,
-      required DateTime updatedAt,
-      List<SetsFlashcards>? flashCards}) = _Set;
+  const factory Set({
+    required String id,
+    required String name,
+    String? description,
+    required String userId,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    List<SetsFlashcards>? flashCards,
+  }) = _Set;
 
   factory Set.fromJson(Map<String, dynamic> json) => _$SetFromJson(json);
 }

@@ -50,8 +50,9 @@ class _AppState extends ConsumerState<App> {
           bodySmall: GoogleFonts.sourceSans3(fontSize: 12),
         ),
       ),
-      routerConfig:
-          AppRouter(user: ref.watch(authStateProvider).value).config(),
+      routerConfig: AppRouter(
+        user: ref.watch(authStateProvider).value,
+      ).config(),
     );
   }
 }

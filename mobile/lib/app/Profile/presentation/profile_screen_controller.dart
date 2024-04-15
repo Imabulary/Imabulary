@@ -7,13 +7,10 @@ import 'package:mobile/app/Set/data/set_repository.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
-import 'package:mobile/utils/fp.dart';
-import 'package:mobile/utils/maybe.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'profile_screen_controller.g.dart';
 
-// TODO: refactor controller by removing riverpod state notifier instantiation as it's useless
 @riverpod
 class ProfileScreenController extends _$ProfileScreenController {
   @override
@@ -38,6 +35,7 @@ class ProfileScreenController extends _$ProfileScreenController {
     }
   }
 
+  // TODO: Add tests
   Future findUserSets(
     int page,
     PagingController<int, Set> pagingController,
@@ -60,9 +58,7 @@ class ProfileScreenController extends _$ProfileScreenController {
     PagingController pagingController,
     int page,
   ) {
-    final previouslyFetchedItemsAmount = Maybe.fromValue(
-      pagingController.itemList?.length,
-    ).map(identity).getOrElse(0) as int;
+    final previouslyFetchedItemsAmount = pagingController.itemList?.length ?? 0;
 
     final isLastPage = data.isLastPage(previouslyFetchedItemsAmount);
     final newItems = data.result;

@@ -1,3 +1,4 @@
+// TODO: add tests
 String pluralize(String word, int? count) {
   count = count ?? 0;
   final isSingular = count == 1;

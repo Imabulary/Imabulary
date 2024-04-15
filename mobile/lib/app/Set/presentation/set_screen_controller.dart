@@ -13,6 +13,7 @@ class SetScreenController extends _$SetScreenController {
     // no-op
   }
 
+  // TODO: add tests
   Future create(GlobalKey<FormBuilderState> formKey) async {
     final setRepository = ref.read(setRepositoryProvider);
 
@@ -24,11 +25,18 @@ class SetScreenController extends _$SetScreenController {
     state = await AsyncValue.guard(() => setRepository.create(setDto));
   }
 
-  Future delete(String id) async {
-    final setRepository = ref.read(setRepositoryProvider);
+  // TODO: add tests
+  Future Function(GlobalKey<FormBuilderState> formKey) edit(String id) {
+    return (GlobalKey<FormBuilderState> formKey) async {
+      final setRepository = ref.read(setRepositoryProvider);
 
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(() => setRepository.delete(id));
+      final setDto = _transform(formKey);
+
+      if (setDto == null) return;
+
+      state = const AsyncLoading();
+      state = await AsyncValue.guard(() => setRepository.update(id, setDto));
+    };
   }
 
   SetDTO? _transform(GlobalKey<FormBuilderState> formKey) {

@@ -40,6 +40,7 @@ class _FlashcardsGridState extends ConsumerState<FlashcardsGrid> {
       onRefresh: () => Future.sync(
         () => _pagingController.refresh(),
       ),
+      // TODO: add tests for the case when data is presented. Additionally, add builder for the case when data is empty
       child: PagedMasonryGridView.count(
         crossAxisCount: 2,
         mainAxisSpacing: 16,

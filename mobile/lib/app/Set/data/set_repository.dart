@@ -36,6 +36,18 @@ class SetRepository {
     });
   }
 
+  Future<Set> update(String id, SetDTO setDto) {
+    return request(() async {
+      final response = await client.patch(
+        '$endpoint/$id',
+        data: setDto.toJson(),
+      );
+      final set = response.data['result'];
+
+      return Set.fromJson(set);
+    });
+  }
+
   Future<Set> delete(String id) {
     return request(() async {
       final response = await client.delete('$endpoint/$id');

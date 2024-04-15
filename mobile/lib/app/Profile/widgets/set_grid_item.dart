@@ -16,6 +16,7 @@ class SetGridItem extends ConsumerStatefulWidget {
   ConsumerState<SetGridItem> createState() => _SetGridItemState();
 }
 
+// TODO: add tests
 class _SetGridItemState extends ConsumerState<SetGridItem> {
   _navigateToSetScreen() {
     ref.read(setServiceProvider.notifier).openSet(widget.set);
@@ -39,6 +40,7 @@ class _SetGridItemState extends ConsumerState<SetGridItem> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // TODO: add images from flashcards preview
           TypeSetting(
             widget.set.name,
             style: const TextStyle(fontWeight: FontWeight.bold),

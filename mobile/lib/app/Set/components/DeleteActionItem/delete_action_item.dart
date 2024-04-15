@@ -7,16 +7,21 @@ import 'package:mobile/app/Set/presentation/set_screen_controller.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 
+// TODO: add 4 tests, on error, on loading, on data and to verify whether the item is rendered correctly
 class DeleteActionItem extends ConsumerWidget {
   const DeleteActionItem({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final setsPagingController = ref.read(setsPagingControllerProvider);
+
     ref.listen(deleteActionItemControllerProvider, (_, state) {
       state.showErrorDialog(context, /* doPop */ true);
       state.showLoadingDialog(context, message: 'Set is being deleted...');
 
       state.whenData((value) {
+        setsPagingController?.refresh();
+
         Navigator.push(
           context,
           MaterialPageRoute(

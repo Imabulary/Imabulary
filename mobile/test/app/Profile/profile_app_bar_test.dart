@@ -39,6 +39,7 @@ void main() {
     ));
   }
 
+  // FIXME: fix tests
   group('ProfileAppBar', () {
     testWidgets(
       'should render profile app bar with predefined profile photo',

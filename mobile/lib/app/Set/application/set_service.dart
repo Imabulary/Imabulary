@@ -1,3 +1,4 @@
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 
@@ -13,5 +14,18 @@ class SetService extends _$SetService {
 
   void openSet(Set set) {
     state = set;
+  }
+}
+
+@Riverpod(keepAlive: true)
+// ignore: unsupported_provider_value
+class SetsPagingController extends _$SetsPagingController {
+  @override
+  PagingController<int, Set>? build() {
+    return null;
+  }
+
+  void addController(PagingController<int, Set> controller) {
+    state = controller;
   }
 }
