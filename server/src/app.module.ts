@@ -5,7 +5,7 @@ import { memoryStorage } from 'multer';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AssistantModule } from './assistant/assistant.module';
-import { FlashCardsModule } from './flash-cards/flash-cards.module';
+import { FlashCardsModule } from './flashcards/flashcards.module';
 import { PrismaService } from './prisma/prisma.service';
 import { TranslatorModule } from './translator/translator.module';
 import { VisionModule } from './vision/vision.module';

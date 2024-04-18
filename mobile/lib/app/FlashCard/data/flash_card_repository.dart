@@ -19,7 +19,7 @@ class FlashCardRepository {
 
   Future<ServerResponse<List<FlashCard>>> findAll(Pagination pagination) {
     return request(() async {
-      final url = '${dotenv.env['API_URL']}/flash-cards';
+      final url = '${dotenv.env['API_URL']}/flashcards';
 
       final response = await client.get(
         url,

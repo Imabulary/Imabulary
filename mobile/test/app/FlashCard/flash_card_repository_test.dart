@@ -17,7 +17,7 @@ void main() {
 
   mockGet(int statusCode, Map<String, dynamic> payload) {
     dioAdapter.onGet(
-      'https://api.com/flash-cards',
+      'https://api.com/flashcards',
       (server) => server.reply(
         statusCode,
         payload,

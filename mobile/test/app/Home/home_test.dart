@@ -38,7 +38,7 @@ void main() {
 
     mockGet(int statusCode, Map<String, dynamic> data) {
       dioAdapter.onGet(
-        'https://api.com/flash-cards',
+        'https://api.com/flashcards',
         (server) => server.reply(
           statusCode,
           data,
@@ -48,7 +48,7 @@ void main() {
 
     pumpHomeScreen(WidgetTester tester, bool error) async {
       await tester.pumpWidget(
-        TestApp(ProviderScope(
+        ProviderScope(
           overrides: [
             flashCardRepositoryProvider.overrideWith(
               (ref) => error
@@ -56,8 +56,8 @@ void main() {
                   : FakeFlashCardsRepository(),
             )
           ],
-          child: const HomeScreen(),
-        )),
+          child: const TestApp(HomeScreen()),
+        ),
       );
     }
 

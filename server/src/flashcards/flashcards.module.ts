@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { FlashCardsService } from './flash-cards.service';
-import { FlashCardsController } from './flash-cards.controller';
+import { FlashCardsService } from './flashcards.service';
+import { FlashCardsController } from './flashcards.controller';
 import { UsersService } from 'src/users';
 import { PrismaService } from 'src/prisma';
 

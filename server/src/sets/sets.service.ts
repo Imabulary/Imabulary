@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { CreateSetDto, UpdateSetDto } from './dto/set.dto';
 import { Prisma } from '@prisma/client';
-import { PrismaService } from '../prisma';
+import { PrismaService } from 'src/prisma';
 import { SET_NOT_FOUND_ERROR_MESSAGE } from './utils';
 import { ServerPagination } from 'src/shared';
 
@@ -29,7 +29,7 @@ export class SetsService {
         where: { userId },
         include: { flashcards: { select: { image_url: true } } },
       }),
-      this.prisma.sets.count(),
+      this.prisma.sets.count({ where: { userId } }),
     ]);
 
     return {
