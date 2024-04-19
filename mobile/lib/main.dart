@@ -49,6 +49,7 @@ class _AppState extends ConsumerState<App> {
           labelLarge: GoogleFonts.sourceSans3(fontSize: 14),
           bodySmall: GoogleFonts.sourceSans3(fontSize: 12),
         ),
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
       ),
       routerConfig: AppRouter(
         user: ref.watch(authStateProvider).value,

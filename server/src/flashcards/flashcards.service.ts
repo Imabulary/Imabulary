@@ -38,9 +38,9 @@ export class FlashCardsService {
       }),
     );
 
-    await Promise.all(queries);
+    const result = await Promise.all(queries);
 
-    return true;
+    return result;
   }
 
   async disorganize(disorganizeFlashcardsDto: DisorganizeFlashcardsDTO) {

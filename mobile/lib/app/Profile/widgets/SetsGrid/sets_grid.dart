@@ -54,6 +54,7 @@ class _SetsGridState extends ConsumerState<SetsGrid> {
           icon: const Icon(Icons.add),
           label: const TypeSetting(
             'Create new set',
+            color: 'primary',
           ),
         ),
         const SizedBox(

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:mobile/app/FlashCard/data/flash_card_repository.dart';
-import 'package:mobile/app/FlashCard/domain/card.dart';
+import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
+import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:mobile/app/Set/data/set_repository.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
@@ -20,14 +20,14 @@ class ProfileScreenController extends _$ProfileScreenController {
 
   Future findUserFlashcards(
     int page,
-    PagingController<int, FlashCard> pagingController,
-  ) async {
+    PagingController<int, FlashCard> pagingController, {
+    String? setId,
+  }) async {
     try {
       final flashCardsRepository = ref.watch(flashCardRepositoryProvider);
 
-      final flashCards = await flashCardsRepository.findAll(
-        Pagination(page: page, limit: 10),
-      );
+      final flashCards = await flashCardsRepository
+          .findAll(Pagination(page: page, limit: 10), setId: setId);
 
       _appendItemsToPage(flashCards, pagingController, page);
     } catch (error) {

@@ -54,6 +54,7 @@ dependencies:
   flutter_form_builder: ^9.2.1
   form_builder_validators: ^9.1.0
   timeago: ^3.6.1
+  another_flushbar: ^1.12.30
 
 dev_dependencies:
   flutter_test:

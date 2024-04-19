@@ -22,15 +22,25 @@ export class SetsService {
   }
 
   async findAll(userId: string, pagination: ServerPagination) {
-    const [result, total] = await this.prisma.$transaction([
+    const [sets, total] = await this.prisma.$transaction([
       this.prisma.sets.findMany({
         ...pagination,
         orderBy: { createdAt: 'desc' },
         where: { userId },
-        include: { flashcards: { select: { image_url: true } } },
+        include: {
+          CardsOnSets: {
+            include: { flashcard: { select: { image_url: true } } },
+          },
+        },
       }),
       this.prisma.sets.count({ where: { userId } }),
     ]);
+
+    const result = sets.map((set) => ({
+      ...set,
+      CardsOnSets: undefined,
+      flashcards: set.CardsOnSets.map((cardsOnSets) => cardsOnSets.flashcard),
+    }));
 
     return {
       result,
@@ -39,7 +49,10 @@ export class SetsService {
   }
 
   async findOne(where: Prisma.SetsWhereInput, throwWhenSetIsNull = true) {
-    const set = await this.prisma.sets.findFirst({ where });
+    const set = await this.prisma.sets.findFirst({
+      where,
+      include: { flashcards: true },
+    });
 
     if (!set && throwWhenSetIsNull) {
       throw new NotFoundException(SET_NOT_FOUND_ERROR_MESSAGE, {

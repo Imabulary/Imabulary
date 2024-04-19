@@ -16,7 +16,7 @@ class Set with _$Set {
     required String userId,
     required DateTime createdAt,
     required DateTime updatedAt,
-    List<SetsFlashcards>? flashCards,
+    List<SetsFlashcards>? flashcards,
   }) = _Set;
 
   factory Set.fromJson(Map<String, dynamic> json) => _$SetFromJson(json);
