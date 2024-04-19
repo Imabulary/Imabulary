@@ -60,8 +60,14 @@ class WelcomeScreen extends ConsumerWidget {
                   key: const Key('google-login'),
                   onPressed: handleGoogleSignIn,
                   child: state.isLoading && !state.hasError
-                      ? const TypeSetting('Logging in...')
-                      : const TypeSetting('Sign in with Google'),
+                      ? const TypeSetting(
+                          'Logging in...',
+                          color: 'primary',
+                        )
+                      : const TypeSetting(
+                          'Sign in with Google',
+                          color: 'primary',
+                        ),
                 )
               ],
             ),

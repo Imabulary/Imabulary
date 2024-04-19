@@ -21,7 +21,6 @@ class _SetsGridState extends ConsumerState<SetsGrid> {
 
   @override
   void initState() {
-    // FIXME: move this to onTap handler when user clicks on the SetGridItem (cover the widget into the GestureDetector, probably)
     Future(() {
       ref
           .read(setsPagingControllerProvider.notifier)

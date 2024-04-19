@@ -18,6 +18,7 @@ class ProfileAppBar extends ConsumerWidget implements PreferredSizeWidget {
         .getOrElse(const AssetImage('assets/images/account.png'));
 
     return AppBar(
+      automaticallyImplyLeading: false,
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 16),

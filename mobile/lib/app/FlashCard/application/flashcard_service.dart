@@ -1,3 +1,4 @@
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -13,5 +14,18 @@ class FlashcardService extends _$FlashcardService {
 
   void openFlashcard(FlashCard flashCard) {
     state = flashCard;
+  }
+}
+
+@Riverpod(keepAlive: true)
+// ignore: unsupported_provider_value
+class FlashcardPagingController extends _$FlashcardPagingController {
+  @override
+  PagingController<int, FlashCard>? build() {
+    return null;
+  }
+
+  void addController(PagingController<int, FlashCard> controller) {
+    state = controller;
   }
 }

@@ -35,7 +35,6 @@ class SetsListItem extends ConsumerWidget {
               () {
                 Navigator.pop(context);
                 Navigator.pop(context);
-                Navigator.pop(context);
 
                 Flushbar(
                   dismissDirection: FlushbarDismissDirection.HORIZONTAL,

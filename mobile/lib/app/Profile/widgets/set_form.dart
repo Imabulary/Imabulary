@@ -50,7 +50,7 @@ class SetForm extends ConsumerWidget {
     final isLoading = state.isLoading;
     final isError = state.hasError;
 
-    final handleSave = set == null ? notifier.create : notifier.edit(set!.id);
+    final handleSave = set == null ? notifier.create : notifier.edit(set!);
     final onSave = isLoading && !isError ? null : () => handleSave(_formKey);
 
     return FormBuilder(

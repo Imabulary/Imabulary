@@ -36,6 +36,8 @@ class _SetGridItemState extends ConsumerState<SetGridItem> {
 
     final setsCount = pluralize('set', widget.set.flashcards?.length);
 
+    final setFlashcards = widget.set.flashcards;
+
     return GestureDetector(
       onTap: _navigateToSetScreen,
       child: Column(
@@ -43,7 +45,9 @@ class _SetGridItemState extends ConsumerState<SetGridItem> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
-            child: Image.network(kStubImageUrl),
+            child: setFlashcards?.isNotEmpty == true
+                ? Image.network(setFlashcards![0].image_url)
+                : Image.network(kStubImageUrl),
           ),
           const SizedBox(
             height: 4,

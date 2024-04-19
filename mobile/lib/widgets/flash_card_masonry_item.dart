@@ -6,15 +6,21 @@ import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/app/Home/widgets/FlashcardListItem/flashcard_list_item_controller.dart';
 
 class FlashCardMasonryItem extends ConsumerWidget {
-  const FlashCardMasonryItem(this.flashCard, {super.key});
+  const FlashCardMasonryItem(this.flashcard, {super.key, this.onLongPress});
 
-  final FlashCard flashCard;
+  final FlashCard flashcard;
+  final void Function(String flashcardId)? onLongPress;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
+      onLongPress: onLongPress != null
+          ? () {
+              onLongPress!(flashcard.id);
+            }
+          : null,
       onTap: () {
-        ref.read(flashcardServiceProvider.notifier).openFlashcard(flashCard);
+        ref.read(flashcardServiceProvider.notifier).openFlashcard(flashcard);
         FlashCardItemController.redirectToFlashCardScreen(context);
       },
       child: Column(
@@ -22,17 +28,17 @@ class FlashCardMasonryItem extends ConsumerWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.network(flashCard.image_url),
+            child: Image.network(flashcard.image_url),
           ),
           const SizedBox(
             height: 4,
           ),
           TypeSetting(
-            flashCard.word,
+            flashcard.word,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           TypeSetting(
-            flashCard.translated_word,
+            flashcard.translated_word,
             variant: TextVariants.bodySmall,
           )
         ],

@@ -24,5 +24,23 @@ final flashcardServiceProvider =
 );
 
 typedef _$FlashcardService = Notifier<FlashCard?>;
+String _$flashcardPagingControllerHash() =>
+    r'c03d3840c9d3813e4ce44b8844fc3701ba8975b2';
+
+/// See also [FlashcardPagingController].
+@ProviderFor(FlashcardPagingController)
+final flashcardPagingControllerProvider = NotifierProvider<
+    FlashcardPagingController, PagingController<int, FlashCard>?>.internal(
+  FlashcardPagingController.new,
+  name: r'flashcardPagingControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$flashcardPagingControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$FlashcardPagingController
+    = Notifier<PagingController<int, FlashCard>?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

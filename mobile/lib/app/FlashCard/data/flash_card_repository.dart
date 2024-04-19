@@ -85,6 +85,19 @@ class FlashCardRepository {
       return response.data['result'];
     });
   }
+
+  Future<List<dynamic>> disorganize(
+    OrganizeFlashcardDTO disorganizeFlashcardDto,
+  ) {
+    return request(() async {
+      final response = await client.delete(
+        '$endpoint/disorganize',
+        data: disorganizeFlashcardDto.toJson(),
+      );
+
+      return response.data['result'];
+    });
+  }
 }
 
 @riverpod

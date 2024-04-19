@@ -20,7 +20,7 @@ SetDTO _$SetDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SetDTO {
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -33,7 +33,7 @@ abstract class $SetDTOCopyWith<$Res> {
   factory $SetDTOCopyWith(SetDTO value, $Res Function(SetDTO) then) =
       _$SetDTOCopyWithImpl<$Res, SetDTO>;
   @useResult
-  $Res call({String name, String? description});
+  $Res call({String? name, String? description});
 }
 
 /// @nodoc
@@ -49,14 +49,14 @@ class _$SetDTOCopyWithImpl<$Res, $Val extends SetDTO>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
+    Object? name = freezed,
     Object? description = freezed,
   }) {
     return _then(_value.copyWith(
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -72,7 +72,7 @@ abstract class _$$SetDTOImplCopyWith<$Res> implements $SetDTOCopyWith<$Res> {
       __$$SetDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String? description});
+  $Res call({String? name, String? description});
 }
 
 /// @nodoc
@@ -86,14 +86,14 @@ class __$$SetDTOImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
+    Object? name = freezed,
     Object? description = freezed,
   }) {
     return _then(_$SetDTOImpl(
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -105,13 +105,13 @@ class __$$SetDTOImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$SetDTOImpl implements _SetDTO {
-  const _$SetDTOImpl({required this.name, this.description});
+  const _$SetDTOImpl({this.name, this.description});
 
   factory _$SetDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$SetDTOImplFromJson(json);
 
   @override
-  final String name;
+  final String? name;
   @override
   final String? description;
 
@@ -149,13 +149,13 @@ class _$SetDTOImpl implements _SetDTO {
 }
 
 abstract class _SetDTO implements SetDTO {
-  const factory _SetDTO(
-      {required final String name, final String? description}) = _$SetDTOImpl;
+  const factory _SetDTO({final String? name, final String? description}) =
+      _$SetDTOImpl;
 
   factory _SetDTO.fromJson(Map<String, dynamic> json) = _$SetDTOImpl.fromJson;
 
   @override
-  String get name;
+  String? get name;
   @override
   String? get description;
   @override

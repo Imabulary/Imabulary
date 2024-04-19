@@ -7,7 +7,7 @@ part of 'set_dto.dart';
 // **************************************************************************
 
 _$SetDTOImpl _$$SetDTOImplFromJson(Map<String, dynamic> json) => _$SetDTOImpl(
-      name: json['name'] as String,
+      name: json['name'] as String?,
       description: json['description'] as String?,
     );
 
