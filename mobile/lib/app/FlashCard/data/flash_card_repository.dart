@@ -6,6 +6,7 @@ import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:mobile/utils/api.dart';
+import 'package:mobile/utils/query_params_builder.dart';
 import 'package:mobile/utils/request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -24,18 +25,11 @@ class FlashCardRepository {
     Pagination pagination, {
     String? setId,
   }) {
-    final queryParameters = setId == null
-        ? {
-            "pagination": pagination.toJson(),
-          }
-        : {
-            "pagination": pagination.toJson(),
-            "filters": {
-              "CardsOnSets": {
-                "some": {"setId": setId}
-              }
-            },
-          };
+    final queryParamsManager = QueryParamsManager();
+    final queryParameters = queryParamsManager.buildFlashcardsInSetQueryParams(
+      pagination,
+      setId: setId,
+    );
 
     return request(() async {
       final response = await client.get(
