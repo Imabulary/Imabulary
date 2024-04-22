@@ -4,8 +4,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/FlashCard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:mobile/app/Flashcard/presentation/flashcard.dart';
+import 'package:mobile/app/Layout/components/better_results_dialog.dart';
 import 'package:mobile/app/Layout/components/bottom_sheet_item.dart';
 import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet_controller.dart';
+import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 
 class AddBottomSheet extends ConsumerWidget {
@@ -48,9 +50,19 @@ class AddBottomSheet extends ConsumerWidget {
         BottomSheetItem(
           source: ImageSource.gallery,
           scanPhoto: scanPhoto,
-          icon: Icons.collections,
+          icon: Icons.collections_outlined,
           title: 'Choose from gallery',
         ),
+        ListTile(
+          title: const TypeSetting('How to get better results?'),
+          leading: const Icon(Icons.help_outline),
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) => const BetterResultsDialog(),
+            );
+          },
+        )
       ],
     );
   }
