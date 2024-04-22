@@ -42,7 +42,6 @@ class SetsListItem extends ConsumerWidget {
                   message: 'Flashcard is successfully organized!',
                   messageText: const TypeSetting(
                     'Flashcard is successfully organized!',
-                    variant: TextVariants.headlineMedium,
                   ),
                   duration: const Duration(seconds: 5),
                   flushbarPosition: FlushbarPosition.TOP,

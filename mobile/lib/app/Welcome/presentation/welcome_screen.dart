@@ -43,6 +43,7 @@ class WelcomeScreen extends ConsumerWidget {
                 const TypeSetting(
                   'Welcome to Imabulary',
                   variant: TextVariants.titleLarge,
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(

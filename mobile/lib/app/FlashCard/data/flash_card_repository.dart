@@ -53,7 +53,6 @@ class FlashCardRepository {
 
   Future<FlashCard> scanPhoto(XFile image) {
     return request(() async {
-      final uploadUrl = '${dotenv.env['API_URL']}/upload';
       final file = await MultipartFile.fromFile(image.path);
 
       final data = FormData.fromMap({
@@ -61,7 +60,7 @@ class FlashCardRepository {
       });
 
       final response = await client.post(
-        uploadUrl,
+        '$endpoint/scan',
         data: data,
       );
 

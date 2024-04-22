@@ -26,8 +26,10 @@ class ProfileScreenController extends _$ProfileScreenController {
     try {
       final flashCardsRepository = ref.watch(flashCardRepositoryProvider);
 
-      final flashCards = await flashCardsRepository
-          .findAll(Pagination(page: page, limit: 10), setId: setId);
+      final flashCards = await flashCardsRepository.findAll(
+        Pagination(page: page),
+        setId: setId,
+      );
 
       _appendItemsToPage(flashCards, pagingController, page);
     } catch (error) {
@@ -44,7 +46,7 @@ class ProfileScreenController extends _$ProfileScreenController {
       final setsRepository = ref.watch(setRepositoryProvider);
 
       final sets = await setsRepository.findAll(
-        Pagination(page: page, limit: 10),
+        Pagination(page: page),
       );
 
       _appendItemsToPage(sets, pagingController, page);

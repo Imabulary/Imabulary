@@ -2,17 +2,13 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AssistantModule } from './assistant/assistant.module';
 import { FlashCardsModule } from './flashcards/flashcards.module';
-import { PrismaService } from './prisma/prisma.service';
-import { TranslatorModule } from './translator/translator.module';
-import { VisionModule } from './vision/vision.module';
-import { StorageModule } from './storage/storage.module';
-import { UsersModule } from './users/users.module';
-import { UsersService } from './users';
 import { SetsModule } from './sets/sets.module';
+import { StorageModule } from './storage/storage.module';
+import { TranslatorModule } from './translator/translator.module';
+import { UsersModule } from './users/users.module';
+import { VisionModule } from './vision/vision.module';
 
 @Module({
   imports: [
@@ -28,7 +24,5 @@ import { SetsModule } from './sets/sets.module';
     UsersModule,
     SetsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, PrismaService, UsersService],
 })
 export class AppModule {}

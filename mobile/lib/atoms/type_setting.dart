@@ -36,15 +36,11 @@ class TypeSetting extends Text {
       TextVariants.bodySmall: Theme.of(context).textTheme.bodySmall,
     };
 
-    final colorVariants = {
-      'primary': colors['primary'],
-    };
-
     return Text(
       text,
       textAlign: textAlign ?? TextAlign.left,
       style: variants[variant]!.copyWith(
-        color: style?.color ?? colorVariants[color] ?? Colors.white,
+        color: style?.color ?? colors[color] ?? Colors.white,
         fontWeight: style?.fontWeight,
         fontFamily: GoogleFonts.sourceSans3().fontFamily,
       ),
