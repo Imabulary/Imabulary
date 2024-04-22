@@ -21,6 +21,10 @@ class BottomSheetItem extends StatelessWidget {
     return ListTile(
       leading: Icon(icon),
       title: TypeSetting(title),
+      subtitle: const TypeSetting(
+        'Sometimes Imabulary may not be 100% accurate.',
+        variant: TextVariants.bodySmall,
+      ),
       onTap: () {
         scanPhoto != null ? scanPhoto!(source) : null;
       },
