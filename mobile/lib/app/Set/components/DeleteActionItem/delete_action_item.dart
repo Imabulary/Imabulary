@@ -38,7 +38,7 @@ class DeleteActionItem extends ConsumerWidget {
 
     return ListTile(
       onTap: state.isLoading ? null : () => delete(set!.id),
-      leading: const Icon(Icons.delete_forever_outlined),
+      leading: const Icon(Icons.delete_forever),
       title: const TypeSetting('Delete'),
       subtitle: const TypeSetting(
         'The set will be permanently deleted. Flashcards will remain.',

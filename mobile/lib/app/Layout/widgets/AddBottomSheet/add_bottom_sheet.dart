@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/FlashCard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:mobile/app/Flashcard/presentation/flashcard.dart';
+import 'package:mobile/app/Layout/components/better_results_dialog.dart';
 import 'package:mobile/app/Layout/components/bottom_sheet_item.dart';
 import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet_controller.dart';
 import 'package:mobile/atoms/type_setting.dart';
@@ -58,17 +59,7 @@ class AddBottomSheet extends ConsumerWidget {
           onTap: () {
             showDialog(
               context: context,
-              builder: (context) => const AlertDialog(
-                title: TypeSetting(
-                  'Tips on how to scan objects like a pro',
-                  variant: TextVariants.headlineLarge,
-                ),
-                content: TypeSetting(
-                  """1. Take a picture of one object at a time.
-2. Make sure there's enough light before taking a photo.
-3. Do not upload any private or explicit content.""",
-                ),
-              ),
+              builder: (context) => const BetterResultsDialog(),
             );
           },
         )

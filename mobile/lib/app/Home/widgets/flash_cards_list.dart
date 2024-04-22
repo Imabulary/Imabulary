@@ -1,9 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/app/Flashcard/domain/card.dart';
-import 'package:mobile/app_router.dart';
-import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/app/Home/widgets/FlashcardListItem/flashcard_list_item.dart';
+import 'package:mobile/app/Profile/presentation/profile.dart';
+import 'package:mobile/atoms/type_setting.dart';
 
 class FlashCardsList extends StatefulWidget {
   const FlashCardsList({super.key, required this.flashCards});
@@ -16,8 +15,11 @@ class FlashCardsList extends StatefulWidget {
 
 class _FlashCardsListState extends State<FlashCardsList> {
   void redirectToProfileScreen() {
-    context.router.push(
-      ProfileRoute(),
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ProfileScreen(),
+      ),
     );
   }
 
