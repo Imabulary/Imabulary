@@ -4,7 +4,7 @@ String pluralize(String word, int? count) {
   final isSingular = count == 1;
 
   if (isSingular) {
-    return word;
+    return '1 $word';
   }
 
   // If the word ends with 'y' preceded by a consonant, change 'y' to 'ies'

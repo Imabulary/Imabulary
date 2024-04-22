@@ -7,3 +7,9 @@ export type ServerPagination = {
   skip: number;
   take: number;
 };
+
+export type Filters = {
+  [key: string]: {
+    equals: string;
+  };
+};

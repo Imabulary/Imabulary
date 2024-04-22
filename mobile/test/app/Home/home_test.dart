@@ -5,8 +5,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'package:mobile/app/FlashCard/data/flash_card_repository.dart';
-import 'package:mobile/app/FlashCard/domain/card.dart';
+import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
+import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:mobile/app/Home/presentation/home.dart';
 import 'package:mobile/app/Home/widgets/flash_cards_list.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
@@ -19,7 +19,10 @@ import '../../test_utils/test_app.dart';
 
 class FakeFlashCardsRepository extends MockFlashCardRepository {
   @override
-  Future<ServerResponse<List<FlashCard>>> findAll(Pagination pagination) {
+  Future<ServerResponse<List<FlashCard>>> findAll(
+    Pagination pagination, {
+    String? setId,
+  }) {
     return Future.value(ServerResponse(result: [flashCardFixture]));
   }
 }
@@ -38,7 +41,7 @@ void main() {
 
     mockGet(int statusCode, Map<String, dynamic> data) {
       dioAdapter.onGet(
-        'https://api.com/flash-cards',
+        'https://api.com/flashcards',
         (server) => server.reply(
           statusCode,
           data,
@@ -48,7 +51,7 @@ void main() {
 
     pumpHomeScreen(WidgetTester tester, bool error) async {
       await tester.pumpWidget(
-        TestApp(ProviderScope(
+        ProviderScope(
           overrides: [
             flashCardRepositoryProvider.overrideWith(
               (ref) => error
@@ -56,8 +59,8 @@ void main() {
                   : FakeFlashCardsRepository(),
             )
           ],
-          child: const HomeScreen(),
-        )),
+          child: const TestApp(HomeScreen()),
+        ),
       );
     }
 

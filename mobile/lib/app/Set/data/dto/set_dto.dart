@@ -6,7 +6,7 @@ part 'set_dto.g.dart';
 @freezed
 class SetDTO with _$SetDTO {
   const factory SetDTO({
-    required String name,
+    String? name,
     String? description,
   }) = _SetDTO;
 

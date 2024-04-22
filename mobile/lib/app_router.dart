@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/app/FlashCard/domain/card.dart';
-import 'package:mobile/app/FlashCard/presentation/flash_card.dart';
+import 'package:mobile/app/Flashcard/presentation/flashcard.dart';
 import 'package:mobile/app/Home/presentation/home.dart';
 import 'package:mobile/app/Profile/presentation/profile.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen.dart';
@@ -29,6 +28,6 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
         AutoRoute(page: HomeRoute.page, initial: true),
         AutoRoute(page: ProfileRoute.page),
         AutoRoute(page: WelcomeRoute.page),
-        AutoRoute(page: FlashCardRoute.page)
+        AutoRoute(page: FlashcardRoute.page)
       ];
 }

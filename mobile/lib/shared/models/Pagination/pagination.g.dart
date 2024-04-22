@@ -8,8 +8,8 @@ part of 'pagination.dart';
 
 _$PaginationImpl _$$PaginationImplFromJson(Map<String, dynamic> json) =>
     _$PaginationImpl(
-      page: json['page'] as int?,
-      limit: json['limit'] as int?,
+      page: json['page'] as int? ?? 1,
+      limit: json['limit'] as int? ?? 10,
     );
 
 Map<String, dynamic> _$$PaginationImplToJson(_$PaginationImpl instance) =>

@@ -13,7 +13,6 @@ class SetAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final set = ref.watch(setServiceProvider);
 
     return AppBar(
-      backgroundColor: Colors.black,
       title: TypeSetting(
         set!.name,
         variant: TextVariants.headlineMedium,

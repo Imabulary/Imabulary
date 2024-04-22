@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SetsService } from '../sets.service';
-import { PrismaService } from '../../prisma';
+import { PrismaService } from 'src/prisma';
 import { faker } from '@faker-js/faker';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { SET_NOT_FOUND_ERROR_MESSAGE } from '../utils';

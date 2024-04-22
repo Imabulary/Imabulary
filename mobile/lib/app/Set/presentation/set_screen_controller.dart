@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobile/app/Set/data/dto/set_dto.dart';
 import 'package:mobile/app/Set/data/set_repository.dart';
+import 'package:mobile/app/Set/domain/set.dart';
+import 'package:mobile/utils/fp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'set_screen_controller.g.dart';
@@ -26,24 +28,33 @@ class SetScreenController extends _$SetScreenController {
   }
 
   // TODO: add tests
-  Future Function(GlobalKey<FormBuilderState> formKey) edit(String id) {
+  Future Function(GlobalKey<FormBuilderState> formKey) edit(Set set) {
     return (GlobalKey<FormBuilderState> formKey) async {
       final setRepository = ref.read(setRepositoryProvider);
 
-      final setDto = _transform(formKey);
+      final setDto = _transform(formKey, set: set);
 
       if (setDto == null) return;
 
       state = const AsyncLoading();
-      state = await AsyncValue.guard(() => setRepository.update(id, setDto));
+      state = await AsyncValue.guard(
+        () => setRepository.update(set.id, setDto),
+      );
     };
   }
 
-  SetDTO? _transform(GlobalKey<FormBuilderState> formKey) {
+  SetDTO? _transform(GlobalKey<FormBuilderState> formKey, {Set? set}) {
     final formState = formKey.currentState;
 
     if (formState != null && formState.saveAndValidate()) {
-      return SetDTO.fromJson(formState.value);
+      final formValue = set != null
+          ? diff(
+              set.toJson(),
+              formState.value,
+            )
+          : formState.value;
+
+      return SetDTO.fromJson(formValue);
     }
 
     return null;

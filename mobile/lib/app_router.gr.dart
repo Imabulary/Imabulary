@@ -15,14 +15,10 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    FlashCardRoute.name: (routeData) {
-      final args = routeData.argsAs<FlashCardRouteArgs>();
+    FlashcardRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: FlashCardScreen(
-          key: args.key,
-          flashCard: args.flashCard,
-        ),
+        child: const FlashcardScreen(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -52,41 +48,17 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
-/// [FlashCardScreen]
-class FlashCardRoute extends PageRouteInfo<FlashCardRouteArgs> {
-  FlashCardRoute({
-    Key? key,
-    required FlashCard flashCard,
-    List<PageRouteInfo>? children,
-  }) : super(
-          FlashCardRoute.name,
-          args: FlashCardRouteArgs(
-            key: key,
-            flashCard: flashCard,
-          ),
+/// [FlashcardScreen]
+class FlashcardRoute extends PageRouteInfo<void> {
+  const FlashcardRoute({List<PageRouteInfo>? children})
+      : super(
+          FlashcardRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'FlashCardRoute';
+  static const String name = 'FlashcardRoute';
 
-  static const PageInfo<FlashCardRouteArgs> page =
-      PageInfo<FlashCardRouteArgs>(name);
-}
-
-class FlashCardRouteArgs {
-  const FlashCardRouteArgs({
-    this.key,
-    required this.flashCard,
-  });
-
-  final Key? key;
-
-  final FlashCard flashCard;
-
-  @override
-  String toString() {
-    return 'FlashCardRouteArgs{key: $key, flashCard: $flashCard}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

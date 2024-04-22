@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/app/FlashCard/domain/card.dart';
+import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/widgets/flash_card_list_item.dart';
+import 'package:mobile/app/Home/widgets/FlashcardListItem/flashcard_list_item.dart';
 
 class FlashCardsList extends StatefulWidget {
   const FlashCardsList({super.key, required this.flashCards});
@@ -46,7 +46,10 @@ class _FlashCardsListState extends State<FlashCardsList> {
               padding: const EdgeInsets.only(bottom: 24),
               child: ElevatedButton(
                 onPressed: redirectToProfileScreen,
-                child: const TypeSetting('View all'),
+                child: const TypeSetting(
+                  'View all',
+                  color: 'primary',
+                ),
               ),
             ),
           ),

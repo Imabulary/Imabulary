@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile/app/FlashCard/domain/card.dart';
+import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
+import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:mobile/utils/api.dart';
+import 'package:mobile/utils/query_params_builder.dart';
 import 'package:mobile/utils/request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -17,13 +19,22 @@ class FlashCardRepository {
 
   final Dio client;
 
-  Future<ServerResponse<List<FlashCard>>> findAll(Pagination pagination) {
-    return request(() async {
-      final url = '${dotenv.env['API_URL']}/flash-cards';
+  String get endpoint => '${dotenv.env['API_URL']}/flashcards';
 
+  Future<ServerResponse<List<FlashCard>>> findAll(
+    Pagination pagination, {
+    String? setId,
+  }) {
+    final queryParamsManager = QueryParamsManager();
+    final queryParameters = queryParamsManager.buildFlashcardsInSetQueryParams(
+      pagination,
+      setId: setId,
+    );
+
+    return request(() async {
       final response = await client.get(
-        url,
-        queryParameters: {"pagination": pagination.toJson()},
+        endpoint,
+        queryParameters: queryParameters,
       );
 
       return ServerResponse.extract<FlashCard>(response, FlashCard.fromJson);
@@ -42,7 +53,6 @@ class FlashCardRepository {
 
   Future<FlashCard> scanPhoto(XFile image) {
     return request(() async {
-      final uploadUrl = '${dotenv.env['API_URL']}/upload';
       final file = await MultipartFile.fromFile(image.path);
 
       final data = FormData.fromMap({
@@ -50,11 +60,35 @@ class FlashCardRepository {
       });
 
       final response = await client.post(
-        uploadUrl,
+        '$endpoint/scan',
         data: data,
       );
 
       return FlashCard.fromJson(response.data!['result']);
+    });
+  }
+
+  Future<List<dynamic>> organize(OrganizeFlashcardDTO organizeFlashcardDto) {
+    return request(() async {
+      final response = await client.put(
+        '$endpoint/organize',
+        data: organizeFlashcardDto.toJson(),
+      );
+
+      return response.data['result'];
+    });
+  }
+
+  Future<List<dynamic>> disorganize(
+    OrganizeFlashcardDTO disorganizeFlashcardDto,
+  ) {
+    return request(() async {
+      final response = await client.delete(
+        '$endpoint/disorganize',
+        data: disorganizeFlashcardDto.toJson(),
+      );
+
+      return response.data['result'];
     });
   }
 }

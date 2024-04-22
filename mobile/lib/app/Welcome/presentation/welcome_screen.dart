@@ -43,6 +43,7 @@ class WelcomeScreen extends ConsumerWidget {
                 const TypeSetting(
                   'Welcome to Imabulary',
                   variant: TextVariants.titleLarge,
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
@@ -60,8 +61,14 @@ class WelcomeScreen extends ConsumerWidget {
                   key: const Key('google-login'),
                   onPressed: handleGoogleSignIn,
                   child: state.isLoading && !state.hasError
-                      ? const TypeSetting('Logging in...')
-                      : const TypeSetting('Sign in with Google'),
+                      ? const TypeSetting(
+                          'Logging in...',
+                          color: 'primary',
+                        )
+                      : const TypeSetting(
+                          'Sign in with Google',
+                          color: 'primary',
+                        ),
                 )
               ],
             ),

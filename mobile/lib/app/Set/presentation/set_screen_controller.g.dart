@@ -7,7 +7,7 @@ part of 'set_screen_controller.dart';
 // **************************************************************************
 
 String _$setScreenControllerHash() =>
-    r'f5a35d3d28c1cd2bb49b1b4a7bee71a65d4b83c1';
+    r'ee4d80f014d3c6015e28a78af9e8c764ddc69b7e';
 
 /// See also [SetScreenController].
 @ProviderFor(SetScreenController)

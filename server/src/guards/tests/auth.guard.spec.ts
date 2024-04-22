@@ -1,8 +1,8 @@
 import { ExecutionContext } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import admin from 'firebase-admin';
-import { PrismaService } from '../../prisma';
-import { UsersService } from '../../users';
+import { PrismaService } from 'src/prisma';
+import { UsersService } from 'src/users';
 import { AuthGuard } from '../auth.guard';
 import {
   UNAUTHORIZED_ERROR_MESSAGE,

@@ -26,7 +26,7 @@ mixin _$Set {
   String get userId => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  List<({String image_url})>? get flashCards =>
+  List<({String image_url})>? get flashcards =>
       throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ abstract class $SetCopyWith<$Res> {
       String userId,
       DateTime createdAt,
       DateTime updatedAt,
-      List<({String image_url})>? flashCards});
+      List<({String image_url})>? flashcards});
 }
 
 /// @nodoc
@@ -67,7 +67,7 @@ class _$SetCopyWithImpl<$Res, $Val extends Set> implements $SetCopyWith<$Res> {
     Object? userId = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? flashCards = freezed,
+    Object? flashcards = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -94,9 +94,9 @@ class _$SetCopyWithImpl<$Res, $Val extends Set> implements $SetCopyWith<$Res> {
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      flashCards: freezed == flashCards
-          ? _value.flashCards
-          : flashCards // ignore: cast_nullable_to_non_nullable
+      flashcards: freezed == flashcards
+          ? _value.flashcards
+          : flashcards // ignore: cast_nullable_to_non_nullable
               as List<({String image_url})>?,
     ) as $Val);
   }
@@ -115,7 +115,7 @@ abstract class _$$SetImplCopyWith<$Res> implements $SetCopyWith<$Res> {
       String userId,
       DateTime createdAt,
       DateTime updatedAt,
-      List<({String image_url})>? flashCards});
+      List<({String image_url})>? flashcards});
 }
 
 /// @nodoc
@@ -133,7 +133,7 @@ class __$$SetImplCopyWithImpl<$Res> extends _$SetCopyWithImpl<$Res, _$SetImpl>
     Object? userId = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? flashCards = freezed,
+    Object? flashcards = freezed,
   }) {
     return _then(_$SetImpl(
       id: null == id
@@ -160,9 +160,9 @@ class __$$SetImplCopyWithImpl<$Res> extends _$SetCopyWithImpl<$Res, _$SetImpl>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      flashCards: freezed == flashCards
-          ? _value._flashCards
-          : flashCards // ignore: cast_nullable_to_non_nullable
+      flashcards: freezed == flashcards
+          ? _value._flashcards
+          : flashcards // ignore: cast_nullable_to_non_nullable
               as List<({String image_url})>?,
     ));
   }
@@ -178,8 +178,8 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
       required this.userId,
       required this.createdAt,
       required this.updatedAt,
-      final List<({String image_url})>? flashCards})
-      : _flashCards = flashCards;
+      final List<({String image_url})>? flashcards})
+      : _flashcards = flashcards;
 
   factory _$SetImpl.fromJson(Map<String, dynamic> json) =>
       _$$SetImplFromJson(json);
@@ -196,19 +196,19 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
   final DateTime createdAt;
   @override
   final DateTime updatedAt;
-  final List<({String image_url})>? _flashCards;
+  final List<({String image_url})>? _flashcards;
   @override
-  List<({String image_url})>? get flashCards {
-    final value = _flashCards;
+  List<({String image_url})>? get flashcards {
+    final value = _flashcards;
     if (value == null) return null;
-    if (_flashCards is EqualUnmodifiableListView) return _flashCards;
+    if (_flashcards is EqualUnmodifiableListView) return _flashcards;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Set(id: $id, name: $name, description: $description, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt, flashCards: $flashCards)';
+    return 'Set(id: $id, name: $name, description: $description, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt, flashcards: $flashcards)';
   }
 
   @override
@@ -222,7 +222,7 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
       ..add(DiagnosticsProperty('userId', userId))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt))
-      ..add(DiagnosticsProperty('flashCards', flashCards));
+      ..add(DiagnosticsProperty('flashcards', flashcards));
   }
 
   @override
@@ -240,13 +240,13 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             const DeepCollectionEquality()
-                .equals(other._flashCards, _flashCards));
+                .equals(other._flashcards, _flashcards));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, description, userId,
-      createdAt, updatedAt, const DeepCollectionEquality().hash(_flashCards));
+      createdAt, updatedAt, const DeepCollectionEquality().hash(_flashcards));
 
   @JsonKey(ignore: true)
   @override
@@ -270,7 +270,7 @@ abstract class _Set implements Set {
       required final String userId,
       required final DateTime createdAt,
       required final DateTime updatedAt,
-      final List<({String image_url})>? flashCards}) = _$SetImpl;
+      final List<({String image_url})>? flashcards}) = _$SetImpl;
 
   factory _Set.fromJson(Map<String, dynamic> json) = _$SetImpl.fromJson;
 
@@ -287,7 +287,7 @@ abstract class _Set implements Set {
   @override
   DateTime get updatedAt;
   @override
-  List<({String image_url})>? get flashCards;
+  List<({String image_url})>? get flashcards;
   @override
   @JsonKey(ignore: true)
   _$$SetImplCopyWith<_$SetImpl> get copyWith =>

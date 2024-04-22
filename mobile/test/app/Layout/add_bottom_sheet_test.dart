@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile/app/FlashCard/data/flash_card_repository.dart';
+import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
 import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
 import 'package:mocktail/mocktail.dart';
@@ -17,16 +17,16 @@ void main() {
   pumpBottomSheet(WidgetTester tester) async {
     final flashCardRepository = MockFlashCardRepository();
 
-    await tester.pumpWidget(TestApp(
-      ProviderScope(
-        overrides: [
-          flashCardRepositoryProvider.overrideWithValue(
-            flashCardRepository,
-          )
-        ],
-        child: const AddBottomSheet(),
+    await tester.pumpWidget(ProviderScope(
+      overrides: [
+        flashCardRepositoryProvider.overrideWithValue(
+          flashCardRepository,
+        )
+      ],
+      child: const TestApp(
+        AddBottomSheet(),
+        isScaffolded: true,
       ),
-      isScaffolded: true,
     ));
 
     return flashCardRepository;
