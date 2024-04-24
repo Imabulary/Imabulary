@@ -179,3 +179,174 @@ abstract class _OrganizeFlashcardDTO implements OrganizeFlashcardDTO {
   _$$OrganizeFlashcardDTOImplCopyWith<_$OrganizeFlashcardDTOImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+FindAllFlashcardsDTO _$FindAllFlashcardsDTOFromJson(Map<String, dynamic> json) {
+  return _FindAllFlashcardsDTO.fromJson(json);
+}
+
+/// @nodoc
+mixin _$FindAllFlashcardsDTO {
+  Pagination get pagination => throw _privateConstructorUsedError;
+  String? get setId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $FindAllFlashcardsDTOCopyWith<FindAllFlashcardsDTO> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $FindAllFlashcardsDTOCopyWith<$Res> {
+  factory $FindAllFlashcardsDTOCopyWith(FindAllFlashcardsDTO value,
+          $Res Function(FindAllFlashcardsDTO) then) =
+      _$FindAllFlashcardsDTOCopyWithImpl<$Res, FindAllFlashcardsDTO>;
+  @useResult
+  $Res call({Pagination pagination, String? setId});
+
+  $PaginationCopyWith<$Res> get pagination;
+}
+
+/// @nodoc
+class _$FindAllFlashcardsDTOCopyWithImpl<$Res,
+        $Val extends FindAllFlashcardsDTO>
+    implements $FindAllFlashcardsDTOCopyWith<$Res> {
+  _$FindAllFlashcardsDTOCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pagination = null,
+    Object? setId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      pagination: null == pagination
+          ? _value.pagination
+          : pagination // ignore: cast_nullable_to_non_nullable
+              as Pagination,
+      setId: freezed == setId
+          ? _value.setId
+          : setId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PaginationCopyWith<$Res> get pagination {
+    return $PaginationCopyWith<$Res>(_value.pagination, (value) {
+      return _then(_value.copyWith(pagination: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$FindAllFlashcardsDTOImplCopyWith<$Res>
+    implements $FindAllFlashcardsDTOCopyWith<$Res> {
+  factory _$$FindAllFlashcardsDTOImplCopyWith(_$FindAllFlashcardsDTOImpl value,
+          $Res Function(_$FindAllFlashcardsDTOImpl) then) =
+      __$$FindAllFlashcardsDTOImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Pagination pagination, String? setId});
+
+  @override
+  $PaginationCopyWith<$Res> get pagination;
+}
+
+/// @nodoc
+class __$$FindAllFlashcardsDTOImplCopyWithImpl<$Res>
+    extends _$FindAllFlashcardsDTOCopyWithImpl<$Res, _$FindAllFlashcardsDTOImpl>
+    implements _$$FindAllFlashcardsDTOImplCopyWith<$Res> {
+  __$$FindAllFlashcardsDTOImplCopyWithImpl(_$FindAllFlashcardsDTOImpl _value,
+      $Res Function(_$FindAllFlashcardsDTOImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pagination = null,
+    Object? setId = freezed,
+  }) {
+    return _then(_$FindAllFlashcardsDTOImpl(
+      pagination: null == pagination
+          ? _value.pagination
+          : pagination // ignore: cast_nullable_to_non_nullable
+              as Pagination,
+      setId: freezed == setId
+          ? _value.setId
+          : setId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$FindAllFlashcardsDTOImpl implements _FindAllFlashcardsDTO {
+  const _$FindAllFlashcardsDTOImpl({required this.pagination, this.setId});
+
+  factory _$FindAllFlashcardsDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FindAllFlashcardsDTOImplFromJson(json);
+
+  @override
+  final Pagination pagination;
+  @override
+  final String? setId;
+
+  @override
+  String toString() {
+    return 'FindAllFlashcardsDTO(pagination: $pagination, setId: $setId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FindAllFlashcardsDTOImpl &&
+            (identical(other.pagination, pagination) ||
+                other.pagination == pagination) &&
+            (identical(other.setId, setId) || other.setId == setId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, pagination, setId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FindAllFlashcardsDTOImplCopyWith<_$FindAllFlashcardsDTOImpl>
+      get copyWith =>
+          __$$FindAllFlashcardsDTOImplCopyWithImpl<_$FindAllFlashcardsDTOImpl>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$FindAllFlashcardsDTOImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _FindAllFlashcardsDTO implements FindAllFlashcardsDTO {
+  const factory _FindAllFlashcardsDTO(
+      {required final Pagination pagination,
+      final String? setId}) = _$FindAllFlashcardsDTOImpl;
+
+  factory _FindAllFlashcardsDTO.fromJson(Map<String, dynamic> json) =
+      _$FindAllFlashcardsDTOImpl.fromJson;
+
+  @override
+  Pagination get pagination;
+  @override
+  String? get setId;
+  @override
+  @JsonKey(ignore: true)
+  _$$FindAllFlashcardsDTOImplCopyWith<_$FindAllFlashcardsDTOImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}

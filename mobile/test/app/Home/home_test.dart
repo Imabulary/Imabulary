@@ -5,11 +5,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
+import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
 import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:mobile/app/Home/presentation/home.dart';
 import 'package:mobile/app/Home/widgets/flash_cards_list.dart';
-import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
@@ -20,9 +20,8 @@ import '../../test_utils/test_app.dart';
 class FakeFlashCardsRepository extends MockFlashCardRepository {
   @override
   Future<ServerResponse<List<FlashCard>>> findAll(
-    Pagination pagination, {
-    String? setId,
-  }) {
+    FindAllFlashcardsDTO findAllFlashcardsDTO,
+  ) {
     return Future.value(ServerResponse(result: [flashCardFixture]));
   }
 }

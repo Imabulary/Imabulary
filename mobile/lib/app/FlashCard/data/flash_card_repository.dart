@@ -3,7 +3,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Flashcard/domain/card.dart';
-import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:mobile/utils/api.dart';
 import 'package:mobile/utils/query_params_builder.dart';
@@ -22,13 +21,12 @@ class FlashCardRepository {
   String get endpoint => '${dotenv.env['API_URL']}/flashcards';
 
   Future<ServerResponse<List<FlashCard>>> findAll(
-    Pagination pagination, {
-    String? setId,
-  }) {
+    FindAllFlashcardsDTO findAllFlashcardsDTO,
+  ) {
     final queryParamsManager = QueryParamsManager();
     final queryParameters = queryParamsManager.buildFlashcardsInSetQueryParams(
-      pagination,
-      setId: setId,
+      findAllFlashcardsDTO.pagination,
+      setId: findAllFlashcardsDTO.setId,
     );
 
     return request(() async {

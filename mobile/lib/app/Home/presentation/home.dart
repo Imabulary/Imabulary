@@ -2,10 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
+import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Home/widgets/flash_cards_list.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/shared/models/Pagination/pagination.dart';
 
 @RoutePage()
 class HomeScreen extends ConsumerWidget {
@@ -13,7 +15,9 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final flashCards = ref.watch(homeFlashCardsProvider);
+    final flashcards = ref.watch(findAllFlashcardsProvider(
+      const FindAllFlashcardsDTO(pagination: Pagination()),
+    ));
 
     return Layout(
       SingleChildScrollView(
@@ -27,7 +31,7 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(
               height: 12,
             ),
-            flashCards.when(
+            flashcards.when(
               skipLoadingOnRefresh: false,
               data: (flashCards) => FlashCardsList(
                 flashCards: flashCards.result,

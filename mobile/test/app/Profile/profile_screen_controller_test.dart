@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
 import 'package:mobile/app/Profile/presentation/profile_screen_controller.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
@@ -45,9 +46,9 @@ void main() {
     );
 
     when(
-      () => flashCardRepository.findAll(
-        const Pagination(page: 1, limit: 10),
-      ),
+      () => flashCardRepository.findAll(const FindAllFlashcardsDTO(
+        pagination: Pagination(),
+      )),
     ).thenAnswer(
       (_) async => serverResponseFixture,
     );

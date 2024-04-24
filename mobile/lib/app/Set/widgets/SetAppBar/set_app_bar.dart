@@ -18,6 +18,13 @@ class SetAppBar extends ConsumerWidget implements PreferredSizeWidget {
         variant: TextVariants.headlineMedium,
       ),
       actions: [
+        ElevatedButton(
+          onPressed: SetAppBarController.startQuiz(context, set.flashcards),
+          child: const TypeSetting(
+            'Learn',
+            color: 'primary',
+          ),
+        ),
         IconButton(
           onPressed: SetAppBarController.showActionsBottomSheet(context),
           icon: const Icon(Icons.more_horiz),
