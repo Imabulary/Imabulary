@@ -18,7 +18,7 @@ class FlashCardListItem extends ConsumerWidget {
         ref.read(flashcardServiceProvider.notifier).openFlashcard(flashCard);
         FlashCardItemController.redirectToFlashCardScreen(context);
       },
-      tileColor: colors['muted'],
+      tileColor: AppColors.muted,
       image: flashCard.image_url,
       label: flashCard.word,
       sublabel: flashCard.translated_word,

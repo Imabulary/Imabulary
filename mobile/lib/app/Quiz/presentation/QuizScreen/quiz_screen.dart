@@ -20,6 +20,8 @@ class QuizScreen extends ConsumerStatefulWidget {
   ConsumerState<QuizScreen> createState() => _QuizScreenState();
 }
 
+// FIXME: move the state and related methods to the data folder of the domain
+// Comunicate with it using riverpod
 class _QuizScreenState extends ConsumerState<QuizScreen> {
   final List<Result> _results = [];
   int _currentFlashcardIndex = 0;

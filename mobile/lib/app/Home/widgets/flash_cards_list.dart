@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:mobile/app/Home/widgets/FlashcardListItem/flashcard_list_item.dart';
 import 'package:mobile/app/Profile/presentation/profile.dart';
+import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
 class FlashCardsList extends StatefulWidget {
@@ -50,7 +51,7 @@ class _FlashCardsListState extends State<FlashCardsList> {
                 onPressed: redirectToProfileScreen,
                 child: const TypeSetting(
                   'View all',
-                  color: 'primary',
+                  style: TextStyle(color: AppColors.primary),
                 ),
               ),
             ),

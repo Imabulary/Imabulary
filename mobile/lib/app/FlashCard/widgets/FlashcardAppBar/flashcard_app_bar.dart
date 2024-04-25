@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/app/Flashcard/widgets/FlashcardAppBar/flashcard_app_bar_controller.dart';
+import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
 class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -15,7 +16,7 @@ class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: FlashcardAppBarController.showSetsBottomSheet(context),
             child: const TypeSetting(
               'Organize',
-              color: 'primary',
+              style: TextStyle(color: AppColors.primary),
             ),
           ),
         )

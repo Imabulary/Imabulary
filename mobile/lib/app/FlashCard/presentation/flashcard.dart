@@ -33,10 +33,10 @@ class FlashcardScreen extends ConsumerWidget {
             const SizedBox(
               height: 16,
             ),
-            TypeSetting(
+            const TypeSetting(
               'Related phrases',
               style: TextStyle(
-                color: colors['primary'],
+                color: AppColors.primary,
               ),
             ),
             const SizedBox(

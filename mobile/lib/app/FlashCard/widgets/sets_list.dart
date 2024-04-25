@@ -42,12 +42,11 @@ class _SetsListState extends ConsumerState<SetsList> {
     return PagedListView(
       pagingController: _pagingController,
       builderDelegate: PagedChildBuilderDelegate<Set>(
-        itemBuilder: (context, item, _) =>
-            SetsListItem(item, flashcard: flashcard),
+        itemBuilder: (context, item, _) => SetsListItem(
+          item,
+          flashcard: flashcard,
+        ),
       ),
-      // separatorBuilder: (BuildContext context, _) => const SizedBox(
-      //   height: 12,
-      // ),
     );
   }
 }

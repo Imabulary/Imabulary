@@ -48,8 +48,8 @@ class ResultScreen extends StatelessWidget {
                   "Your answer: ${results[index].answer}\nCorrect answer: ${results[index].correctAnswer}",
               image: results[index].imageUrl,
               tileColor: results[index].answer == results[index].correctAnswer
-                  ? colors['success']
-                  : colors['error'],
+                  ? AppColors.success
+                  : AppColors.error,
             ),
             itemCount: results.length,
           )

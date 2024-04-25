@@ -20,7 +20,7 @@ class FloatingButton extends StatelessWidget {
       onPressed: () {
         _handleAdd(context);
       },
-      backgroundColor: colors['primary'],
+      backgroundColor: AppColors.primary,
       foregroundColor: Colors.black,
       child: const Icon(Icons.add),
     );

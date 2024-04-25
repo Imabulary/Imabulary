@@ -35,7 +35,7 @@ class _AppState extends ConsumerState<App> {
       title: 'Imabulary',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: colors['primary'] as Color,
+          seedColor: AppColors.primary,
           brightness: Brightness.dark,
         ),
         textTheme: TextTheme(
