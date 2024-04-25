@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Quiz/presentation/quiz_screen.dart';
+import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen.dart';
 import 'package:mobile/app/Set/components/quiz_flashcards_amount_warning.dart';
 import 'package:mobile/app/Set/widgets/actions_list.dart';
 

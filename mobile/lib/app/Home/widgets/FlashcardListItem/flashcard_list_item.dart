@@ -18,7 +18,6 @@ class FlashCardListItem extends ConsumerWidget {
         ref.read(flashcardServiceProvider.notifier).openFlashcard(flashCard);
         FlashCardItemController.redirectToFlashCardScreen(context);
       },
-      contentPadding: const EdgeInsets.only(left: 10, right: 10),
       tileColor: colors['muted'],
       image: flashCard.image_url,
       label: flashCard.word,

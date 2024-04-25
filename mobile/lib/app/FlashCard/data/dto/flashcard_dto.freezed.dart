@@ -180,16 +180,11 @@ abstract class _OrganizeFlashcardDTO implements OrganizeFlashcardDTO {
       get copyWith => throw _privateConstructorUsedError;
 }
 
-FindAllFlashcardsDTO _$FindAllFlashcardsDTOFromJson(Map<String, dynamic> json) {
-  return _FindAllFlashcardsDTO.fromJson(json);
-}
-
 /// @nodoc
 mixin _$FindAllFlashcardsDTO {
   Pagination get pagination => throw _privateConstructorUsedError;
   String? get setId => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $FindAllFlashcardsDTOCopyWith<FindAllFlashcardsDTO> get copyWith =>
       throw _privateConstructorUsedError;
@@ -286,12 +281,9 @@ class __$$FindAllFlashcardsDTOImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$FindAllFlashcardsDTOImpl implements _FindAllFlashcardsDTO {
   const _$FindAllFlashcardsDTOImpl({required this.pagination, this.setId});
-
-  factory _$FindAllFlashcardsDTOImpl.fromJson(Map<String, dynamic> json) =>
-      _$$FindAllFlashcardsDTOImplFromJson(json);
 
   @override
   final Pagination pagination;
@@ -313,7 +305,6 @@ class _$FindAllFlashcardsDTOImpl implements _FindAllFlashcardsDTO {
             (identical(other.setId, setId) || other.setId == setId));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, pagination, setId);
 
@@ -324,22 +315,12 @@ class _$FindAllFlashcardsDTOImpl implements _FindAllFlashcardsDTO {
       get copyWith =>
           __$$FindAllFlashcardsDTOImplCopyWithImpl<_$FindAllFlashcardsDTOImpl>(
               this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$FindAllFlashcardsDTOImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _FindAllFlashcardsDTO implements FindAllFlashcardsDTO {
   const factory _FindAllFlashcardsDTO(
       {required final Pagination pagination,
       final String? setId}) = _$FindAllFlashcardsDTOImpl;
-
-  factory _FindAllFlashcardsDTO.fromJson(Map<String, dynamic> json) =
-      _$FindAllFlashcardsDTOImpl.fromJson;
 
   @override
   Pagination get pagination;

@@ -27,11 +27,11 @@ class ProfileScreenController extends _$ProfileScreenController {
     try {
       final flashCardsRepository = ref.watch(flashCardRepositoryProvider);
 
-      final flashCards = await flashCardsRepository.findAll(
+      final flashcards = await flashCardsRepository.findAll(
         FindAllFlashcardsDTO(pagination: const Pagination(), setId: setId),
       );
 
-      _appendItemsToPage(flashCards, pagingController, page);
+      _appendItemsToPage(flashcards, pagingController, page);
     } catch (error) {
       pagingController.error = error;
     }
