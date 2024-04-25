@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
+import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
 
@@ -39,7 +40,7 @@ void main() {
 
     callMethod() {
       return flashCardRepository.findAll(
-        const Pagination(page: 1, limit: 10),
+        const FindAllFlashcardsDTO(pagination: Pagination()),
       );
     }
 

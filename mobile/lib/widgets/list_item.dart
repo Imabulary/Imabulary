@@ -21,7 +21,9 @@ class ListItem extends ListTile {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      contentPadding: contentPadding,
+      contentPadding: sublabel == null
+          ? const EdgeInsets.all(10)
+          : const EdgeInsets.only(left: 10, right: 10),
       tileColor: tileColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),

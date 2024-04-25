@@ -39,14 +39,13 @@ class _SetsListState extends ConsumerState<SetsList> {
   Widget build(BuildContext context) {
     final flashcard = ref.watch(flashcardServiceProvider);
 
-    return PagedListView.separated(
+    return PagedListView(
       pagingController: _pagingController,
       builderDelegate: PagedChildBuilderDelegate<Set>(
-        itemBuilder: (context, item, _) =>
-            SetsListItem(item, flashcard: flashcard),
-      ),
-      separatorBuilder: (BuildContext context, _) => const SizedBox(
-        height: 12,
+        itemBuilder: (context, item, _) => SetsListItem(
+          item,
+          flashcard: flashcard,
+        ),
       ),
     );
   }

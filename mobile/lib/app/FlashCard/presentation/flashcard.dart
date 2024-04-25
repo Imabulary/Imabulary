@@ -6,6 +6,7 @@ import 'package:mobile/app/Flashcard/widgets/FlashcardAppBar/flashcard_app_bar.d
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/components/full_screen_image.dart';
 
 @RoutePage()
 class FlashcardScreen extends ConsumerWidget {
@@ -20,26 +21,22 @@ class FlashcardScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                flashcard!.image_url,
-                width: double.infinity,
-                height: 256,
-                fit: BoxFit.cover,
-              ),
-            ),
+            FullScreenImage(imageUrl: flashcard!.image_url),
             const SizedBox(
               height: 24,
             ),
             TypeSetting(flashcard.word, variant: TextVariants.titleLarge),
+            TypeSetting(
+              flashcard.translated_word,
+              variant: TextVariants.headlineLarge,
+            ),
             const SizedBox(
               height: 16,
             ),
-            TypeSetting(
+            const TypeSetting(
               'Related phrases',
               style: TextStyle(
-                color: colors['primary'],
+                color: AppColors.primary,
               ),
             ),
             const SizedBox(

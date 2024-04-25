@@ -7,6 +7,7 @@ import 'package:mobile/app/Profile/widgets/no_sets.dart';
 import 'package:mobile/app/Profile/widgets/set_grid_item.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/domain/set.dart';
+import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
 class SetsGrid extends ConsumerStatefulWidget {
@@ -53,7 +54,7 @@ class _SetsGridState extends ConsumerState<SetsGrid> {
           icon: const Icon(Icons.add),
           label: const TypeSetting(
             'Create new set',
-            color: 'primary',
+            style: TextStyle(color: AppColors.primary),
           ),
         ),
         const SizedBox(

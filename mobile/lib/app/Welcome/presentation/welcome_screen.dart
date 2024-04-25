@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen_controller.dart';
+import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 import 'package:vector_graphics/vector_graphics.dart';
@@ -50,7 +51,7 @@ class WelcomeScreen extends ConsumerWidget {
                   height: 12,
                 ),
                 const TypeSetting(
-                  "You're the one we've been waiting for!",
+                  "Build your long-term visual memory in a fun way!",
                   variant: TextVariants.headlineLarge,
                   textAlign: TextAlign.center,
                 ),
@@ -60,15 +61,12 @@ class WelcomeScreen extends ConsumerWidget {
                 ElevatedButton(
                   key: const Key('google-login'),
                   onPressed: handleGoogleSignIn,
-                  child: state.isLoading && !state.hasError
-                      ? const TypeSetting(
-                          'Logging in...',
-                          color: 'primary',
-                        )
-                      : const TypeSetting(
-                          'Sign in with Google',
-                          color: 'primary',
-                        ),
+                  child: TypeSetting(
+                    state.isLoading && !state.hasError
+                        ? 'Logging in...'
+                        : 'Sign in with Google',
+                    style: const TextStyle(color: AppColors.primary),
+                  ),
                 )
               ],
             ),

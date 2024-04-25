@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile/atoms/colors.dart';
 
 enum TextVariants {
   titleLarge,
@@ -18,11 +17,9 @@ class TypeSetting extends Text {
     super.style,
     super.textAlign,
     this.variant = TextVariants.bodyLarge,
-    this.color,
   }) : super(text);
 
   final String text;
-  final String? color;
   final TextVariants variant;
 
   @override
@@ -40,7 +37,7 @@ class TypeSetting extends Text {
       text,
       textAlign: textAlign ?? TextAlign.left,
       style: variants[variant]!.copyWith(
-        color: style?.color ?? colors[color] ?? Colors.white,
+        color: style?.color ?? Colors.white,
         fontWeight: style?.fontWeight,
         fontFamily: GoogleFonts.sourceSans3().fontFamily,
       ),

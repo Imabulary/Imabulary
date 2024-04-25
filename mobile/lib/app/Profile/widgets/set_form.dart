@@ -81,7 +81,7 @@ class SetForm extends ConsumerWidget {
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: onSave,
-            style: ElevatedButton.styleFrom(backgroundColor: colors['primary']),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
             child: TypeSetting(
               isLoading && !isError ? 'Saving...' : 'Save',
               style: const TextStyle(color: Colors.black),

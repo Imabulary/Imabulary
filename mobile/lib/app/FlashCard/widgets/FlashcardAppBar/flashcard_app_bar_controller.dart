@@ -6,7 +6,7 @@ class FlashcardAppBarController {
         showModalBottomSheet(
           context: context,
           builder: (context) => const Padding(
-            padding: EdgeInsets.only(top: 16),
+            padding: EdgeInsets.all(8),
             child: SetsList(),
           ),
         );
