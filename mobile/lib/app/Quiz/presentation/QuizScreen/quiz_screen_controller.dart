@@ -3,10 +3,11 @@ import 'dart:math';
 import 'package:mobile/app/Flashcard/domain/card.dart';
 
 class QuizScreenController {
-  static Map<String, dynamic> generateOptions(List<FlashCard> flashcards) {
-    // Randomly pick a flashcard as the correct option
+  static List<FlashCard> generateOptions(
+    List<FlashCard> flashcards,
+    FlashCard correctFlashcard,
+  ) {
     final random = Random();
-    final correctFlashcard = flashcards[random.nextInt(flashcards.length)];
 
     // Create a set to keep track of selected incorrect flashcards
     final selectedIncorrectFlashcards = {correctFlashcard};
@@ -27,6 +28,6 @@ class QuizScreenController {
     final options = [correctFlashcard, ...incorrectFlashcards];
     options.shuffle();
 
-    return {'list': options, 'correctFlashcard': correctFlashcard};
+    return options;
   }
 }

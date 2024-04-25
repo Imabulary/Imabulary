@@ -9,6 +9,7 @@ import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen_controller.d
 import 'package:mobile/app/Quiz/presentation/result_screen.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/components/full_screen_image.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
 
@@ -21,6 +22,7 @@ class QuizScreen extends ConsumerStatefulWidget {
 
 class _QuizScreenState extends ConsumerState<QuizScreen> {
   final List<Result> _results = [];
+  int _currentFlashcardIndex = 0;
 
   _saveResult(FlashCard quizFlashcard, FlashCard option) {
     setState(() {
@@ -34,23 +36,40 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     });
   }
 
+  _changeQuestion(List<FlashCard> flashcards) {
+    if (_currentFlashcardIndex < flashcards.length - 1) {
+      _currentFlashcardIndex++;
+    }
+
+    if (_results.length == flashcards.length) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ResultScreen(
+            results: _results,
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final set = ref.read(setServiceProvider);
 
-    final flashcards = ref.watch(findAllFlashcardsProvider(
+    final response = ref.watch(findAllFlashcardsProvider(
       FindAllFlashcardsDTO(
         pagination: const Pagination(page: 1, limit: 100),
         setId: set?.id,
       ),
     ));
 
-    if (flashcards.isLoading) {
+    if (response.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
 
-    if (flashcards.hasError) {
-      final serverError = flashcards.error as ServerError;
+    if (response.hasError) {
+      final serverError = response.error as ServerError;
 
       return Layout(
         Center(
@@ -63,48 +82,34 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       );
     }
 
+    final flashcards = response.value!.result;
+
+    final currentFlashcard = flashcards[_currentFlashcardIndex];
     final options = QuizScreenController.generateOptions(
-      flashcards.value!.result,
+      flashcards,
+      currentFlashcard,
     );
 
     return Layout(
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.network(
-              options['correctFlashcard'].image_url,
-              width: double.infinity,
-              height: 256,
-              fit: BoxFit.cover,
-            ),
-          ),
+          FullScreenImage(imageUrl: currentFlashcard.image_url),
           const SizedBox(
             height: 24,
           ),
           TypeSetting(
-            options['correctFlashcard'].word,
+            currentFlashcard.word,
             variant: TextVariants.titleLarge,
           ),
           const SizedBox(
             height: 24,
           ),
-          for (final option in options['list'])
+          for (final option in options)
             OutlinedButton(
               onPressed: () {
-                _saveResult(options['correctFlashcard'], option);
-
-                if (_results.length == flashcards.value!.result.length) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ResultScreen(
-                        results: _results,
-                      ),
-                    ),
-                  );
-                }
+                _saveResult(currentFlashcard, option);
+                _changeQuestion(flashcards);
               },
               child: TypeSetting(option.translated_word),
             )
