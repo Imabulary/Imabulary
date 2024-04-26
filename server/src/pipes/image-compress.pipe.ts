@@ -15,11 +15,11 @@ export class ImageCompressPipe
     const fileName = Date.now() + '-' + originalName + extension;
 
     const file = await sharp(image.buffer)
+      .rotate()
       .resize(800)
       .jpeg({ progressive: true, quality: 80 })
       .png({ quality: 80, effort: 3 })
       .webp({ effort: 3, quality: 80 })
-      .withMetadata()
       .toBuffer();
 
     return { file, fileName };

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/FlashCard/application/flashcard_service.dart';
+import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:mobile/app/Flashcard/presentation/flashcard.dart';
 import 'package:mobile/app/Layout/components/better_results_dialog.dart';
@@ -20,6 +21,11 @@ class AddBottomSheet extends ConsumerWidget {
       state.showErrorDialog(context, true);
 
       state.whenData((value) {
+        Navigator.pop(context);
+        Navigator.pop(context);
+
+        ref.invalidate(findAllFlashcardsProvider);
+
         final flashcard = value as FlashCard;
 
         ref.read(flashcardServiceProvider.notifier).openFlashcard(flashcard);

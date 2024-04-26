@@ -4,7 +4,7 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { get } from 'lodash';
+import { get, upperFirst } from 'lodash';
 import * as adminAccount from '../../admin-account.json';
 import {
   OBJECT_IS_NOT_RECOGNIZABLE_ERROR,
@@ -35,6 +35,6 @@ export class VisionService {
       });
     }
 
-    return object;
+    return upperFirst(object);
   }
 }

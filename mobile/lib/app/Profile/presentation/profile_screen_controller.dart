@@ -28,7 +28,7 @@ class ProfileScreenController extends _$ProfileScreenController {
       final flashCardsRepository = ref.watch(flashCardRepositoryProvider);
 
       final flashcards = await flashCardsRepository.findAll(
-        FindAllFlashcardsDTO(pagination: const Pagination(), setId: setId),
+        FindAllFlashcardsDTO(pagination: Pagination(page: page), setId: setId),
       );
 
       _appendItemsToPage(flashcards, pagingController, page);

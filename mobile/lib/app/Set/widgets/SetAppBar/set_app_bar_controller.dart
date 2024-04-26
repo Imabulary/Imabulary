@@ -20,8 +20,9 @@ class SetAppBarController {
     return () {
       const kMinimalAmountOfFlashcardsToStartQuiz = 4;
 
-      if (flashcards?.isEmpty == true ||
-          flashcards!.length < kMinimalAmountOfFlashcardsToStartQuiz) {
+      if (flashcards == null ||
+          flashcards.isEmpty == true ||
+          flashcards.length < kMinimalAmountOfFlashcardsToStartQuiz) {
         return showDialog(
           context: context,
           builder: (context) => const QuizFlashcardsAmountWarning(),

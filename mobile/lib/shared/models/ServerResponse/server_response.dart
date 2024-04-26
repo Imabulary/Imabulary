@@ -25,8 +25,10 @@ class ServerResponse<R> {
     Response<dynamic> response,
     T Function(Map<String, dynamic> json) handler,
   ) {
-    // FIXME: cover result in Maybe monad as well
-    final List<dynamic> result = response.data['result'];
+    final List<dynamic> result = Maybe.fromValue(
+      response.data['result'],
+    ).map(identity).getOrElse([]);
+
     final int totalItems =
         Maybe.fromValue(response.data['meta']['pagination']['total'])
             .map(identity)

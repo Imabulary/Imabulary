@@ -20,32 +20,42 @@ class HomeScreen extends ConsumerWidget {
     ));
 
     return Layout(
-      SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const TypeSetting(
-              'Your latest scans',
-              variant: TextVariants.headlineMedium,
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            flashcards.when(
-              skipLoadingOnRefresh: false,
-              data: (flashCards) => FlashCardsList(
-                flashCards: flashCards.result,
-              ),
-              error: (error, _) => const Center(
-                child: TypeSetting(
-                  "Oops! An error occurred during loading. But don't worry, we're on it! Try again later.",
-                  style: TextStyle(color: Colors.grey),
-                  textAlign: TextAlign.center,
+      RefreshIndicator(
+        onRefresh: () => Future.sync(
+          () => ref.invalidate(findAllFlashcardsProvider),
+        ),
+        child: SizedBox(
+          height: double.infinity,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const TypeSetting(
+                  'Your latest scans',
+                  variant: TextVariants.headlineMedium,
                 ),
-              ),
-              loading: () => const Center(child: CircularProgressIndicator()),
-            )
-          ],
+                const SizedBox(
+                  height: 12,
+                ),
+                flashcards.when(
+                  skipLoadingOnRefresh: false,
+                  data: (flashCards) => FlashCardsList(
+                    flashCards: flashCards.result,
+                  ),
+                  error: (error, _) => const Center(
+                    child: TypeSetting(
+                      "Oops! An error occurred during loading. But don't worry, we're on it! Try again later.",
+                      style: TextStyle(color: Colors.grey),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                )
+              ],
+            ),
+          ),
         ),
       ),
       currentScreen: CurrentScreens.home.value,

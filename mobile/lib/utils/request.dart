@@ -25,7 +25,8 @@ Future<T> request<T>(Future<T> Function() asyncFunc) async {
       exception = Maybe.fromValue(error)
           .map(
             (result) => ServerError.fromJson({
-              "code": result.code,
+              "statusCode": 400,
+              "error": result.code,
               "message": result.message ?? ServerError.defaultError
             }),
           )
