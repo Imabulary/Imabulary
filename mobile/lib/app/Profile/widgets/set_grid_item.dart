@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
+import 'package:mobile/app/Set/components/set_preview.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/presentation/set_screen.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/shared/constants.dart';
 import 'package:mobile/utils/plularize.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -36,19 +36,14 @@ class _SetGridItemState extends ConsumerState<SetGridItem> {
 
     final setsCount = pluralize('set', widget.set.flashcards?.length);
 
-    final setFlashcards = widget.set.flashcards;
+    final setFlashcards = widget.set.flashcards ?? [];
 
     return GestureDetector(
       onTap: _navigateToSetScreen,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: setFlashcards?.isNotEmpty == true
-                ? Image.network(setFlashcards![0].image_url)
-                : Image.network(kStubImageUrl),
-          ),
+          SetPreview(images: setFlashcards),
           const SizedBox(
             height: 4,
           ),
