@@ -42,7 +42,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We don't process videos, so probably you won't need to approve this permission</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<string>Allow the app to access your photo library so you can select images which contains objects you want to learn</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

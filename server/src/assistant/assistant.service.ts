@@ -1,7 +1,7 @@
 import { VertexAI } from '@google-cloud/vertexai';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import * as adminAccount from '../../admin-account.json';
-import { get } from 'lodash';
+import { get, upperFirst } from 'lodash';
 import { ASSISTANT_GENERIC_ERROR } from './utils';
 
 @Injectable()
@@ -20,12 +20,12 @@ export class AssistantService {
   });
 
   async generatePhrase(word: string) {
-    const prompt = `Generate a simple phrase using the word ${word.toLowerCase()}.`;
+    const prompt = `Create a simple phrase with the word ${word.toLowerCase()}.`;
 
     const rules = [
       'The length of the phrase must be maximum of 20 words',
       'Do not cover a string in quotes',
-      'Phrase must contain the word itself',
+      'Asnwer only with the phrase, no additional text is needed',
     ].join('. ');
 
     const result = await this.generativeModel.generateContent({
@@ -49,6 +49,6 @@ export class AssistantService {
       );
     }
 
-    return text;
+    return upperFirst(text.trim());
   }
 }

@@ -2,6 +2,7 @@ import { v3 } from '@google-cloud/translate';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import * as adminAccount from '../../admin-account.json';
 import { TRANSLATOR_GENERIC_ERROR } from './utils';
+import { upperFirst } from 'lodash';
 
 const { TranslationServiceClient } = v3;
 
@@ -28,6 +29,8 @@ export class TranslatorService {
       throw new InternalServerErrorException(TRANSLATOR_GENERIC_ERROR);
     }
 
-    return translations.map((translation) => translation.translatedText || '');
+    return translations.map(
+      (translation) => upperFirst(translation.translatedText.trim()) || '',
+    );
   }
 }

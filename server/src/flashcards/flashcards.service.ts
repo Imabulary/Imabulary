@@ -18,37 +18,46 @@ export class FlashCardsService {
   ) {}
 
   async scan(userId: string, fileName: string, file: Buffer) {
-    const imageUrl = await this.storage.upload(fileName, file);
+    const storageFile = await this.storage.upload(fileName, file);
 
-    const objectOnImage = await this.vision.analyze(imageUrl);
+    try {
+      const imageUrl = await this.storage.getImageURL(storageFile);
 
-    const relatedPhrase = await this.assistant.generatePhrase(objectOnImage);
+      const objectOnImage = await this.vision.analyze(imageUrl);
 
-    // TODO: Take these variables from settings of user profile, once it's done
-    const sourceLanguageCode = 'en-US';
-    const targetLanguageCode = 'uk-UA';
+      const relatedPhrase = await this.assistant.generatePhrase(objectOnImage);
 
-    const [translatedWord, translatedPhrase] = await this.translator.translate(
-      [objectOnImage, relatedPhrase],
-      { sourceLanguageCode, targetLanguageCode },
-    );
+      // TODO: Take these variables from settings of user profile, once it's done
+      const sourceLanguageCode = 'en-US';
+      const targetLanguageCode = 'uk-UA';
 
-    const card = await this.prisma.cards.create({
-      data: {
-        word: objectOnImage,
-        phrase: relatedPhrase,
-        translated_phrase: translatedPhrase,
-        translated_word: translatedWord,
-        target_language: targetLanguageCode,
-        source_language: sourceLanguageCode,
-        image_url: imageUrl,
-        userId,
-      },
-    });
+      const [translatedWord, translatedPhrase] =
+        await this.translator.translate([objectOnImage, relatedPhrase], {
+          sourceLanguageCode,
+          targetLanguageCode,
+        });
 
-    return {
-      result: card,
-    };
+      const card = await this.prisma.cards.create({
+        data: {
+          word: objectOnImage,
+          phrase: relatedPhrase,
+          translated_phrase: translatedPhrase,
+          translated_word: translatedWord,
+          target_language: targetLanguageCode,
+          source_language: sourceLanguageCode,
+          image_url: imageUrl,
+          userId,
+        },
+      });
+
+      return {
+        result: card,
+      };
+    } catch (error) {
+      await storageFile.delete();
+
+      throw error;
+    }
   }
 
   async findAll(

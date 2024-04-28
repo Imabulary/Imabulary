@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
@@ -93,29 +94,31 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     );
 
     return Layout(
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          FullScreenImage(imageUrl: currentFlashcard.image_url),
-          const SizedBox(
-            height: 24,
-          ),
-          TypeSetting(
-            currentFlashcard.word,
-            variant: TextVariants.titleLarge,
-          ),
-          const SizedBox(
-            height: 24,
-          ),
-          for (final option in options)
-            OutlinedButton(
-              onPressed: () {
-                _saveResult(currentFlashcard, option);
-                _changeQuestion(flashcards);
-              },
-              child: TypeSetting(option.translated_word),
-            )
-        ],
+      SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            FullScreenImage(imageUrl: currentFlashcard.image_url),
+            const SizedBox(
+              height: 24,
+            ),
+            TypeSetting(
+              currentFlashcard.word,
+              variant: TextVariants.titleLarge,
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            for (final option in options)
+              OutlinedButton(
+                onPressed: () {
+                  _saveResult(currentFlashcard, option);
+                  _changeQuestion(flashcards);
+                },
+                child: TypeSetting(option.translated_word),
+              )
+          ],
+        ),
       ),
     );
   }

@@ -12,13 +12,19 @@ class AddBottomSheetController extends _$AddBottomSheetController {
   }
 
   Future scanPhoto(ImageSource source) async {
-    final flashCardRepository = ref.read(flashCardRepositoryProvider);
+    try {
+      final flashCardRepository = ref.read(flashCardRepositoryProvider);
 
-    final image = await flashCardRepository.pickPhoto(source);
+      final image = await flashCardRepository.pickPhoto(source);
 
-    if (image == null) return;
+      if (image == null) return;
 
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(() => flashCardRepository.scanPhoto(image));
+      state = const AsyncLoading();
+      state = await AsyncValue.guard(
+        () => flashCardRepository.scanPhoto(image),
+      );
+    } catch (error) {
+      state = AsyncError(error, StackTrace.current);
+    }
   }
 }
