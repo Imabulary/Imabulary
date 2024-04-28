@@ -1,1 +1,1 @@
-const kStubImageUrl = 'https://placehold.co/300@2x.png?text=+';
+const kStubImageUrl = 'https://placehold.co/110@2x.png?text=No+Picture';

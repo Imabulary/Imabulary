@@ -11,7 +11,7 @@ class SetPreview extends StatelessWidget {
 
   generateGrid() {
     if (images.isEmpty || images.length == 1) {
-      return [const StairedGridTile(1, 1)].toList();
+      return [const StairedGridTile(1, 1.5)].toList();
     }
 
     if (images.length == 2 || images.length < 4) {
@@ -24,7 +24,7 @@ class SetPreview extends StatelessWidget {
     if (images.length >= 4) {
       return images
           .sublist(0, 4)
-          .map((_) => const StairedGridTile(0.5, 1.2))
+          .map((_) => const StairedGridTile(0.5, 1.4))
           .toList();
     }
   }
@@ -35,7 +35,7 @@ class SetPreview extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
       width: double.infinity,
-      height: 150,
+      height: 110,
       child: IgnorePointer(
         child: GridView.custom(
           gridDelegate: SliverStairedGridDelegate(

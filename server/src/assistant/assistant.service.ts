@@ -25,6 +25,7 @@ export class AssistantService {
     const rules = [
       'The length of the phrase must be maximum of 20 words',
       'Do not cover a string in quotes',
+      'Asnwer only with the phrase, no additional text is needed',
     ].join('. ');
 
     const result = await this.generativeModel.generateContent({

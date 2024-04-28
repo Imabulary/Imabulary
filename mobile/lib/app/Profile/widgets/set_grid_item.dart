@@ -34,7 +34,7 @@ class _SetGridItemState extends ConsumerState<SetGridItem> {
         .format(widget.set.updatedAt, locale: 'en_short')
         .replaceAll('~', '');
 
-    final setsCount = pluralize('Flashcard', widget.set.flashcards?.length);
+    final setsCount = pluralize('flashcard', widget.set.flashcards?.length);
 
     final setFlashcards = widget.set.flashcards ?? [];
 
