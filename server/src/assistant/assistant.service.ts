@@ -90,7 +90,10 @@ export class AssistantService {
   }
 
   async speechPart(word: string) {
-    const prompt = `To what part of the speech word "${word.toLowerCase()}" belongs to?.`;
+    const isPhrase = word.split(' ').length > 1;
+    const inputType = isPhrase ? 'phrase' : 'word';
+
+    const prompt = `Identify the part of speech for the ${inputType} "${word.toLowerCase()}".`;
 
     const rules = [
       'Do not cover a string in quotes',

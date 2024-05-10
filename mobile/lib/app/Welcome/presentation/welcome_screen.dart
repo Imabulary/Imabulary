@@ -51,7 +51,7 @@ class WelcomeScreen extends ConsumerWidget {
                   height: 12,
                 ),
                 const TypeSetting(
-                  "Build your long-term visual memory in a fun way!",
+                  "Build your long-term visual memory!",
                   variant: TextVariants.headlineLarge,
                   textAlign: TextAlign.center,
                 ),
