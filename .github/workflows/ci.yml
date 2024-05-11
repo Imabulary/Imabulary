@@ -50,7 +50,7 @@ jobs:
       - name: Deploy new instance and manage IPs
         run: |
           NEW_INSTANCE="instance-build-${{ github.run_number }}"
-          MACHINE_TYPE="${{ secrets.GCP_MACHINE_TYPE || 'n4-standard-2' }}"
+          MACHINE_TYPE="${{ secrets.GCP_MACHINE_TYPE || 'n1-standard-1' }}"
           gcloud compute instances create-with-container "$NEW_INSTANCE" \
             --machine-type=$MACHINE_TYPE \
             --container-image=${{ env.GAR_LOCATION }}:${{ github.run_number }} \

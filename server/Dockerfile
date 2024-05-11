@@ -1,4 +1,9 @@
 FROM node:21-alpine3.18
+
+EXPOSE 80
+EXPOSE 443
+EXPOSE 5000
+
 WORKDIR /server
 
 COPY package.json .
