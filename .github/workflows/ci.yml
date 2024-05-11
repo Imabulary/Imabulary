@@ -34,7 +34,7 @@ jobs:
   
       - name: "Docker auth"
         run: |-
-          gcloud auth configure-docker ${{ env.GOOGLE_COMPUTE_REGION }}-docker.pkg.dev --quiet
+          gcloud auth configure-docker ${{ env.GOOGLE_COMPUTE_ZONE }}-docker.pkg.dev  --quiet
 
       - name: Build image
         run: docker build . --tag ${{ env.GAR_LOCATION }}:${{ github.run_number }}
