@@ -39,7 +39,7 @@ jobs:
 
       - name: Build and Push Docker Image to GCR
         run: |
-          source ./script.sh
+          source ./scripts.sh
           prodBuildPushGCR
 
       - name: Install JQ
