@@ -56,7 +56,6 @@ jobs:
             --container-image=${{ env.GAR_LOCATION }}:${{ github.run_number }} \
             --tags http-server,https-server \
             --container-arg="PORT=5000" \
-            --port-mappings=80:5000:TCP
             --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
 
           OLD_INSTANCE=$(gcloud compute instances list --filter="EXTERNAL_IP=(${{ env.PROD_IP }})" --zones ${{ env.GOOGLE_COMPUTE_ZONE }}-a --format=json | jq '.[0].name' --raw-output)
