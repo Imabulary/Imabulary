@@ -70,4 +70,4 @@ jobs:
 
           gcloud compute instances add-access-config "$NEW_INSTANCE" \
             --access-config-name "external-nat" --address ${{ env.PROD_IP }} \
-            --zone ${{ env.GOOGLE_COMPUTE_ZONE }} --quiet
+            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
