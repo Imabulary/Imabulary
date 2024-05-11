@@ -39,6 +39,7 @@ jobs:
 
       - name: Build and Push Docker Image to GCR
         run: |
+          touch server/.env
           source ./scripts.sh
           prodBuildPushGCR
 
