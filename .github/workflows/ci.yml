@@ -5,6 +5,7 @@ on:
     branches:
       - production
   pull_request:
+    branches:
       - production
 
 jobs:
