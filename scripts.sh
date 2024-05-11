@@ -44,3 +44,15 @@ runMigration() {
 prismaGenerate() {
   docker exec -it imabulary_backend sh -c "npx prisma generate"
 }
+
+# Build & Push to GCP
+prodBuildPushGCR() {
+  echo "Building Docker image for production..."
+  docker-compose -f docker-compose.yml -f docker-compose.prod.yml build backend
+
+  echo "Tagging Docker image..."
+  docker tag imabulary_backend:latest $GAR_LOCATION:${GITHUB_RUN_NUMBER}
+
+  echo "Pushing Docker image to Google Container Registry..."
+  docker push $GAR_LOCATION:${GITHUB_RUN_NUMBER}
+}

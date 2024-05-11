@@ -34,15 +34,13 @@ jobs:
         run: 'gcloud info'
   
       - name: "Docker auth"
-        run: |-
+        run: |
           gcloud auth configure-docker ${{ env.GOOGLE_COMPUTE_ZONE }}-docker.pkg.dev --quiet
 
-      - name: Build image
-        run: docker build . --tag ${{ env.GAR_LOCATION }}:${{ github.run_number }}
-        working-directory: ./server
-
-      - name: Push image
-        run: docker push ${{ env.GAR_LOCATION }}:${{ github.run_number }}
+      - name: Build and Push Docker Image to GCR
+        run: |
+          source ./script.sh
+          prodBuildPushGCR
 
       - name: Install JQ
         run: sudo apt-get --yes install jq
@@ -55,7 +53,8 @@ jobs:
             --machine-type=$MACHINE_TYPE \
             --container-image=${{ env.GAR_LOCATION }}:${{ github.run_number }} \
             --tags http-server,https-server \
-            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
+            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet \
+            --container-env=NODE_ENV=production
 
           OLD_INSTANCE=$(gcloud compute instances list --filter="EXTERNAL_IP=(${{ env.PROD_IP }})" --zones ${{ env.GOOGLE_COMPUTE_ZONE }}-a --format=json | jq '.[0].name' --raw-output)
 
