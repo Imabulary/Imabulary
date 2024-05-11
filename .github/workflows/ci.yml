@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - production
+defaults:
+ run:
+  working-directory: ./server
 
 jobs:
   build-and-deploy:
@@ -17,10 +20,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set working directory
-        run: |
-          cd server
 
       - name: Login to Google Cloud
         uses: google-github-actions/setup-gcloud@v2
