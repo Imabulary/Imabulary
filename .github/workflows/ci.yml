@@ -34,7 +34,7 @@ jobs:
   
       - name: "Docker auth"
         run: |-
-          gcloud auth configure-docker ${{ env.GOOGLE_COMPUTE_ZONE }}-docker.pkg.dev  --quiet
+          gcloud auth configure-docker ${{ env.GOOGLE_COMPUTE_ZONE }}-docker.pkg.dev --quiet
 
       - name: Build image
         run: docker build . --tag ${{ env.GAR_LOCATION }}:${{ github.run_number }}
@@ -54,18 +54,19 @@ jobs:
             --machine-type=$MACHINE_TYPE \
             --container-image=${{ env.GAR_LOCATION }}:${{ github.run_number }} \
             --tags http-server,https-server \
-            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a
+            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
 
           OLD_INSTANCE=$(gcloud compute instances list --filter="EXTERNAL_IP=('prod-ip')" --zones $GOOGLE_COMPUTE_ZONE --format=json | jq '.[0].name' --raw-output)
 
           gcloud compute instances delete-access-config "$NEW_INSTANCE" \
             --access-config-name "external-nat" \
-            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a
+            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
 
           if [ "$OLD_INSTANCE" != "null" ]; then
-            gcloud compute instances delete "$OLD_INSTANCE" --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a
+            gcloud compute instances delete "$OLD_INSTANCE" \
+              --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
           fi
 
           gcloud compute instances add-access-config "$NEW_INSTANCE" \
             --access-config-name "external-nat" --address "prod-ip" \
-            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a
+            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
