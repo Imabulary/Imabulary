@@ -57,7 +57,7 @@ jobs:
             --tags http-server,https-server \
             --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
 
-          OLD_INSTANCE=$(gcloud compute instances list --filter="EXTERNAL_IP=(${{ env.PRORD_IP }})" --zones ${{ env.GOOGLE_COMPUTE_ZONE }}-a --format=json | jq '.[0].name' --raw-output)
+          OLD_INSTANCE=$(gcloud compute instances list --filter="EXTERNAL_IP=(${{ env.PROD_IP }})" --zones ${{ env.GOOGLE_COMPUTE_ZONE }}-a --format=json | jq '.[0].name' --raw-output)
 
           gcloud compute instances delete-access-config "$NEW_INSTANCE" \
             --access-config-name "external-nat" \
@@ -69,5 +69,5 @@ jobs:
           fi
 
           gcloud compute instances add-access-config "$NEW_INSTANCE" \
-            --access-config-name "external-nat" --address ${{ env.PRORD_IP }} \
+            --access-config-name "external-nat" --address ${{ env.PROD_IP }} \
             --zone ${{ env.GOOGLE_COMPUTE_ZONE }} --quiet
