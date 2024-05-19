@@ -4,7 +4,7 @@
   </a>
 </h1>
 
-<h3 align="center">
+<h3>
   Imabulary - your brain will remember!
 </h3>
 
