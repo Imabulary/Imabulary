@@ -51,8 +51,8 @@ prodBuildPushGCR() {
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml build backend
 
   echo "Tagging Docker image..."
-  docker tag imabulary_backend:latest $GAR_LOCATION:${GITHUB_RUN_NUMBER}
+  docker tag imabulary_backend:latest $GAR_LOCATION:${SHORT_SHA}
 
   echo "Pushing Docker image to Google Container Registry..."
-  docker push $GAR_LOCATION:${GITHUB_RUN_NUMBER}
+  docker push $GAR_LOCATION:${SHORT_SHA}
 }
