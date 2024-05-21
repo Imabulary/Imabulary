@@ -23,6 +23,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set short commit SHA
+        id: set_short_sha
+        run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
@@ -49,10 +53,10 @@ jobs:
 
       - name: Deploy new instance and manage IPs
         run: |
-          NEW_INSTANCE="instance-build-${{ github.run_number }}"
+          NEW_INSTANCE="instance-build-${SHORT_SHA}"
           gcloud compute instances create-with-container "$NEW_INSTANCE" \
             --machine-type=${{ env.MACHINE_TYPE }} \
-            --container-image=${{ env.GAR_LOCATION }}:${{ github.run_number }} \
+            --container-image=${{ env.GAR_LOCATION }}:${SHORT_SHA} \
             --tags http-server,https-server \
             --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet \
             --container-env=NODE_ENV=production
