@@ -17,7 +17,7 @@ jobs:
       GOOGLE_COMPUTE_ZONE: ${{ secrets.GCP_ZONE }}
       GAR_LOCATION: ${{ secrets.GCP_GAR }}
       PROD_IP: ${{ secrets.PROD_IP }}
-      MACHINE_TYPE: 'e2-medium' #${{ secrets.GCP_MACHINE_TYPE }}
+      MACHINE_TYPE: ${{ secrets.GCP_MACHINE_TYPE }}
 
     steps:
       - name: Checkout code
@@ -26,6 +26,18 @@ jobs:
       - name: Set short commit SHA
         id: set_short_sha
         run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+
+      - id: create-service-account-json
+        uses: jsdaniell/create-json@v1.2.3
+        with:
+          name: "service-account.json"
+          json: ${{ secrets.SERVICE_ACCOUNT }}
+
+      - id: create-admin-account-json
+        uses: jsdaniell/create-json@v1.2.3
+        with:
+          name: "admin-account.json"
+          json: ${{ secrets.ADMIN_ACCOUNT }}
 
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
@@ -44,7 +56,13 @@ jobs:
 
       - name: Build and Push Docker Image to GCR
         run: |
-          touch server/.env
+          echo "PORT=${{ secrets.PORT }}" > server/.env
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> server/.env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> server/.env
+          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> server/.env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> server/.env
+          echo "STORAGE_URL=${{ secrets.STORAGE_URL }}" >> server/.env
+          echo "PROJECT_ID=${{ secrets.GCP_PROJECT_ID }}" >> server/.env
           source ./scripts.sh
           prodBuildPushGCR
 
