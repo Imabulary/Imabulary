@@ -17,7 +17,7 @@ jobs:
       GOOGLE_COMPUTE_ZONE: ${{ secrets.GCP_ZONE }}
       GAR_LOCATION: ${{ secrets.GCP_GAR }}
       PROD_IP: ${{ secrets.PROD_IP }}
-      MACHINE_TYPE: 'g1-small' #${{ secrets.GCP_MACHINE_TYPE }}
+      MACHINE_TYPE: 'e2-medium' #${{ secrets.GCP_MACHINE_TYPE }}
 
     steps:
       - name: Checkout code
