@@ -13,10 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GCP_PROJECT_NUMBER: ${{ secrets.GCP_PROJECT_ID }}
-      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_NAME || 'imabulary' }}
-      GOOGLE_COMPUTE_ZONE: ${{ secrets.GCP_ZONE || 'us-central1' }}
-      GAR_LOCATION: ${{ secrets.GCP_GAR || 'us-central1-docker.pkg.dev/imabulary/my-app/backend' }}
-      PROD_IP: '34.135.73.159'
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_NAME }}
+      GOOGLE_COMPUTE_ZONE: ${{ secrets.GCP_ZONE }}
+      GAR_LOCATION: ${{ secrets.GCP_GAR }}
+      PROD_IP: ${{ secrets.PROD_IP }}
+      MACHINE_TYPE: ${{ secrets.GCP_MACHINE_TYPE }}
 
     steps:
       - name: Checkout code
@@ -49,9 +50,8 @@ jobs:
       - name: Deploy new instance and manage IPs
         run: |
           NEW_INSTANCE="instance-build-${{ github.run_number }}"
-          MACHINE_TYPE="${{ secrets.GCP_MACHINE_TYPE || 'n1-standard-1' }}"
           gcloud compute instances create-with-container "$NEW_INSTANCE" \
-            --machine-type=$MACHINE_TYPE \
+            --machine-type=${{ env.MACHINE_TYPE }} \
             --container-image=${{ env.GAR_LOCATION }}:${{ github.run_number }} \
             --tags http-server,https-server \
             --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet \
