@@ -22,6 +22,7 @@ prodBuild() {
 # Start containers for production
 prodStart() {
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+  prismaGenerate
 }
 
 # Shutdown containers that was run for production
@@ -43,4 +44,16 @@ runMigration() {
 # Generate TypeScript types based on prisma schema
 prismaGenerate() {
   docker exec -it imabulary_backend sh -c "npx prisma generate"
+}
+
+# Build & Push to GCP
+prodBuildPushGCR() {
+  echo "Building Docker image for production..."
+  docker-compose -f docker-compose.yml -f docker-compose.prod.yml build backend
+
+  echo "Tagging Docker image..."
+  docker tag imabulary_backend:latest $GAR_LOCATION:${SHORT_SHA}
+
+  echo "Pushing Docker image to Google Container Registry..."
+  docker push $GAR_LOCATION:${SHORT_SHA}
 }

@@ -1,0 +1,95 @@
+name: Deploy to GCP
+
+on:
+  push:
+    branches:
+      - production
+  pull_request:
+    branches:
+      - production
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      GCP_PROJECT_NUMBER: ${{ secrets.GCP_PROJECT_ID }}
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_NAME }}
+      GOOGLE_COMPUTE_ZONE: ${{ secrets.GCP_ZONE }}
+      GAR_LOCATION: ${{ secrets.GCP_GAR }}
+      PROD_IP: ${{ secrets.PROD_IP }}
+      MACHINE_TYPE: ${{ secrets.GCP_MACHINE_TYPE }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set short commit SHA
+        id: set_short_sha
+        run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+
+      - id: create-service-account-json
+        uses: jsdaniell/create-json@v1.2.3
+        with:
+          name: "service-account.json"
+          json: ${{ secrets.SERVICE_ACCOUNT }}
+
+      - id: create-admin-account-json
+        uses: jsdaniell/create-json@v1.2.3
+        with:
+          name: "admin-account.json"
+          json: ${{ secrets.ADMIN_ACCOUNT }}
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+  
+      - name: "Docker auth"
+        run: |
+          gcloud auth configure-docker ${{ env.GOOGLE_COMPUTE_ZONE }}-docker.pkg.dev --quiet
+
+      - name: Build and Push Docker Image to GCR
+        run: |
+          echo "PORT=${{ secrets.PORT }}" > server/.env
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> server/.env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> server/.env
+          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> server/.env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> server/.env
+          echo "STORAGE_URL=${{ secrets.STORAGE_URL }}" >> server/.env
+          echo "PROJECT_ID=${{ secrets.GCP_PROJECT_ID }}" >> server/.env
+          source ./scripts.sh
+          prodBuildPushGCR
+
+      - name: Install JQ
+        run: sudo apt-get --yes install jq
+
+      - name: Deploy new instance and manage IPs
+        run: |
+          NEW_INSTANCE="instance-build-${SHORT_SHA}"
+          gcloud compute instances create-with-container "$NEW_INSTANCE" \
+            --machine-type=${{ env.MACHINE_TYPE }} \
+            --container-image=${{ env.GAR_LOCATION }}:${SHORT_SHA} \
+            --tags http-server,https-server \
+            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet \
+            --container-env=NODE_ENV=production
+
+          OLD_INSTANCE=$(gcloud compute instances list --filter="EXTERNAL_IP=(${{ env.PROD_IP }})" --zones ${{ env.GOOGLE_COMPUTE_ZONE }}-a --format=json | jq '.[0].name' --raw-output)
+
+          gcloud compute instances delete-access-config "$NEW_INSTANCE" \
+            --access-config-name "external-nat" \
+            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
+
+          if [ "$OLD_INSTANCE" != "null" ]; then
+            gcloud compute instances delete "$OLD_INSTANCE" \
+              --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
+          fi
+
+          gcloud compute instances add-access-config "$NEW_INSTANCE" \
+            --access-config-name "external-nat" --address ${{ env.PROD_IP }} \
+            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
