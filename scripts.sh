@@ -22,6 +22,7 @@ prodBuild() {
 # Start containers for production
 prodStart() {
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+  prismaGenerate
 }
 
 # Shutdown containers that was run for production

@@ -23,7 +23,7 @@ import { DisorganizeFlashcardsDTO, OrganizeFlashcardsDTO } from './dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
 
-const MAX_PROFILE_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
+const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
 @UseGuards(AuthGuard)
 @Controller('flashcards')
@@ -38,7 +38,7 @@ export class FlashCardsController {
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({
-            maxSize: MAX_PROFILE_PICTURE_SIZE_IN_BYTES,
+            maxSize: MAX_PICTURE_SIZE_IN_BYTES,
           }),
         ],
       }),
