@@ -20,12 +20,6 @@ RUN npm install --force @img/sharp-linuxmusl-arm64
 
 COPY . ./
 
-ARG ADMIN_ACCOUNT
-ARG SERVICE_ACCOUNT
-
-RUN if [ -n "$ADMIN_ACCOUNT" ]; then echo "${ADMIN_ACCOUNT}" > admin-account.json; fi
-RUN if [ -n "$SERVICE_ACCOUNT" ]; then echo "${SERVICE_ACCOUNT}" > service-account.json; fi
-
 RUN npx prisma generate
 RUN npm run build
 

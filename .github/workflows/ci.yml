@@ -30,13 +30,13 @@ jobs:
       - id: create-service-account-json
         uses: jsdaniell/create-json@v1.2.3
         with:
-          name: "service-account.json"
+          name: 'server/service-account.json'
           json: ${{ secrets.SERVICE_ACCOUNT }}
 
       - id: create-admin-account-json
         uses: jsdaniell/create-json@v1.2.3
         with:
-          name: "admin-account.json"
+          name: 'server/admin-account.json'
           json: ${{ secrets.ADMIN_ACCOUNT }}
 
       - id: 'auth'
@@ -49,8 +49,8 @@ jobs:
 
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
-  
-      - name: "Docker auth"
+
+      - name: 'Docker auth'
         run: |
           gcloud auth configure-docker ${{ env.GOOGLE_COMPUTE_ZONE }}-docker.pkg.dev --quiet
 
