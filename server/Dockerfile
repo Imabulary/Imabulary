@@ -9,6 +9,7 @@ WORKDIR /server
 RUN apk --no-cache add g++ make py3-pip
 
 COPY package*.json ./
+
 ARG NODE_ENV
 
 RUN if [ "$NODE_ENV" = "development" ]; \
@@ -23,6 +24,8 @@ COPY . ./
 RUN npx prisma generate
 RUN npm run build
 
-RUN chmod +x entrypoint.sh
+COPY entrypoint.sh ./
+
+RUN chmod +x ./entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
