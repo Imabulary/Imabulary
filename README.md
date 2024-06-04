@@ -5,7 +5,7 @@
 </h1>
 
 <h3>
-  Imabulary - your brain will remember!
+  Imabulary - the whole world is your dictionary!
 </h3>
 
 <details open="open">
