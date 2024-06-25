@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WalletService } from '../wallet.service';
 import { PrismaService } from '../../prisma';
+import { TECHNICAL_ISSUE, WALLET_NOT_FOUND } from '../utils';
 
 describe('WalletService', () => {
   let service: WalletService;
@@ -41,16 +42,12 @@ describe('WalletService', () => {
       balance: 'invalid',
     });
 
-    await expect(service.balance('user-id')).rejects.toThrow(
-      'Wallet not found or balance is not a number',
-    );
+    await expect(service.balance('user-id')).rejects.toThrow(TECHNICAL_ISSUE);
   });
 
   it('should throw an error if wallet is not found', async () => {
     mockPrismaService.wallet.findUnique.mockReturnValueOnce(null);
 
-    await expect(service.balance('user-id')).rejects.toThrow(
-      'Wallet not found or balance is not a number',
-    );
+    await expect(service.balance('user-id')).rejects.toThrow(WALLET_NOT_FOUND);
   });
 });
