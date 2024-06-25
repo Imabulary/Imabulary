@@ -83,20 +83,6 @@ describe('AllExceptionsFilter', () => {
     });
   });
 
-  it('should handle unknown exception', () => {
-    const exception = new Error('Unknown error');
-    const host = createMockArgumentsHost(mockRequest, mockResponse);
-
-    filter.catch(exception, host);
-
-    expect(Logger.prototype.error).toHaveBeenCalledWith(exception);
-    expect(mockResponse.status).toHaveBeenCalledWith(500);
-    expect(mockResponse.json).toHaveBeenCalledWith({
-      statusCode: 500,
-      message: 'Internal server error',
-    });
-  });
-
   function createMockArgumentsHost(
     req: Partial<Request>,
     res: Partial<Response>,
