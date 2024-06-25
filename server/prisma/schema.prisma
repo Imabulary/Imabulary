@@ -59,9 +59,20 @@ model CardsOnSets {
 }
 
 model Wallet {
-  id        String       @id @default(uuid()) @db.VarChar()
-  userId    String       @db.VarChar() @unique
-  status    String?
-  balance   Float?
-  user      Users        @relation(fields: [userId], references: [id])
+  id      String  @id @default(uuid()) @db.VarChar()
+  userId  String  @unique @db.VarChar()
+  status  String  @default("active")
+  balance Float   @default(0.0)
+  user    Users   @relation(fields: [userId], references: [id])
+  Awards  Awards?
+}
+
+model Awards {
+  id            String    @id @default(uuid()) @db.VarChar()
+  walletId      String    @unique @db.VarChar()
+  lastAwardedAt DateTime?
+  streekLevel   Int       @default(1)
+  streekCount   Int       @default(0)
+  award         Float     @default(1.0)
+  wallet        Wallet    @relation(fields: [walletId], references: [id])
 }

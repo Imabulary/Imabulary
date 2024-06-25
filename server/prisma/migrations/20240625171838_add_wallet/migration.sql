@@ -2,8 +2,8 @@
 CREATE TABLE "Wallet" (
     "id" VARCHAR NOT NULL,
     "userId" VARCHAR NOT NULL,
-    "status" TEXT,
-    "balance" DOUBLE PRECISION,
+    "status" TEXT NOT NULL DEFAULT 'active',
+    "balance" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
 
     CONSTRAINT "Wallet_pkey" PRIMARY KEY ("id")
 );
