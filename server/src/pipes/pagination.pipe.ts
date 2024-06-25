@@ -3,7 +3,6 @@ import { subtract, toNumber } from 'lodash';
 import { ClientPagination, ServerPagination } from 'src/shared/types';
 import { getMaybe } from 'src/utils';
 
-// TODO: add tests
 export class PaginationPipe
   implements PipeTransform<ClientPagination, ServerPagination>
 {
