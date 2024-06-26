@@ -15,7 +15,7 @@ export class AssistantService {
   });
 
   private generativeModel = this.vertexAI.getGenerativeModel({
-    model: 'gemini-pro',
+    model: 'gemini-1.5-pro',
     generation_config: { max_output_tokens: 20, temperature: 1 },
   });
 
@@ -24,8 +24,10 @@ export class AssistantService {
 
     const rules = [
       'The length of the phrase must be maximum of 20 words',
+      'The length of the phrase must be minimum of 7 words',
       'Do not cover a string in quotes',
       'Asnwer only with the phrase, no additional text is needed',
+      'Keep the phrase simple, do not need to make it too creative',
     ].join('. ');
 
     const result = await this.generativeModel.generateContent({
