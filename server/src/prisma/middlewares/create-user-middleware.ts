@@ -1,18 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 
-export async function createWalletForUser(
-  prisma: PrismaClient,
-  userId: string,
-) {
-  await prisma.wallet.create({
-    data: {
-      userId,
-      status: 'active',
-      balance: 0,
-    },
-  });
-}
-
 export async function createUserMiddleware(params, next, prisma: PrismaClient) {
   if (params.model === 'Users' && params.action === 'create') {
     const result = await next(params);
@@ -20,4 +7,20 @@ export async function createUserMiddleware(params, next, prisma: PrismaClient) {
     return result;
   }
   return next(params);
+}
+
+export async function createWalletForUser(
+  prisma: PrismaClient,
+  userId: string,
+) {
+  const wallet = await prisma.wallet.create({ data: { userId } });
+
+  await Promise.allSettled([createDailyAwardForWallet(prisma, wallet.id)]);
+}
+
+export async function createDailyAwardForWallet(
+  prisma: PrismaClient,
+  walletId: string,
+) {
+  await prisma.awards.create({ data: { walletId } });
 }
