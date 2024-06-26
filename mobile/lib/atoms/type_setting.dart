@@ -39,6 +39,7 @@ class TypeSetting extends Text {
       style: variants[variant]!.copyWith(
         color: style?.color ?? Colors.white,
         fontWeight: style?.fontWeight,
+        fontStyle: style?.fontStyle,
         fontFamily: GoogleFonts.sourceSans3().fontFamily,
       ),
     );

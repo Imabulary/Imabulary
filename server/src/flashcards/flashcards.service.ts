@@ -26,27 +26,35 @@ export class FlashCardsService {
       const objectOnImage = await this.vision.analyze(imageUrl);
 
       const relatedPhrase = await this.assistant.generatePhrase(objectOnImage);
+      const explanation = await this.assistant.explain(objectOnImage);
+      const speechPart = await this.assistant.speechPart(objectOnImage);
 
       // TODO: Take these variables from settings of user profile, once it's done
       const sourceLanguageCode = 'en-US';
       const targetLanguageCode = 'uk-UA';
 
-      const [translatedWord, translatedPhrase] =
-        await this.translator.translate([objectOnImage, relatedPhrase], {
-          sourceLanguageCode,
-          targetLanguageCode,
-        });
+      const [translatedWord, translatedPhrase, translatedExplanation] =
+        await this.translator.translate(
+          [objectOnImage, relatedPhrase, explanation],
+          {
+            sourceLanguageCode,
+            targetLanguageCode,
+          },
+        );
 
       const card = await this.prisma.cards.create({
         data: {
           word: objectOnImage,
           phrase: relatedPhrase,
+          speech_part: speechPart,
+          translated_explanation: translatedExplanation,
           translated_phrase: translatedPhrase,
           translated_word: translatedWord,
           target_language: targetLanguageCode,
           source_language: sourceLanguageCode,
           image_url: imageUrl,
           userId,
+          explanation,
         },
       });
 
