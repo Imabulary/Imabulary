@@ -73,9 +73,9 @@ export class DailyAwardsService {
 
   async updateAwardTransaction(award: Awards, currentTime: string) {
     const nextStreekLevel = award.streekCount + 1;
-    let updatedAward: Awards & { wallet: Wallet };
 
     return await this.prisma.$transaction(async (prisma) => {
+      let updatedAward: Awards & { wallet: Wallet };
       if (nextStreekLevel === AWARD_PERIOD_UPDATION_IN_DAYS) {
         updatedAward = await prisma.awards.update({
           where: { id: award.id },

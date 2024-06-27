@@ -7,7 +7,6 @@ import { DailyAwardsService } from 'src/awards/awards.service';
 describe('WalletService', () => {
   let service: WalletService;
   let prisma: PrismaService;
-  let dailyAwardsService: DailyAwardsService;
 
   const mockPrismaService = {
     wallet: {

@@ -15,12 +15,27 @@ export async function createWalletForUser(
 ) {
   const wallet = await prisma.wallet.create({ data: { userId } });
 
-  await Promise.allSettled([createDailyAwardForWallet(prisma, wallet.id)]);
+  await Promise.allSettled([
+    createDailyAwardForWallet(prisma, wallet.id),
+    createCashbackForWallet(prisma, wallet.id),
+  ]);
 }
 
 export async function createDailyAwardForWallet(
   prisma: PrismaClient,
   walletId: string,
 ) {
-  await prisma.awards.create({ data: { walletId } });
+  await prisma.awards.create({
+    data: {
+      walletId,
+      lastAwardedAt: new Date().toISOString(),
+    },
+  });
+}
+
+export async function createCashbackForWallet(
+  prisma: PrismaClient,
+  walletId: string,
+) {
+  await prisma.cashback.create({ data: { walletId } });
 }
