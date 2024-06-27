@@ -70,7 +70,7 @@ model Wallet {
 model Awards {
   id            String    @id @default(uuid()) @db.VarChar()
   walletId      String    @unique @db.VarChar()
-  lastAwardedAt DateTime?
+  lastAwardedAt String?
   streekLevel   Int       @default(1)
   streekCount   Int       @default(0)
   award         Float     @default(1.0)

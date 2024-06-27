@@ -6,4 +6,4 @@ import { DailyAwardsService } from './awards.service';
   controllers: [DailyAwardsService],
   providers: [PrismaService, DailyAwardsService],
 })
-export class WalletModule {}
+export class DailyAwardsModule {}

@@ -2,10 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { WalletService } from '../wallet.service';
 import { PrismaService } from '../../prisma';
 import { TECHNICAL_ISSUE, WALLET_NOT_FOUND } from '../utils';
+import { DailyAwardsService } from 'src/awards/awards.service';
 
 describe('WalletService', () => {
   let service: WalletService;
   let prisma: PrismaService;
+  let dailyAwardsService: DailyAwardsService;
 
   const mockPrismaService = {
     wallet: {
@@ -13,11 +15,14 @@ describe('WalletService', () => {
     },
   };
 
+  const mockDailyAwardsService = {};
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         WalletService,
         { provide: PrismaService, useValue: mockPrismaService },
+        { provide: DailyAwardsService, useValue: mockDailyAwardsService },
       ],
     }).compile();
 

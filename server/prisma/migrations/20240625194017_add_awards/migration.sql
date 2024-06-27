@@ -2,7 +2,7 @@
 CREATE TABLE "Awards" (
     "id" VARCHAR NOT NULL,
     "walletId" VARCHAR NOT NULL,
-    "lastAwardedAt" TIMESTAMP(3),
+    "lastAwardedAt" TEXT,
     "streekLevel" INTEGER NOT NULL DEFAULT 1,
     "streekCount" INTEGER NOT NULL DEFAULT 0,
     "award" DOUBLE PRECISION NOT NULL DEFAULT 1.0,

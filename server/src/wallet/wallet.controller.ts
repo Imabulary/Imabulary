@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/guards';
 import { WalletService } from './wallet.service';
 import { Users } from '@prisma/client';
@@ -13,5 +13,12 @@ export class WalletController {
     const user: Users = request['user'];
 
     return this.walletService.balance(user.id);
+  }
+
+  @Put('/collect')
+  collectAward(@Req() request: Request) {
+    const user: Users = request['user'];
+
+    return this.walletService.collectAward(user.id);
   }
 }
