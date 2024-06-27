@@ -28,6 +28,9 @@ mixin _$FlashCard {
   String get target_language => throw _privateConstructorUsedError;
   String get source_language => throw _privateConstructorUsedError;
   String get image_url => throw _privateConstructorUsedError;
+  String? get speech_part => throw _privateConstructorUsedError;
+  String? get translated_explanation => throw _privateConstructorUsedError;
+  String? get explanation => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +51,10 @@ abstract class $FlashCardCopyWith<$Res> {
       String translated_word,
       String target_language,
       String source_language,
-      String image_url});
+      String image_url,
+      String? speech_part,
+      String? translated_explanation,
+      String? explanation});
 }
 
 /// @nodoc
@@ -72,6 +78,9 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
     Object? target_language = null,
     Object? source_language = null,
     Object? image_url = null,
+    Object? speech_part = freezed,
+    Object? translated_explanation = freezed,
+    Object? explanation = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -106,6 +115,18 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
           ? _value.image_url
           : image_url // ignore: cast_nullable_to_non_nullable
               as String,
+      speech_part: freezed == speech_part
+          ? _value.speech_part
+          : speech_part // ignore: cast_nullable_to_non_nullable
+              as String?,
+      translated_explanation: freezed == translated_explanation
+          ? _value.translated_explanation
+          : translated_explanation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      explanation: freezed == explanation
+          ? _value.explanation
+          : explanation // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -126,7 +147,10 @@ abstract class _$$FlashCardImplCopyWith<$Res>
       String translated_word,
       String target_language,
       String source_language,
-      String image_url});
+      String image_url,
+      String? speech_part,
+      String? translated_explanation,
+      String? explanation});
 }
 
 /// @nodoc
@@ -148,6 +172,9 @@ class __$$FlashCardImplCopyWithImpl<$Res>
     Object? target_language = null,
     Object? source_language = null,
     Object? image_url = null,
+    Object? speech_part = freezed,
+    Object? translated_explanation = freezed,
+    Object? explanation = freezed,
   }) {
     return _then(_$FlashCardImpl(
       id: null == id
@@ -182,6 +209,18 @@ class __$$FlashCardImplCopyWithImpl<$Res>
           ? _value.image_url
           : image_url // ignore: cast_nullable_to_non_nullable
               as String,
+      speech_part: freezed == speech_part
+          ? _value.speech_part
+          : speech_part // ignore: cast_nullable_to_non_nullable
+              as String?,
+      translated_explanation: freezed == translated_explanation
+          ? _value.translated_explanation
+          : translated_explanation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      explanation: freezed == explanation
+          ? _value.explanation
+          : explanation // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -197,7 +236,10 @@ class _$FlashCardImpl with DiagnosticableTreeMixin implements _FlashCard {
       required this.translated_word,
       required this.target_language,
       required this.source_language,
-      required this.image_url});
+      required this.image_url,
+      this.speech_part,
+      this.translated_explanation,
+      this.explanation});
 
   factory _$FlashCardImpl.fromJson(Map<String, dynamic> json) =>
       _$$FlashCardImplFromJson(json);
@@ -218,10 +260,16 @@ class _$FlashCardImpl with DiagnosticableTreeMixin implements _FlashCard {
   final String source_language;
   @override
   final String image_url;
+  @override
+  final String? speech_part;
+  @override
+  final String? translated_explanation;
+  @override
+  final String? explanation;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'FlashCard(id: $id, word: $word, phrase: $phrase, translated_phrase: $translated_phrase, translated_word: $translated_word, target_language: $target_language, source_language: $source_language, image_url: $image_url)';
+    return 'FlashCard(id: $id, word: $word, phrase: $phrase, translated_phrase: $translated_phrase, translated_word: $translated_word, target_language: $target_language, source_language: $source_language, image_url: $image_url, speech_part: $speech_part, translated_explanation: $translated_explanation, explanation: $explanation)';
   }
 
   @override
@@ -236,7 +284,11 @@ class _$FlashCardImpl with DiagnosticableTreeMixin implements _FlashCard {
       ..add(DiagnosticsProperty('translated_word', translated_word))
       ..add(DiagnosticsProperty('target_language', target_language))
       ..add(DiagnosticsProperty('source_language', source_language))
-      ..add(DiagnosticsProperty('image_url', image_url));
+      ..add(DiagnosticsProperty('image_url', image_url))
+      ..add(DiagnosticsProperty('speech_part', speech_part))
+      ..add(
+          DiagnosticsProperty('translated_explanation', translated_explanation))
+      ..add(DiagnosticsProperty('explanation', explanation));
   }
 
   @override
@@ -256,7 +308,13 @@ class _$FlashCardImpl with DiagnosticableTreeMixin implements _FlashCard {
             (identical(other.source_language, source_language) ||
                 other.source_language == source_language) &&
             (identical(other.image_url, image_url) ||
-                other.image_url == image_url));
+                other.image_url == image_url) &&
+            (identical(other.speech_part, speech_part) ||
+                other.speech_part == speech_part) &&
+            (identical(other.translated_explanation, translated_explanation) ||
+                other.translated_explanation == translated_explanation) &&
+            (identical(other.explanation, explanation) ||
+                other.explanation == explanation));
   }
 
   @JsonKey(ignore: true)
@@ -270,7 +328,10 @@ class _$FlashCardImpl with DiagnosticableTreeMixin implements _FlashCard {
       translated_word,
       target_language,
       source_language,
-      image_url);
+      image_url,
+      speech_part,
+      translated_explanation,
+      explanation);
 
   @JsonKey(ignore: true)
   @override
@@ -295,7 +356,10 @@ abstract class _FlashCard implements FlashCard {
       required final String translated_word,
       required final String target_language,
       required final String source_language,
-      required final String image_url}) = _$FlashCardImpl;
+      required final String image_url,
+      final String? speech_part,
+      final String? translated_explanation,
+      final String? explanation}) = _$FlashCardImpl;
 
   factory _FlashCard.fromJson(Map<String, dynamic> json) =
       _$FlashCardImpl.fromJson;
@@ -316,6 +380,12 @@ abstract class _FlashCard implements FlashCard {
   String get source_language;
   @override
   String get image_url;
+  @override
+  String? get speech_part;
+  @override
+  String? get translated_explanation;
+  @override
+  String? get explanation;
   @override
   @JsonKey(ignore: true)
   _$$FlashCardImplCopyWith<_$FlashCardImpl> get copyWith =>

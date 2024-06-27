@@ -17,6 +17,9 @@ class FlashCard with _$FlashCard {
     required String target_language,
     required String source_language,
     required String image_url,
+    String? speech_part,
+    String? translated_explanation,
+    String? explanation,
   }) = _FlashCard;
 
   factory FlashCard.fromJson(Map<String, dynamic> json) =>

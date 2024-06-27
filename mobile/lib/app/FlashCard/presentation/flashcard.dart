@@ -31,6 +31,49 @@ class FlashcardScreen extends ConsumerWidget {
               variant: TextVariants.headlineLarge,
             ),
             const SizedBox(
+              height: 4,
+            ),
+            if (flashcard.speech_part != null)
+              TypeSetting(
+                flashcard.speech_part!,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            if (flashcard.explanation != null &&
+                flashcard.translated_explanation != null)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const TypeSetting(
+                    'Explanation',
+                    style: TextStyle(
+                      color: AppColors.primary,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  TypeSetting(flashcard.explanation!),
+                  const TypeSetting(
+                    'English',
+                    variant: TextVariants.bodySmall,
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  TypeSetting(flashcard.translated_explanation!),
+                  const TypeSetting(
+                    'Ukrainian',
+                    variant: TextVariants.bodySmall,
+                  ),
+                ],
+              ),
+            const SizedBox(
               height: 16,
             ),
             const TypeSetting(
