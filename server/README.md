@@ -25,3 +25,5 @@ The app is written using [Node.js](https://nodejs.org/) with [Nest.js](https://n
 - `utils` - place where we store some handy functions that might be used in different places and modules of the app
 - `vision` - a module to work with Google Cloud Vision API
 - `wallet` - a module to work with wallet and payment system
+- `awards` - a module to work with awards for wallet
+- `cashback` - a module to work with cashback system
