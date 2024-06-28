@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpStatus, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma';
 import { TECHNICAL_ISSUE, WALLET_NOT_FOUND } from './utils';
 import { DailyAwardsService } from 'src/awards/awards.service';
@@ -15,17 +15,14 @@ export class WalletService {
     });
 
     if (!wallet) {
-      throw new HttpException(
-        WALLET_NOT_FOUND,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new NotFoundException(WALLET_NOT_FOUND);
     }
 
     if (typeof wallet.balance !== 'number') {
-      throw new HttpException(
-        TECHNICAL_ISSUE,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new NotFoundException({
+        message: TECHNICAL_ISSUE,
+        statusCode: HttpStatus.BAD_REQUEST,
+      });
     }
 
     return wallet.balance;
