@@ -1,6 +1,6 @@
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x", "linux-arm64-openssl-3.0.x"]
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x", "linux-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -36,6 +36,7 @@ model Users {
   sets       Sets[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  Wallet     Wallet?
 }
 
 model Sets {
@@ -58,4 +59,32 @@ model CardsOnSets {
   createdAt   DateTime @default(now())
 
   @@id([setId, flashcardId])
+}
+
+model Wallet {
+  id       String    @id @default(uuid()) @db.VarChar()
+  userId   String    @unique @db.VarChar()
+  status   String    @default("active")
+  balance  Float     @default(0.0)
+  user     Users     @relation(fields: [userId], references: [id])
+  Awards   Awards?
+  Cashback Cashback?
+}
+
+model Awards {
+  id            String  @id @default(uuid()) @db.VarChar()
+  walletId      String  @unique @db.VarChar()
+  lastAwardedAt String?
+  streekLevel   Int     @default(1)
+  streekCount   Int     @default(0)
+  award         Float   @default(1.0)
+  wallet        Wallet  @relation(fields: [walletId], references: [id])
+}
+
+model Cashback {
+  id       String @id @default(uuid()) @db.VarChar()
+  walletId String @unique @db.VarChar()
+  level    Int @default(1)
+  refund   Float @default(0.1)
+  wallet   Wallet @relation(fields: [walletId], references: [id])
 }

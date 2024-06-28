@@ -9,6 +9,7 @@ import { StorageModule } from './storage/storage.module';
 import { TranslatorModule } from './translator/translator.module';
 import { UsersModule } from './users/users.module';
 import { VisionModule } from './vision/vision.module';
+import { WalletModule } from './wallet/wallet.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { VisionModule } from './vision/vision.module';
     StorageModule,
     UsersModule,
     SetsModule,
+    WalletModule,
   ],
 })
 export class AppModule {}
