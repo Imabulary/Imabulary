@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CashbackService } from '../cashback.service';
 import { PrismaService } from 'src/prisma';
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { HttpStatus, NotFoundException } from '@nestjs/common';
 import { CASHBACK_NOT_FOUND } from '../utils';
 import { WALLET_IS_INACTIVE, WALLET_STATUS } from 'src/wallet/utils';
 
@@ -32,7 +32,7 @@ describe('CashbackService', () => {
     mockPrismaService.cashback.findFirst.mockResolvedValue(null);
 
     await expect(service.collectCashback('some-user-id')).rejects.toThrow(
-      new HttpException(CASHBACK_NOT_FOUND, HttpStatus.INTERNAL_SERVER_ERROR),
+      new NotFoundException(CASHBACK_NOT_FOUND),
     );
   });
 
@@ -42,7 +42,10 @@ describe('CashbackService', () => {
     });
 
     await expect(service.collectCashback('some-user-id')).rejects.toThrow(
-      new HttpException(WALLET_IS_INACTIVE, HttpStatus.INTERNAL_SERVER_ERROR),
+      new NotFoundException({
+        message: WALLET_IS_INACTIVE,
+        statusCode: HttpStatus.BAD_REQUEST,
+      }),
     );
   });
 

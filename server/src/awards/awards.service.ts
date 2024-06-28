@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpStatus, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma';
 import {
   AWARDS_IS_UNAVAILABLE,
@@ -29,17 +29,14 @@ export class DailyAwardsService {
     });
 
     if (!award) {
-      throw new HttpException(
-        AWARDS_NOT_FOUND,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new NotFoundException(AWARDS_NOT_FOUND);
     }
 
     if (award.wallet.status === WALLET_STATUS.INACTIVE) {
-      throw new HttpException(
-        WALLET_IS_INACTIVE,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new NotFoundException({
+        message: WALLET_IS_INACTIVE,
+        statusCode: HttpStatus.BAD_REQUEST,
+      });
     }
 
     const currentTime = new Date().toISOString();
@@ -51,10 +48,10 @@ export class DailyAwardsService {
     });
 
     if (!isAwardAvailable) {
-      throw new HttpException(
-        AWARDS_IS_UNAVAILABLE,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new NotFoundException({
+        message: AWARDS_IS_UNAVAILABLE,
+        statusCode: HttpStatus.BAD_REQUEST,
+      });
     }
 
     const isAwardExpired = checkAwardAvailability({

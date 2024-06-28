@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpStatus, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma';
 import { CASHBACK_NOT_FOUND } from './utils';
 import { WALLET_IS_INACTIVE, WALLET_STATUS } from 'src/wallet/utils';
@@ -20,17 +20,14 @@ export class CashbackService {
     });
 
     if (!cashback) {
-      throw new HttpException(
-        CASHBACK_NOT_FOUND,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new NotFoundException(CASHBACK_NOT_FOUND);
     }
 
     if (cashback.wallet.status === WALLET_STATUS.INACTIVE) {
-      throw new HttpException(
-        WALLET_IS_INACTIVE,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new NotFoundException({
+        message: WALLET_IS_INACTIVE,
+        statusCode: HttpStatus.BAD_REQUEST,
+      });
     }
 
     await this.prisma.wallet.update({

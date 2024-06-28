@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DailyAwardsService } from '../awards.service';
 import { PrismaService } from '../../prisma';
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
 import {
   AWARDS_NOT_FOUND,
   checkAwardAvailability,
@@ -55,7 +55,10 @@ describe('DailyAwardsService', () => {
     mockPrismaService.awards.findFirst.mockResolvedValue(expectedAward);
 
     await expect(service.checkAward('user-id')).rejects.toThrow(
-      new HttpException(WALLET_IS_INACTIVE, HttpStatus.INTERNAL_SERVER_ERROR),
+      new NotFoundException({
+        message: WALLET_IS_INACTIVE,
+        statusCode: HttpStatus.BAD_REQUEST,
+      }),
     );
     expect(prisma.awards.findFirst).toHaveBeenCalledWith({
       where: { wallet: { userId: 'user-id' } },
@@ -69,7 +72,7 @@ describe('DailyAwardsService', () => {
     mockPrismaService.awards.findFirst.mockResolvedValue(null);
 
     await expect(service.checkAward('user-id')).rejects.toThrow(
-      new HttpException(AWARDS_NOT_FOUND, HttpStatus.NOT_FOUND),
+      new NotFoundException(AWARDS_NOT_FOUND),
     );
   });
 
