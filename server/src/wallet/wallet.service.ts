@@ -1,4 +1,8 @@
-import { Injectable, HttpStatus, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma';
 import { TECHNICAL_ISSUE, WALLET_NOT_FOUND } from './utils';
 import { DailyAwardsService } from 'src/awards/awards.service';
@@ -19,10 +23,7 @@ export class WalletService {
     }
 
     if (typeof wallet.balance !== 'number') {
-      throw new NotFoundException({
-        message: TECHNICAL_ISSUE,
-        statusCode: HttpStatus.BAD_REQUEST,
-      });
+      throw new BadRequestException(TECHNICAL_ISSUE);
     }
 
     return wallet.balance;
