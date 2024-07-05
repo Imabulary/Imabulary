@@ -6,7 +6,6 @@ import { StorageService } from 'src/storage/storage.service';
 import { VisionService } from 'src/vision/vision.service';
 import { AssistantService } from 'src/assistant/assistant.service';
 import { TranslatorService } from 'src/translator/translator.service';
-import { CashbackService } from 'src/cashback/cashback.service';
 
 @Injectable()
 export class FlashCardsService {
@@ -16,7 +15,6 @@ export class FlashCardsService {
     private readonly vision: VisionService,
     private readonly assistant: AssistantService,
     private readonly translator: TranslatorService,
-    private readonly cashback: CashbackService,
   ) {}
 
   async scan(userId: string, fileName: string, file: Buffer) {
@@ -114,33 +112,5 @@ export class FlashCardsService {
     });
 
     return true;
-  }
-
-  async createCardWithCashBack({
-    objectOnImage,
-    relatedPhrase,
-    translatedPhrase,
-    translatedWord,
-    targetLanguageCode,
-    sourceLanguageCode,
-    imageUrl,
-    userId,
-  }) {
-    return await this.prisma.$transaction(async (prisma) => {
-      await this.cashback.collectCashback(userId);
-
-      return await prisma.cards.create({
-        data: {
-          word: objectOnImage,
-          phrase: relatedPhrase,
-          translated_phrase: translatedPhrase,
-          translated_word: translatedWord,
-          target_language: targetLanguageCode,
-          source_language: sourceLanguageCode,
-          image_url: imageUrl,
-          userId,
-        },
-      });
-    });
   }
 }
