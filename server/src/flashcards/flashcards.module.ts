@@ -7,7 +7,6 @@ import { StorageService } from 'src/storage/storage.service';
 import { VisionService } from 'src/vision/vision.service';
 import { AssistantService } from 'src/assistant/assistant.service';
 import { TranslatorService } from 'src/translator/translator.service';
-import { CashbackService } from 'src/cashback/cashback.service';
 
 @Module({
   controllers: [FlashCardsController],
@@ -19,7 +18,6 @@ import { CashbackService } from 'src/cashback/cashback.service';
     VisionService,
     AssistantService,
     TranslatorService,
-    CashbackService,
   ],
 })
 export class FlashCardsModule {}

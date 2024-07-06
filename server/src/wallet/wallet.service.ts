@@ -1,10 +1,6 @@
-import {
-  Injectable,
-  NotFoundException,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma';
-import { TECHNICAL_ISSUE, WALLET_NOT_FOUND } from './utils';
+import { validateWallet } from './utils';
 import { DailyAwardsService } from 'src/awards/awards.service';
 @Injectable()
 export class WalletService {
@@ -18,13 +14,7 @@ export class WalletService {
       where: { userId },
     });
 
-    if (!wallet) {
-      throw new NotFoundException(WALLET_NOT_FOUND);
-    }
-
-    if (typeof wallet.balance !== 'number') {
-      throw new BadRequestException(TECHNICAL_ISSUE);
-    }
+    validateWallet(wallet);
 
     return wallet.balance;
   }

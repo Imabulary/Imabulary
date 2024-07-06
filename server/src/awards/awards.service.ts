@@ -14,7 +14,7 @@ import {
   AWARD_PERIOD_UPDATION_IN_DAYS,
 } from './utils';
 import { HOURS_IN_DAY, checkAwardAvailability } from './utils';
-import { WALLET_IS_INACTIVE, WALLET_STATUS } from 'src/wallet/utils';
+import { conduct, WALLET_IS_INACTIVE, WALLET_STATUS } from 'src/wallet/utils';
 import { Awards, Wallet } from '@prisma/client';
 @Injectable()
 export class DailyAwardsService {
@@ -96,7 +96,7 @@ export class DailyAwardsService {
       return await prisma.wallet.update({
         where: { id: updatedAward.walletId },
         data: {
-          balance: updatedAward.wallet.balance + updatedAward.award,
+          balance: conduct(updatedAward.wallet.balance, updatedAward.award),
         },
       });
     });
@@ -118,7 +118,7 @@ export class DailyAwardsService {
       return await prisma.wallet.update({
         where: { id: updatedAward.walletId },
         data: {
-          balance: updatedAward.wallet.balance + updatedAward.award,
+          balance: conduct(updatedAward.wallet.balance, updatedAward.award),
         },
       });
     });

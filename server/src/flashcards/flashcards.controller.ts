@@ -22,6 +22,8 @@ import type { Users } from '@prisma/client';
 import { DisorganizeFlashcardsDTO, OrganizeFlashcardsDTO } from './dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
+import { DeductBalance } from 'src/wallet/deduct-balance.interceptor';
+import { CollectCashback } from 'src/cashback/cashback.interceptor';
 
 const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
@@ -31,6 +33,8 @@ export class FlashCardsController {
   constructor(private readonly flashCardsService: FlashCardsService) {}
 
   @Post('scan')
+  @DeductBalance(1)
+  @CollectCashback()
   @UseInterceptors(FileInterceptor('file'))
   scan(
     @Req() request: Request,
