@@ -1,0 +1,14 @@
+type: object
+properties:
+  flashcardIds:
+    type: array
+    items:
+      type: string
+      format: uuid
+    description: An array of flashcard IDs to be disorganized
+    example: ["123e4567-e89b-12d3-a456-426614174000"]
+  setId:
+    type: string
+    format: uuid
+    description: The ID of the set to disorganize flashcards from
+    example: "123e4567-e89b-12d3-a456-426614174000"

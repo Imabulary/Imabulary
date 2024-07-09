@@ -1,0 +1,42 @@
+post:
+  tags:
+    - sets
+  summary: Create a new set
+  description: Create a new set with a name and optional description
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/set/create-set-dto.yaml"
+  responses:
+    "201":
+      description: Create set
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/set/set-response.yaml"
+  security:
+    - bearerAuth: []
+
+get:
+  tags:
+    - sets
+  summary: Get all sets
+  description: Get a list of all sets
+  parameters:
+    - name: pagination
+      in: query
+      description: Pagination parameters
+      schema:
+        $ref: "../../components/schemas/filter/server-pagination.yaml"
+  responses:
+    "200":
+      description: List of all sets
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/set/all-sets-response.yaml"
+
+  security:
+    - bearerAuth: []

@@ -1,0 +1,9 @@
+type: object
+properties:
+  result:
+    type: array
+    items:
+      $ref: "sets.yaml"
+  total:
+    type: integer
+    example: 1

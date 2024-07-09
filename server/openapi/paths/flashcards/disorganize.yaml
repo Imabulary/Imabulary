@@ -1,0 +1,16 @@
+ delete:
+      tags:
+        - flashcards
+      summary: Disorganize flashcards
+      description: Disorganize flashcards from a set
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+               $ref: '../../components/schemas/card/disorganize-flashcards-dto.yaml'
+      responses:
+        "200":
+          description: Flashcards disorganized successfully
+      security:
+        - bearerAuth: []

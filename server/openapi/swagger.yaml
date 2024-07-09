@@ -1,0 +1,43 @@
+openapi: 3.0.0
+info:
+  title: Imabulary API
+  description: API documentation for the Imabulary API
+  version: 1.0.0
+
+paths:
+  /flashcards/scan:
+    $ref: './paths/flashcards/scan.yaml'
+
+  /flashcards/:
+    $ref: './paths/flashcards/flashcards.yaml'
+
+  /flashcards/organize:
+    $ref: './paths/flashcards/organize.yaml'
+
+  /flashcards/disorganize:
+    $ref: './paths/flashcards/disorganize.yaml'
+
+  /sets:
+    $ref: './paths/sets/sets.yaml'
+
+  /sets/{id}:
+    $ref: './paths/sets/sets-id.yaml'
+  
+  /users:
+    $ref: './paths/users/users.yaml'
+  
+  /wallet:
+    $ref: './paths/wallet/balance.yaml'
+  
+  /wallet/collect: 
+    $ref: './paths/wallet/collect-award.yaml'
+
+components:
+  schemas:
+    $ref: './components/schemas/index.yaml'
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

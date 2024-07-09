@@ -1,0 +1,11 @@
+type: object
+properties:
+  statusCode:
+    type: integer
+    description: The HTTP status code
+  message:
+    type: string
+    description: The error message
+  error:
+    type: string
+    description: The error type
