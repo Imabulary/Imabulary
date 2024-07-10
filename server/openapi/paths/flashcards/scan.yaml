@@ -1,8 +1,8 @@
 post:
   tags:
     - flashcards
-  summary: Scan flashcards
-  description: Scan flashcards by uploading an image and processing it. This operation deducts 1 coin from the user's wallet and collect cashback.
+  summary: Scan photography and generate flashcard
+  description: Scan photography by uploading an image and processing it to generate flashcard. This operation deducts 1 coin from the user's wallet and collect cashback.
   requestBody:
     required: true
     content:
@@ -13,10 +13,10 @@ post:
             file:
               type: string
               format: binary
-              description: Flashcard image to be scanned
+              description: Photography to be scanned
   responses:
     "201":
-      description: Successfully processed the flashcard image
+      description: Successfully processed photo and generated flashcard
       content:
         application/json:
           schema:
