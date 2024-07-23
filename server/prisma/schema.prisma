@@ -12,6 +12,7 @@ model Cards {
   id                     String        @id @default(uuid()) @db.VarChar()
   word                   String        @db.VarChar()
   phrase                 String
+  file_name              String
   explanation            String?
   speech_part            String?       @db.VarChar()
   translated_word        String        @db.VarChar()
@@ -26,6 +27,7 @@ model Cards {
   createdAt              DateTime      @default(now())
   updatedAt              DateTime      @updatedAt
   CardsOnSets            CardsOnSets[]
+  Feedback               Feedback?
 }
 
 model Users {
@@ -84,7 +86,15 @@ model Awards {
 model Cashback {
   id       String @id @default(uuid()) @db.VarChar()
   walletId String @unique @db.VarChar()
-  level    Int @default(1)
-  refund   Float @default(0.1)
+  level    Int    @default(1)
+  refund   Float  @default(0.1)
   wallet   Wallet @relation(fields: [walletId], references: [id])
+}
+
+model Feedback {
+  id            String   @id @default(uuid()) @db.VarChar()
+  cardId        String   @unique @db.VarChar()
+  isAppropriate Boolean?
+  textFeedback  String?
+  card          Cards    @relation(fields: [cardId], references: [id])
 }
