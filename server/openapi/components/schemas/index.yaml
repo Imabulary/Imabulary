@@ -1,0 +1,53 @@
+CardResponse:
+  $ref: "./card/card-response.yaml"
+
+AllCardsResponse:
+  $ref: "./card/all-cards-response.yaml"
+
+Card:
+  $ref: "./card/card.yaml"
+
+ErrorResponse:
+  $ref: "./error/error-response.yaml"
+
+OrganizeFlashcardsDTO:
+  $ref: "./card/organize-flashcards-dto.yaml"
+
+DisorganizeFlashcardsDTO:
+  $ref: "./card/disorganize-flashcards-dto.yaml"
+
+CreateSetDto:
+  $ref: "./set/create-set-dto.yaml"
+
+UpdateSetDto:
+  $ref: "./set/update-set-dto.yaml"
+
+ServerPagination:
+  $ref: "./filter/server-pagination.yaml"
+
+Filters:
+  $ref: "./filter/filters.yaml"
+
+Sets:
+  $ref: "./set/sets.yaml"
+
+SetResponse:
+  $ref: "./set/set-response.yaml"
+
+AllSetsResponse:
+  $ref: "./set/all-sets-response.yaml"
+
+CardsOnSets:
+  $ref: "./set/cards-on-sets.yaml"
+
+UserResponse:
+  $ref: "./user/user-response.yaml"
+
+User:
+  $ref: "./user/user.yaml"
+
+WalletBalance:
+  $ref: "./wallet/balance-response.yaml"
+
+CollectAwardResponse:
+  $ref: "./wallet/collect-award-response.yaml"

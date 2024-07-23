@@ -1,0 +1,17 @@
+type: object
+properties:
+  flashcardIds:
+    type: array
+    items:
+      type: string
+      format: uuid
+    description: An array of flashcard IDs to be organized
+    example: ["123e4567-e89b-12d3-a456-426614174000"]
+  setId:
+    type: string
+    format: uuid
+    description: The ID of the set to organize flashcards into
+    example: "123e4567-e89b-12d3-a456-426614174000"
+required:
+  - flashcardIds
+  - setId

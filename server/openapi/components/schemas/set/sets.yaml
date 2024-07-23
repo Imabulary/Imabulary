@@ -1,0 +1,35 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: Unique identifier for the set.
+  name:
+    type: string
+    description: Name of the set.
+  description:
+    type: string
+    nullable: true
+    description: Description of the set.
+  userId:
+    type: string
+    nullable: true
+    description: Identifier of the user who owns the set.
+  flashcards:
+    type: array
+    items:
+      $ref: "../card/card.yaml"
+    description: List of flashcards associated with the set.
+  createdAt:
+    type: string
+    format: date-time
+    description: Timestamp when the set was created.
+  updatedAt:
+    type: string
+    format: date-time
+    description: Timestamp when the set was last updated.
+  CardsOnSets:
+    type: array
+    items:
+      $ref: "cards-on-sets.yaml"
+    description: List of CardsOnSets associations.

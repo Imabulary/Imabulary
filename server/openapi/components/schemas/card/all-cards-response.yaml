@@ -1,0 +1,10 @@
+type: object
+properties:
+  result:
+    type: array
+    items:
+      $ref: "card.yaml"
+  total:
+    type: integer
+    description: Total number of flashcards
+    example: 1

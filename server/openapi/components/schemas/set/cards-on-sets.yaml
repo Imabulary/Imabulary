@@ -1,0 +1,14 @@
+type: object
+properties:
+  setId:
+    type: string
+    format: uuid
+    description: Unique identifier for the set.
+  flashcardId:
+    type: string
+    format: uuid
+    description: Unique identifier for the flashcard.
+  createdAt:
+    type: string
+    format: date-time
+    description: Timestamp when the CardsOnSets association was created.

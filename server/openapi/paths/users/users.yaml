@@ -1,0 +1,18 @@
+ post:
+    tags:
+      - users
+    summary: Create a new user
+    description: Create a new user with UID and email
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/user/create-user-dto.yaml'
+    responses:
+      '201':
+        description: User created successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../../components/schemas/user/user-response.yaml'

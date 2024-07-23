@@ -6,6 +6,7 @@ import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './filters';
 import { ValidationPipe } from '@nestjs/common';
 import { ResponseInterceptor } from './interceptors';
+import { setupSwagger } from 'openapi/swagger.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -23,6 +24,10 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResponseInterceptor());
 
   const PORT = configService.get<string>('PORT') || 5000;
+
+  if (configService.get<string>('NODE_ENV') === 'development') {
+    setupSwagger(app);
+  }
 
   await app.listen(PORT);
 }
