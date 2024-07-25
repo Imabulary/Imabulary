@@ -1,15 +1,14 @@
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { SwaggerModule } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
+import { join } from 'path';
+import { readFile } from 'fs/promises';
+import * as yaml from 'js-yaml';
 
-export function setupSwagger(app: INestApplication): void {
-  const options = new DocumentBuilder()
-    .setTitle('Imabulary API')
-    .setDescription('API documentation for the Imabulary API')
-    .setVersion('1.0.0')
-    .addBearerAuth()
-    .build();
-  const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api', app, document, {
-    yamlDocumentUrl: 'swagger.yaml',
-  });
+export async function setupSwagger(app: INestApplication) {
+  const fileContents = await readFile(
+    join(process.cwd(), './openapi/swagger.generated.yaml'),
+    'utf-8',
+  );
+  const document = yaml.load(fileContents);
+  SwaggerModule.setup('api', app, document);
 }
