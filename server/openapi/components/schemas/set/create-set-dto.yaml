@@ -1,0 +1,12 @@
+type: object
+properties:
+  name:
+    type: string
+    description: Name of the set
+    example: "My Flashcard Set"
+  description:
+    type: string
+    description: Description of the set
+    example: "This is a set for organizing flashcards."
+required:
+  - name
