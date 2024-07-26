@@ -3,16 +3,18 @@ import admin from 'firebase-admin';
 import { File } from '@google-cloud/storage';
 import { getDownloadURL } from 'firebase-admin/storage';
 import { handleUploadException } from './utils';
+import { formatFileName } from 'src/utils';
 
 @Injectable()
 export class StorageService {
   async upload(fileName: string, file: Buffer) {
     try {
-      const storageFile = this.findOne(fileName);
+      const generatedFileName = formatFileName(fileName);
+      const storageFile = this.findOne(generatedFileName);
 
       await storageFile.save(file);
 
-      return storageFile;
+      return { storageFile, generatedFileName };
     } catch (error: any) {
       handleUploadException(error);
     }
