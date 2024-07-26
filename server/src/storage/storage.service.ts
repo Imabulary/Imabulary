@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import admin from 'firebase-admin';
 import { File } from '@google-cloud/storage';
 import { getDownloadURL } from 'firebase-admin/storage';
@@ -8,8 +8,7 @@ import { handleUploadException } from './utils';
 export class StorageService {
   async upload(fileName: string, file: Buffer) {
     try {
-      const bucket = admin.storage().bucket();
-      const storageFile = bucket.file(fileName);
+      const storageFile = this.findOne(fileName);
 
       await storageFile.save(file);
 
@@ -23,10 +22,15 @@ export class StorageService {
     return getDownloadURL(file);
   }
 
+  findOne(fileName: string) {
+    const bucket = admin.storage().bucket();
+    const storageFile = bucket.file(fileName);
+    return storageFile;
+  }
+
   async delete(fileName: string) {
     try {
-      const bucket = admin.storage().bucket();
-      const storageFile = bucket.file(fileName);
+      const storageFile = this.findOne(fileName);
 
       await storageFile.delete();
     } catch (error: any) {

@@ -13,7 +13,7 @@ import { AssistantService } from 'src/assistant/assistant.service';
 import { TranslatorService } from 'src/translator/translator.service';
 import { conduct } from 'src/wallet/utils';
 import { randomUUID } from 'crypto';
-import { formatFileName } from 'src/shared';
+import { formatFileName } from 'src/utils';
 
 @Injectable()
 export class FlashCardsService {
@@ -126,12 +126,18 @@ export class FlashCardsService {
 
   async like(likeFlashcardDto: LikeFlashcardDto) {
     const { cardId } = likeFlashcardDto;
+    try {
+      const feedback = await this.prisma.feedback.create({
+        data: { cardId, isAppropriate: true },
+      });
 
-    await this.prisma.feedback.create({
-      data: { cardId, isAppropriate: true },
-    });
-
-    return true;
+      if (!feedback) {
+        throw new BadRequestException('User not found for the given card');
+      }
+      return true;
+    } catch (error) {
+      throw new BadRequestException('Failed to like the flashcard');
+    }
   }
 
   async dislike(dislikeFlashcardDto: DislikeFlashcardDto, userId: string) {

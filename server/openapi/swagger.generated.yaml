@@ -106,6 +106,54 @@ paths:
           description: Flashcards disorganized successfully
       security:
         - bearerAuth: []
+  /flashcards/like:
+    post:
+      tags:
+        - flashcards
+      summary: Like a flashcard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LikeFlashcardDto'
+      responses:
+        '200':
+          description: Flashcard liked successfully
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /flashcards/dislike:
+    post:
+      tags:
+        - flashcards
+      summary: Dislike a flashcard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DislikeFlashcardDto'
+      responses:
+        '200':
+          description: Flashcard disliked successfully
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /sets:
     post:
       tags:
@@ -637,6 +685,23 @@ components:
         - lastAwardedAt
         - nextAward
         - expirationTime
+    LikeFlashcardDto:
+      type: object
+      required:
+        - cardId
+      properties:
+        cardId:
+          type: string
+          description: ID of the flashcard
+    DislikeFlashcardDto:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/LikeFlashcardDto'
+        - type: object
+          properties:
+            textFeedback:
+              type: string
+              description: Optional text feedback
   securitySchemes:
     bearerAuth:
       type: http
