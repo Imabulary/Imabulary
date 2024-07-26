@@ -1,0 +1,709 @@
+openapi: 3.0.0
+info:
+  title: Imabulary API
+  description: API documentation for the Imabulary API
+  version: 1.0.0
+paths:
+  /flashcards/scan:
+    post:
+      tags:
+        - flashcards
+      summary: Scan photography and generate flashcard
+      description: Scan photography by uploading an image and processing it to generate flashcard. This operation deducts 1 coin from the user's wallet and collect cashback.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Photography to be scanned
+      responses:
+        '201':
+          description: Successfully processed photo and generated flashcard
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
+  /flashcards/:
+    get:
+      tags:
+        - flashcards
+      summary: Get all flashcards
+      description: Get a list of all flashcards
+      parameters:
+        - name: pagination
+          in: query
+          description: Pagination parameters
+          schema:
+            $ref: '#/components/schemas/ServerPagination'
+        - name: filters
+          in: query
+          description: Filters for querying flashcards
+          schema:
+            $ref: '#/components/schemas/Filters'
+      responses:
+        '200':
+          description: List of all flashcards
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllCardsResponse'
+      security:
+        - bearerAuth: []
+  /flashcards/organize:
+    put:
+      tags:
+        - flashcards
+      summary: Organize flashcards
+      description: Organize flashcards into a set
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizeFlashcardsDTO'
+      responses:
+        '200':
+          description: Organize flashcards
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllCardsResponse'
+      security:
+        - bearerAuth: []
+  /flashcards/disorganize:
+    delete:
+      tags:
+        - flashcards
+      summary: Disorganize flashcards
+      description: Disorganize flashcards from a set
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DisorganizeFlashcardsDTO'
+      responses:
+        '200':
+          description: Flashcards disorganized successfully
+      security:
+        - bearerAuth: []
+  /flashcards/like:
+    post:
+      tags:
+        - flashcards
+      summary: Like a flashcard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LikeFlashcardDto'
+      responses:
+        '200':
+          description: Flashcard liked successfully
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /flashcards/dislike:
+    post:
+      tags:
+        - flashcards
+      summary: Dislike a flashcard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DislikeFlashcardDto'
+      responses:
+        '200':
+          description: Flashcard disliked successfully
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /sets:
+    post:
+      tags:
+        - sets
+      summary: Create a new set
+      description: Create a new set with a name and optional description
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSetDto'
+      responses:
+        '201':
+          description: Create set
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetResponse'
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - sets
+      summary: Get all sets
+      description: Get a list of all sets
+      parameters:
+        - name: pagination
+          in: query
+          description: Pagination parameters
+          schema:
+            $ref: '#/components/schemas/ServerPagination'
+      responses:
+        '200':
+          description: List of all sets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllSetsResponse'
+      security:
+        - bearerAuth: []
+  '/sets/{id}':
+    get:
+      tags:
+        - sets
+      summary: Get a single set
+      description: Get details of a single set by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the set
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Set details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetResponse'
+        '404':
+          description: When set is equals null
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
+    patch:
+      tags:
+        - sets
+      summary: Update a set
+      description: Update the name or description of a set
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the set
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSetDto'
+      responses:
+        '200':
+          description: Set updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetResponse'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - sets
+      summary: Delete a set
+      description: Delete a set by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the set
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Set deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetResponse'
+      security:
+        - bearerAuth: []
+  /users:
+    post:
+      tags:
+        - users
+      summary: Create a new user
+      description: Create a new user with UID and email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uid:
+                  type: string
+                  description: UID must be a valid string
+                  example: user-123456
+                email:
+                  type: string
+                  description: Email must be a valid email address
+                  example: user@example.com
+              required:
+                - uid
+                - email
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+  /wallet:
+    get:
+      tags:
+        - wallet
+      summary: Get coin balance
+      description: Get current coin balance in float format
+      responses:
+        '200':
+          description: Return user's coin balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletBalance'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /wallet/collect:
+    put:
+      tags:
+        - wallet
+      summary: Collect daily award
+      description: 'Check award availability and collect daily award. Return current balance, expiration time in timestamp, next award prediction, and date of awarding in ISO string'
+      responses:
+        '200':
+          description: Award had been collected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectAwardResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    CardResponse:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/Card'
+    AllCardsResponse:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+        total:
+          type: integer
+          description: Total number of flashcards
+          example: 1
+    Card:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the card
+          example: 123e4567-e89b-12d3-a456-426614174000
+        word:
+          type: string
+          description: The detected word from the image
+          example: apple
+        phrase:
+          type: string
+          description: A related phrase generated by the assistant
+          example: An apple a day keeps the doctor away
+        explanation:
+          type: string
+          description: The explanation of the word
+          example: 'A fruit that is usually red, green, or yellow'
+          nullable: true
+        speech_part:
+          type: string
+          description: The part of speech of the word
+          example: noun
+          nullable: true
+        translated_word:
+          type: string
+          description: The translated word
+          example: яблуко
+        translated_phrase:
+          type: string
+          description: The translated phrase
+          example: Яблуко в день тримає лікаря далеко
+        translated_explanation:
+          type: string
+          description: The translated explanation of the word
+          example: 'Фрукт, який зазвичай червоний, зелений або жовтий'
+          nullable: true
+        target_language:
+          type: string
+          description: The target language code
+          example: uk-UA
+        source_language:
+          type: string
+          description: The source language code
+          example: en-US
+        image_url:
+          type: string
+          description: The URL of the uploaded image
+          example: 'https://example.com/image.png'
+        userId:
+          type: string
+          description: The ID of the user
+          example: 123e4567-e89b-12d3-a456-426614174000
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time when the card was created
+          example: '2023-07-08T14:48:00.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the card was last updated
+          example: '2023-07-08T14:48:00.000Z'
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: The HTTP status code
+        message:
+          type: string
+          description: The error message
+        error:
+          type: string
+          description: The error type
+    OrganizeFlashcardsDTO:
+      type: object
+      properties:
+        flashcardIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: An array of flashcard IDs to be organized
+          example:
+            - 123e4567-e89b-12d3-a456-426614174000
+        setId:
+          type: string
+          format: uuid
+          description: The ID of the set to organize flashcards into
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+        - flashcardIds
+        - setId
+    DisorganizeFlashcardsDTO:
+      type: object
+      properties:
+        flashcardIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: An array of flashcard IDs to be disorganized
+          example:
+            - 123e4567-e89b-12d3-a456-426614174000
+        setId:
+          type: string
+          format: uuid
+          description: The ID of the set to disorganize flashcards from
+          example: 123e4567-e89b-12d3-a456-426614174000
+    CreateSetDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the set
+          example: My Flashcard Set
+        description:
+          type: string
+          description: Description of the set
+          example: This is a set for organizing flashcards.
+      required:
+        - name
+    UpdateSetDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the set
+          example: My Flashcard Set
+        description:
+          type: string
+          description: Description of the set
+          example: This is a set for organizing flashcards.
+      required:
+        - name
+    ServerPagination:
+      type: object
+      properties:
+        take:
+          type: integer
+          description: Number of items per page
+          example: 100
+        skip:
+          type: integer
+          description: Number of items to skip
+          example: 0
+    Filters:
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          equals:
+            type: string
+            description: Filter by prisma property
+    Sets:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the set.
+        name:
+          type: string
+          description: Name of the set.
+        description:
+          type: string
+          nullable: true
+          description: Description of the set.
+        userId:
+          type: string
+          nullable: true
+          description: Identifier of the user who owns the set.
+        flashcards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+          description: List of flashcards associated with the set.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the set was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the set was last updated.
+        CardsOnSets:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardsOnSets'
+          description: List of CardsOnSets associations.
+    SetResponse:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/Sets'
+    AllSetsResponse:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sets'
+        total:
+          type: integer
+          example: 1
+    CardsOnSets:
+      type: object
+      properties:
+        setId:
+          type: string
+          format: uuid
+          description: Unique identifier for the set.
+        flashcardId:
+          type: string
+          format: uuid
+          description: Unique identifier for the flashcard.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the CardsOnSets association was created.
+    UserResponse:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/User'
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the user
+          example: 123e4567-e89b-12d3-a456-426614174000
+        externalId:
+          type: string
+          description: The external ID of the user
+          example: external-123456
+        email:
+          type: string
+          description: The email of the user
+          example: user@example.com
+        flashcards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+          description: The list of flashcards associated with the user
+        sets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sets'
+          description: The list of sets associated with the user
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time when the user was created
+          example: '2023-07-08T14:48:00.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          description: The date and time when the user was last updated
+          example: '2023-07-08T14:48:00.000Z'
+        Wallet:
+          type: object
+          description: The wallet associated with the user
+          nullable: false
+          properties:
+            id:
+              type: string
+              description: The ID of the wallet
+            status:
+              type: string
+              description: Status of Wallet. Can be 'active' or 'inactive'
+            balance:
+              type: number
+              description: The balance of the wallet
+    WalletBalance:
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            balance:
+              description: User coin balance
+              type: number
+              format: float
+              example: 1
+    CollectAwardResponse:
+      type: object
+      properties:
+        currentBalance:
+          type: number
+          format: float
+          description: The current balance of the wallet
+          example: 123.45
+        lastAwardedAt:
+          type: string
+          format: date-time
+          description: The ISO date when the last award was given
+          example: '2023-07-08T14:48:00.000Z'
+        nextAward:
+          type: number
+          format: float
+          description: The next award amount
+          example: 50
+        expirationTime:
+          type: integer
+          description: The expiration time in seconds
+          example: 3600
+      required:
+        - currentBalance
+        - lastAwardedAt
+        - nextAward
+        - expirationTime
+    LikeFlashcardDto:
+      type: object
+      required:
+        - cardId
+      properties:
+        cardId:
+          type: string
+          description: ID of the flashcard
+    DislikeFlashcardDto:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/LikeFlashcardDto'
+        - type: object
+          properties:
+            textFeedback:
+              type: string
+              description: Optional text feedback
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

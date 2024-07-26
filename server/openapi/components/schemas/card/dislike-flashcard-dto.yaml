@@ -1,0 +1,8 @@
+type: object
+allOf:
+  - $ref: "like-flashcard-dto.yaml"
+  - type: object
+    properties:
+      textFeedback:
+        type: string
+        description: Optional text feedback

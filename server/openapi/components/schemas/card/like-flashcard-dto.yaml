@@ -1,0 +1,7 @@
+type: object
+required:
+  - cardId
+properties:
+  cardId:
+    type: string
+    description: ID of the flashcard

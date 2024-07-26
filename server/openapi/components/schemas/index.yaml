@@ -51,3 +51,9 @@ WalletBalance:
 
 CollectAwardResponse:
   $ref: "./wallet/collect-award-response.yaml"
+
+LikeFlashcardDto:
+  $ref: "./card/like-flashcard-dto.yaml"
+
+DislikeFlashcardDto:
+  $ref: "./card/dislike-flashcard-dto.yaml"

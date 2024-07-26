@@ -19,7 +19,12 @@ import { Filters, ServerPagination } from 'src/shared';
 import { Request } from 'express';
 import { FlashCardsService } from './flashcards.service';
 import type { Users } from '@prisma/client';
-import { DisorganizeFlashcardsDTO, OrganizeFlashcardsDTO } from './dto';
+import {
+  DisorganizeFlashcardsDTO,
+  OrganizeFlashcardsDTO,
+  DislikeFlashcardDto,
+  LikeFlashcardDto,
+} from './dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
 import { DeductBalance } from 'src/wallet/deduct-balance.interceptor';
@@ -74,5 +79,20 @@ export class FlashCardsController {
   @Delete('/disorganize')
   disorganize(@Body() disorganizeFlashcardsDto: DisorganizeFlashcardsDTO) {
     return this.flashCardsService.disorganize(disorganizeFlashcardsDto);
+  }
+
+  @Post('/like')
+  like(@Body() likeFlashcardDto: LikeFlashcardDto) {
+    return this.flashCardsService.like(likeFlashcardDto);
+  }
+
+  @Post('/dislike')
+  dislike(
+    @Req() request: Request,
+    @Body() dislikeFlashcardDto: DislikeFlashcardDto,
+  ) {
+    const user: Users = request['user'];
+
+    return this.flashCardsService.dislike(dislikeFlashcardDto, user.id);
   }
 }

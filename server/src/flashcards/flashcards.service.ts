@@ -1,11 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma';
 import { Filters, ServerPagination } from 'src/shared';
-import { DisorganizeFlashcardsDTO, OrganizeFlashcardsDTO } from './dto';
+import {
+  DisorganizeFlashcardsDTO,
+  OrganizeFlashcardsDTO,
+  DislikeFlashcardDto,
+  LikeFlashcardDto,
+} from './dto';
 import { StorageService } from 'src/storage/storage.service';
 import { VisionService } from 'src/vision/vision.service';
 import { AssistantService } from 'src/assistant/assistant.service';
 import { TranslatorService } from 'src/translator/translator.service';
+import { conduct } from 'src/wallet/utils';
 
 @Injectable()
 export class FlashCardsService {
@@ -18,7 +24,10 @@ export class FlashCardsService {
   ) {}
 
   async scan(userId: string, fileName: string, file: Buffer) {
-    const storageFile = await this.storage.upload(fileName, file);
+    const { storageFile, generatedFileName } = await this.storage.upload(
+      fileName,
+      file,
+    );
 
     try {
       const imageUrl = await this.storage.getImageURL(storageFile);
@@ -54,6 +63,7 @@ export class FlashCardsService {
           source_language: sourceLanguageCode,
           image_url: imageUrl,
           userId,
+          file_name: generatedFileName,
           explanation,
         },
       });
@@ -109,6 +119,47 @@ export class FlashCardsService {
 
     await this.prisma.cardsOnSets.deleteMany({
       where: { setId, flashcardId: { in: flashcardIds } },
+    });
+
+    return true;
+  }
+
+  async like(likeFlashcardDto: LikeFlashcardDto) {
+    const { cardId } = likeFlashcardDto;
+    await this.prisma.feedback.create({
+      data: { cardId, isAppropriate: true },
+    });
+  }
+
+  async dislike(dislikeFlashcardDto: DislikeFlashcardDto, userId: string) {
+    const { cardId, textFeedback } = dislikeFlashcardDto;
+
+    await this.prisma.$transaction(async (prisma) => {
+      const feedback = await prisma.feedback.create({
+        data: { cardId, isAppropriate: false, textFeedback },
+        include: {
+          card: {
+            include: {
+              user: {
+                include: {
+                  Wallet: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!feedback.card.user) {
+        throw new NotFoundException('User not found for the given card');
+      }
+
+      await prisma.wallet.update({
+        where: { userId },
+        data: { balance: conduct(feedback.card.user.Wallet.balance, 1) },
+      });
+
+      await this.storage.delete(feedback.card.file_name);
     });
 
     return true;
