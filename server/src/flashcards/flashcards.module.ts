@@ -1,23 +1,30 @@
 import { Module } from '@nestjs/common';
-import { FlashCardsService } from './flashcards.service';
-import { FlashCardsController } from './flashcards.controller';
-import { UsersService } from 'src/users';
-import { PrismaService } from 'src/prisma';
-import { StorageService } from 'src/storage/storage.service';
-import { VisionService } from 'src/vision/vision.service';
+import { CustomPrismaModule } from 'nestjs-prisma';
 import { AssistantService } from 'src/assistant/assistant.service';
+import { extendedPrismaClient, PrismaService } from 'src/prisma';
+import { StorageService } from 'src/storage/storage.service';
 import { TranslatorService } from 'src/translator/translator.service';
+import { UsersService } from 'src/users';
+import { VisionService } from 'src/vision/vision.service';
+import { FlashCardsController } from './flashcards.controller';
+import { FlashCardsService } from './flashcards.service';
 
 @Module({
   controllers: [FlashCardsController],
+  imports: [
+    CustomPrismaModule.forRootAsync({
+      name: 'PrismaService',
+      useFactory: () => extendedPrismaClient,
+    }),
+  ],
   providers: [
     FlashCardsService,
     PrismaService,
-    UsersService,
     StorageService,
     VisionService,
     AssistantService,
     TranslatorService,
+    UsersService,
   ],
 })
 export class FlashCardsModule {}

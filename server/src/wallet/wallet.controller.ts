@@ -8,11 +8,12 @@ import { Users } from '@prisma/client';
 export class WalletController {
   constructor(private readonly walletService: WalletService) {}
 
+  // LINK server/openapi/paths/wallet/wallet.yaml
   @Get('/')
-  balance(@Req() request: Request) {
+  wallet(@Req() request: Request) {
     const user: Users = request['user'];
 
-    return this.walletService.balance(user.id);
+    return this.walletService.wallet(user.id);
   }
 
   @Put('/collect')

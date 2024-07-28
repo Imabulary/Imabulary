@@ -1,0 +1,24 @@
+get:
+  tags:
+    - wallet
+  summary: Get wallet info
+  description: Get info about user's wallet
+  responses:
+    '200':
+      description: Return user's wallet
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/wallet/wallet-response.yaml'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/error/error-response.yaml'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/error/error-response.yaml'

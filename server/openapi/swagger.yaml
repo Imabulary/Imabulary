@@ -6,41 +6,41 @@ info:
 
 paths:
   /flashcards/scan:
-    $ref: "./paths/flashcards/scan.yaml"
+    $ref: './paths/flashcards/scan.yaml'
 
   /flashcards/:
-    $ref: "./paths/flashcards/flashcards.yaml"
+    $ref: './paths/flashcards/flashcards.yaml'
 
   /flashcards/organize:
-    $ref: "./paths/flashcards/organize.yaml"
+    $ref: './paths/flashcards/organize.yaml'
 
   /flashcards/disorganize:
-    $ref: "./paths/flashcards/disorganize.yaml"
+    $ref: './paths/flashcards/disorganize.yaml'
 
   /flashcards/like:
-    $ref: "./paths/flashcards/like.yaml"
+    $ref: './paths/flashcards/like.yaml'
 
   /flashcards/dislike:
-    $ref: "./paths/flashcards/dislike.yaml"
+    $ref: './paths/flashcards/dislike.yaml'
 
   /sets:
-    $ref: "./paths/sets/sets.yaml"
+    $ref: './paths/sets/sets.yaml'
 
   /sets/{id}:
-    $ref: "./paths/sets/sets-id.yaml"
+    $ref: './paths/sets/sets-id.yaml'
 
   /users:
-    $ref: "./paths/users/users.yaml"
+    $ref: './paths/users/users.yaml'
 
   /wallet:
-    $ref: "./paths/wallet/balance.yaml"
+    $ref: './paths/wallet/wallet.yaml'
 
   /wallet/collect:
-    $ref: "./paths/wallet/collect-award.yaml"
+    $ref: './paths/wallet/collect-award.yaml'
 
 components:
   schemas:
-    $ref: "./components/schemas/index.yaml"
+    $ref: './components/schemas/index.yaml'
 
   securitySchemes:
     bearerAuth:

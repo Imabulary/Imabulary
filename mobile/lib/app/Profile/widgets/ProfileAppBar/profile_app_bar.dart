@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Auth/application/auth_provider.dart';
 import 'package:mobile/app/Profile/widgets/ProfileAppBar/profile_app_bar_controller.dart';
+import 'package:mobile/app/Profile/widgets/ProfileAppTitle/profile_app_title.dart';
 import 'package:mobile/utils/maybe.dart';
 
 class ProfileAppBar extends ConsumerWidget implements PreferredSizeWidget {
@@ -19,6 +20,7 @@ class ProfileAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
     return AppBar(
       automaticallyImplyLeading: false,
+      title: const ProfileAppTitle(),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 16),
