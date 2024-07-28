@@ -34,23 +34,23 @@ class _AppState extends ConsumerState<App> {
       debugShowCheckedModeBanner: false,
       title: 'Imabulary',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primary,
-          brightness: Brightness.dark,
-        ),
-        textTheme: TextTheme(
-          titleLarge: GoogleFonts.sourceSans3(fontSize: 32),
-          headlineLarge: GoogleFonts.sourceSans3(fontSize: 24),
-          headlineMedium: GoogleFonts.sourceSans3(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: AppColors.primary,
+            brightness: Brightness.dark,
           ),
-          bodyLarge: GoogleFonts.sourceSans3(fontSize: 16),
-          labelLarge: GoogleFonts.sourceSans3(fontSize: 14),
-          bodySmall: GoogleFonts.sourceSans3(fontSize: 12),
-        ),
-        appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
-      ),
+          textTheme: TextTheme(
+            titleLarge: GoogleFonts.sourceSans3(fontSize: 32),
+            headlineLarge: GoogleFonts.sourceSans3(fontSize: 24),
+            headlineMedium: GoogleFonts.sourceSans3(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+            bodyLarge: GoogleFonts.sourceSans3(fontSize: 16),
+            labelLarge: GoogleFonts.sourceSans3(fontSize: 14),
+            bodySmall: GoogleFonts.sourceSans3(fontSize: 12),
+          ),
+          appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
+          cardTheme: const CardTheme(color: AppColors.muted, elevation: 0)),
       routerConfig: AppRouter(
         user: ref.watch(authStateProvider).value,
       ).config(),

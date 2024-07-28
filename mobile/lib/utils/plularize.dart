@@ -1,5 +1,5 @@
 // TODO: add tests
-String pluralize(String word, int? count) {
+String pluralize(String word, num? count) {
   count = count ?? 0;
   final isSingular = count == 1;
 
