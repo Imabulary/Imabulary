@@ -1,22 +1,40 @@
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Res,
+  UseGuards,
+  StreamableFile,
+} from '@nestjs/common';
+import { AuthGuard } from 'src/guards';
 import { TextToSpeechService } from './text-to-speech.service';
-import { Response } from 'express';
+import type { Response } from 'express';
+import { PassThrough } from 'stream';
+import { TextToSpeechDto } from './dto/text-to-speech.dto';
 
+@UseGuards(AuthGuard)
 @Controller('text-to-speech')
 export class TextToSpeechController {
   constructor(private readonly textToSpeechService: TextToSpeechService) {}
 
   @Post('synthesize')
   async synthesizeSpeech(
-    @Body('text') text: string,
-    @Res() res: Response,
-  ): Promise<void> {
-    const base64Audio = await this.textToSpeechService.synthesizeSpeech(text);
+    @Body() textToSpeechDto: TextToSpeechDto,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<StreamableFile> {
+    const base64Audio = await this.textToSpeechService.synthesizeSpeech(
+      textToSpeechDto.text,
+    );
     const audioBuffer = Buffer.from(base64Audio, 'base64');
 
-    res.setHeader('Content-Type', 'audio/mpeg');
-    res.setHeader('Content-Length', audioBuffer.length.toString());
+    res.set({
+      'Content-Type': 'audio/mpeg',
+      'Content-Length': audioBuffer.length,
+    });
 
-    res.end(audioBuffer);
+    const stream = new PassThrough();
+    stream.end(audioBuffer);
+
+    return new StreamableFile(stream);
   }
 }

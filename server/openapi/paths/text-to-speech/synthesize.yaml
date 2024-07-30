@@ -1,0 +1,16 @@
+post:
+  summary: Синтезировать речь из текста
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/text-to-speech/text-to-speech-dto.yaml"
+  responses:
+    "200":
+      description: Успешный ответ, возвращает MP3 файл
+      content:
+        audio/mpeg:
+          schema:
+            type: string
+            format: binary

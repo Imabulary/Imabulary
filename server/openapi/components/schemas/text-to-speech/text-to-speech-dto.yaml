@@ -1,0 +1,7 @@
+type: object
+properties:
+  text:
+    type: string
+    description: Текст для синтеза речи
+required:
+  - text

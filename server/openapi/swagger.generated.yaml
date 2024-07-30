@@ -4,6 +4,23 @@ info:
   description: API documentation for the Imabulary API
   version: 1.0.0
 paths:
+  /text-to-speech/synthesize:
+    post:
+      summary: Синтезировать речь из текста
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextToSpeechDto'
+      responses:
+        '200':
+          description: 'Успешный ответ, возвращает MP3 файл'
+          content:
+            audio/mpeg:
+              schema:
+                type: string
+                format: binary
   /flashcards/scan:
     post:
       tags:
@@ -702,6 +719,14 @@ components:
             textFeedback:
               type: string
               description: Optional text feedback
+    TextToSpeechDto:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Текст для синтеза речи
+      required:
+        - text
   securitySchemes:
     bearerAuth:
       type: http
