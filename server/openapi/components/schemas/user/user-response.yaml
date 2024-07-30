@@ -1,4 +1,9 @@
 type: object
 properties:
   result:
-    $ref: "user.yaml"
+    type: object
+    properties:
+      user:
+        $ref: 'user.yaml'
+      award:
+        $ref: '../wallet/award.yaml'

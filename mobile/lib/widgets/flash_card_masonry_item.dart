@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/FlashCard/application/flashcard_service.dart';
+import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/app/Home/widgets/FlashcardListItem/flashcard_list_item_controller.dart';

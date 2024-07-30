@@ -13,6 +13,7 @@ export function checkAwardAvailability({
   const { lastAwardedAt } = award;
   const timeDifference =
     new Date(currentTime).getTime() - new Date(lastAwardedAt).getTime();
+
   const hoursDifference = timeDifference / MILLISECONDS_IN_HOUR;
 
   return hoursDifference >= pointer;

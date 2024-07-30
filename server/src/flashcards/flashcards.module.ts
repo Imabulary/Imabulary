@@ -8,6 +8,7 @@ import { UsersService } from 'src/users';
 import { VisionService } from 'src/vision/vision.service';
 import { FlashCardsController } from './flashcards.controller';
 import { FlashCardsService } from './flashcards.service';
+import { WalletModule } from 'src/wallet/wallet.module';
 
 @Module({
   controllers: [FlashCardsController],
@@ -16,6 +17,7 @@ import { FlashCardsService } from './flashcards.service';
       name: 'PrismaService',
       useFactory: () => extendedPrismaClient,
     }),
+    WalletModule,
   ],
   providers: [
     FlashCardsService,

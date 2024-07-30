@@ -12,7 +12,7 @@ model Cards {
   id                     String        @id @default(uuid()) @db.VarChar()
   word                   String        @db.VarChar()
   phrase                 String
-  file_name              String
+  file_name              String?
   explanation            String?
   speech_part            String?       @db.VarChar()
   translated_word        String        @db.VarChar()

@@ -13,7 +13,7 @@ export class WalletController {
   wallet(@Req() request: Request) {
     const user: Users = request['user'];
 
-    return this.walletService.wallet(user.id);
+    return this.walletService.findOneAndValidate(user.id);
   }
 
   @Put('/collect')

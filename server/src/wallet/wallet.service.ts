@@ -11,12 +11,15 @@ export class WalletService {
     private readonly awardsService: DailyAwardsService,
   ) {}
 
-  findOne(where: Prisma.WalletWhereUniqueInput) {
-    return this.prisma.wallet.findFirst({ where });
+  findOne(
+    where: Prisma.WalletWhereUniqueInput,
+    include?: Prisma.WalletInclude,
+  ) {
+    return this.prisma.wallet.findFirst({ where, include });
   }
 
-  async wallet(userId: string) {
-    const wallet = await this.findOne({ userId });
+  async findOneAndValidate(userId: string, include?: Prisma.WalletInclude) {
+    const wallet = await this.findOne({ userId }, include);
 
     validateWallet(wallet);
 

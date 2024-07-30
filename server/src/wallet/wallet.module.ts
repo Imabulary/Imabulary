@@ -15,5 +15,6 @@ import { CustomPrismaModule } from 'nestjs-prisma';
     }),
   ],
   providers: [PrismaService, WalletService, UsersService, DailyAwardsService],
+  exports: [WalletService],
 })
 export class WalletModule {}
