@@ -1,5 +1,5 @@
 post:
-  summary: Синтезировать речь из текста
+  summary: Synthesize text to speech
   requestBody:
     required: true
     content:
@@ -8,7 +8,7 @@ post:
           $ref: "../../components/schemas/text-to-speech/text-to-speech-dto.yaml"
   responses:
     "200":
-      description: Успешный ответ, возвращает MP3 файл
+      description: Successfull request, returns MP3 file
       content:
         audio/mpeg:
           schema:

@@ -6,7 +6,7 @@ info:
 paths:
   /text-to-speech/synthesize:
     post:
-      summary: Синтезировать речь из текста
+      summary: Synthesize text to speech
       requestBody:
         required: true
         content:
@@ -15,7 +15,7 @@ paths:
               $ref: '#/components/schemas/TextToSpeechDto'
       responses:
         '200':
-          description: 'Успешный ответ, возвращает MP3 файл'
+          description: 'Successfull request, returns MP3 file'
           content:
             audio/mpeg:
               schema:
@@ -724,7 +724,7 @@ components:
       properties:
         text:
           type: string
-          description: Текст для синтеза речи
+          description: Synthesis text
       required:
         - text
   securitySchemes:
