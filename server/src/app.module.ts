@@ -8,7 +8,6 @@ import { SetsModule } from './sets/sets.module';
 import { StorageModule } from './storage/storage.module';
 import { TranslatorModule } from './translator/translator.module';
 import { UsersModule } from './users/users.module';
-import { TextToSpeechModule } from './text-to-speech/text-to-speech.module';
 import { VisionModule } from './vision/vision.module';
 import { WalletModule } from './wallet/wallet.module';
 
@@ -26,7 +25,6 @@ import { WalletModule } from './wallet/wallet.module';
     UsersModule,
     SetsModule,
     WalletModule,
-    TextToSpeechModule,
   ],
 })
 export class AppModule {}

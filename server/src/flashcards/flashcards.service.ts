@@ -12,6 +12,8 @@ import { VisionService } from 'src/vision/vision.service';
 import { AssistantService } from 'src/assistant/assistant.service';
 import { TranslatorService } from 'src/translator/translator.service';
 import { conduct } from 'src/wallet/utils';
+import { SoundService } from 'src/sound/sound.service';
+import { IBucketFolders } from 'src/storage/utils';
 
 @Injectable()
 export class FlashCardsService {
@@ -21,18 +23,31 @@ export class FlashCardsService {
     private readonly vision: VisionService,
     private readonly assistant: AssistantService,
     private readonly translator: TranslatorService,
+    private readonly sound: SoundService,
   ) {}
 
+  async synthesizeSpeechAndSave(text) {
+    const audioSpeechStream = await this.sound.synthesizeSpeech(text);
+
+    const { storageFile: audioFile, generatedFileName: generatedAudioName } =
+      await this.storage.upload(IBucketFolders.AUDIO, text, audioSpeechStream);
+
+    const audioUrl = await this.storage.getFileURL(audioFile);
+
+    return { audioUrl, generatedAudioName };
+  }
+
   async scan(userId: string, fileName: string, file: Buffer) {
-    const { storageFile, generatedFileName } = await this.storage.upload(
-      fileName,
-      file,
-    );
+    const { storageFile: imageFile, generatedFileName: generatedImageName } =
+      await this.storage.upload(IBucketFolders.IMAGE, fileName, file);
 
     try {
-      const imageUrl = await this.storage.getImageURL(storageFile);
+      const imageUrl = await this.storage.getFileURL(imageFile);
 
       const objectOnImage = await this.vision.analyze(imageUrl);
+
+      const { audioUrl, generatedAudioName } =
+        await this.synthesizeSpeechAndSave(objectOnImage);
 
       const relatedPhrase = await this.assistant.generatePhrase(objectOnImage);
       const explanation = await this.assistant.explain(objectOnImage);
@@ -62,8 +77,10 @@ export class FlashCardsService {
           target_language: targetLanguageCode,
           source_language: sourceLanguageCode,
           image_url: imageUrl,
+          audio_url: audioUrl,
+          audio_name: generatedAudioName,
           userId,
-          file_name: generatedFileName,
+          file_name: generatedImageName,
           explanation,
         },
       });
@@ -72,7 +89,7 @@ export class FlashCardsService {
         result: card,
       };
     } catch (error) {
-      await storageFile.delete();
+      await imageFile.delete();
 
       throw error;
     }

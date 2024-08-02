@@ -4,23 +4,6 @@ info:
   description: API documentation for the Imabulary API
   version: 1.0.0
 paths:
-  /text-to-speech/synthesize:
-    post:
-      summary: Synthesize text to speech
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TextToSpeechDto'
-      responses:
-        '200':
-          description: 'Successfull request, returns MP3 file'
-          content:
-            audio/mpeg:
-              schema:
-                type: string
-                format: binary
   /flashcards/scan:
     post:
       tags:
@@ -719,14 +702,6 @@ components:
             textFeedback:
               type: string
               description: Optional text feedback
-    TextToSpeechDto:
-      type: object
-      properties:
-        text:
-          type: string
-          description: Synthesis text
-      required:
-        - text
   securitySchemes:
     bearerAuth:
       type: http

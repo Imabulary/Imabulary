@@ -6,7 +6,12 @@ import {
   InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { FORBIDDEN_ERROR, UNAUTHORIZED_ERROR, UNKNOWN_ERROR } from '../utils';
+import {
+  FORBIDDEN_ERROR,
+  IBucketFolders,
+  UNAUTHORIZED_ERROR,
+  UNKNOWN_ERROR,
+} from '../utils';
 
 jest.mock('firebase-admin');
 
@@ -50,6 +55,7 @@ describe('StorageService', () => {
     mockAdminSdk();
 
     const imageUrl = await service.upload(
+      IBucketFolders.IMAGE,
       'image.png',
       Buffer.from('image content'),
     );
@@ -61,7 +67,11 @@ describe('StorageService', () => {
     mockAdminSdk('storage/unknown');
 
     expect(async () => {
-      await service.upload('image.png', Buffer.from('image content'));
+      await service.upload(
+        IBucketFolders.IMAGE,
+        'image.png',
+        Buffer.from('image content'),
+      );
     }).rejects.toThrow(new InternalServerErrorException(UNKNOWN_ERROR));
   });
 
@@ -69,7 +79,11 @@ describe('StorageService', () => {
     mockAdminSdk('storage/unauthenticated');
 
     expect(async () => {
-      await service.upload('image.png', Buffer.from('image content'));
+      await service.upload(
+        IBucketFolders.IMAGE,
+        'image.png',
+        Buffer.from('image content'),
+      );
     }).rejects.toThrow(new UnauthorizedException(UNAUTHORIZED_ERROR));
   });
 
@@ -77,7 +91,11 @@ describe('StorageService', () => {
     mockAdminSdk('storage/unauthorized');
 
     expect(async () => {
-      await service.upload('image.png', Buffer.from('image content'));
+      await service.upload(
+        IBucketFolders.IMAGE,
+        'image.png',
+        Buffer.from('image content'),
+      );
     }).rejects.toThrow(new ForbiddenException(FORBIDDEN_ERROR));
   });
 
@@ -85,7 +103,11 @@ describe('StorageService', () => {
     mockAdminSdk('storage/quota-exceeded');
 
     expect(async () => {
-      await service.upload('image.png', Buffer.from('image content'));
+      await service.upload(
+        IBucketFolders.IMAGE,
+        'image.png',
+        Buffer.from('image content'),
+      );
     }).rejects.toThrow(new InternalServerErrorException(UNKNOWN_ERROR));
   });
 
@@ -96,7 +118,11 @@ describe('StorageService', () => {
     );
 
     expect(async () => {
-      await service.upload('image.png', Buffer.from('image content'));
+      await service.upload(
+        IBucketFolders.IMAGE,
+        'image.png',
+        Buffer.from('image content'),
+      );
     }).rejects.toThrow(new InternalServerErrorException(UNKNOWN_ERROR));
   });
 });

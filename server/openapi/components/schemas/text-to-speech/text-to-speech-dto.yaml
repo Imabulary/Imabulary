@@ -1,7 +1,0 @@
-type: object
-properties:
-  text:
-    type: string
-    description: Synthesis text
-required:
-  - text

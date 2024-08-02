@@ -58,5 +58,3 @@ LikeFlashcardDto:
 DislikeFlashcardDto:
   $ref: "./card/dislike-flashcard-dto.yaml"
 
-TextToSpeechDto:
-  $ref: "./text-to-speech/text-to-speech-dto.yaml"
