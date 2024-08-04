@@ -613,16 +613,6 @@ components:
           type: string
           description: The email of the user
           example: user@example.com
-        flashcards:
-          type: array
-          items:
-            $ref: '#/components/schemas/Card'
-          description: The list of flashcards associated with the user
-        sets:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sets'
-          description: The list of sets associated with the user
         createdAt:
           type: string
           format: date-time
@@ -633,20 +623,6 @@ components:
           format: date-time
           description: The date and time when the user was last updated
           example: '2023-07-08T14:48:00.000Z'
-        Wallet:
-          type: object
-          description: The wallet associated with the user
-          nullable: false
-          properties:
-            id:
-              type: string
-              description: The ID of the wallet
-            status:
-              type: string
-              description: Status of Wallet. Can be 'active' or 'inactive'
-            balance:
-              type: number
-              description: The balance of the wallet
     WalletBalance:
       type: object
       properties:

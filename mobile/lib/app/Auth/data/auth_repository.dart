@@ -1,10 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mobile/app/Auth/domain/auth.dart';
 import 'package:mobile/app/Profile/data/dto/profile_dto.dart';
 import 'package:mobile/app/Profile/domain/profile.dart';
-import 'package:mobile/app/Wallet/domain/award/award.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
 import 'package:mobile/utils/request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -39,16 +37,13 @@ class AuthRepository {
     });
   }
 
-  Future<CreateUserResponse> createUser(ProfileDTO profile) {
+  createUser(ProfileDTO profile) {
     return request(() async {
       final url = '${dotenv.env['API_URL']}/users';
 
       final response = await dio.post(url, data: profile.toJson());
 
-      return CreateUserResponse(
-        user: Profile.fromJson(response.data!['result']['user']),
-        award: Award.fromJson(response.data!['result']['award']),
-      );
+      return Profile.fromJson(response.data!['result']);
     });
   }
 
