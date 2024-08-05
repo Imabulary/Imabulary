@@ -14,6 +14,7 @@ import { TranslatorService } from 'src/translator/translator.service';
 import { conduct } from 'src/wallet/utils';
 import { SoundService } from 'src/sound/sound.service';
 import { IBucketFolders } from 'src/storage/utils';
+import { File } from '@google-cloud/storage';
 
 @Injectable()
 export class FlashCardsService {
@@ -26,32 +27,39 @@ export class FlashCardsService {
     private readonly sound: SoundService,
   ) {}
 
-  async synthesizeSpeechAndSave(text) {
-    const audioSpeechStream = await this.sound.synthesizeSpeech(text);
-
-    const { storageFile: audioFile, generatedFileName: generatedAudioName } =
-      await this.storage.upload(IBucketFolders.AUDIO, text, audioSpeechStream);
-
-    const audioUrl = await this.storage.getFileURL(audioFile);
-
-    return { audioUrl, generatedAudioName };
-  }
-
   async scan(userId: string, fileName: string, file: Buffer) {
     const { storageFile: imageFile, generatedFileName: generatedImageName } =
       await this.storage.upload(IBucketFolders.IMAGE, fileName, file);
+
+    let audioFile: File | undefined;
 
     try {
       const imageUrl = await this.storage.getFileURL(imageFile);
 
       const objectOnImage = await this.vision.analyze(imageUrl);
 
-      const { audioUrl, generatedAudioName } =
-        await this.synthesizeSpeechAndSave(objectOnImage);
+      const audioSpeechStream = await this.sound.synthesizeSpeech(
+        objectOnImage,
+      );
 
-      const relatedPhrase = await this.assistant.generatePhrase(objectOnImage);
-      const explanation = await this.assistant.explain(objectOnImage);
-      const speechPart = await this.assistant.speechPart(objectOnImage);
+      const {
+        storageFile: uploadedAudioFile,
+        generatedFileName: generatedAudioName,
+      } = await this.storage.upload(
+        IBucketFolders.AUDIO,
+        objectOnImage,
+        audioSpeechStream,
+      );
+
+      audioFile = uploadedAudioFile;
+
+      const audioUrl = await this.storage.getFileURL(audioFile);
+
+      const [relatedPhrase, explanation, speechPart] = await Promise.all([
+        this.assistant.generatePhrase(objectOnImage),
+        this.assistant.explain(objectOnImage),
+        this.assistant.speechPart(objectOnImage),
+      ]);
 
       // TODO: Take these variables from settings of user profile, once it's done
       const sourceLanguageCode = 'en-US';
@@ -90,6 +98,7 @@ export class FlashCardsService {
       };
     } catch (error) {
       await imageFile.delete();
+      await audioFile?.delete();
 
       throw error;
     }
