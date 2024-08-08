@@ -2,15 +2,15 @@ import { Injectable } from '@nestjs/common';
 import admin from 'firebase-admin';
 import { File } from '@google-cloud/storage';
 import { getDownloadURL } from 'firebase-admin/storage';
-import { handleUploadException } from './utils';
+import { handleUploadException, IBucketFolders } from './utils';
 import { formatFileName } from 'src/utils';
 
 @Injectable()
 export class StorageService {
-  async upload(fileName: string, file: Buffer) {
+  async upload(bucketFolder: IBucketFolders, fileName: string, file: Buffer) {
     try {
       const generatedFileName = formatFileName(fileName);
-      const storageFile = this.findOne(generatedFileName);
+      const storageFile = this.findOne(bucketFolder, generatedFileName);
 
       await storageFile.save(file);
 
@@ -20,19 +20,19 @@ export class StorageService {
     }
   }
 
-  getImageURL(file: File) {
+  getFileURL(file: File) {
     return getDownloadURL(file);
   }
 
-  findOne(fileName: string) {
+  findOne(bucketFolder: IBucketFolders, fileName: string) {
     const bucket = admin.storage().bucket();
-    const storageFile = bucket.file(fileName);
+    const storageFile = bucket.file(`${bucketFolder}/${fileName}`);
     return storageFile;
   }
 
   async delete(fileName: string) {
     try {
-      const storageFile = this.findOne(fileName);
+      const storageFile = this.findOne(IBucketFolders.IMAGE, fileName);
 
       await storageFile.delete();
     } catch (error: any) {

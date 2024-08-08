@@ -21,6 +21,8 @@ model Cards {
   target_language        String        @db.VarChar()
   source_language        String        @db.VarChar()
   image_url              String        @db.VarChar()
+  audio_url              String?       @db.VarChar()
+  audio_name             String?
   user                   Users?        @relation(fields: [userId], references: [id])
   userId                 String?       @db.VarChar()
   sets                   Sets[]
