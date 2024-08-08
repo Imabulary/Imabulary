@@ -3,47 +3,22 @@ properties:
   id:
     type: string
     description: The ID of the user
-    example: "123e4567-e89b-12d3-a456-426614174000"
+    example: '123e4567-e89b-12d3-a456-426614174000'
   externalId:
     type: string
     description: The external ID of the user
-    example: "external-123456"
+    example: 'external-123456'
   email:
     type: string
     description: The email of the user
-    example: "user@example.com"
-  flashcards:
-    type: array
-    items:
-      $ref: '../card/card.yaml'
-    description: The list of flashcards associated with the user
-  sets:
-    type: array
-    items:
-      $ref: '../set/sets.yaml'
-    description: The list of sets associated with the user
+    example: 'user@example.com'
   createdAt:
     type: string
     format: date-time
     description: The date and time when the user was created
-    example: "2023-07-08T14:48:00.000Z"
+    example: '2023-07-08T14:48:00.000Z'
   updatedAt:
     type: string
     format: date-time
     description: The date and time when the user was last updated
-    example: "2023-07-08T14:48:00.000Z"
-  Wallet:
-    type: object
-    description: The wallet associated with the user
-    nullable: false
-    properties:
-      id:
-        type: string
-        description: The ID of the wallet
-      status:
-        type: string
-        description: Status of Wallet. Can be 'active' or 'inactive'
-      balance:
-        type: number
-        description: The balance of the wallet
-
+    example: '2023-07-08T14:48:00.000Z'

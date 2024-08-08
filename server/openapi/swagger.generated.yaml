@@ -306,11 +306,11 @@ paths:
     get:
       tags:
         - wallet
-      summary: Get coin balance
-      description: Get current coin balance in float format
+      summary: Get wallet info
+      description: Get info about user's wallet
       responses:
         '200':
-          description: Return user's coin balance
+          description: Return user's wallet
           content:
             application/json:
               schema:
@@ -613,16 +613,6 @@ components:
           type: string
           description: The email of the user
           example: user@example.com
-        flashcards:
-          type: array
-          items:
-            $ref: '#/components/schemas/Card'
-          description: The list of flashcards associated with the user
-        sets:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sets'
-          description: The list of sets associated with the user
         createdAt:
           type: string
           format: date-time
@@ -633,31 +623,34 @@ components:
           format: date-time
           description: The date and time when the user was last updated
           example: '2023-07-08T14:48:00.000Z'
-        Wallet:
-          type: object
-          description: The wallet associated with the user
-          nullable: false
-          properties:
-            id:
-              type: string
-              description: The ID of the wallet
-            status:
-              type: string
-              description: Status of Wallet. Can be 'active' or 'inactive'
-            balance:
-              type: number
-              description: The balance of the wallet
     WalletBalance:
       type: object
       properties:
         result:
           type: object
           properties:
+            id:
+              description: ID of the wallet
+              type: string
+              format: uuid
+              example: ac94c2fa-8f89-43c9-abb4-2a8d417cd7fa
+            userId:
+              description: User id to which the wallet belongs
+              type: string
+              format: uuid
+              example: a5780ee9-419e-445d-810f-12284cc3a9c4
             balance:
               description: User coin balance
               type: number
               format: float
               example: 1
+            status:
+              description: Wallet's status
+              type: string
+              enum:
+                - ACTIVE
+                - INACTIVE
+              example: ACTIVE
     CollectAwardResponse:
       type: object
       properties:

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile/app/FlashCard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
+import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/domain/card.dart';
 import 'package:mobile/app/Flashcard/presentation/flashcard.dart';
 import 'package:mobile/app/Layout/components/better_results_dialog.dart';

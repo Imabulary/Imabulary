@@ -1,5 +1,6 @@
 export const AWARDS_NOT_FOUND = 'Awards not found';
-export const AWARDS_IS_UNAVAILABLE = 'Awards is anavailable';
+export const AWARDS_IS_UNAVAILABLE =
+  'You cannot collect award at the moment. Come back later.';
 
 export const MILLISECONDS_IN_HOUR = 1000 * 60 * 60;
 export const HOURS_IN_DAY = 24;

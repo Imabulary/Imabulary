@@ -1,60 +1,59 @@
 CardResponse:
-  $ref: "./card/card-response.yaml"
+  $ref: './card/card-response.yaml'
 
 AllCardsResponse:
-  $ref: "./card/all-cards-response.yaml"
+  $ref: './card/all-cards-response.yaml'
 
 Card:
-  $ref: "./card/card.yaml"
+  $ref: './card/card.yaml'
 
 ErrorResponse:
-  $ref: "./error/error-response.yaml"
+  $ref: './error/error-response.yaml'
 
 OrganizeFlashcardsDTO:
-  $ref: "./card/organize-flashcards-dto.yaml"
+  $ref: './card/organize-flashcards-dto.yaml'
 
 DisorganizeFlashcardsDTO:
-  $ref: "./card/disorganize-flashcards-dto.yaml"
+  $ref: './card/disorganize-flashcards-dto.yaml'
 
 CreateSetDto:
-  $ref: "./set/create-set-dto.yaml"
+  $ref: './set/create-set-dto.yaml'
 
 UpdateSetDto:
-  $ref: "./set/update-set-dto.yaml"
+  $ref: './set/update-set-dto.yaml'
 
 ServerPagination:
-  $ref: "./filter/server-pagination.yaml"
+  $ref: './filter/server-pagination.yaml'
 
 Filters:
-  $ref: "./filter/filters.yaml"
+  $ref: './filter/filters.yaml'
 
 Sets:
-  $ref: "./set/sets.yaml"
+  $ref: './set/sets.yaml'
 
 SetResponse:
-  $ref: "./set/set-response.yaml"
+  $ref: './set/set-response.yaml'
 
 AllSetsResponse:
-  $ref: "./set/all-sets-response.yaml"
+  $ref: './set/all-sets-response.yaml'
 
 CardsOnSets:
-  $ref: "./set/cards-on-sets.yaml"
+  $ref: './set/cards-on-sets.yaml'
 
 UserResponse:
-  $ref: "./user/user-response.yaml"
+  $ref: './user/user-response.yaml'
 
 User:
-  $ref: "./user/user.yaml"
+  $ref: './user/user.yaml'
 
 WalletBalance:
-  $ref: "./wallet/balance-response.yaml"
+  $ref: './wallet/wallet-response.yaml'
 
 CollectAwardResponse:
-  $ref: "./wallet/collect-award-response.yaml"
+  $ref: './wallet/collect-award-response.yaml'
 
 LikeFlashcardDto:
-  $ref: "./card/like-flashcard-dto.yaml"
+  $ref: './card/like-flashcard-dto.yaml'
 
 DislikeFlashcardDto:
-  $ref: "./card/dislike-flashcard-dto.yaml"
-
+  $ref: './card/dislike-flashcard-dto.yaml'

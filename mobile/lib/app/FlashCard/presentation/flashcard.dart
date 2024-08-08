@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/FlashCard/application/flashcard_service.dart';
+import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/widgets/FlashcardAppBar/flashcard_app_bar.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/atoms/colors.dart';

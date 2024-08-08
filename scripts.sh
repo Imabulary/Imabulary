@@ -36,6 +36,8 @@ runMigration() {
 
   if [ -z $MIGRATION_NAME ]; then
     docker exec -it imabulary_backend sh -c "npx prisma migrate dev"
+
+    return
   fi
 
   docker exec -it imabulary_backend sh -c "npx prisma migrate dev --name $MIGRATION_NAME"

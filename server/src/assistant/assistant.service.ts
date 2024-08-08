@@ -62,7 +62,7 @@ export class AssistantService {
       'The length of the explanation must be minimum of 7 words',
       'Do not cover a string in quotes',
       'Asnwer only with the explanation, no additional text is required',
-      'Keep the explanation simple, do not need to make it too creative',
+      'Keep the explanation simple, do not make it too creative',
     ].join('. ');
 
     const result = await this.generativeModel.generateContent({

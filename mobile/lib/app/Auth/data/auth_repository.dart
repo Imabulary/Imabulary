@@ -37,13 +37,13 @@ class AuthRepository {
     });
   }
 
-  Future createUser(ProfileDTO profile) {
+  createUser(ProfileDTO profile) {
     return request(() async {
       final url = '${dotenv.env['API_URL']}/users';
 
       final response = await dio.post(url, data: profile.toJson());
 
-      return Profile.fromJson(response.data);
+      return Profile.fromJson(response.data!['result']);
     });
   }
 

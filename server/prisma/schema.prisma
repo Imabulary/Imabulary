@@ -12,7 +12,7 @@ model Cards {
   id                     String        @id @default(uuid()) @db.VarChar()
   word                   String        @db.VarChar()
   phrase                 String
-  file_name              String
+  file_name              String?
   explanation            String?
   speech_part            String?       @db.VarChar()
   translated_word        String        @db.VarChar()
@@ -66,23 +66,23 @@ model CardsOnSets {
 }
 
 model Wallet {
-  id       String    @id @default(uuid()) @db.VarChar()
-  userId   String    @unique @db.VarChar()
-  status   String    @default("active")
-  balance  Float     @default(0.0)
-  user     Users     @relation(fields: [userId], references: [id])
+  id       String       @id @default(uuid()) @db.VarChar()
+  userId   String       @unique @db.VarChar()
+  status   WalletStatus @default(ACTIVE)
+  balance  Float        @default(0.0)
+  user     Users        @relation(fields: [userId], references: [id])
   Awards   Awards?
   Cashback Cashback?
 }
 
 model Awards {
-  id            String  @id @default(uuid()) @db.VarChar()
-  walletId      String  @unique @db.VarChar()
-  lastAwardedAt String?
-  streekLevel   Int     @default(1)
-  streekCount   Int     @default(0)
-  award         Float   @default(1.0)
-  wallet        Wallet  @relation(fields: [walletId], references: [id])
+  id            String   @id @default(uuid()) @db.VarChar()
+  walletId      String   @unique @db.VarChar()
+  lastAwardedAt DateTime @default(now())
+  streekLevel   Int      @default(1)
+  streekCount   Int      @default(0)
+  award         Float    @default(1.0)
+  wallet        Wallet   @relation(fields: [walletId], references: [id])
 }
 
 model Cashback {
@@ -99,4 +99,9 @@ model Feedback {
   isAppropriate Boolean?
   textFeedback  String?
   card          Cards    @relation(fields: [cardId], references: [id])
+}
+
+enum WalletStatus {
+  ACTIVE
+  INACTIVE
 }

@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma';
 import {
+  HOURS_IN_DAY,
+  checkAwardAvailability,
   AWARDS_IS_UNAVAILABLE,
   AWARDS_NOT_FOUND,
   AWARD_EXPIRATION_TIME,
@@ -13,9 +15,9 @@ import {
   DEFAULT_STREEK_COUNT,
   AWARD_PERIOD_UPDATION_IN_DAYS,
 } from './utils';
-import { HOURS_IN_DAY, checkAwardAvailability } from './utils';
 import { conduct, WALLET_IS_INACTIVE, WALLET_STATUS } from 'src/wallet/utils';
 import { Awards, Wallet } from '@prisma/client';
+
 @Injectable()
 export class DailyAwardsService {
   constructor(private readonly prisma: PrismaService) {}
