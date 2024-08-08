@@ -1,0 +1,13 @@
+get:
+  tags:
+    - Feedback Categories
+  summary: Get all feedback categories
+  responses:
+    "200":
+      description: A list of feedback categories
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/card/feedback-category.yaml"

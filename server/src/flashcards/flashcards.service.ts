@@ -158,11 +158,16 @@ export class FlashCardsService {
   }
 
   async dislike(dislikeFlashcardDto: DislikeFlashcardDto, userId: string) {
-    const { cardId, textFeedback } = dislikeFlashcardDto;
+    const { cardId, textFeedback, action, categoryId } = dislikeFlashcardDto;
 
     await this.prisma.$transaction(async (prisma) => {
       const feedback = await prisma.feedback.create({
-        data: { cardId, isAppropriate: false, textFeedback },
+        data: {
+          cardId,
+          isAppropriate: false,
+          textFeedback,
+          feedbackCategoryId: categoryId,
+        },
         include: {
           card: {
             include: {
@@ -180,14 +185,44 @@ export class FlashCardsService {
         throw new NotFoundException('User not found for the given card');
       }
 
-      await prisma.wallet.update({
-        where: { userId },
-        data: { balance: conduct(feedback.card.user.Wallet.balance, 1) },
-      });
+      if (action === 'delete') {
+        await this.prisma.$transaction(async (prisma) => {
+          await Promise.all([
+            prisma.wallet.update({
+              where: { userId },
+              data: {
+                balance: conduct(feedback.card.user?.Wallet?.balance, 1),
+              },
+            }),
+            prisma.cards.update({
+              where: { id: cardId },
+              data: {
+                userId: null,
+                deletedAt: new Date(),
+              },
+            }),
+            prisma.cardsOnSets.deleteMany({
+              where: { flashcardId: cardId },
+            }),
+          ]);
+        });
 
-      await this.storage.delete(feedback.card.file_name);
+        return {
+          message:
+            'Card soft deleted and removed from sets successfully. Thank you for your feedback!',
+        };
+      } else {
+        return {
+          message: 'Thank you for your feedback!',
+        };
+      }
     });
 
     return true;
+  }
+
+  async getAllFeedbackCategories() {
+    const categories = await this.prisma.feedbackCategory.findMany();
+    return categories;
   }
 }

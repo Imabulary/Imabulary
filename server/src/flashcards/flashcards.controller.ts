@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -19,6 +20,7 @@ import { Filters, ServerPagination } from 'src/shared';
 import { Request } from 'express';
 import { FlashCardsService } from './flashcards.service';
 import type { Users } from '@prisma/client';
+import { validate } from 'class-validator';
 import {
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
@@ -87,12 +89,21 @@ export class FlashCardsController {
   }
 
   @Post('/dislike')
-  dislike(
+  async dislike(
     @Req() request: Request,
     @Body() dislikeFlashcardDto: DislikeFlashcardDto,
   ) {
+    const errors = await validate(dislikeFlashcardDto);
+    if (errors.length > 0) {
+      throw new BadRequestException(errors);
+    }
     const user: Users = request['user'];
 
     return this.flashCardsService.dislike(dislikeFlashcardDto, user.id);
+  }
+
+  @Get('/feedback-categories')
+  getFeedbackCategories() {
+    return this.flashCardsService.getAllFeedbackCategories();
   }
 }

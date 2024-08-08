@@ -3,6 +3,15 @@ allOf:
   - $ref: "like-flashcard-dto.yaml"
   - type: object
     properties:
+      action:
+        type: string
+        description: Describe action. Should be "delete" or "save"
+      cardId:
+        type: string
+        description: ID of target card
+      categoryId:
+        type: string
+        description: Optional categoryId. Should be null if textFeedback was specified
       textFeedback:
         type: string
-        description: Optional text feedback
+        description: Optional text feedback. Should be null if categoryId was specified

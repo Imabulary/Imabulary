@@ -62,3 +62,9 @@ properties:
     format: date-time
     description: The date and time when the card was last updated
     example: "2023-07-08T14:48:00.000Z"
+  deletedAt:
+    type: string
+    format: date-time
+    description: The date and time when the card was soft deleted
+    example: "2023-07-08T14:48:00.000Z"
+    nullable: true
