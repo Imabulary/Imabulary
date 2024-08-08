@@ -12,7 +12,6 @@ model Cards {
   id                     String        @id @default(uuid()) @db.VarChar()
   word                   String        @db.VarChar()
   phrase                 String
-  file_name              String?
   explanation            String?
   speech_part            String?       @db.VarChar()
   translated_word        String        @db.VarChar()
@@ -21,6 +20,7 @@ model Cards {
   target_language        String        @db.VarChar()
   source_language        String        @db.VarChar()
   image_url              String        @db.VarChar()
+  image_name             String?
   audio_url              String?       @db.VarChar()
   audio_name             String?
   user                   Users?        @relation(fields: [userId], references: [id])

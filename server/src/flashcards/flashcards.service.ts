@@ -47,7 +47,7 @@ export class FlashCardsService {
         generatedFileName: generatedAudioName,
       } = await this.storage.upload(
         IBucketFolders.AUDIO,
-        objectOnImage,
+        `${objectOnImage}.mp3`,
         audioSpeechStream,
       );
 
@@ -88,7 +88,7 @@ export class FlashCardsService {
           audio_url: audioUrl,
           audio_name: generatedAudioName,
           userId,
-          file_name: generatedImageName,
+          image_name: generatedImageName,
           explanation,
         },
       });
@@ -185,7 +185,7 @@ export class FlashCardsService {
         data: { balance: conduct(feedback.card.user.Wallet.balance, 1) },
       });
 
-      await this.storage.delete(feedback.card.file_name);
+      await this.storage.delete(feedback.card.image_name);
     });
 
     return true;

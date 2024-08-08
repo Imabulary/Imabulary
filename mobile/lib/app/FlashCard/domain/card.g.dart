@@ -19,6 +19,9 @@ _$FlashCardImpl _$$FlashCardImplFromJson(Map<String, dynamic> json) =>
       speech_part: json['speech_part'] as String?,
       translated_explanation: json['translated_explanation'] as String?,
       explanation: json['explanation'] as String?,
+      image_name: json['image_name'] as String?,
+      audio_url: json['audio_url'] as String?,
+      audio_name: json['audio_name'] as String?,
     );
 
 Map<String, dynamic> _$$FlashCardImplToJson(_$FlashCardImpl instance) =>
@@ -34,4 +37,7 @@ Map<String, dynamic> _$$FlashCardImplToJson(_$FlashCardImpl instance) =>
       'speech_part': instance.speech_part,
       'translated_explanation': instance.translated_explanation,
       'explanation': instance.explanation,
+      'image_name': instance.image_name,
+      'audio_url': instance.audio_url,
+      'audio_name': instance.audio_name,
     };

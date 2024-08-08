@@ -420,6 +420,18 @@ components:
           type: string
           description: The URL of the uploaded image
           example: 'https://example.com/image.png'
+        image_name:
+          type: string
+          description: The name of the uploaded image
+          example: image.png
+        audio_url:
+          type: string
+          description: The URL of the voiceover audio file of a word
+          example: 'https://example.com/word.mp3'
+        audio_name:
+          type: string
+          description: The name of the uploaded image
+          example: word.mp3
         userId:
           type: string
           description: The ID of the user
