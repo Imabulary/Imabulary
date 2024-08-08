@@ -47,7 +47,7 @@ export class FlashCardsService {
         generatedFileName: generatedAudioName,
       } = await this.storage.upload(
         IBucketFolders.AUDIO,
-        objectOnImage,
+        `${objectOnImage}.mp3`,
         audioSpeechStream,
       );
 
@@ -88,7 +88,7 @@ export class FlashCardsService {
           audio_url: audioUrl,
           audio_name: generatedAudioName,
           userId,
-          file_name: generatedImageName,
+          image_name: generatedImageName,
           explanation,
         },
       });
@@ -206,7 +206,6 @@ export class FlashCardsService {
             }),
           ]);
         });
-
         return {
           message:
             'Card soft deleted and removed from sets successfully. Thank you for your feedback!',

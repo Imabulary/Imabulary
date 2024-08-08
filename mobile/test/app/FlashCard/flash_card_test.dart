@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
-import 'package:mobile/app/Flashcard/presentation/flashcard.dart';
+import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
