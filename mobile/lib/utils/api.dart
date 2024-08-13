@@ -9,9 +9,7 @@ class DioInterceptor extends Interceptor {
   ) async {
     final token = await FirebaseAuth.instance.currentUser!.getIdToken();
 
-    if (token != null) {
-      options.headers['authorization'] = 'Bearer $token';
-    }
+    options.headers['authorization'] = token != null ? 'Bearer $token' : '';
 
     super.onRequest(options, handler);
   }
