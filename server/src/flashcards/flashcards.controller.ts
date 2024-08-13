@@ -93,17 +93,9 @@ export class FlashCardsController {
     @Req() request: Request,
     @Body() dislikeFlashcardDto: DislikeFlashcardDto,
   ) {
-    const errors = await validate(dislikeFlashcardDto);
-    if (errors.length > 0) {
-      throw new BadRequestException(errors);
-    }
+    await validate(dislikeFlashcardDto);
     const user: Users = request['user'];
 
     return this.flashCardsService.dislike(dislikeFlashcardDto, user.id);
-  }
-
-  @Get('/feedback-categories')
-  getFeedbackCategories() {
-    return this.flashCardsService.getAllFeedbackCategories();
   }
 }

@@ -1,15 +1,6 @@
 import { IsRecordExist } from 'src/decorators/is-record-exist.decorator';
-import {
-  IsString,
-  IsOptional,
-  IsNotEmpty,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-  registerDecorator,
-  IsIn,
-  ValidationOptions,
-  ValidationArguments,
-} from 'class-validator';
+import { IsString, IsOptional, IsNotEmpty, IsIn } from 'class-validator';
+import { EitherCategoryIdOrTextFeedback } from '../../decorators/either-categoryId-or-text.decorator';
 
 export class LikeFlashcardDto {
   @IsString({ message: 'UID must be a valid string' })
@@ -20,36 +11,10 @@ export class LikeFlashcardDto {
   cardId: string;
 }
 
-@ValidatorConstraint({ async: false })
-class EitherCategoryIdOrTextFeedbackConstraint
-  implements ValidatorConstraintInterface
-{
-  validate(_: any, args: ValidationArguments) {
-    const dto = args.object as DislikeFlashcardDto;
-    return !!dto.categoryId !== !!dto.textFeedback;
-  }
-
-  defaultMessage(_: ValidationArguments) {
-    return 'Either categoryId or textFeedback must be provided, but not both';
-  }
-}
-
-function EitherCategoryIdOrTextFeedback(validationOptions?: ValidationOptions) {
-  return function (object: Record<string, any>, propertyName: string) {
-    registerDecorator({
-      name: 'EitherCategoryIdOrTextFeedback',
-      target: object.constructor,
-      propertyName: propertyName,
-      options: validationOptions,
-      validator: EitherCategoryIdOrTextFeedbackConstraint,
-    });
-  };
-}
-
 export class DislikeFlashcardDto extends LikeFlashcardDto {
   @IsString()
   @IsOptional()
-  textFeedback?: string;
+  text?: string;
 
   @IsString()
   @IsOptional()
@@ -63,7 +28,7 @@ export class DislikeFlashcardDto extends LikeFlashcardDto {
   action: string;
 
   @EitherCategoryIdOrTextFeedback({
-    message: 'Either categoryId or textFeedback must be provided, but not both',
+    message: 'Either categoryId or text must be provided, but not both',
   })
   validate: boolean;
 }

@@ -59,4 +59,4 @@ DislikeFlashcardDto:
   $ref: './card/dislike-flashcard-dto.yaml'
 
 FeedbackCategory:
-  $ref: './card/feedback-category.yaml'
+  $ref: './feedback/feedback-category.yaml'

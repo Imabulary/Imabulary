@@ -10,4 +10,4 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components/schemas/card/feedback-category.yaml"
+              $ref: "../../components/schemas/feedback/feedback-category.yaml"

@@ -11,7 +11,7 @@ allOf:
         description: ID of target card
       categoryId:
         type: string
-        description: Optional categoryId. Should be null if textFeedback was specified
-      textFeedback:
+        description: Optional categoryId. Should be null if text was specified
+      text:
         type: string
         description: Optional text feedback. Should be null if categoryId was specified

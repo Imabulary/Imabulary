@@ -12,11 +12,3 @@ properties:
     type: string
     description: The description or meaning of the feedback category
     example: "This means that the system pulled up an incorrect translation."
-  language_representation_UA:
-    type: string
-    description: The Ukrainian language representation of the category name
-    example: "Переклад слова на фото"
-  language_representation_UK:
-    type: string
-    description: The UK English language representation of the category name
-    example: "Translation of the word on the photo"

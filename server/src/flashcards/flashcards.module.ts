@@ -10,6 +10,7 @@ import { FlashCardsController } from './flashcards.controller';
 import { FlashCardsService } from './flashcards.service';
 import { WalletModule } from 'src/wallet/wallet.module';
 import { SoundService } from 'src/sound/sound.service';
+import { FeedbackService } from 'src/feedback/feedback.service';
 
 @Module({
   controllers: [FlashCardsController],
@@ -27,6 +28,7 @@ import { SoundService } from 'src/sound/sound.service';
     VisionService,
     AssistantService,
     TranslatorService,
+    FeedbackService,
     UsersService,
     SoundService,
   ],
