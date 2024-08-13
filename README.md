@@ -52,10 +52,12 @@ Imabulary helps you learn a foreign language through visualizations and associat
 
 1. Ensure that Docker and `docker-compose` tools are installed on your local device.
 2. Create all required `.env` files to start the project. [How to work with `.env` files](docs/SECURITY.md).
-3. In the root of the `server` directory create 2 files `admin-account.json` and `service-account.json`. You can find the content of those files in our [secrets vault](https://vault.bitwarden.com/#/vault). 
-4. Populate the project's CLI commands by running `source scripts.sh` in the terminal being in the project's root directory. Yes, you have to have a UNIX-based machine or environment.
-5. Run the `devBuild` command in the terminal. By doing it, you start a backend and database using Docker, so make sure that the Docker daemon is running on your machine.
-6. To start a mobile app, you have to have either an emulator running on your device or a real device connected to your machine. Then run `flutter run` in the terminal and choose your preferred device.
+   - Create `.env` for the flutter app inside the `mobile/assets` folder. Also, you will find there `.env.example`
+   - Create `.env` for the backend inside the root of the `server` folder. Also, you will find there `.env.example`
+4. In the root of the `server` directory create 2 files `admin-account.json` and `service-account.json`. You can find the content of those files in our [secrets vault](https://vault.bitwarden.com/#/vault). 
+5. Populate the project's CLI commands by running `source scripts.sh` in the terminal being in the project's root directory. Yes, you have to have a UNIX-based machine or environment.
+6. Run the `devBuild` command in the terminal. By doing it, you start a backend and database using Docker, so make sure that the Docker daemon is running on your machine.
+7. To start a mobile app, you must have either an emulator running on your device or a real device connected to your machine. Then run `flutter run` in the terminal and choose your preferred device.
 
 ## Project structure
 
