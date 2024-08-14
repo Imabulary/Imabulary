@@ -99,8 +99,8 @@ model Feedback {
   cardId             String            @unique @db.VarChar()
   isAppropriate      Boolean?
   text               String?
-  feedbackCategoryId String?
-  feedbackCategory   FeedbackCategory? @relation(fields: [feedbackCategoryId], references: [id])
+  categoryId String?
+  category   FeedbackCategory? @relation(fields: [categoryId], references: [id])
   card               Cards             @relation(fields: [cardId], references: [id])
 }
 

@@ -1,5 +1,5 @@
 -- AlterTable
-ALTER TABLE "Feedback" ADD COLUMN     "feedbackCategoryId" TEXT;
+ALTER TABLE "Feedback" ADD COLUMN     "categoryId" TEXT;
 
 -- CreateTable
 CREATE TABLE "FeedbackCategory" (
@@ -11,7 +11,7 @@ CREATE TABLE "FeedbackCategory" (
 );
 
 -- AddForeignKey
-ALTER TABLE "Feedback" ADD CONSTRAINT "Feedback_feedbackCategoryId_fkey" FOREIGN KEY ("feedbackCategoryId") REFERENCES "FeedbackCategory"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Feedback" ADD CONSTRAINT "Feedback_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "FeedbackCategory"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- Insert values into FeedbackCategory
 INSERT INTO "FeedbackCategory" ("name", "meaning")
