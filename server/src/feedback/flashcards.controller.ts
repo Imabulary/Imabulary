@@ -7,7 +7,7 @@ import { AuthGuard } from 'src/guards';
 export class FeedbackController {
   constructor(private readonly feedbackService: FeedbackService) {}
 
-  @Get('/feedback-categories')
+  @Get('/feedback')
   getFeedbackCategories() {
     return this.feedbackService.getAllFeedbackCategories();
   }

@@ -93,7 +93,6 @@ export class FlashCardsController {
     @Req() request: Request,
     @Body() dislikeFlashcardDto: DislikeFlashcardDto,
   ) {
-    await validate(dislikeFlashcardDto);
     const user: Users = request['user'];
 
     return this.flashCardsService.dislike(dislikeFlashcardDto, user.id);

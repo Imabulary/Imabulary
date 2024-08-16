@@ -22,7 +22,7 @@ export class FeedbackService {
         cardId,
         isAppropriate: false,
         text,
-        feedbackCategoryId: categoryId,
+        categoryId,
       },
       include: {
         card: {
