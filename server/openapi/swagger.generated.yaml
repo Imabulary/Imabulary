@@ -4,6 +4,20 @@ info:
   description: API documentation for the Imabulary API
   version: 1.0.0
 paths:
+  /feedback/categories:
+    get:
+      tags:
+        - feedback
+      summary: Get all feedback categories
+      responses:
+        '200':
+          description: A list of feedback categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FeedbackCategory'
   /flashcards/scan:
     post:
       tags:
@@ -147,7 +161,19 @@ paths:
           content:
             application/json:
               schema:
-                type: boolean
+                type: object
+                properties:
+                  message:
+                    type: string
+              examples:
+                dislikeWithSave:
+                  summary: Successfully disliked and saved flashcard
+                  value:
+                    message: Thank you for your feedback!
+                alreadyDisliked:
+                  summary: Flashcard was soft deleted
+                  value:
+                    message: '''Card soft deleted and removed from sets successfully. Thank you for your feedback!'''
         '400':
           description: Bad request
           content:
@@ -704,9 +730,33 @@ components:
         - $ref: '#/components/schemas/LikeFlashcardDto'
         - type: object
           properties:
-            textFeedback:
+            action:
               type: string
-              description: Optional text feedback
+              description: Describe action. Should be "delete" or "save"
+            cardId:
+              type: string
+              description: ID of target card
+            categoryId:
+              type: string
+              description: Optional categoryId. Should be null if text was specified
+            text:
+              type: string
+              description: Optional text feedback. Should be null if categoryId was specified
+    FeedbackCategory:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the feedback category
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: The name of the feedback category
+          example: translation_error_photo
+        meaning:
+          type: string
+          description: The description or meaning of the feedback category
+          example: This means that the system pulled up an incorrect translation.
   securitySchemes:
     bearerAuth:
       type: http

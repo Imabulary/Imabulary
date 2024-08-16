@@ -14,7 +14,19 @@ post:
       content:
         application/json:
           schema:
-            type: boolean
+            type: object
+            properties:
+              message: 
+                type: string
+          examples:
+                dislikeWithSave:
+                  summary: Successfully disliked and saved flashcard
+                  value:
+                    message: "Thank you for your feedback!"
+                alreadyDisliked:
+                  summary: Flashcard was soft deleted
+                  value:
+                    message: "'Card soft deleted and removed from sets successfully. Thank you for your feedback!'"
     "400":
       description: Bad request
       content:

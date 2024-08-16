@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    type: string
+    description: The unique identifier for the feedback category
+    example: "123e4567-e89b-12d3-a456-426614174000"
+  name:
+    type: string
+    description: The name of the feedback category
+    example: "translation_error_photo"
+  meaning:
+    type: string
+    description: The description or meaning of the feedback category
+    example: "This means that the system pulled up an incorrect translation."

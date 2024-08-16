@@ -3,7 +3,7 @@ CREATE TABLE "Feedback" (
     "id" VARCHAR NOT NULL,
     "cardId" VARCHAR NOT NULL,
     "isAppropriate" BOOLEAN,
-    "textFeedback" TEXT,
+    "text" TEXT,
 
     CONSTRAINT "Feedback_pkey" PRIMARY KEY ("id")
 );

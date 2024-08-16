@@ -28,6 +28,7 @@ model Cards {
   sets                   Sets[]
   createdAt              DateTime      @default(now())
   updatedAt              DateTime      @updatedAt
+  deletedAt              DateTime?
   CardsOnSets            CardsOnSets[]
   Feedback               Feedback?
 }
@@ -94,11 +95,20 @@ model Cashback {
 }
 
 model Feedback {
-  id            String   @id @default(uuid()) @db.VarChar()
-  cardId        String   @unique @db.VarChar()
-  isAppropriate Boolean?
-  textFeedback  String?
-  card          Cards    @relation(fields: [cardId], references: [id])
+  id                 String            @id @default(uuid()) @db.VarChar()
+  cardId             String            @unique @db.VarChar()
+  isAppropriate      Boolean?
+  text               String?
+  categoryId String?
+  category   FeedbackCategory? @relation(fields: [categoryId], references: [id])
+  card               Cards             @relation(fields: [cardId], references: [id])
+}
+
+model FeedbackCategory {
+  id       String     @id @default(uuid()) @db.VarChar()
+  name     String
+  meaning  String
+  feedback Feedback[]
 }
 
 enum WalletStatus {

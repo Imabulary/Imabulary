@@ -87,7 +87,7 @@ export class FlashCardsController {
   }
 
   @Post('/dislike')
-  dislike(
+  async dislike(
     @Req() request: Request,
     @Body() dislikeFlashcardDto: DislikeFlashcardDto,
   ) {
