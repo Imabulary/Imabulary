@@ -1,6 +1,6 @@
 get:
   tags:
-    - Feedback Categories
+    - feedback
   summary: Get all feedback categories
   responses:
     "200":
@@ -10,4 +10,4 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components/schemas/feedback/feedback.yaml"
+              $ref: "../../components/schemas/feedback/categories.yaml"

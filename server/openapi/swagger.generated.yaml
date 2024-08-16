@@ -4,10 +4,10 @@ info:
   description: API documentation for the Imabulary API
   version: 1.0.0
 paths:
-  /feedback/feedback-category:
+  /feedback/categories:
     get:
       tags:
-        - Feedback Categories
+        - feedback
       summary: Get all feedback categories
       responses:
         '200':

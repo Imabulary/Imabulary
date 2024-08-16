@@ -5,8 +5,8 @@ info:
   version: 1.0.0
 
 paths:
-  /feedback/feedback:
-    $ref: './paths/feedback/feedback.yaml'
+  /feedback/categories:
+    $ref: './paths/feedback/categories.yaml'
 
   /flashcards/scan:
     $ref: './paths/flashcards/scan.yaml'

@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -20,7 +19,6 @@ import { Filters, ServerPagination } from 'src/shared';
 import { Request } from 'express';
 import { FlashCardsService } from './flashcards.service';
 import type { Users } from '@prisma/client';
-import { validate } from 'class-validator';
 import {
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
