@@ -9,28 +9,30 @@ datasource db {
 }
 
 model Cards {
-  id                     String        @id @default(uuid()) @db.VarChar()
-  word                   String        @db.VarChar()
+  id                     String         @id @default(uuid()) @db.VarChar()
+  word                   String         @db.VarChar()
   phrase                 String
   explanation            String?
-  speech_part            String?       @db.VarChar()
-  translated_word        String        @db.VarChar()
+  speech_part            String?        @db.VarChar()
+  translated_word        String         @db.VarChar()
   translated_phrase      String
   translated_explanation String?
-  target_language        String        @db.VarChar()
-  source_language        String        @db.VarChar()
-  image_url              String        @db.VarChar()
+  target_language        String         @db.VarChar()
+  source_language        String         @db.VarChar()
+  image_url              String         @db.VarChar()
   image_name             String?
-  audio_url              String?       @db.VarChar()
+  audio_url              String?        @db.VarChar()
   audio_name             String?
-  user                   Users?        @relation(fields: [userId], references: [id])
-  userId                 String?       @db.VarChar()
-  sets                   Sets[]
-  createdAt              DateTime      @default(now())
-  updatedAt              DateTime      @updatedAt
+  quizStatusName         String         @default("still_learning")
+  userId                 String?        @db.VarChar()
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
   deletedAt              DateTime?
+  user                   Users?         @relation(fields: [userId], references: [id])
+  sets                   Sets[]
   CardsOnSets            CardsOnSets[]
   Feedback               Feedback?
+  QuizStatus             QuizCardStatus @relation(fields: [quizStatusName], references: [id])
 }
 
 model Users {
@@ -95,13 +97,13 @@ model Cashback {
 }
 
 model Feedback {
-  id                 String            @id @default(uuid()) @db.VarChar()
-  cardId             String            @unique @db.VarChar()
-  isAppropriate      Boolean?
-  text               String?
-  categoryId String?
-  category   FeedbackCategory? @relation(fields: [categoryId], references: [id])
-  card               Cards             @relation(fields: [cardId], references: [id])
+  id            String            @id @default(uuid()) @db.VarChar()
+  cardId        String            @unique @db.VarChar()
+  isAppropriate Boolean?
+  text          String?
+  categoryId    String?
+  category      FeedbackCategory? @relation(fields: [categoryId], references: [id])
+  card          Cards             @relation(fields: [cardId], references: [id])
 }
 
 model FeedbackCategory {
@@ -114,4 +116,11 @@ model FeedbackCategory {
 enum WalletStatus {
   ACTIVE
   INACTIVE
+}
+
+model QuizCardStatus {
+  id                 String  @id @default(uuid()) @db.VarChar()
+  name               String
+  textRepresentation String
+  Cards              Cards[]
 }

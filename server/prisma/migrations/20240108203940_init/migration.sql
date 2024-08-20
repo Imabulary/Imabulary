@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- CreateTable
 CREATE TABLE "Cards" (
     "id" TEXT NOT NULL,

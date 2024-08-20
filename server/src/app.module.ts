@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
 import { VisionModule } from './vision/vision.module';
 import { WalletModule } from './wallet/wallet.module';
 import { FeedbackModule } from './feedback/feedback.module';
+import { QuizModule } from './quiz/quiz.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { FeedbackModule } from './feedback/feedback.module';
     SetsModule,
     WalletModule,
     FeedbackModule,
+    QuizModule,
   ],
 })
 export class AppModule {}

@@ -60,3 +60,6 @@ DislikeFlashcardDto:
 
 FeedbackCategory:
   $ref: './feedback/categories.yaml'
+
+QuizDto:
+  $ref: './quiz/learn.yaml'
