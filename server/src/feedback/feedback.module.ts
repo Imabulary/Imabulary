@@ -1,11 +1,18 @@
 import { Module } from '@nestjs/common';
-import { FeedbackService } from './feedback.service';
 import { FeedbackController } from './feedback.controller';
-import { PrismaModule } from 'nestjs-prisma';
+import { FeedbackService } from './feedback.service';
+import { extendedPrismaClient, PrismaService } from 'src/prisma';
+import { UsersService } from 'src/users';
+import { CustomPrismaModule } from 'nestjs-prisma';
 
 @Module({
-  imports: [PrismaModule],
-  providers: [FeedbackService],
+  imports: [
+    CustomPrismaModule.forRootAsync({
+      name: 'PrismaService',
+      useFactory: () => extendedPrismaClient,
+    }),
+  ],
+  providers: [FeedbackService, PrismaService, UsersService],
   controllers: [FeedbackController],
 })
 export class FeedbackModule {}
