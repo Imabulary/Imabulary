@@ -1,11 +1,11 @@
 import { IsString } from 'class-validator';
 import { IsRecordExist } from 'src/decorators/is-record-exist.decorator';
 
-export class QuizDto {
+export class QuizDTO {
   @IsString({ message: 'UID must be a valid string' })
   @IsRecordExist('cards', {
     each: false,
-    message: 'Flashcard is unavailable for feedback',
+    message: 'Flashcard is unavailable for quiz',
   })
   cardId: string;
 
