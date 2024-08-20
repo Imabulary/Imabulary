@@ -24,6 +24,7 @@ import {
   OrganizeFlashcardsDTO,
   DislikeFlashcardDto,
   LikeFlashcardDto,
+  CardDto,
 } from './dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
@@ -87,12 +88,18 @@ export class FlashCardsController {
   }
 
   @Post('/dislike')
-  async dislike(
-    @Req() request: Request,
-    @Body() dislikeFlashcardDto: DislikeFlashcardDto,
-  ) {
+  async dislike(@Body() dislikeFlashcardDto: DislikeFlashcardDto) {
+    return this.flashCardsService.dislike(dislikeFlashcardDto);
+  }
+  @Post('/regenerate')
+  async regenerate(@Req() request: Request, @Body() regenerateDto: CardDto) {
     const user: Users = request['user'];
 
-    return this.flashCardsService.dislike(dislikeFlashcardDto, user.id);
+    return this.flashCardsService.regenerateCard(regenerateDto.cardId, user.id);
+  }
+
+  @Post('/delete')
+  async delete(@Body() regenerateDto: CardDto) {
+    return this.flashCardsService.deleteCard(regenerateDto.cardId);
   }
 }

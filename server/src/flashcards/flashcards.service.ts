@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma';
 import { Filters, ServerPagination } from 'src/shared';
 import {
@@ -14,7 +18,6 @@ import { TranslatorService } from 'src/translator/translator.service';
 import { conduct } from 'src/wallet/utils';
 import { SoundService } from 'src/sound/sound.service';
 import { IBucketFolders } from 'src/storage/utils';
-import { File } from '@google-cloud/storage';
 import { FeedbackService } from 'src/feedback/feedback.service';
 
 @Injectable()
@@ -33,11 +36,34 @@ export class FlashCardsService {
     const { storageFile: imageFile, generatedFileName: generatedImageName } =
       await this.storage.upload(IBucketFolders.IMAGE, fileName, file);
 
-    let audioFile: File | undefined;
-
     try {
       const imageUrl = await this.storage.getFileURL(imageFile);
+      const card = await this.processImage({
+        imageUrl,
+        userId,
+        generatedImageName,
+      });
+      return card;
+    } catch (error) {
+      await imageFile.delete();
 
+      throw error;
+    }
+  }
+
+  async processImage({
+    imageUrl,
+    userId,
+    generatedImageName,
+    isRegeneration = false,
+  }: {
+    imageUrl: string;
+    userId: string;
+    generatedImageName: string;
+    isRegeneration?: boolean;
+  }) {
+    let audioFile;
+    try {
       const objectOnImage = await this.vision.analyze(imageUrl);
 
       const audioSpeechStream = await this.sound.synthesizeSpeech(
@@ -88,20 +114,16 @@ export class FlashCardsService {
           source_language: sourceLanguageCode,
           image_url: imageUrl,
           audio_url: audioUrl,
+          is_regenerated: isRegeneration,
           audio_name: generatedAudioName,
           userId,
           image_name: generatedImageName,
           explanation,
         },
       });
-
-      return {
-        result: card,
-      };
+      return card;
     } catch (error) {
-      await imageFile.delete();
-      await audioFile?.delete();
-
+      audioFile?.delete();
       throw error;
     }
   }
@@ -159,47 +181,78 @@ export class FlashCardsService {
     });
   }
 
-  async dislike(dislikeFlashcardDto: DislikeFlashcardDto, userId: string) {
-    const { cardId, text, action, categoryId } = dislikeFlashcardDto;
+  async deleteCard(cardId: string) {
+    await Promise.all([
+      this.prisma.cards.update({
+        where: { id: cardId },
+        data: {
+          userId: null,
+          deletedAt: new Date(),
+        },
+      }),
+      this.prisma.cardsOnSets.deleteMany({
+        where: { flashcardId: cardId },
+      }),
+    ]);
+    return {
+      message: 'Card was successfuly deleted!',
+    };
+  }
+
+  async regenerateCard(cardId: string, userId: string) {
+    const currentCard = await this.prisma.cards.update({
+      data: {
+        userId: null,
+        deletedAt: new Date(),
+      },
+      where: {
+        id: cardId,
+      },
+    });
+
+    await this.prisma.cardsOnSets.deleteMany({
+      where: { flashcardId: cardId },
+    });
+
+    if (currentCard.is_regenerated) {
+      throw new BadRequestException('This card had already regenerated');
+    }
+
+    const card = await this.processImage({
+      imageUrl: currentCard.image_name,
+      userId: userId,
+      generatedImageName: currentCard.image_name,
+      isRegeneration: true,
+    });
+
+    return {
+      result: card,
+    };
+  }
+
+  async dislike(dislikeFlashcardDto: DislikeFlashcardDto) {
+    const { cardId, text, categories } = dislikeFlashcardDto;
+
+    const existingFeedback = await this.prisma.feedback.findFirst({
+      where: { id: cardId },
+    });
+
+    if (existingFeedback) {
+      throw new NotFoundException('This card has already feedback');
+    }
 
     const fetchedFeedback = await this.feedback.leaveFeedback({
       cardId,
       text,
-      categoryId,
+      categories,
     });
 
     if (!fetchedFeedback.card.user) {
       throw new NotFoundException('User not found for the given card');
     }
 
-    if (action === 'delete') {
-      await this.prisma.$transaction(async (prisma) => {
-        await Promise.all([
-          prisma.wallet.update({
-            where: { userId },
-            data: {
-              balance: conduct(fetchedFeedback.card.user?.Wallet?.balance, 1),
-            },
-          }),
-          prisma.cards.update({
-            where: { id: cardId },
-            data: {
-              userId: null,
-              deletedAt: new Date(),
-            },
-          }),
-          prisma.cardsOnSets.deleteMany({
-            where: { flashcardId: cardId },
-          }),
-        ]);
-      });
-      return {
-        message: 'Card was deleted successfully. Thank you for your feedback!',
-      };
-    } else {
-      return {
-        message: 'Thank you for your feedback!',
-      };
-    }
+    return {
+      message: 'Thank you for your feedback!',
+    };
   }
 }

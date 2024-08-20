@@ -3,9 +3,6 @@ allOf:
   - $ref: "like-flashcard-dto.yaml"
   - type: object
     properties:
-      action:
-        type: string
-        description: Describe action. Should be "delete" or "save"
       cardId:
         type: string
         description: ID of target card
