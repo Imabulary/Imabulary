@@ -1,3 +1,10 @@
+import {
+  IsIn,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import { IsRecordExist } from 'src/decorators/is-record-exist.decorator';
 import { IsString, IsOptional, IsArray } from 'class-validator';
 import { EitherCategoryIdOrTextFeedback } from '../../decorators/either-categoryId-or-text.decorator';

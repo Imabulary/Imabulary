@@ -6,8 +6,7 @@ export class FeedbackService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAllFeedbackCategories() {
-    const categories = await this.prisma.feedbackCategory.findMany();
-    return categories;
+    return this.prisma.feedbackCategory.findMany();
   }
 
   async leaveFeedback(feedbackDto: {

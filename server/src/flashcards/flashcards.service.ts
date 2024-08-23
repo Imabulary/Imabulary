@@ -241,6 +241,12 @@ export class FlashCardsService {
       throw new NotFoundException('This card has already feedback');
     }
 
+    if ((!categoryId && !text) || (categoryId && text)) {
+      throw new BadRequestException(
+        'Either categoryId or text must be provided, but not both',
+      );
+    }
+
     const fetchedFeedback = await this.feedback.leaveFeedback({
       cardId,
       text,

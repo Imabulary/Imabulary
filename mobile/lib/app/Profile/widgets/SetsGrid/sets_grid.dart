@@ -7,6 +7,7 @@ import 'package:mobile/app/Profile/widgets/no_sets.dart';
 import 'package:mobile/app/Profile/widgets/set_grid_item.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/domain/set.dart';
+import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
@@ -74,7 +75,10 @@ class _SetsGridState extends ConsumerState<SetsGrid> {
               ),
             ),
             onRefresh: () => Future.sync(
-              () => _pagingController.refresh(),
+              () {
+                ref.invalidate(getWalletBalanceProvider);
+                _pagingController.refresh();
+              },
             ),
           ),
         ),

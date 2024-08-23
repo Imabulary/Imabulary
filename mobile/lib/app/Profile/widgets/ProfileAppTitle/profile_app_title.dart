@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Profile/widgets/ProfileAppTitle/profile_app_title_controller.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
-import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
-import 'package:mobile/utils/plularize.dart';
 
 class ProfileAppTitle extends ConsumerWidget {
   const ProfileAppTitle({Key? key}) : super(key: key);
@@ -17,18 +14,11 @@ class ProfileAppTitle extends ConsumerWidget {
     return wallet.when(
       data: (data) => Row(
         children: [
-          TypeSetting(pluralize('Coin', data.balance)),
+          const Icon(Icons.paid),
           const SizedBox(
-            width: 8,
+            width: 4,
           ),
-          ElevatedButton(
-            onPressed:
-                ProfileAppTitleController.redirectToFlashCardScreen(context),
-            child: const TypeSetting(
-              'More Coins',
-              style: TextStyle(color: AppColors.primary),
-            ),
-          )
+          TypeSetting(data.balance.toString()),
         ],
       ),
       error: (error, _) => Container(
