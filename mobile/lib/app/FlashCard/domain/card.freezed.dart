@@ -35,8 +35,12 @@ mixin _$FlashCard {
   String? get audio_url => throw _privateConstructorUsedError;
   String? get audio_name => throw _privateConstructorUsedError;
 
+  /// Serializes this FlashCard to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FlashCard
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FlashCardCopyWith<FlashCard> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -73,6 +77,8 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FlashCard
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -185,6 +191,8 @@ class __$$FlashCardImplCopyWithImpl<$Res>
       _$FlashCardImpl _value, $Res Function(_$FlashCardImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FlashCard
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -374,7 +382,7 @@ class _$FlashCardImpl with DiagnosticableTreeMixin implements _FlashCard {
                 other.audio_name == audio_name));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -393,7 +401,9 @@ class _$FlashCardImpl with DiagnosticableTreeMixin implements _FlashCard {
       audio_url,
       audio_name);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FlashCard
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FlashCardImplCopyWith<_$FlashCardImpl> get copyWith =>
@@ -455,8 +465,11 @@ abstract class _FlashCard implements FlashCard {
   String? get audio_url;
   @override
   String? get audio_name;
+
+  /// Create a copy of FlashCard
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FlashCardImplCopyWith<_$FlashCardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

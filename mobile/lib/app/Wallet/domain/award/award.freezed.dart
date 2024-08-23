@@ -25,8 +25,12 @@ mixin _$CollectedAward {
   double get nextAward => throw _privateConstructorUsedError;
   int get expirationTime => throw _privateConstructorUsedError;
 
+  /// Serializes this CollectedAward to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CollectedAward
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CollectedAwardCopyWith<CollectedAward> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -54,6 +58,8 @@ class _$CollectedAwardCopyWithImpl<$Res, $Val extends CollectedAward>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CollectedAward
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -106,6 +112,8 @@ class __$$CollectedAwardImplCopyWithImpl<$Res>
       _$CollectedAwardImpl _value, $Res Function(_$CollectedAwardImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CollectedAward
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -176,12 +184,14 @@ class _$CollectedAwardImpl implements _CollectedAward {
                 other.expirationTime == expirationTime));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, currentBalance, lastAwardedAt, nextAward, expirationTime);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CollectedAward
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CollectedAwardImplCopyWith<_$CollectedAwardImpl> get copyWith =>
@@ -214,8 +224,11 @@ abstract class _CollectedAward implements CollectedAward {
   double get nextAward;
   @override
   int get expirationTime;
+
+  /// Create a copy of CollectedAward
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CollectedAwardImplCopyWith<_$CollectedAwardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -233,8 +246,12 @@ mixin _$Award {
   int get streekCount => throw _privateConstructorUsedError;
   double get award => throw _privateConstructorUsedError;
 
+  /// Serializes this Award to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Award
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AwardCopyWith<Award> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -262,6 +279,8 @@ class _$AwardCopyWithImpl<$Res, $Val extends Award>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Award
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -325,6 +344,8 @@ class __$$AwardImplCopyWithImpl<$Res>
       _$AwardImpl _value, $Res Function(_$AwardImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Award
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -413,12 +434,14 @@ class _$AwardImpl implements _Award {
             (identical(other.award, award) || other.award == award));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, walletId, lastAwardedAt,
       streekLevel, streekCount, award);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Award
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AwardImplCopyWith<_$AwardImpl> get copyWith =>
@@ -455,8 +478,11 @@ abstract class _Award implements Award {
   int get streekCount;
   @override
   double get award;
+
+  /// Create a copy of Award
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AwardImplCopyWith<_$AwardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

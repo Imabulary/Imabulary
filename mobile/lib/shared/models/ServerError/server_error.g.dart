@@ -8,7 +8,7 @@ part of 'server_error.dart';
 
 _$ServerErrorImpl _$$ServerErrorImplFromJson(Map<String, dynamic> json) =>
     _$ServerErrorImpl(
-      statusCode: json['statusCode'] as int,
+      statusCode: (json['statusCode'] as num).toInt(),
       message: json['message'] as String,
       error: json['error'] as String?,
     );

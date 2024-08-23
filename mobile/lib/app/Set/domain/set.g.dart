@@ -29,7 +29,7 @@ Map<String, dynamic> _$$SetImplToJson(_$SetImpl instance) => <String, dynamic>{
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
       'flashcards': instance.flashcards
-          ?.map((e) => {
+          ?.map((e) => <String, dynamic>{
                 'image_url': e.image_url,
               })
           .toList(),

@@ -22,10 +22,12 @@ import { PaginationPipe } from 'src/pipes/pagination.pipe';
 import { Filters, ServerPagination } from 'src/shared';
 import { DeductBalance } from 'src/wallet/deduct-balance.interceptor';
 import {
+  DeleteFlashcardDTO,
   DislikeFlashcardDto,
   DisorganizeFlashcardsDTO,
   LikeFlashcardDto,
-  CardDto,
+  OrganizeFlashcardsDTO,
+  RegenerateFlashcardDTO,
 } from './dto';
 import { FlashCardsService } from './flashcards.service';
 
@@ -88,15 +90,22 @@ export class FlashCardsController {
   async dislike(@Body() dislikeFlashcardDto: DislikeFlashcardDto) {
     return this.flashCardsService.dislike(dislikeFlashcardDto);
   }
+
   @Post('/regenerate')
-  async regenerate(@Req() request: Request, @Body() regenerateDto: CardDto) {
+  async regenerate(
+    @Req() request: Request,
+    @Body() regenerateFlashcardDto: RegenerateFlashcardDTO,
+  ) {
     const user: Users = request['user'];
 
-    return this.flashCardsService.regenerateCard(regenerateDto.cardId, user.id);
+    return this.flashCardsService.regenerate(
+      regenerateFlashcardDto.cardId,
+      user.id,
+    );
   }
 
   @Post('/delete')
-  async delete(@Body() regenerateDto: CardDto) {
-    return this.flashCardsService.deleteCard(regenerateDto.cardId);
+  async delete(@Body() deleteFlashcardDto: DeleteFlashcardDTO) {
+    return this.flashCardsService.delete(deleteFlashcardDto.cardId);
   }
 }

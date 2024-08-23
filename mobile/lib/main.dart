@@ -7,6 +7,7 @@ import 'package:mobile/app/Auth/application/auth_provider.dart';
 import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/firebase_options.dart';
+import 'package:qonversion_flutter/qonversion_flutter.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,17 @@ Future main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  final purchasesKey = dotenv.env['PURCHASES_KEY'];
+
+  if (purchasesKey != null) {
+    Qonversion.initialize(
+      new QonversionConfigBuilder(
+        dotenv.env['PURCHASES_KEY']!,
+        QLaunchMode.subscriptionManagement,
+      ).build(),
+    );
+  }
 
   runApp(const ProviderScope(child: App()));
 }

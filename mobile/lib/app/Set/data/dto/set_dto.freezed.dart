@@ -23,8 +23,12 @@ mixin _$SetDTO {
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
 
+  /// Serializes this SetDTO to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SetDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SetDTOCopyWith<SetDTO> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -46,6 +50,8 @@ class _$SetDTOCopyWithImpl<$Res, $Val extends SetDTO>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SetDTO
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -83,6 +89,8 @@ class __$$SetDTOImplCopyWithImpl<$Res>
       _$SetDTOImpl _value, $Res Function(_$SetDTOImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SetDTO
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -130,11 +138,13 @@ class _$SetDTOImpl implements _SetDTO {
                 other.description == description));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, description);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SetDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SetDTOImplCopyWith<_$SetDTOImpl> get copyWith =>
@@ -158,8 +168,11 @@ abstract class _SetDTO implements SetDTO {
   String? get name;
   @override
   String? get description;
+
+  /// Create a copy of SetDTO
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SetDTOImplCopyWith<_$SetDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

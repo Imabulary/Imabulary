@@ -15,10 +15,10 @@ import { StorageService } from 'src/storage/storage.service';
 import { VisionService } from 'src/vision/vision.service';
 import { AssistantService } from 'src/assistant/assistant.service';
 import { TranslatorService } from 'src/translator/translator.service';
-import { conduct } from 'src/wallet/utils';
 import { SoundService } from 'src/sound/sound.service';
 import { IBucketFolders } from 'src/storage/utils';
 import { FeedbackService } from 'src/feedback/feedback.service';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class FlashCardsService {
@@ -38,6 +38,7 @@ export class FlashCardsService {
 
     try {
       const imageUrl = await this.storage.getFileURL(imageFile);
+
       const card = await this.processImage({
         imageUrl,
         userId,
@@ -124,6 +125,7 @@ export class FlashCardsService {
       return card;
     } catch (error) {
       audioFile?.delete();
+
       throw error;
     }
   }
@@ -176,12 +178,13 @@ export class FlashCardsService {
 
   async like(likeFlashcardDto: LikeFlashcardDto) {
     const { cardId } = likeFlashcardDto;
+
     await this.prisma.feedback.create({
       data: { cardId, isAppropriate: true },
     });
   }
 
-  async deleteCard(cardId: string) {
+  async delete(cardId: string) {
     await Promise.all([
       this.prisma.cards.update({
         where: { id: cardId },
@@ -194,12 +197,13 @@ export class FlashCardsService {
         where: { flashcardId: cardId },
       }),
     ]);
+
     return {
       message: 'Card was successfuly deleted!',
     };
   }
 
-  async regenerateCard(cardId: string, userId: string) {
+  async regenerate(cardId: string, userId: string) {
     const currentCard = await this.prisma.cards.update({
       data: {
         userId: null,
@@ -215,7 +219,7 @@ export class FlashCardsService {
     });
 
     if (currentCard.is_regenerated) {
-      throw new BadRequestException('This card had already regenerated');
+      throw new BadRequestException('This card has already been regenerated');
     }
 
     const card = await this.processImage({
@@ -238,24 +242,20 @@ export class FlashCardsService {
     });
 
     if (existingFeedback) {
-      throw new NotFoundException('This card has already feedback');
+      throw new NotFoundException('This card has a feedback already');
     }
 
-    if ((!categoryId && !text) || (categoryId && text)) {
+    if ((isEmpty(categories) && !text) || (!isEmpty(categories) && text)) {
       throw new BadRequestException(
-        'Either categoryId or text must be provided, but not both',
+        'Either feedback category(-ies) or text must be provided, but not both',
       );
     }
 
-    const fetchedFeedback = await this.feedback.leaveFeedback({
+    await this.feedback.leaveFeedback({
       cardId,
       text,
       categories,
     });
-
-    if (!fetchedFeedback.card.user) {
-      throw new NotFoundException('User not found for the given card');
-    }
 
     return {
       message: 'Thank you for your feedback!',

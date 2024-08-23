@@ -23,8 +23,12 @@ mixin _$CreateUserResponse {
   Profile get user => throw _privateConstructorUsedError;
   Award get award => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateUserResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateUserResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateUserResponseCopyWith<CreateUserResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,6 +55,8 @@ class _$CreateUserResponseCopyWithImpl<$Res, $Val extends CreateUserResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateUserResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -69,6 +75,8 @@ class _$CreateUserResponseCopyWithImpl<$Res, $Val extends CreateUserResponse>
     ) as $Val);
   }
 
+  /// Create a copy of CreateUserResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ProfileCopyWith<$Res> get user {
@@ -77,6 +85,8 @@ class _$CreateUserResponseCopyWithImpl<$Res, $Val extends CreateUserResponse>
     });
   }
 
+  /// Create a copy of CreateUserResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AwardCopyWith<$Res> get award {
@@ -110,6 +120,8 @@ class __$$CreateUserResponseImplCopyWithImpl<$Res>
       $Res Function(_$CreateUserResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateUserResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -156,11 +168,13 @@ class _$CreateUserResponseImpl implements _CreateUserResponse {
             (identical(other.award, award) || other.award == award));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, user, award);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateUserResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateUserResponseImplCopyWith<_$CreateUserResponseImpl> get copyWith =>
@@ -187,8 +201,11 @@ abstract class _CreateUserResponse implements CreateUserResponse {
   Profile get user;
   @override
   Award get award;
+
+  /// Create a copy of CreateUserResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateUserResponseImplCopyWith<_$CreateUserResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

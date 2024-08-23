@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
+import 'package:mobile/app/Wallet/widgets/packages.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
@@ -68,10 +69,7 @@ class WalletScreen extends ConsumerWidget {
           const SizedBox(
             height: 32,
           ),
-          const TypeSetting(
-            'With package - cheaper!',
-            variant: TextVariants.headlineMedium,
-          ),
+          Packages(),
           const SizedBox(
             height: 32,
           ),

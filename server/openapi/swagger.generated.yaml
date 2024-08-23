@@ -165,15 +165,10 @@ paths:
                 properties:
                   message:
                     type: string
-              examples:
-                dislikeWithSave:
-                  summary: Successfully disliked and saved flashcard
-                  value:
-                    message: Thank you for your feedback!
-                alreadyDisliked:
-                  summary: Flashcard was soft deleted
-                  value:
-                    message: '''Card soft deleted and removed from sets successfully. Thank you for your feedback!'''
+              example:
+                summary: Successfully disliked
+                value:
+                  message: Thank you for your feedback!
         '400':
           description: Bad request
           content:
@@ -730,9 +725,6 @@ components:
         - $ref: '#/components/schemas/LikeFlashcardDto'
         - type: object
           properties:
-            action:
-              type: string
-              description: Describe action. Should be "delete" or "save"
             cardId:
               type: string
               description: ID of target card

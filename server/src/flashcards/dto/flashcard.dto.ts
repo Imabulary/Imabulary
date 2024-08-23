@@ -28,3 +28,21 @@ export class OrganizeFlashcardsDTO {
 export class DisorganizeFlashcardsDTO extends PartialType(
   OrganizeFlashcardsDTO,
 ) {}
+
+export class RegenerateFlashcardDTO {
+  @IsUUID('4', { message: 'ID must be a valid string' })
+  @IsRecordExist('cards', {
+    each: false,
+    message: `You cannot regenerate a flashcard that doesn't exist`,
+  })
+  cardId: string;
+}
+
+export class DeleteFlashcardDTO {
+  @IsUUID('4', { message: 'ID must be a valid string' })
+  @IsRecordExist('cards', {
+    each: false,
+    message: `You cannot delete a flashcard that doesn't exist`,
+  })
+  cardId: string;
+}
