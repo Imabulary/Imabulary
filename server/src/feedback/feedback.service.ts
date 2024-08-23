@@ -6,23 +6,26 @@ export class FeedbackService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAllFeedbackCategories() {
-    const categories = await this.prisma.feedbackCategory.findMany();
-    return categories;
+    return this.prisma.feedbackCategory.findMany();
   }
 
   async leaveFeedback(feedbackDto: {
     cardId: string;
     text: string;
-    categoryId: string;
+    categories: string[];
   }) {
-    const { cardId, text, categoryId } = feedbackDto;
+    const { cardId, text, categories } = feedbackDto;
 
     const feedback = await this.prisma.feedback.create({
       data: {
         cardId,
         isAppropriate: false,
         text,
-        categoryId,
+        category: {
+          connect: categories.map((categoryId) => ({
+            id: categoryId,
+          })),
+        },
       },
       include: {
         card: {
