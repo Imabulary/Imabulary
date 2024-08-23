@@ -12,16 +12,20 @@ export class FeedbackService {
   async leaveFeedback(feedbackDto: {
     cardId: string;
     text: string;
-    categoryId: string;
+    categories: string[];
   }) {
-    const { cardId, text, categoryId } = feedbackDto;
+    const { cardId, text, categories } = feedbackDto;
 
     const feedback = await this.prisma.feedback.create({
       data: {
         cardId,
         isAppropriate: false,
         text,
-        categoryId,
+        category: {
+          connect: categories.map((categoryId) => ({
+            id: categoryId,
+          })),
+        },
       },
       include: {
         card: {

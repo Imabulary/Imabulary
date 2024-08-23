@@ -3,7 +3,7 @@ ALTER TABLE "Feedback" ADD COLUMN     "categoryId" TEXT;
 
 -- CreateTable
 CREATE TABLE "FeedbackCategory" (
-    "id" VARCHAR NOT NULL,
+    "id" VARCHAR NOT NULL DEFAULT gen_random_uuid(),
     "name" TEXT NOT NULL,
     "meaning" TEXT NOT NULL,
 
