@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma';
 import { Filters, ServerPagination } from 'src/shared';
 import {
@@ -161,6 +165,12 @@ export class FlashCardsService {
 
   async dislike(dislikeFlashcardDto: DislikeFlashcardDto, userId: string) {
     const { cardId, text, action, categoryId } = dislikeFlashcardDto;
+
+    if ((!categoryId && !text) || (categoryId && text)) {
+      throw new BadRequestException(
+        'Either categoryId or text must be provided, but not both',
+      );
+    }
 
     const fetchedFeedback = await this.feedback.leaveFeedback({
       cardId,

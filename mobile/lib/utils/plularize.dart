@@ -3,7 +3,7 @@ String pluralize(String word, num? count) {
   final amount = (count ?? 0).toStringAsFixed(2);
   final formattedAmount =
       amount.endsWith('.00') ? amount.split('.')[0] : amount;
-  final isSingular = count == 1;
+  final isSingular = count?.round() == 1;
 
   if (isSingular) {
     return '1 $word';

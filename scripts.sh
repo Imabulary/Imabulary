@@ -7,6 +7,7 @@ devBuild() {
 devStart() {
   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
   prismaGenerate
+  prismaSeed
 }
 
 # Shutdown containers that was run for development
@@ -46,6 +47,11 @@ runMigration() {
 # Generate TypeScript types based on prisma schema
 prismaGenerate() {
   docker exec -it imabulary_backend sh -c "npx prisma generate"
+}
+
+# Seed an initial data inside database
+prismaSeed() {
+  npx prisma db seed
 }
 
 # Build & Push to GCP

@@ -1,5 +1,11 @@
+import {
+  IsIn,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import { IsRecordExist } from 'src/decorators/is-record-exist.decorator';
-import { IsString, IsOptional, IsNotEmpty, IsIn } from 'class-validator';
 import { EitherCategoryIdOrTextFeedback } from '../../decorators/either-categoryId-or-text.decorator';
 
 export class LikeFlashcardDto {
@@ -16,7 +22,10 @@ export class DislikeFlashcardDto extends LikeFlashcardDto {
   @IsOptional()
   text?: string;
 
-  @IsString()
+  @IsRecordExist('feedbackCategories', {
+    message: "Feedback category you've provided doesn't exist",
+  })
+  @IsUUID()
   @IsOptional()
   categoryId?: string;
 
@@ -26,9 +35,4 @@ export class DislikeFlashcardDto extends LikeFlashcardDto {
     message: 'Action must be either "delete" or "save"',
   })
   action: string;
-
-  @EitherCategoryIdOrTextFeedback({
-    message: 'Either categoryId or text must be provided, but not both',
-  })
-  validate: boolean;
 }

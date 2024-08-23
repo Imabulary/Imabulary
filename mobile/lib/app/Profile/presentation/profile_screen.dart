@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
 import 'package:mobile/app/Profile/widgets/ProfileAppBar/profile_app_bar.dart';
-import 'package:mobile/app/Profile/widgets/flashcards_grid.dart';
 import 'package:mobile/app/Profile/widgets/SetsGrid/sets_grid.dart';
+import 'package:mobile/app/Profile/widgets/flashcards_grid.dart';
 
 @RoutePage()
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -24,7 +24,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
   @override
   void initState() {
     _tabController = TabController(
-        length: 2, vsync: this, initialIndex: widget.initialTabIndex);
+      length: 2,
+      vsync: this,
+      initialIndex: widget.initialTabIndex,
+    );
 
     super.initState();
   }
@@ -44,7 +47,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         children: const [FlashcardsGrid(), SetsGrid()],
       ),
       currentScreen: CurrentScreens.profile.value,
-      appBar: ProfileAppBar(_tabController),
+      appBar: ProfileAppBar(
+        _tabController,
+      ),
     );
   }
 }

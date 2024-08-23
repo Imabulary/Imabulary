@@ -7,6 +7,58 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:222626452683:android:77361b1bd591ed9e0ff74e",
+        "android_client_info": {
+          "package_name": "com.byterhyme.imabulary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "222626452683-6e62oh12qg57dg31226f5amnldeftm5d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.byterhyme.imabulary",
+            "certificate_hash": "03d47041aadd6fa1446246e5cceb803ae3e72441"
+          }
+        },
+        {
+          "client_id": "222626452683-fckpog6sg8rdqj2tjkmf0bij4tnbke83.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.byterhyme.imabulary",
+            "certificate_hash": "23a1855f224080eecbc79aa652a54a50bd01004b"
+          }
+        },
+        {
+          "client_id": "222626452683-0kvtf5sga86suf5q3rf1knks62ebegh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvNdKTfJcIeRvi3Psy1MRXNNmoBWXluC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "222626452683-0kvtf5sga86suf5q3rf1knks62ebegh4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "222626452683-823iovqtt4e9aukg6rl8bkr6c34oj7r5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.imabulary"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:222626452683:android:08adf5e6016a134a0ff74e",
         "android_client_info": {
           "package_name": "com.example.mobile"
@@ -39,10 +91,10 @@
               "client_type": 3
             },
             {
-              "client_id": "222626452683-gpqqh6k9lmndj9r4grokf9e2qkrsccld.apps.googleusercontent.com",
+              "client_id": "222626452683-823iovqtt4e9aukg6rl8bkr6c34oj7r5.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.mobile"
+                "bundle_id": "com.example.imabulary"
               }
             }
           ]

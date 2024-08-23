@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Profile/presentation/profile.dart';
+import 'package:mobile/app/Profile/presentation/profile_screen.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/components/DeleteActionItem/delete_action_item_controller.dart';
 import 'package:mobile/app/Set/presentation/set_screen_controller.dart';
