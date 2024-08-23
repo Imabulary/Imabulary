@@ -241,7 +241,7 @@ export class FlashCardsService {
       throw new NotFoundException('This card has already feedback');
     }
 
-    if ((!categoryId && !text) || (categoryId && text)) {
+    if ((!categories && !text) || (categories && text)) {
       throw new BadRequestException(
         'Either categoryId or text must be provided, but not both',
       );
