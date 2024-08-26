@@ -21,9 +21,10 @@ model Cards {
   source_language        String         @db.VarChar()
   image_url              String         @db.VarChar()
   image_name             String?
+  is_regenerated         Boolean        @default(false)
   audio_url              String?        @db.VarChar()
   audio_name             String?
-  quizStatusName         String         @default("still_learning")
+  quizStatusId           String
   userId                 String?        @db.VarChar()
   createdAt              DateTime       @default(now())
   updatedAt              DateTime       @updatedAt
@@ -32,7 +33,7 @@ model Cards {
   sets                   Sets[]
   CardsOnSets            CardsOnSets[]
   Feedback               Feedback?
-  QuizStatus             QuizCardStatus @relation(fields: [quizStatusName], references: [id])
+  QuizStatus             QuizCardStatus @relation(fields: [quizStatusId], references: [id])
 }
 
 model Users {
@@ -97,20 +98,19 @@ model Cashback {
 }
 
 model Feedback {
-  id            String            @id @default(uuid()) @db.VarChar()
-  cardId        String            @unique @db.VarChar()
+  id            String             @id @default(uuid()) @db.VarChar()
+  cardId        String             @unique @db.VarChar()
   isAppropriate Boolean?
   text          String?
-  categoryId    String?
-  category      FeedbackCategory? @relation(fields: [categoryId], references: [id])
-  card          Cards             @relation(fields: [cardId], references: [id])
+  category      FeedbackCategory[] @relation("card_feedbacks_categories")
+  card          Cards              @relation(fields: [cardId], references: [id])
 }
 
 model FeedbackCategory {
   id       String     @id @default(uuid()) @db.VarChar()
   name     String
   meaning  String
-  feedback Feedback[]
+  feedback Feedback[] @relation("card_feedbacks_categories")
 }
 
 enum WalletStatus {
@@ -119,8 +119,7 @@ enum WalletStatus {
 }
 
 model QuizCardStatus {
-  id                 String  @id @default(uuid()) @db.VarChar()
-  name               String
-  textRepresentation String
-  Cards              Cards[]
+  id    String  @id @default(uuid()) @db.VarChar()
+  name  String
+  Cards Cards[]
 }

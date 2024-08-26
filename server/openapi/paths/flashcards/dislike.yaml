@@ -16,17 +16,12 @@ post:
           schema:
             type: object
             properties:
-              message: 
+              message:
                 type: string
-          examples:
-                dislikeWithSave:
-                  summary: Successfully disliked and saved flashcard
-                  value:
-                    message: "Thank you for your feedback!"
-                alreadyDisliked:
-                  summary: Flashcard was soft deleted
-                  value:
-                    message: "'Card soft deleted and removed from sets successfully. Thank you for your feedback!'"
+          example:
+            summary: Successfully disliked
+            value:
+              message: "Thank you for your feedback!"
     "400":
       description: Bad request
       content:

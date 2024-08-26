@@ -13,22 +13,22 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import type { Users } from '@prisma/client';
+import { Request } from 'express';
 import { AuthGuard } from 'src/guards';
+import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
 import { PaginationPipe } from 'src/pipes/pagination.pipe';
 import { Filters, ServerPagination } from 'src/shared';
-import { Request } from 'express';
-import { FlashCardsService } from './flashcards.service';
-import type { Users } from '@prisma/client';
+import { DeductBalance } from 'src/wallet/deduct-balance.interceptor';
 import {
+  DislikeFlashcardDto,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
-  DislikeFlashcardDto,
   LikeFlashcardDto,
+  CardDto,
 } from './dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
-import { DeductBalance } from 'src/wallet/deduct-balance.interceptor';
-import { CollectCashback } from 'src/cashback/cashback.interceptor';
+import { FlashCardsService } from './flashcards.service';
 
 const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
@@ -39,7 +39,6 @@ export class FlashCardsController {
 
   @Post('scan')
   @DeductBalance(1)
-  @CollectCashback()
   @UseInterceptors(FileInterceptor('file'))
   scan(
     @Req() request: Request,
@@ -87,12 +86,18 @@ export class FlashCardsController {
   }
 
   @Post('/dislike')
-  async dislike(
-    @Req() request: Request,
-    @Body() dislikeFlashcardDto: DislikeFlashcardDto,
-  ) {
+  async dislike(@Body() dislikeFlashcardDto: DislikeFlashcardDto) {
+    return this.flashCardsService.dislike(dislikeFlashcardDto);
+  }
+  @Post('/regenerate')
+  async regenerate(@Req() request: Request, @Body() regenerateDto: CardDto) {
     const user: Users = request['user'];
 
-    return this.flashCardsService.dislike(dislikeFlashcardDto, user.id);
+    return this.flashCardsService.regenerateCard(regenerateDto.cardId, user.id);
+  }
+
+  @Post('/delete')
+  async delete(@Body() regenerateDto: CardDto) {
+    return this.flashCardsService.deleteCard(regenerateDto.cardId);
   }
 }

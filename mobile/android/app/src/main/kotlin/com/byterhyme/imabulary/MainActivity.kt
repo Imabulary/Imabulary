@@ -1,4 +1,4 @@
-package com.example.mobile
+package com.byterhyme.imabulary
 
 import io.flutter.embedding.android.FlutterActivity
 

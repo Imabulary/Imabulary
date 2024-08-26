@@ -1,11 +1,18 @@
 import { Module } from '@nestjs/common';
 import { QuizService } from './quiz.service';
 import { QuizController } from './quiz.controller';
-import { PrismaModule } from 'nestjs-prisma';
+import { extendedPrismaClient, PrismaService } from 'src/prisma';
+import { CustomPrismaModule } from 'nestjs-prisma';
+import { UsersService } from 'src/users';
 
 @Module({
-  imports: [PrismaModule],
-  providers: [QuizService],
+  imports: [
+    CustomPrismaModule.forRootAsync({
+      name: 'PrismaService',
+      useFactory: () => extendedPrismaClient,
+    }),
+  ],
+  providers: [QuizService, PrismaService, UsersService],
   controllers: [QuizController],
 })
 export class QuizModule {}

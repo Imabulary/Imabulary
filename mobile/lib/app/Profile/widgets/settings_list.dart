@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Auth/data/auth_repository.dart';
+import 'package:mobile/app/Wallet/presentation/wallet_screen.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
 class SettingsList extends ConsumerWidget {
@@ -15,7 +16,14 @@ class SettingsList extends ConsumerWidget {
       children: [
         ListTile(
           key: const Key('wallet'),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => WalletScreen(),
+              ),
+            );
+          },
           title: const TypeSetting('Wallet'),
         ),
         ListTile(

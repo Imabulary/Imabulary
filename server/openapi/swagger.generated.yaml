@@ -4,6 +4,26 @@ info:
   description: API documentation for the Imabulary API
   version: 1.0.0
 paths:
+  /quiz/learn:
+    post:
+      tags:
+        - quiz
+      summary: User answer to quiz answer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuizDto'
+        responses:
+          '200':
+            description: Answer was leaved successfully.
+          '400': null
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /feedback/categories:
     get:
       tags:
@@ -165,15 +185,10 @@ paths:
                 properties:
                   message:
                     type: string
-              examples:
-                dislikeWithSave:
-                  summary: Successfully disliked and saved flashcard
-                  value:
-                    message: Thank you for your feedback!
-                alreadyDisliked:
-                  summary: Flashcard was soft deleted
-                  value:
-                    message: '''Card soft deleted and removed from sets successfully. Thank you for your feedback!'''
+              example:
+                summary: Successfully disliked
+                value:
+                  message: Thank you for your feedback!
         '400':
           description: Bad request
           content:
@@ -730,9 +745,6 @@ components:
         - $ref: '#/components/schemas/LikeFlashcardDto'
         - type: object
           properties:
-            action:
-              type: string
-              description: Describe action. Should be "delete" or "save"
             cardId:
               type: string
               description: ID of target card
@@ -757,6 +769,19 @@ components:
           type: string
           description: The description or meaning of the feedback category
           example: This means that the system pulled up an incorrect translation.
+    QuizDto:
+      type: object
+      properties:
+        cardId:
+          type: string
+          description: cardId
+          example: 123e4567-e89b-12d3-a456-426614174000
+        word:
+          type: string
+          description: User answer
+          example: Apple
+      required:
+        - name
   securitySchemes:
     bearerAuth:
       type: http

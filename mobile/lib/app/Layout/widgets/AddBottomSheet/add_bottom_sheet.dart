@@ -8,6 +8,7 @@ import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
 import 'package:mobile/app/Layout/components/better_results_dialog.dart';
 import 'package:mobile/app/Layout/components/bottom_sheet_item.dart';
 import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet_controller.dart';
+import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 
@@ -25,6 +26,7 @@ class AddBottomSheet extends ConsumerWidget {
         Navigator.pop(context);
 
         ref.invalidate(findAllFlashcardsProvider);
+        ref.invalidate(getWalletBalanceProvider);
 
         final flashcard = value as FlashCard;
 

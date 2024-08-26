@@ -16,9 +16,3 @@ CREATE TABLE "QuizCardStatus" (
 
 -- AddForeignKey
 ALTER TABLE "Cards" ADD CONSTRAINT "Cards_quizStatusName_fkey" FOREIGN KEY ("quizStatusName") REFERENCES "QuizCardStatus"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
-INSERT INTO "QuizCardStatus" ("name", "textRepresentation")
-VALUES
-('still_learning', 'Still learning'),
-('not_studied', 'Not studied'),
-('mastered', 'Mastered');

@@ -13,7 +13,7 @@ class EitherCategoryIdOrTextFeedbackConstraint
 {
   validate(_: any, args: ValidationArguments) {
     const dto = args.object as DislikeFlashcardDto;
-    return !!dto.categoryId !== !!dto.text;
+    return !!dto.categories.length !== !!dto.text;
   }
 }
 
