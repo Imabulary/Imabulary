@@ -15,10 +15,12 @@ import { StorageService } from 'src/storage/storage.service';
 import { VisionService } from 'src/vision/vision.service';
 import { AssistantService } from 'src/assistant/assistant.service';
 import { TranslatorService } from 'src/translator/translator.service';
-import { conduct } from 'src/wallet/utils';
 import { SoundService } from 'src/sound/sound.service';
 import { IBucketFolders } from 'src/storage/utils';
 import { FeedbackService } from 'src/feedback/feedback.service';
+import { Wallet } from '@prisma/client';
+import { WalletService } from 'src/wallet/wallet.service';
+import { DEFAULT_COST } from 'src/shared/constants';
 
 @Injectable()
 export class FlashCardsService {
@@ -30,6 +32,7 @@ export class FlashCardsService {
     private readonly translator: TranslatorService,
     private readonly sound: SoundService,
     private readonly feedback: FeedbackService,
+    private readonly wallet: WalletService,
   ) {}
 
   async scan(userId: string, fileName: string, file: Buffer) {
@@ -121,6 +124,13 @@ export class FlashCardsService {
           explanation,
         },
       });
+
+      const { result } = await this.wallet.deductBalance(userId, DEFAULT_COST);
+
+      if (!result) {
+        throw new Error('Deduct balance error');
+      }
+
       return card;
     } catch (error) {
       audioFile?.delete();
