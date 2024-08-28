@@ -18,7 +18,6 @@ import { TranslatorService } from 'src/translator/translator.service';
 import { SoundService } from 'src/sound/sound.service';
 import { IBucketFolders } from 'src/storage/utils';
 import { FeedbackService } from 'src/feedback/feedback.service';
-import { Wallet } from '@prisma/client';
 import { WalletService } from 'src/wallet/wallet.service';
 import { DEFAULT_COST } from 'src/shared/constants';
 
