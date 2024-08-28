@@ -10,6 +10,6 @@ export class QuizController {
 
   @Post('learn')
   learn(@Body() quizDto: QuizDTO) {
-    return this.quizService.saveResult(quizDto.cardId, quizDto.word);
+    return this.quizService.learn(quizDto);
   }
 }

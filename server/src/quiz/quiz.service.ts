@@ -1,18 +1,19 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma';
+import { QuizDTO } from './dto/quiz.dto';
 
 @Injectable()
 export class QuizService {
   constructor(private readonly prisma: PrismaService) {}
 
-  private findStatusId = (array: Record<string, string>[], statusName) => {
+  private findStatusId(array: { id: string; name: string }[], statusName) {
     return array.find((item) => statusName === item.name)?.id;
-  };
+  }
 
-  async saveResult(cardId: string, word: string) {
+  async learn(quizDto: QuizDTO) {
     const card = await this.prisma.cards.findUnique({
       where: {
-        id: cardId,
+        id: quizDto.cardId,
       },
     });
 
@@ -22,24 +23,20 @@ export class QuizService {
       );
     }
 
-    const isCorrect = card.word.toLowerCase() === word.toLowerCase();
+    const isCorrect = card.word.toLowerCase() === quizDto.word.toLowerCase();
 
     const quizStatuses = await this.prisma.quizCardStatus.findMany();
 
-    try {
-      return await this.prisma.cards.update({
-        where: {
-          id: cardId,
-        },
-        data: {
-          quizStatusId: isCorrect
-            ? this.findStatusId(quizStatuses, 'mastered')
-            : this.findStatusId(quizStatuses, 'still_learing'),
-          updatedAt: new Date(),
-        },
-      });
-    } catch (error) {
-      throw new BadRequestException('Quiz status assign error: ' + error);
-    }
+    return await this.prisma.cards.update({
+      where: {
+        id: quizDto.cardId,
+      },
+      data: {
+        quizStatusId: isCorrect
+          ? this.findStatusId(quizStatuses, 'mastered')
+          : this.findStatusId(quizStatuses, 'still_learing'),
+        updatedAt: new Date(),
+      },
+    });
   }
 }
