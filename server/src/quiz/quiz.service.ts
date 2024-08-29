@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma';
 import { QuizDTO } from './dto/quiz.dto';
+import { QUIZ_STATUS } from './utils/quiz-status';
 
 @Injectable()
 export class QuizService {
@@ -33,8 +34,8 @@ export class QuizService {
       },
       data: {
         quizStatusId: isCorrect
-          ? this.findStatusId(quizStatuses, 'mastered')
-          : this.findStatusId(quizStatuses, 'still_learing'),
+          ? this.findStatusId(quizStatuses, QUIZ_STATUS.MASTERED)
+          : this.findStatusId(quizStatuses, QUIZ_STATUS.STILL_LEARNING),
         updatedAt: new Date(),
       },
     });
