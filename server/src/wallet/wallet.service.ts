@@ -30,27 +30,23 @@ export class WalletService {
   }
 
   async deductBalance(userId: string, cost: number) {
-    try {
-      await this.prisma.$transaction(async (prisma) => {
-        const wallet = await prisma.wallet.findUnique({
-          where: { userId },
-        });
-
-        validateWallet(wallet);
-
-        if (!checkBalanceAvailability(wallet.balance, cost)) {
-          throw new BadRequestException(INSUFFICIENT_FUNDS);
-        }
-
-        await prisma.wallet.update({
-          where: { userId },
-          data: { balance: deduct(wallet.balance, cost) },
-        });
+    await this.prisma.$transaction(async (prisma) => {
+      const wallet = await prisma.wallet.findUnique({
+        where: { userId },
       });
-      return { result: true };
-    } catch (e) {
-      return { result: false };
-    }
+
+      validateWallet(wallet);
+
+      if (!checkBalanceAvailability(wallet.balance, cost)) {
+        throw new BadRequestException(INSUFFICIENT_FUNDS);
+      }
+
+      await prisma.wallet.update({
+        where: { userId },
+        data: { balance: deduct(wallet.balance, cost) },
+      });
+    });
+    return { result: true };
   }
 
   async collectAward(userId: string) {

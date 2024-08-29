@@ -124,11 +124,7 @@ export class FlashCardsService {
         },
       });
 
-      const { result } = await this.wallet.deductBalance(userId, DEFAULT_COST);
-
-      if (!result) {
-        throw new Error('Deduct balance error');
-      }
+      await this.wallet.deductBalance(userId, DEFAULT_COST);
 
       return card;
     } catch (error) {
