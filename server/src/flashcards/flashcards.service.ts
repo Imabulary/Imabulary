@@ -18,6 +18,7 @@ import { TranslatorService } from 'src/translator/translator.service';
 import { SoundService } from 'src/sound/sound.service';
 import { IBucketFolders } from 'src/storage/utils';
 import { FeedbackService } from 'src/feedback/feedback.service';
+import { QUIZ_STATUS } from 'src/quiz/utils/quiz-status';
 
 @Injectable()
 export class FlashCardsService {
@@ -88,7 +89,7 @@ export class FlashCardsService {
           this.assistant.explain(objectOnImage),
           this.assistant.speechPart(objectOnImage),
           this.prisma.quizCardStatus.findFirst({
-            where: { name: 'not_studied' },
+            where: { name: QUIZ_STATUS.NOT_STUDIED },
           }),
         ]);
 
