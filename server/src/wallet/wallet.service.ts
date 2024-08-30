@@ -46,7 +46,6 @@ export class WalletService {
         data: { balance: deduct(wallet.balance, cost) },
       });
     });
-    return { result: true };
   }
 
   async collectAward(userId: string) {
