@@ -19,6 +19,8 @@ import { SoundService } from 'src/sound/sound.service';
 import { IBucketFolders } from 'src/storage/utils';
 import { FeedbackService } from 'src/feedback/feedback.service';
 import { QUIZ_STATUS } from 'src/quiz/utils/quiz-status';
+import { WalletService } from 'src/wallet/wallet.service';
+import { DEFAULT_COST } from 'src/shared/constants';
 
 @Injectable()
 export class FlashCardsService {
@@ -30,6 +32,7 @@ export class FlashCardsService {
     private readonly translator: TranslatorService,
     private readonly sound: SoundService,
     private readonly feedback: FeedbackService,
+    private readonly wallet: WalletService,
   ) {}
 
   async scan(userId: string, fileName: string, file: Buffer) {
@@ -126,6 +129,9 @@ export class FlashCardsService {
           explanation,
         },
       });
+
+      await this.wallet.deductBalance(userId, DEFAULT_COST);
+
       return card;
     } catch (error) {
       audioFile?.delete();

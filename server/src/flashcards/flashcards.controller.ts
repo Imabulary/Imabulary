@@ -20,13 +20,13 @@ import { AuthGuard } from 'src/guards';
 import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
 import { PaginationPipe } from 'src/pipes/pagination.pipe';
 import { Filters, ServerPagination } from 'src/shared';
-import { DeductBalance } from 'src/wallet/deduct-balance.interceptor';
 import {
   DislikeFlashcardDto,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
   LikeFlashcardDto,
   CardDto,
+  OrganizeFlashcardsDTO,
 } from './dto';
 import { FlashCardsService } from './flashcards.service';
 
@@ -38,7 +38,6 @@ export class FlashCardsController {
   constructor(private readonly flashCardsService: FlashCardsService) {}
 
   @Post('scan')
-  @DeductBalance(1)
   @UseInterceptors(FileInterceptor('file'))
   scan(
     @Req() request: Request,
