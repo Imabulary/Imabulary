@@ -28,6 +28,7 @@ import { FeedbackService } from 'src/feedback/feedback.service';
     VisionService,
     AssistantService,
     TranslatorService,
+    WalletModule,
     FeedbackService,
     UsersService,
     SoundService,
