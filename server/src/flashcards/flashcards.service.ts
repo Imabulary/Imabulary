@@ -18,6 +18,7 @@ import { TranslatorService } from 'src/translator/translator.service';
 import { SoundService } from 'src/sound/sound.service';
 import { IBucketFolders } from 'src/storage/utils';
 import { FeedbackService } from 'src/feedback/feedback.service';
+import { QUIZ_STATUS } from 'src/quiz/utils/quiz-status';
 import { WalletService } from 'src/wallet/wallet.service';
 import { DEFAULT_COST } from 'src/shared/constants';
 
@@ -85,11 +86,15 @@ export class FlashCardsService {
 
       const audioUrl = await this.storage.getFileURL(audioFile);
 
-      const [relatedPhrase, explanation, speechPart] = await Promise.all([
-        this.assistant.generatePhrase(objectOnImage),
-        this.assistant.explain(objectOnImage),
-        this.assistant.speechPart(objectOnImage),
-      ]);
+      const [relatedPhrase, explanation, speechPart, status] =
+        await Promise.all([
+          this.assistant.generatePhrase(objectOnImage),
+          this.assistant.explain(objectOnImage),
+          this.assistant.speechPart(objectOnImage),
+          this.prisma.quizCardStatus.findFirst({
+            where: { name: QUIZ_STATUS.NOT_STUDIED },
+          }),
+        ]);
 
       // TODO: Take these variables from settings of user profile, once it's done
       const sourceLanguageCode = 'en-US';
@@ -115,6 +120,7 @@ export class FlashCardsService {
           target_language: targetLanguageCode,
           source_language: sourceLanguageCode,
           image_url: imageUrl,
+          quizStatusId: status?.id,
           audio_url: audioUrl,
           is_regenerated: isRegeneration,
           audio_name: generatedAudioName,

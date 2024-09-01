@@ -1,12 +1,5 @@
-import {
-  IsIn,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsUUID,
-} from 'class-validator';
+import { IsOptional, IsString, IsArray } from 'class-validator';
 import { IsRecordExist } from 'src/decorators/is-record-exist.decorator';
-import { IsString, IsOptional, IsArray } from 'class-validator';
 import { EitherCategoryIdOrTextFeedback } from '../../decorators/either-categoryId-or-text.decorator';
 
 export class LikeFlashcardDto {

@@ -23,6 +23,7 @@ import { Filters, ServerPagination } from 'src/shared';
 import {
   DislikeFlashcardDto,
   DisorganizeFlashcardsDTO,
+  OrganizeFlashcardsDTO,
   LikeFlashcardDto,
   CardDto,
   OrganizeFlashcardsDTO,

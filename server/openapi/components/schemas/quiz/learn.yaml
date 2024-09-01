@@ -1,0 +1,12 @@
+type: object
+properties:
+  cardId:
+    type: string
+    description: cardId
+    example: "123e4567-e89b-12d3-a456-426614174000"
+  word:
+    type: string
+    description: User answer
+    example: "Apple"
+required:
+  - name

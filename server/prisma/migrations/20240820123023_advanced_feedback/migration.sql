@@ -8,10 +8,6 @@
 ALTER TABLE "Feedback" DROP CONSTRAINT "Feedback_categoryId_fkey";
 
 -- AlterTable
-ALTER TABLE "Cards" ADD COLUMN     "deletedAt" TIMESTAMP(3),
-ADD COLUMN     "is_regenerated" BOOLEAN NOT NULL DEFAULT false;
-
--- AlterTable
 ALTER TABLE "Feedback" DROP COLUMN "categoryId";
 
 -- AlterTable
