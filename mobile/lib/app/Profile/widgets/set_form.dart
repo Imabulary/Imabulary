@@ -69,7 +69,7 @@ class SetForm extends ConsumerWidget {
             ),
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(),
-              FormBuilderValidators.maxLength(maxSetNameLength),
+              FormBuilderValidators.maxLength(kMaxSetNameLength),
             ]),
           ),
           const SizedBox(height: 16),
@@ -81,7 +81,7 @@ class SetForm extends ConsumerWidget {
               border: OutlineInputBorder(),
             ),
             maxLines: null,
-            validator: FormBuilderValidators.maxLength(maxSetDescriptionLength),
+            validator: FormBuilderValidators.maxLength(kMaxSetDescriptionLength),
           ),
           const SizedBox(height: 16),
           ElevatedButton(

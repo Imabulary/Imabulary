@@ -11,11 +11,11 @@ typedef SetsFlashcards = ({String image_url});
 class Set with _$Set {
   const factory Set({
     required String id,
-    @Assert('name.length <= ${maxSetNameLength}',
-        'Name should not be more than ${maxSetNameLength} characters')
+    @Assert('name.length <= ${kMaxSetNameLength}',
+        'Name should not be more than ${kMaxSetNameLength} characters')
     String name,
-    @Assert('description.length <= ${maxSetDescriptionLength}',
-        'Description should not be more than ${maxSetDescriptionLength} characters')
+    @Assert('description.length <= ${kMaxSetDescriptionLength}',
+        'Description should not be more than ${kMaxSetDescriptionLength} characters')
     String? description,
     required String userId,
     required DateTime createdAt,
