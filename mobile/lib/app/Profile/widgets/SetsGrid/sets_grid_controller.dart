@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Profile/widgets/set_form.dart';
-import 'package:mobile/app/Set/domain/set.dart';
+import 'package:Imabulary/app/Profile/widgets/set_form.dart';
+import 'package:Imabulary/app/Set/domain/set.dart';
 
 class SetsGridController {
   static void Function({Set? set}) showSetFormBottomSheet(

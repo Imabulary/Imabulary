@@ -1,4 +1,4 @@
-import 'package:mobile/shared/models/Pagination/pagination.dart';
+import 'package:Imabulary/shared/models/Pagination/pagination.dart';
 
 class QueryParamsBuilder {
   final Map<String, dynamic> _queryParams = {};

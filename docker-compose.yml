@@ -5,7 +5,7 @@ services:
   #   build: ./client
   #   ports:
   #     - 3001:3000
-  #   container_name: imabulary_frontend
+  #   container_name: ${COMPOSE_PROJECT_NAME}_frontend
   #   env_file:
   #     - ./client/.env
   #   depends_on:
@@ -15,7 +15,7 @@ services:
     build: ./server
     ports:
       - 5001:5000
-    container_name: imabulary_backend
+    container_name: ${COMPOSE_PROJECT_NAME}_backend
     env_file:
       - ./server/.env
     depends_on:
@@ -23,7 +23,7 @@ services:
 
   database:
     image: postgres
-    container_name: imabulary_database
+    container_name: ${COMPOSE_PROJECT_NAME}_database
     ports:
       - 5433:5432
     volumes:

@@ -3,13 +3,13 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
-import 'package:mobile/app/Flashcard/components/voiceover_button.dart';
-import 'package:mobile/app/Flashcard/widgets/FlashcardAppBar/flashcard_app_bar.dart';
-import 'package:mobile/app/Layout/presentation/layout.dart';
-import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/components/full_screen_image.dart';
+import 'package:Imabulary/app/Flashcard/application/flashcard_service.dart';
+import 'package:Imabulary/app/Flashcard/components/voiceover_button.dart';
+import 'package:Imabulary/app/Flashcard/widgets/FlashcardAppBar/flashcard_app_bar.dart';
+import 'package:Imabulary/app/Layout/presentation/layout.dart';
+import 'package:Imabulary/atoms/colors.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
+import 'package:Imabulary/components/full_screen_image.dart';
 
 @RoutePage()
 class FlashcardScreen extends ConsumerWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
+import 'package:Imabulary/app/Flashcard/presentation/flashcard_screen.dart';
 
 class FlashCardItemController {
   static void redirectToFlashCardScreen(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/shared/constants.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
+import 'package:Imabulary/shared/constants.dart';
 
 class ListItem extends ListTile {
   const ListItem({

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
-import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet.dart';
-import 'package:mobile/shared/models/ServerError/server_error.dart';
+import 'package:Imabulary/app/Flashcard/data/flash_card_repository.dart';
+import 'package:Imabulary/app/Layout/widgets/AddBottomSheet/add_bottom_sheet.dart';
+import 'package:Imabulary/shared/models/ServerError/server_error.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 

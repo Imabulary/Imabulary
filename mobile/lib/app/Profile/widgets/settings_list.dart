@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Auth/data/auth_repository.dart';
-import 'package:mobile/app/Wallet/presentation/wallet_screen.dart';
-import 'package:mobile/atoms/type_setting.dart';
+import 'package:Imabulary/app/Auth/data/auth_repository.dart';
+import 'package:Imabulary/app/Wallet/presentation/wallet_screen.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
 
 class SettingsList extends ConsumerWidget {
   const SettingsList({super.key});

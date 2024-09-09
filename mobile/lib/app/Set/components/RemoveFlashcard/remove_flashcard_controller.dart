@@ -1,5 +1,5 @@
-import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
-import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
+import 'package:Imabulary/app/Flashcard/data/dto/flashcard_dto.dart';
+import 'package:Imabulary/app/Flashcard/data/flash_card_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'remove_flashcard_controller.g.dart';

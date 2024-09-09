@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Wallet/presentation/wallet_screen.dart';
-import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/atoms/type_setting.dart';
+import 'package:Imabulary/app/Wallet/presentation/wallet_screen.dart';
+import 'package:Imabulary/atoms/colors.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
 
 class NotEnoughCoinsDialog extends StatelessWidget {
   const NotEnoughCoinsDialog({Key? key}) : super(key: key);

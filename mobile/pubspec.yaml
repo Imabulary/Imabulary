@@ -1,5 +1,5 @@
-name: mobile
-description: 'A new Flutter project.'
+name: Imabulary
+description: 'Imabulary helps you learn foreign language through visualisations and associations utilizing real-world surrounding.'
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.1
 
 environment:
   sdk: '>=3.2.4 <4.0.0'
@@ -58,6 +58,7 @@ dependencies:
   shared_preferences: ^2.2.3
   just_audio: ^0.9.39
   qonversion_flutter: ^9.0.2
+  cider: ^0.2.8
 
 dev_dependencies:
   flutter_test:
@@ -78,8 +79,8 @@ dev_dependencies:
   vector_graphics_compiler: ^1.1.11+1
   auto_route_generator: ^8.0.0
   firebase_core_platform_interface: ^5.0.0
-  riverpod_lint: ^2.3.10
-  custom_lint: ^0.6.4
+  riverpod_lint: ^2.3.13
+  custom_lint: ^0.6.5
   faker: ^2.1.0
   flutter_launcher_icons: ^0.13.1
 

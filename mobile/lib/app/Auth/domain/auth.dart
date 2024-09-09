@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mobile/app/Profile/domain/profile.dart';
-import 'package:mobile/app/Wallet/domain/award/award.dart';
+import 'package:Imabulary/app/Profile/domain/profile.dart';
+import 'package:Imabulary/app/Wallet/domain/award/award.dart';
 
 part 'auth.freezed.dart';
 part 'auth.g.dart';

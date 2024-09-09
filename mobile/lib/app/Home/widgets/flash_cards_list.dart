@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Flashcard/domain/card.dart';
-import 'package:mobile/app/Home/widgets/FlashcardListItem/flashcard_list_item.dart';
-import 'package:mobile/app/Profile/presentation/profile_screen.dart';
-import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/atoms/type_setting.dart';
+import 'package:Imabulary/app/Flashcard/domain/card.dart';
+import 'package:Imabulary/app/Home/widgets/FlashcardListItem/flashcard_list_item.dart';
+import 'package:Imabulary/app/Profile/presentation/profile_screen.dart';
+import 'package:Imabulary/atoms/colors.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
 
 class FlashCardsList extends StatefulWidget {
   const FlashCardsList({super.key, required this.flashCards});

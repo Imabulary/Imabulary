@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:mobile/app/Flashcard/domain/card.dart';
+import 'package:Imabulary/app/Flashcard/domain/card.dart';
 
 class QuizScreenController {
   static List<FlashCard> generateOptions(

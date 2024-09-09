@@ -1,4 +1,4 @@
-import 'package:mobile/app/Set/data/set_repository.dart';
+import 'package:Imabulary/app/Set/data/set_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'delete_action_item_controller.g.dart';

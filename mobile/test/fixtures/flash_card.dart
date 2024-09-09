@@ -1,5 +1,5 @@
-import 'package:mobile/app/Flashcard/domain/card.dart';
-import 'package:mobile/shared/models/ServerError/server_error.dart';
+import 'package:Imabulary/app/Flashcard/domain/card.dart';
+import 'package:Imabulary/shared/models/ServerError/server_error.dart';
 
 const flashCardFixture = FlashCard(
   id: '1',

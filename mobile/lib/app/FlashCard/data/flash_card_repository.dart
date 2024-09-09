@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
-import 'package:mobile/app/Flashcard/domain/card.dart';
-import 'package:mobile/shared/models/ServerResponse/server_response.dart';
-import 'package:mobile/utils/api.dart';
-import 'package:mobile/utils/query_params_builder.dart';
-import 'package:mobile/utils/request.dart';
+import 'package:Imabulary/app/Flashcard/data/dto/flashcard_dto.dart';
+import 'package:Imabulary/app/Flashcard/domain/card.dart';
+import 'package:Imabulary/shared/models/ServerResponse/server_response.dart';
+import 'package:Imabulary/utils/api.dart';
+import 'package:Imabulary/utils/query_params_builder.dart';
+import 'package:Imabulary/utils/request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'flash_card_repository.g.dart';

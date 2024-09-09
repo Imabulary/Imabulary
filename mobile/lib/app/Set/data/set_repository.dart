@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mobile/app/Set/data/dto/set_dto.dart';
-import 'package:mobile/app/Set/domain/set.dart';
-import 'package:mobile/shared/models/Pagination/pagination.dart';
-import 'package:mobile/shared/models/ServerResponse/server_response.dart';
-import 'package:mobile/utils/api.dart';
-import 'package:mobile/utils/fp.dart';
-import 'package:mobile/utils/request.dart';
+import 'package:Imabulary/app/Set/data/dto/set_dto.dart';
+import 'package:Imabulary/app/Set/domain/set.dart';
+import 'package:Imabulary/shared/models/Pagination/pagination.dart';
+import 'package:Imabulary/shared/models/ServerResponse/server_response.dart';
+import 'package:Imabulary/utils/api.dart';
+import 'package:Imabulary/utils/fp.dart';
+import 'package:Imabulary/utils/request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'set_repository.g.dart';

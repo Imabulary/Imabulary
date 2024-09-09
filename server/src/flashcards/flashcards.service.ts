@@ -19,6 +19,8 @@ import { SoundService } from 'src/sound/sound.service';
 import { IBucketFolders } from 'src/storage/utils';
 import { FeedbackService } from 'src/feedback/feedback.service';
 import { isEmpty } from 'lodash';
+import { ProcessImageProps } from './interface';
+import { File } from '@google-cloud/storage';
 
 @Injectable()
 export class FlashCardsService {
@@ -44,6 +46,7 @@ export class FlashCardsService {
         userId,
         generatedImageName,
       });
+
       return card;
     } catch (error) {
       await imageFile.delete();
@@ -57,13 +60,9 @@ export class FlashCardsService {
     userId,
     generatedImageName,
     isRegeneration = false,
-  }: {
-    imageUrl: string;
-    userId: string;
-    generatedImageName: string;
-    isRegeneration?: boolean;
-  }) {
-    let audioFile;
+  }: ProcessImageProps) {
+    let audioFile: File;
+
     try {
       const objectOnImage = await this.vision.analyze(imageUrl);
 
@@ -122,6 +121,7 @@ export class FlashCardsService {
           explanation,
         },
       });
+
       return card;
     } catch (error) {
       audioFile?.delete();

@@ -1,6 +1,6 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:mobile/app/Set/domain/set.dart';
+import 'package:Imabulary/app/Set/domain/set.dart';
 
 part 'set_service.g.dart';
 

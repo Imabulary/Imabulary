@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Home/widgets/CollectDailyAwardButton/collect_daily_award_button_controller.dart';
-import 'package:mobile/app/Wallet/application/award_providers.dart';
-import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/utils/async_value_ui.dart';
+import 'package:Imabulary/app/Home/widgets/CollectDailyAwardButton/collect_daily_award_button_controller.dart';
+import 'package:Imabulary/app/Wallet/application/award_providers.dart';
+import 'package:Imabulary/atoms/colors.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
+import 'package:Imabulary/utils/async_value_ui.dart';
 
 class CollectDailyAwardButton extends ConsumerWidget {
   const CollectDailyAwardButton({Key? key}) : super(key: key);

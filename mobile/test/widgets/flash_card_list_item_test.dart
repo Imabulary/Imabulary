@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/app/Home/widgets/FlashcardListItem/flashcard_list_item.dart';
+import 'package:Imabulary/app/Home/widgets/FlashcardListItem/flashcard_list_item.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
 import '../fixtures/flash_card.dart';

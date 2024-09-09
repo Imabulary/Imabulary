@@ -1,4 +1,4 @@
-import 'package:mobile/app/Wallet/data/wallet/wallet_repository.dart';
+import 'package:Imabulary/app/Wallet/data/wallet/wallet_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'collect_daily_award_button_controller.g.dart';

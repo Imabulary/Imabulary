@@ -1,28 +1,28 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mobile/app/Profile/data/dto/profile_dto.dart';
-import 'package:mobile/app/Profile/domain/profile.dart';
-import 'package:mobile/shared/models/ServerError/server_error.dart';
-import 'package:mobile/utils/request.dart';
+import 'package:Imabulary/app/Profile/data/dto/profile_dto.dart';
+import 'package:Imabulary/app/Profile/domain/profile.dart';
+import 'package:Imabulary/shared/models/ServerError/server_error.dart';
+import 'package:Imabulary/utils/request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_repository.g.dart';
 
 class AuthRepository {
-  AuthRepository({required this.client, required this.dio});
+  AuthRepository({required this.firebase, required this.dio});
 
-  final FirebaseAuth client;
+  final FirebaseAuth firebase;
   final Dio dio;
 
-  Stream<User?> get authStateChange => client.idTokenChanges();
+  Stream<User?> get authStateChange => firebase.idTokenChanges();
 
   // TODO: Add tests
   Future<ProfileDTO> loginWithGoogle() {
     return request(() async {
       final googleAuthProvider = GoogleAuthProvider();
 
-      final token = await client.signInWithProvider(googleAuthProvider);
+      final token = await firebase.signInWithProvider(googleAuthProvider);
       final user = token.user;
 
       if (user == null) {
@@ -49,11 +49,11 @@ class AuthRepository {
 
   Future signOut() {
     return request(() async {
-      await client.signOut();
+      await firebase.signOut();
     });
   }
 }
 
 @riverpod
 AuthRepository authRepository(AuthRepositoryRef ref) =>
-    AuthRepository(client: FirebaseAuth.instance, dio: Dio());
+    AuthRepository(firebase: FirebaseAuth.instance, dio: Dio());

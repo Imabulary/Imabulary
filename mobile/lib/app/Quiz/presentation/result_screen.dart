@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mobile/app/Layout/presentation/layout.dart';
-import 'package:mobile/app/Quiz/domain/result.dart';
-import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/widgets/list_item.dart';
+import 'package:Imabulary/app/Layout/presentation/layout.dart';
+import 'package:Imabulary/app/Quiz/domain/result.dart';
+import 'package:Imabulary/atoms/colors.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
+import 'package:Imabulary/widgets/list_item.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key, required this.results});

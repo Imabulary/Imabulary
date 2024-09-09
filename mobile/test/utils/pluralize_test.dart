@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/utils/plularize.dart';
+import 'package:Imabulary/utils/plularize.dart';
 
 void main() {
   group('pluralize', () {

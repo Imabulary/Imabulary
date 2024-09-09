@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen.dart';
-import 'package:mobile/app/Set/components/quiz_flashcards_amount_warning.dart';
-import 'package:mobile/app/Set/widgets/actions_list.dart';
+import 'package:Imabulary/app/Quiz/presentation/QuizScreen/quiz_screen.dart';
+import 'package:Imabulary/app/Set/components/quiz_flashcards_amount_warning.dart';
+import 'package:Imabulary/app/Set/widgets/actions_list.dart';
 
 class SetAppBarController {
   static void Function() showActionsBottomSheet(BuildContext context) => () {

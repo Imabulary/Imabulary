@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mobile/shared/models/Pagination/pagination.dart';
+import 'package:Imabulary/shared/models/Pagination/pagination.dart';
 
 part 'flashcard_dto.freezed.dart';
 part 'flashcard_dto.g.dart';

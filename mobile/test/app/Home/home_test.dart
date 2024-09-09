@@ -5,12 +5,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
-import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
-import 'package:mobile/app/Flashcard/domain/card.dart';
-import 'package:mobile/app/Home/presentation/home.dart';
-import 'package:mobile/app/Home/widgets/flash_cards_list.dart';
-import 'package:mobile/shared/models/ServerResponse/server_response.dart';
+import 'package:Imabulary/app/Flashcard/data/dto/flashcard_dto.dart';
+import 'package:Imabulary/app/Flashcard/data/flash_card_repository.dart';
+import 'package:Imabulary/app/Flashcard/domain/card.dart';
+import 'package:Imabulary/app/Home/presentation/home.dart';
+import 'package:Imabulary/app/Home/widgets/flash_cards_list.dart';
+import 'package:Imabulary/shared/models/ServerResponse/server_response.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
 import '../../fixtures/flash_card.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Set/components/RemoveFlashcard/remove_flashcard.dart';
+import 'package:Imabulary/app/Set/components/RemoveFlashcard/remove_flashcard.dart';
 
 class FlashcardActions extends StatelessWidget {
   const FlashcardActions({super.key, required this.flashcardId});

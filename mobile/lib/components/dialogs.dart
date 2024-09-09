@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/atoms/type_setting.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
 
 class Dialogs {
   static Widget loading(String? message) => AlertDialog(

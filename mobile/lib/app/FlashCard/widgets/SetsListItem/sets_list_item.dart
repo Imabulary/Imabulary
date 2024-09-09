@@ -1,12 +1,12 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Flashcard/domain/card.dart';
-import 'package:mobile/app/Flashcard/widgets/SetsListItem/sets_list_item_controller.dart';
-import 'package:mobile/app/Set/domain/set.dart';
-import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/utils/async_value_ui.dart';
-import 'package:mobile/widgets/list_item.dart';
+import 'package:Imabulary/app/Flashcard/domain/card.dart';
+import 'package:Imabulary/app/Flashcard/widgets/SetsListItem/sets_list_item_controller.dart';
+import 'package:Imabulary/app/Set/domain/set.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
+import 'package:Imabulary/utils/async_value_ui.dart';
+import 'package:Imabulary/widgets/list_item.dart';
 
 class SetsListItem extends ConsumerWidget {
   const SetsListItem(this.set, {super.key, this.flashcard});

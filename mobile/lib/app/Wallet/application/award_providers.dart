@@ -1,4 +1,4 @@
-import 'package:mobile/app/Wallet/data/award/award_repository.dart';
+import 'package:Imabulary/app/Wallet/data/award/award_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 final getLastAwardedAtProvider = FutureProvider.autoDispose(

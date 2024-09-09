@@ -1,4 +1,4 @@
-import 'package:mobile/utils/request.dart';
+import 'package:Imabulary/utils/request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
-import 'package:mobile/app/Flashcard/domain/card.dart';
-import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/app/Home/widgets/FlashcardListItem/flashcard_list_item_controller.dart';
-import 'package:mobile/widgets/list_item.dart';
+import 'package:Imabulary/app/Flashcard/application/flashcard_service.dart';
+import 'package:Imabulary/app/Flashcard/domain/card.dart';
+import 'package:Imabulary/atoms/colors.dart';
+import 'package:Imabulary/app/Home/widgets/FlashcardListItem/flashcard_list_item_controller.dart';
+import 'package:Imabulary/widgets/list_item.dart';
 
 class FlashCardListItem extends ConsumerWidget {
   const FlashCardListItem(this.flashCard, {super.key});

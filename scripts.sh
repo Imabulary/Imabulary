@@ -6,8 +6,9 @@ devBuild() {
 # Start containers for development
 devStart() {
   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+  runMigration
   prismaGenerate
-  prismaSeed
+  # prismaSeed
 }
 
 # Shutdown containers that was run for development
@@ -23,7 +24,9 @@ prodBuild() {
 # Start containers for production
 prodStart() {
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+  runMigration
   prismaGenerate
+  prismaSeed
 }
 
 # Shutdown containers that was run for production
@@ -51,7 +54,7 @@ prismaGenerate() {
 
 # Seed an initial data inside database
 prismaSeed() {
-  npx prisma db seed
+  docker exec -it imabulary_backend sh -c "npx prisma db seed"
 }
 
 # Build & Push to GCP

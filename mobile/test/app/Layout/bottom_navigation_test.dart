@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
+import 'package:Imabulary/app/Layout/widgets/bottom_navigation.dart';
 
 import '../../test_utils/test_app.dart';
 

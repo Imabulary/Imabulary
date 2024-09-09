@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:mobile/shared/constants.dart';
+import 'package:Imabulary/shared/constants.dart';
 
 class SetPreview extends StatelessWidget {
   const SetPreview({super.key, required this.images});

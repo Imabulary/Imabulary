@@ -1,12 +1,11 @@
+import 'package:Imabulary/app/Layout/presentation/layout.dart';
+import 'package:Imabulary/app/Wallet/application/wallet_providers.dart';
+import 'package:Imabulary/app/Wallet/widgets/packages.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
+import 'package:Imabulary/shared/models/ServerError/server_error.dart';
+import 'package:Imabulary/utils/plularize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Layout/presentation/layout.dart';
-import 'package:mobile/app/Wallet/application/wallet_providers.dart';
-import 'package:mobile/app/Wallet/widgets/packages.dart';
-import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/shared/models/ServerError/server_error.dart';
-import 'package:mobile/utils/plularize.dart';
 
 class WalletScreen extends ConsumerWidget {
   const WalletScreen({Key? key}) : super(key: key);
@@ -57,25 +56,11 @@ class WalletScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(
-            height: 8,
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            child: const TypeSetting(
-              'Buy More Coins',
-              style: TextStyle(color: AppColors.primary),
-            ),
-          ),
-          const SizedBox(
             height: 32,
           ),
           Packages(),
           const SizedBox(
             height: 32,
-          ),
-          const TypeSetting(
-            'Transaction history',
-            variant: TextVariants.headlineMedium,
           ),
         ],
       ),

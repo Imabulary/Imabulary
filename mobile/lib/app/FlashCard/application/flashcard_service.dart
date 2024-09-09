@@ -1,5 +1,5 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:mobile/app/Flashcard/domain/card.dart';
+import 'package:Imabulary/app/Flashcard/domain/card.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'flashcard_service.g.dart';

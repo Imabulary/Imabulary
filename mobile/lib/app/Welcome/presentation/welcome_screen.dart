@@ -2,10 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mobile/app/Welcome/presentation/welcome_screen_controller.dart';
-import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/utils/async_value_ui.dart';
+import 'package:Imabulary/app/Welcome/presentation/welcome_screen_controller.dart';
+import 'package:Imabulary/atoms/colors.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
+import 'package:Imabulary/utils/async_value_ui.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
 @RoutePage()

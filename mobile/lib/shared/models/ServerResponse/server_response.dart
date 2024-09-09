@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:mobile/utils/fp.dart';
-import 'package:mobile/utils/maybe.dart';
+import 'package:Imabulary/utils/fp.dart';
+import 'package:Imabulary/utils/maybe.dart';
 
 class ServerResponse<R> {
   ServerResponse({required this.result, this.totalItems});
@@ -29,10 +29,10 @@ class ServerResponse<R> {
       response.data['result'],
     ).map(identity).getOrElse([]);
 
-    final int totalItems =
-        Maybe.fromValue(response.data['meta']['pagination']['total'])
-            .map(identity)
-            .getOrElse(0);
+    final int totalItems = Maybe.fromValue(response.data['meta'])
+        .map((meta) => meta['pagination'])
+        .map((pagination) => pagination['total'])
+        .getOrElse(result.length);
 
     return ServerResponse<List<T>>(
       result: result.map((item) => handler(item)).toList(),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/components/dialogs.dart';
-import 'package:mobile/shared/models/ServerError/server_error.dart';
+import 'package:Imabulary/components/dialogs.dart';
+import 'package:Imabulary/shared/models/ServerError/server_error.dart';
 
 extension AsyncValueUI on AsyncValue {
   showLoadingDialog(

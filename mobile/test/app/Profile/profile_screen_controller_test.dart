@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
-import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
-import 'package:mobile/app/Profile/presentation/profile_screen_controller.dart';
-import 'package:mobile/shared/models/Pagination/pagination.dart';
-import 'package:mobile/shared/models/ServerResponse/server_response.dart';
+import 'package:Imabulary/app/Flashcard/data/dto/flashcard_dto.dart';
+import 'package:Imabulary/app/Flashcard/data/flash_card_repository.dart';
+import 'package:Imabulary/app/Profile/presentation/profile_screen_controller.dart';
+import 'package:Imabulary/shared/models/Pagination/pagination.dart';
+import 'package:Imabulary/shared/models/ServerResponse/server_response.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../fixtures/flash_card.dart';

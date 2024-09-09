@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Profile/widgets/SetsGrid/sets_grid_controller.dart';
-import 'package:mobile/app/Set/application/set_service.dart';
-import 'package:mobile/atoms/type_setting.dart';
+import 'package:Imabulary/app/Profile/widgets/SetsGrid/sets_grid_controller.dart';
+import 'package:Imabulary/app/Set/application/set_service.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
 
 // TODO: add tests to verify whether the item is rendered correctly and it opens the bottom sheet modal
 class EditActionItem extends ConsumerWidget {

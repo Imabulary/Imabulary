@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/atoms/colors.dart';
+import 'package:Imabulary/atoms/colors.dart';
 import 'AddBottomSheet/add_bottom_sheet.dart';
 
 class FloatingButton extends StatelessWidget {

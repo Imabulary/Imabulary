@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Flashcard/widgets/FlashcardAppBar/flashcard_app_bar_controller.dart';
-import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/atoms/type_setting.dart';
+import 'package:Imabulary/app/Flashcard/widgets/FlashcardAppBar/flashcard_app_bar_controller.dart';
+import 'package:Imabulary/atoms/colors.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
 
 class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
   const FlashcardAppBar({super.key});

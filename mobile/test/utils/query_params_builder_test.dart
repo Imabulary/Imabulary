@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/shared/models/Pagination/pagination.dart';
-import 'package:mobile/utils/query_params_builder.dart';
+import 'package:Imabulary/shared/models/Pagination/pagination.dart';
+import 'package:Imabulary/utils/query_params_builder.dart';
 import 'package:faker/faker.dart';
 
 void main() {

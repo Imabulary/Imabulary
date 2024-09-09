@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile/app/Layout/components/not_enough_coins_dialog.dart';
-import 'package:mobile/app/Wallet/application/wallet_providers.dart';
-import 'package:mobile/atoms/type_setting.dart';
+import 'package:Imabulary/app/Layout/components/not_enough_coins_dialog.dart';
+import 'package:Imabulary/app/Wallet/application/wallet_providers.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
 
 const kSingleFlashcardCost = 1;
 

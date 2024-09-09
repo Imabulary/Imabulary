@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'package:mobile/shared/models/ServerError/server_error.dart';
-import 'package:mobile/utils/request.dart';
+import 'package:Imabulary/shared/models/ServerError/server_error.dart';
+import 'package:Imabulary/utils/request.dart';
 
 void main() {
   group('request', () {

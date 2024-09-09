@@ -2,8 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/app/Profile/widgets/settings_list.dart';
-import 'package:mobile/app/Auth/data/auth_repository.dart';
+import 'package:Imabulary/app/Profile/widgets/settings_list.dart';
+import 'package:Imabulary/app/Auth/data/auth_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../test_utils/mocks.dart';

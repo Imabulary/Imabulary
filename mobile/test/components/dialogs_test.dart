@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/components/dialogs.dart';
+import 'package:Imabulary/components/dialogs.dart';
 
 import '../test_utils/test_app.dart';
 

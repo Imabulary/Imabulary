@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
-import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
-import 'package:mobile/app/Flashcard/domain/card.dart';
-import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
-import 'package:mobile/app/Layout/components/better_results_dialog.dart';
-import 'package:mobile/app/Layout/components/bottom_sheet_item.dart';
-import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet_controller.dart';
-import 'package:mobile/app/Wallet/application/wallet_providers.dart';
-import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/utils/async_value_ui.dart';
+import 'package:Imabulary/app/Flashcard/application/flashcard_providers.dart';
+import 'package:Imabulary/app/Flashcard/application/flashcard_service.dart';
+import 'package:Imabulary/app/Flashcard/domain/card.dart';
+import 'package:Imabulary/app/Flashcard/presentation/flashcard_screen.dart';
+import 'package:Imabulary/app/Layout/components/better_results_dialog.dart';
+import 'package:Imabulary/app/Layout/components/bottom_sheet_item.dart';
+import 'package:Imabulary/app/Layout/widgets/AddBottomSheet/add_bottom_sheet_controller.dart';
+import 'package:Imabulary/app/Wallet/application/wallet_providers.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
+import 'package:Imabulary/utils/async_value_ui.dart';
 
 class AddBottomSheet extends ConsumerWidget {
   const AddBottomSheet({super.key});

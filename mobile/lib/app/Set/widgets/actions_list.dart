@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Set/components/DeleteActionItem/delete_action_item.dart';
-import 'package:mobile/app/Set/components/edit_action_item.dart';
+import 'package:Imabulary/app/Set/components/DeleteActionItem/delete_action_item.dart';
+import 'package:Imabulary/app/Set/components/edit_action_item.dart';
 
 class ActionsList extends StatelessWidget {
   const ActionsList({super.key});

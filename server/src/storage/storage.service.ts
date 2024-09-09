@@ -26,7 +26,9 @@ export class StorageService {
 
   findOne(bucketFolder: IBucketFolders, fileName: string) {
     const bucket = admin.storage().bucket();
+
     const storageFile = bucket.file(`${bucketFolder}/${fileName}`);
+
     return storageFile;
   }
 

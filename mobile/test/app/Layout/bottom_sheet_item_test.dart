@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile/app/Layout/components/bottom_sheet_item.dart';
+import 'package:Imabulary/app/Layout/components/bottom_sheet_item.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../test_utils/test_app.dart';

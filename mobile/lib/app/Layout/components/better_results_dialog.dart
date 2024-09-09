@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/atoms/type_setting.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
 
 class BetterResultsDialog extends StatelessWidget {
   const BetterResultsDialog({Key? key}) : super(key: key);

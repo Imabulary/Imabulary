@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
-import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
-import 'package:mobile/app/Flashcard/domain/card.dart';
-import 'package:mobile/app/Set/data/set_repository.dart';
-import 'package:mobile/app/Set/domain/set.dart';
-import 'package:mobile/shared/models/Pagination/pagination.dart';
-import 'package:mobile/shared/models/ServerResponse/server_response.dart';
+import 'package:Imabulary/app/Flashcard/data/dto/flashcard_dto.dart';
+import 'package:Imabulary/app/Flashcard/data/flash_card_repository.dart';
+import 'package:Imabulary/app/Flashcard/domain/card.dart';
+import 'package:Imabulary/app/Set/data/set_repository.dart';
+import 'package:Imabulary/app/Set/domain/set.dart';
+import 'package:Imabulary/shared/models/Pagination/pagination.dart';
+import 'package:Imabulary/shared/models/ServerResponse/server_response.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'profile_screen_controller.g.dart';

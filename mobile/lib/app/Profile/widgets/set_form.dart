@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:mobile/app/Set/domain/set.dart';
-import 'package:mobile/app/Set/application/set_service.dart';
-import 'package:mobile/app/Set/presentation/set_screen.dart';
-import 'package:mobile/app/Set/presentation/set_screen_controller.dart';
-import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/utils/async_value_ui.dart';
+import 'package:Imabulary/app/Set/domain/set.dart';
+import 'package:Imabulary/app/Set/application/set_service.dart';
+import 'package:Imabulary/app/Set/presentation/set_screen.dart';
+import 'package:Imabulary/app/Set/presentation/set_screen_controller.dart';
+import 'package:Imabulary/atoms/colors.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
+import 'package:Imabulary/utils/async_value_ui.dart';
 
 class SetForm extends ConsumerWidget {
   const SetForm(this.set, {super.key});

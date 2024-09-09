@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Auth/application/auth_provider.dart';
-import 'package:mobile/app/Profile/widgets/ProfileAppBar/profile_app_bar_controller.dart';
-import 'package:mobile/app/Profile/widgets/ProfileAppTitle/profile_app_title.dart';
-import 'package:mobile/utils/maybe.dart';
+import 'package:Imabulary/app/Auth/application/auth_provider.dart';
+import 'package:Imabulary/app/Profile/widgets/ProfileAppBar/profile_app_bar_controller.dart';
+import 'package:Imabulary/app/Profile/widgets/ProfileAppTitle/profile_app_title.dart';
+import 'package:Imabulary/utils/maybe.dart';
 
 class ProfileAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const ProfileAppBar(this.tabController, {super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Wallet/application/wallet_providers.dart';
-import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/shared/models/ServerError/server_error.dart';
+import 'package:Imabulary/app/Wallet/application/wallet_providers.dart';
+import 'package:Imabulary/atoms/type_setting.dart';
+import 'package:Imabulary/shared/models/ServerError/server_error.dart';
 
 class ProfileAppTitle extends ConsumerWidget {
   const ProfileAppTitle({Key? key}) : super(key: key);

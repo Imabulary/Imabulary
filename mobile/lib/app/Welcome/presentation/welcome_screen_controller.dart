@@ -1,4 +1,4 @@
-import 'package:mobile/app/Auth/data/auth_repository.dart';
+import 'package:Imabulary/app/Auth/data/auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'welcome_screen_controller.g.dart';

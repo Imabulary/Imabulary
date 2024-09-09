@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:mobile/shared/models/ServerError/server_error.dart';
-import 'package:mobile/utils/maybe.dart';
+import 'package:Imabulary/shared/models/ServerError/server_error.dart';
+import 'package:Imabulary/utils/maybe.dart';
 
 Future<T> request<T>(Future<T> Function() asyncFunc) async {
   try {
