@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
+import 'package:mobile/shared/constants.dart';
 part 'set.freezed.dart';
 part 'set.g.dart';
 
@@ -11,7 +11,11 @@ typedef SetsFlashcards = ({String image_url});
 class Set with _$Set {
   const factory Set({
     required String id,
-    required String name,
+    @Assert('name.length <= ${kMaxSetNameLength}',
+        'Name should not be more than ${kMaxSetNameLength} characters')
+    String name,
+    @Assert('description.length <= ${kMaxSetDescriptionLength}',
+        'Description should not be more than ${kMaxSetDescriptionLength} characters')
     String? description,
     required String userId,
     required DateTime createdAt,

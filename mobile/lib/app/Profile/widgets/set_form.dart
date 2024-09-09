@@ -9,6 +9,7 @@ import 'package:mobile/app/Set/presentation/set_screen_controller.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/utils/async_value_ui.dart';
+import 'package:mobile/shared/constants.dart';
 
 class SetForm extends ConsumerWidget {
   const SetForm(this.set, {super.key});
@@ -66,7 +67,10 @@ class SetForm extends ConsumerWidget {
               labelText: 'Name',
               border: OutlineInputBorder(),
             ),
-            validator: FormBuilderValidators.required(),
+            validator: FormBuilderValidators.compose([
+              FormBuilderValidators.required(),
+              FormBuilderValidators.maxLength(kMaxSetNameLength),
+            ]),
           ),
           const SizedBox(height: 16),
           FormBuilderTextField(
@@ -77,6 +81,7 @@ class SetForm extends ConsumerWidget {
               border: OutlineInputBorder(),
             ),
             maxLines: null,
+            validator: FormBuilderValidators.maxLength(kMaxSetDescriptionLength),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
