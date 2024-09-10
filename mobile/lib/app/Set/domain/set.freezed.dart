@@ -21,7 +21,11 @@ Set _$SetFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Set {
   String get id => throw _privateConstructorUsedError;
+  @Assert('name.length <= $kMaxSetNameLength',
+      'Name should not be more than $kMaxSetNameLength characters')
   String get name => throw _privateConstructorUsedError;
+  @Assert('description.length <= $kMaxSetDescriptionLength',
+      'Description should not be more than $kMaxSetDescriptionLength characters')
   String? get description => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -29,8 +33,12 @@ mixin _$Set {
   List<({String image_url})>? get flashcards =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this Set to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Set
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SetCopyWith<Set> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -41,7 +49,11 @@ abstract class $SetCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      @Assert('name.length <= $kMaxSetNameLength',
+          'Name should not be more than $kMaxSetNameLength characters')
       String name,
+      @Assert('description.length <= $kMaxSetDescriptionLength',
+          'Description should not be more than $kMaxSetDescriptionLength characters')
       String? description,
       String userId,
       DateTime createdAt,
@@ -58,6 +70,8 @@ class _$SetCopyWithImpl<$Res, $Val extends Set> implements $SetCopyWith<$Res> {
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Set
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -110,7 +124,11 @@ abstract class _$$SetImplCopyWith<$Res> implements $SetCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      @Assert('name.length <= $kMaxSetNameLength',
+          'Name should not be more than $kMaxSetNameLength characters')
       String name,
+      @Assert('description.length <= $kMaxSetDescriptionLength',
+          'Description should not be more than $kMaxSetDescriptionLength characters')
       String? description,
       String userId,
       DateTime createdAt,
@@ -124,6 +142,8 @@ class __$$SetImplCopyWithImpl<$Res> extends _$SetCopyWithImpl<$Res, _$SetImpl>
   __$$SetImplCopyWithImpl(_$SetImpl _value, $Res Function(_$SetImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Set
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -173,7 +193,11 @@ class __$$SetImplCopyWithImpl<$Res> extends _$SetCopyWithImpl<$Res, _$SetImpl>
 class _$SetImpl with DiagnosticableTreeMixin implements _Set {
   const _$SetImpl(
       {required this.id,
+      @Assert('name.length <= $kMaxSetNameLength',
+          'Name should not be more than $kMaxSetNameLength characters')
       required this.name,
+      @Assert('description.length <= $kMaxSetDescriptionLength',
+          'Description should not be more than $kMaxSetDescriptionLength characters')
       this.description,
       required this.userId,
       required this.createdAt,
@@ -187,8 +211,12 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
   @override
   final String id;
   @override
+  @Assert('name.length <= $kMaxSetNameLength',
+      'Name should not be more than $kMaxSetNameLength characters')
   final String name;
   @override
+  @Assert('description.length <= $kMaxSetDescriptionLength',
+      'Description should not be more than $kMaxSetDescriptionLength characters')
   final String? description;
   @override
   final String userId;
@@ -243,12 +271,14 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
                 .equals(other._flashcards, _flashcards));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, description, userId,
       createdAt, updatedAt, const DeepCollectionEquality().hash(_flashcards));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Set
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SetImplCopyWith<_$SetImpl> get copyWith =>
@@ -265,7 +295,11 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
 abstract class _Set implements Set {
   const factory _Set(
       {required final String id,
+      @Assert('name.length <= $kMaxSetNameLength',
+          'Name should not be more than $kMaxSetNameLength characters')
       required final String name,
+      @Assert('description.length <= $kMaxSetDescriptionLength',
+          'Description should not be more than $kMaxSetDescriptionLength characters')
       final String? description,
       required final String userId,
       required final DateTime createdAt,
@@ -277,8 +311,12 @@ abstract class _Set implements Set {
   @override
   String get id;
   @override
+  @Assert('name.length <= $kMaxSetNameLength',
+      'Name should not be more than $kMaxSetNameLength characters')
   String get name;
   @override
+  @Assert('description.length <= $kMaxSetDescriptionLength',
+      'Description should not be more than $kMaxSetDescriptionLength characters')
   String? get description;
   @override
   String get userId;
@@ -288,8 +326,11 @@ abstract class _Set implements Set {
   DateTime get updatedAt;
   @override
   List<({String image_url})>? get flashcards;
+
+  /// Create a copy of Set
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SetImplCopyWith<_$SetImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

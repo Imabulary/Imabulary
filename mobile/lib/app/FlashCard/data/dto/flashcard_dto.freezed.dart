@@ -23,8 +23,12 @@ mixin _$OrganizeFlashcardDTO {
   String get setId => throw _privateConstructorUsedError;
   List<String> get flashcardIds => throw _privateConstructorUsedError;
 
+  /// Serializes this OrganizeFlashcardDTO to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OrganizeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OrganizeFlashcardDTOCopyWith<OrganizeFlashcardDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$OrganizeFlashcardDTOCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of OrganizeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +93,8 @@ class __$$OrganizeFlashcardDTOImplCopyWithImpl<$Res>
       $Res Function(_$OrganizeFlashcardDTOImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OrganizeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -141,12 +149,14 @@ class _$OrganizeFlashcardDTOImpl implements _OrganizeFlashcardDTO {
                 .equals(other._flashcardIds, _flashcardIds));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, setId, const DeepCollectionEquality().hash(_flashcardIds));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OrganizeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OrganizeFlashcardDTOImplCopyWith<_$OrganizeFlashcardDTOImpl>
@@ -174,8 +184,11 @@ abstract class _OrganizeFlashcardDTO implements OrganizeFlashcardDTO {
   String get setId;
   @override
   List<String> get flashcardIds;
+
+  /// Create a copy of OrganizeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OrganizeFlashcardDTOImplCopyWith<_$OrganizeFlashcardDTOImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -185,7 +198,9 @@ mixin _$FindAllFlashcardsDTO {
   Pagination get pagination => throw _privateConstructorUsedError;
   String? get setId => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FindAllFlashcardsDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FindAllFlashcardsDTOCopyWith<FindAllFlashcardsDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -212,6 +227,8 @@ class _$FindAllFlashcardsDTOCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FindAllFlashcardsDTO
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -230,6 +247,8 @@ class _$FindAllFlashcardsDTOCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of FindAllFlashcardsDTO
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PaginationCopyWith<$Res> get pagination {
@@ -261,6 +280,8 @@ class __$$FindAllFlashcardsDTOImplCopyWithImpl<$Res>
       $Res Function(_$FindAllFlashcardsDTOImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FindAllFlashcardsDTO
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -308,7 +329,9 @@ class _$FindAllFlashcardsDTOImpl implements _FindAllFlashcardsDTO {
   @override
   int get hashCode => Object.hash(runtimeType, pagination, setId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FindAllFlashcardsDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FindAllFlashcardsDTOImplCopyWith<_$FindAllFlashcardsDTOImpl>
@@ -326,8 +349,11 @@ abstract class _FindAllFlashcardsDTO implements FindAllFlashcardsDTO {
   Pagination get pagination;
   @override
   String? get setId;
+
+  /// Create a copy of FindAllFlashcardsDTO
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FindAllFlashcardsDTOImplCopyWith<_$FindAllFlashcardsDTOImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -11,7 +11,7 @@ _$CollectedAwardImpl _$$CollectedAwardImplFromJson(Map<String, dynamic> json) =>
       currentBalance: (json['currentBalance'] as num).toDouble(),
       lastAwardedAt: DateTime.parse(json['lastAwardedAt'] as String),
       nextAward: (json['nextAward'] as num).toDouble(),
-      expirationTime: json['expirationTime'] as int,
+      expirationTime: (json['expirationTime'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$CollectedAwardImplToJson(
@@ -27,8 +27,8 @@ _$AwardImpl _$$AwardImplFromJson(Map<String, dynamic> json) => _$AwardImpl(
       id: json['id'] as String,
       walletId: json['walletId'] as String,
       lastAwardedAt: DateTime.parse(json['lastAwardedAt'] as String),
-      streekLevel: json['streekLevel'] as int,
-      streekCount: json['streekCount'] as int,
+      streekLevel: (json['streekLevel'] as num).toInt(),
+      streekCount: (json['streekCount'] as num).toInt(),
       award: (json['award'] as num).toDouble(),
     );
 

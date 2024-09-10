@@ -26,7 +26,6 @@ import {
   OrganizeFlashcardsDTO,
   LikeFlashcardDto,
   CardDto,
-  OrganizeFlashcardsDTO,
 } from './dto';
 import { FlashCardsService } from './flashcards.service';
 

@@ -62,6 +62,7 @@ class SetForm extends ConsumerWidget {
           const SizedBox(height: 8),
           FormBuilderTextField(
             name: 'name',
+            maxLength: kMaxSetNameLength,
             initialValue: set?.name,
             decoration: const InputDecoration(
               labelText: 'Name',
@@ -75,13 +76,17 @@ class SetForm extends ConsumerWidget {
           const SizedBox(height: 16),
           FormBuilderTextField(
             name: 'description',
+            maxLength: kMaxSetDescriptionLength,
             initialValue: set?.description,
             decoration: const InputDecoration(
               labelText: 'Description',
               border: OutlineInputBorder(),
             ),
             maxLines: null,
-            validator: FormBuilderValidators.maxLength(kMaxSetDescriptionLength),
+            validator: FormBuilderValidators.maxLength(
+              kMaxSetDescriptionLength,
+              checkNullOrEmpty: false,
+            ),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
