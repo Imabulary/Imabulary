@@ -1,5 +1,5 @@
-import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
-import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
+import 'package:mobile/app/FlashCard/data/dto/flashcard_dto.dart';
+import 'package:mobile/app/FlashCard/data/flash_card_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'sets_list_item_controller.g.dart';
