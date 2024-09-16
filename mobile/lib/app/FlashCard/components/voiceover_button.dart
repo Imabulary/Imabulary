@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Flashcard/components/voiceover_button_controller.dart';
+import 'package:mobile/app/FlashCard/components/voiceover_button_controller.dart';
 
 class VoiceoverButton extends StatelessWidget {
   const VoiceoverButton({super.key, required this.audioUrl});

@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
-import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
+import 'package:mobile/app/FlashCard/data/dto/flashcard_dto.dart';
+import 'package:mobile/app/FlashCard/data/flash_card_repository.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
 
 import '../../fixtures/flash_card.dart';

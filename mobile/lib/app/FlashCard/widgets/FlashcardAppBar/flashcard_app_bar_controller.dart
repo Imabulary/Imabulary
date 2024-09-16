@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Flashcard/widgets/sets_list.dart';
+import 'package:mobile/app/FlashCard/widgets/sets_list.dart';
 
 class FlashcardAppBarController {
   static void Function() showSetsBottomSheet(BuildContext context) => () {

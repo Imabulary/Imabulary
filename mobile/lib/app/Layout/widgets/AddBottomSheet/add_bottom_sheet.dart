@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
-import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
-import 'package:mobile/app/Flashcard/domain/card.dart';
-import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
+import 'package:mobile/app/FlashCard/application/flashcard_providers.dart';
+import 'package:mobile/app/FlashCard/application/flashcard_service.dart';
+import 'package:mobile/app/FlashCard/domain/card.dart';
+import 'package:mobile/app/FlashCard/presentation/flashcard_screen.dart';
 import 'package:mobile/app/Layout/components/better_results_dialog.dart';
 import 'package:mobile/app/Layout/components/bottom_sheet_item.dart';
 import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet_controller.dart';
