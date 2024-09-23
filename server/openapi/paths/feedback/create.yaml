@@ -1,7 +1,7 @@
 post:
   tags:
     - feedback
-  summary: Dislike a flashcard
+  summary: Create a feedback
   requestBody:
     required: true
     content:

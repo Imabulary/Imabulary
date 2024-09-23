@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsArray } from 'class-validator';
+import { IsOptional, IsString, IsArray, IsUUID } from 'class-validator';
 import { IsRecordExist } from 'src/decorators/is-record-exist.decorator';
 export class LikeFlashcardDto {
   @IsString({ message: 'UID must be a valid string' })
@@ -30,7 +30,7 @@ export class CreateFeedbackDto {
   text?: string;
 
   @IsArray()
-  @IsString({ each: true })
+  @IsUUID(4, { each: true })
   @IsOptional()
   categories?: string[];
 }

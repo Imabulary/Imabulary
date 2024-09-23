@@ -105,7 +105,7 @@ export class FlashCardsController {
     return this.flashCardsService.create(createFlashcardDto, user.id);
   }
 
-  @Post('/delete')
+  @Delete('/delete')
   async delete(@Body() regenerateDto: CardDto) {
     return this.flashCardsService.deleteCard(regenerateDto.cardId);
   }
