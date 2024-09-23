@@ -21,7 +21,7 @@ export class DislikeFlashcardDto extends LikeFlashcardDto {
 }
 
 export class CreateFeedbackDto {
-  @IsString({ message: 'UID must be a valid string' })
+  @IsUUID(4)
   @IsOptional()
   cardId?: string;
 
