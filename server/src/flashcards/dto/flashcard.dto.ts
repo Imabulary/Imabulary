@@ -1,5 +1,11 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { ArrayNotEmpty, IsNotEmpty, IsUUID } from 'class-validator';
+import {
+  ArrayNotEmpty,
+  IsNotEmpty,
+  IsUUID,
+  IsString,
+  IsBoolean,
+} from 'class-validator';
 import { IsRecordExist } from 'src/decorators/is-record-exist.decorator';
 
 export class OrganizeFlashcardsDTO {
@@ -28,3 +34,23 @@ export class OrganizeFlashcardsDTO {
 export class DisorganizeFlashcardsDTO extends PartialType(
   OrganizeFlashcardsDTO,
 ) {}
+
+export class CreateFlashcardDTO {
+  @IsNotEmpty({
+    message: 'Object name should be defined',
+  })
+  @IsString()
+  objectOnImage: string;
+
+  @IsNotEmpty()
+  @IsString()
+  imageUrl: string;
+
+  @IsNotEmpty()
+  @IsString()
+  generatedImageName: string;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  isRegeneration: boolean;
+}

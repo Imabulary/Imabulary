@@ -26,6 +26,7 @@ import {
   OrganizeFlashcardsDTO,
   LikeFlashcardDto,
   CardDto,
+  CreateFlashcardDTO,
 } from './dto';
 import { FlashCardsService } from './flashcards.service';
 
@@ -94,7 +95,17 @@ export class FlashCardsController {
     return this.flashCardsService.regenerateCard(regenerateDto.cardId, user.id);
   }
 
-  @Post('/delete')
+  @Post('/create')
+  async create(
+    @Req() request: Request,
+    @Body() createFlashcardDto: CreateFlashcardDTO,
+  ) {
+    const user: Users = request['user'];
+
+    return this.flashCardsService.create(createFlashcardDto, user.id);
+  }
+
+  @Delete('/delete')
   async delete(@Body() regenerateDto: CardDto) {
     return this.flashCardsService.deleteCard(regenerateDto.cardId);
   }

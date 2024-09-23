@@ -10,6 +10,7 @@ import {
   OrganizeFlashcardsDTO,
   DislikeFlashcardDto,
   LikeFlashcardDto,
+  CreateFlashcardDTO,
 } from './dto';
 import { StorageService } from 'src/storage/storage.service';
 import { VisionService } from 'src/vision/vision.service';
@@ -54,21 +55,19 @@ export class FlashCardsService {
     }
   }
 
-  async processImage({
-    imageUrl,
-    userId,
-    generatedImageName,
-    isRegeneration = false,
-  }: {
-    imageUrl: string;
-    userId: string;
-    generatedImageName: string;
-    isRegeneration?: boolean;
-  }) {
+  async create(
+    {
+      objectOnImage,
+      imageUrl,
+      isRegeneration,
+      generatedImageName,
+    }: CreateFlashcardDTO,
+    userId: string,
+  ) {
     let audioFile;
-    try {
-      const objectOnImage = await this.vision.analyze(imageUrl);
+    const imageFileName = imageUrl.split('/').pop();
 
+    try {
       const audioSpeechStream = await this.sound.synthesizeSpeech(
         objectOnImage,
       );
@@ -99,6 +98,119 @@ export class FlashCardsService {
       // TODO: Take these variables from settings of user profile, once it's done
       const sourceLanguageCode = 'en-US';
       const targetLanguageCode = 'uk-UA';
+
+      const [translatedWord, translatedPhrase, translatedExplanation] =
+        await this.translator.translate(
+          [objectOnImage, relatedPhrase, explanation],
+          {
+            sourceLanguageCode,
+            targetLanguageCode,
+          },
+        );
+
+      const card = await this.prisma.cards.create({
+        data: {
+          word: objectOnImage,
+          phrase: relatedPhrase,
+          speech_part: speechPart,
+          translated_explanation: translatedExplanation,
+          translated_phrase: translatedPhrase,
+          translated_word: translatedWord,
+          target_language: targetLanguageCode,
+          source_language: sourceLanguageCode,
+          image_url: imageUrl,
+          quizStatusId: status.id,
+          audio_url: audioUrl,
+          is_regenerated: isRegeneration,
+          audio_name: generatedAudioName,
+          userId,
+          image_name: generatedImageName,
+          explanation,
+        },
+      });
+
+      return card;
+    } catch (error) {
+      await this.storage.delete(imageFileName);
+      await audioFile.delete();
+
+      throw error;
+    }
+  }
+
+  async processImage({
+    imageUrl,
+    userId,
+    generatedImageName,
+    isRegeneration = false,
+  }: {
+    imageUrl: string;
+    userId: string;
+    generatedImageName: string;
+    isRegeneration?: boolean;
+  }) {
+    let audioFile;
+    // TODO: Take these variables from settings of user profile, once it's done
+    const sourceLanguageCode = 'en-US';
+    const targetLanguageCode = 'uk-UA';
+    try {
+      const objectOnImage = await this.vision.analyze(imageUrl);
+
+      if (Array.isArray(objectOnImage)) {
+        const notFoundItem = {
+          name: 'The object I wanted is not in this list',
+          score: 0,
+        };
+
+        const namesToTranslate = [...objectOnImage, notFoundItem].map(
+          (item) => item.name,
+        );
+        const translatedWords = await this.translator.translate(
+          namesToTranslate,
+          {
+            sourceLanguageCode,
+            targetLanguageCode,
+          },
+        );
+
+        const translatedObjectOnImage = objectOnImage.map((item, index) => ({
+          name: translatedWords[index],
+          score: item.score,
+        }));
+        return {
+          objectOnImage: translatedObjectOnImage,
+          imageUrl,
+          isRegeneration,
+          generatedImageName,
+        };
+      }
+
+      const audioSpeechStream = await this.sound.synthesizeSpeech(
+        objectOnImage,
+      );
+
+      const {
+        storageFile: uploadedAudioFile,
+        generatedFileName: generatedAudioName,
+      } = await this.storage.upload(
+        IBucketFolders.AUDIO,
+        `${objectOnImage}.mp3`,
+        audioSpeechStream,
+      );
+
+      audioFile = uploadedAudioFile;
+
+      const audioUrl = await this.storage.getFileURL(audioFile);
+
+      const [relatedPhrase, explanation, speechPart, status] =
+        await Promise.all([
+          this.assistant.generatePhrase(objectOnImage),
+          this.assistant.explain(objectOnImage),
+          this.assistant.speechPart(objectOnImage),
+          this.prisma.quizCardStatus.findFirst({
+            where: { name: QUIZ_STATUS.NOT_STUDIED },
+          }),
+        ]);
 
       const [translatedWord, translatedPhrase, translatedExplanation] =
         await this.translator.translate(
@@ -258,7 +370,7 @@ export class FlashCardsService {
       );
     }
 
-    const fetchedFeedback = await this.feedback.leaveFeedback({
+    const fetchedFeedback = await this.feedback.create({
       cardId,
       text,
       categories,

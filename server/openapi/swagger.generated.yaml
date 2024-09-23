@@ -38,6 +38,37 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/FeedbackCategory'
+  /feedback/create:
+    post:
+      tags:
+        - feedback
+      summary: Create a feedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFeedbackDto'
+      responses:
+        '200':
+          description: Feedback created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                summary: Successfully created
+                value:
+                  message: Thank you for your feedback!
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /flashcards/scan:
     post:
       tags:
@@ -769,6 +800,19 @@ components:
           type: string
           description: The description or meaning of the feedback category
           example: This means that the system pulled up an incorrect translation.
+    CreateFeedbackDto:
+      - type: object
+        properties:
+          cardId:
+            optional: true
+            type: string
+            description: ID of target card
+          categoryId:
+            type: string
+            description: Optional categoryId. Should be null if text was specified
+          text:
+            type: string
+            description: Optional text feedback. Should be null if categoryId was specified
     QuizDto:
       type: object
       properties:

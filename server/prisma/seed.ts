@@ -25,6 +25,11 @@ async function main() {
             'This means that the system does not recognize the element in the photo correctly.',
         },
         {
+          name: 'The object I wanted is not in this list',
+          meaning:
+            'This means that the system return a list with options, but none of them was true',
+        },
+        {
           name: 'Wrong translation of the word in the photo',
           meaning:
             'This means that the system pulled up an incorrect translation.',
