@@ -14,10 +14,6 @@ class WelcomeScreenController extends _$WelcomeScreenController {
     final authRepository = ref.read(authRepositoryProvider);
 
     state = const AsyncLoading();
-    state = await AsyncValue.guard(() async {
-      final profile = await authRepository.loginWithGoogle();
-
-      return authRepository.createUser(profile);
-    });
+    state = await AsyncValue.guard(authRepository.loginWithGoogle);
   }
 }

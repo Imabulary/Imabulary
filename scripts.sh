@@ -51,7 +51,9 @@ prismaGenerate() {
 
 # Seed an initial data inside database
 prismaSeed() {
+  pushd server > /dev/null
   npx prisma db seed
+  popd > /dev/null
 }
 
 # Build & Push to GCP

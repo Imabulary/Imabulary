@@ -46,14 +46,6 @@ void main() {
           () => mockedAuthReposiory.loginWithGoogle(),
         ).thenAnswer((_) async => profileDto);
 
-        when(
-          () => mockedAuthReposiory.createUser(profileDto),
-        ).thenAnswer((_) async {
-          await Future.delayed(const Duration(microseconds: 1000));
-
-          print('User was logged in with Google!');
-        });
-
         final googleLoginButton = find.byKey(const Key('google-login'));
 
         await tester.tap(googleLoginButton);

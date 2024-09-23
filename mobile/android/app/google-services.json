@@ -56,50 +56,6 @@
           ]
         }
       }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:222626452683:android:08adf5e6016a134a0ff74e",
-        "android_client_info": {
-          "package_name": "com.example.mobile"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "222626452683-onsj5ja8fa08k9tk977nel89tca18rcr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.mobile",
-            "certificate_hash": "23a1855f224080eecbc79aa652a54a50bd01004b"
-          }
-        },
-        {
-          "client_id": "222626452683-0kvtf5sga86suf5q3rf1knks62ebegh4.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDvNdKTfJcIeRvi3Psy1MRXNNmoBWXluC0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "222626452683-0kvtf5sga86suf5q3rf1knks62ebegh4.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "222626452683-823iovqtt4e9aukg6rl8bkr6c34oj7r5.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.imabulary"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "configuration_version": "1"
