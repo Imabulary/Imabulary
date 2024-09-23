@@ -63,10 +63,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '222626452683',
     projectId: 'imabulary-fc20f',
     storageBucket: 'imabulary-fc20f.appspot.com',
-    androidClientId:
-        '222626452683-6e62oh12qg57dg31226f5amnldeftm5d.apps.googleusercontent.com',
-    iosClientId:
-        '222626452683-823iovqtt4e9aukg6rl8bkr6c34oj7r5.apps.googleusercontent.com',
+    androidClientId: '222626452683-0o2mplaachv3a188p8akvhklpu510r07.apps.googleusercontent.com',
+    iosClientId: '222626452683-823iovqtt4e9aukg6rl8bkr6c34oj7r5.apps.googleusercontent.com',
     iosBundleId: 'com.example.imabulary',
   );
+
 }

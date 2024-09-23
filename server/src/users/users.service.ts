@@ -17,7 +17,7 @@ export class UsersService {
    *
    * Check `server/src/prisma/prisma.extension.ts:3` for implementation details
    */
-  async create(createUserDto: CreateUserDTO) {
+  async findOneOrCreate(createUserDto: CreateUserDTO) {
     const { uid, email } = createUserDto;
 
     const user = await this.findOne({ externalId: uid, email });

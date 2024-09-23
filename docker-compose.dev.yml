@@ -1,4 +1,3 @@
-version: '3'
 services:
   # TEMPORARELY DISABLE AS WE'RE NOT FOCUSED ON THE WEB AT THE MOMENT
   # frontend:
