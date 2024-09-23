@@ -5,7 +5,7 @@ import {
   ValidationArguments,
   registerDecorator,
 } from 'class-validator';
-import { DislikeFlashcardDto } from '../flashcards/dto/feedback.dto';
+import { DislikeFlashcardDto } from '../feedback/dto/feedback.dto';
 
 @ValidatorConstraint({ async: false })
 class EitherCategoryIdOrTextFeedbackConstraint

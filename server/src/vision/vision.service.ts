@@ -18,9 +18,9 @@ export class VisionService {
   });
 
   async analyze(imageUrl: string) {
-    const [result] = await this.visionClient.objectLocalization(imageUrl);
+    const [result] = await this.visionClient.labelDetection(imageUrl);
 
-    const object = get(result, 'localizedObjectAnnotations[0].name');
+    const objects = get(result, 'labelAnnotations');
     const error = get(result, 'error');
 
     if (error) {
@@ -29,12 +29,23 @@ export class VisionService {
       });
     }
 
-    if (!object) {
+    if (!objects.length) {
       throw new BadRequestException(OBJECT_IS_NOT_RECOGNIZABLE_ERROR, {
         cause: `Image: ${imageUrl}`,
       });
     }
 
-    return upperFirst(object);
+    const handledObjects = objects.map((object) => ({
+      name: object.description,
+      score: object.score,
+    }));
+
+    if (objects.length > 1) {
+      return handledObjects;
+    }
+
+    const signleObjectName = objects[0].description;
+
+    return upperFirst(signleObjectName);
   }
 }

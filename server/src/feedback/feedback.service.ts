@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { CreateFeedbackDto } from './dto/feedback.dto';
 
 @Injectable()
 export class FeedbackService {
@@ -9,11 +10,7 @@ export class FeedbackService {
     return this.prisma.feedbackCategory.findMany();
   }
 
-  async leaveFeedback(feedbackDto: {
-    cardId: string;
-    text: string;
-    categories: string[];
-  }) {
+  async create(feedbackDto: CreateFeedbackDto) {
     const { cardId, text, categories } = feedbackDto;
 
     const feedback = await this.prisma.feedback.create({
