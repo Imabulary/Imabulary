@@ -62,10 +62,10 @@ android {
 
   signingConfigs {
     release {
-        keyAlias lmabulary
-        keyPassword lmabulary
-        storeFile lmabulary
-        storePassword lmabulary
+        storeFile file('./lmabulary.keystore')
+        keyAlias 'lmabulary'
+        keyPassword 'lmabulary'
+        storePassword 'lmabulary'
     }
   }
 
