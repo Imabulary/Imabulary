@@ -1,13 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/FlashCard/application/flashcard_providers.dart';
-import 'package:mobile/app/FlashCard/data/dto/flashcard_dto.dart';
-import 'package:mobile/app/Home/widgets/flash_cards_list.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
-import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/app/Home/widgets/CardMenu/card_menu.dart';
+import 'package:mobile/app/Home/widgets/home_app_title.dart';
+import 'package:mobile/app/Wallet/application/wallet_providers.dart';
+import 'package:mobile/app/Set/data/set_repository.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
+import 'package:mobile/app/Home/widgets/sets_navigation_card.dart';
+import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet.dart';
 
 @RoutePage()
 class HomeScreen extends ConsumerWidget {
@@ -15,15 +17,25 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final flashcards = ref.watch(findAllFlashcardsProvider(
-      const FindAllFlashcardsDTO(pagination: Pagination()),
-    ));
+    final wallet = ref.watch(getWalletBalanceProvider);
+
+    final setsRepository = ref.watch(setRepositoryProvider);
+
+    void handleAdd(BuildContext context) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        clipBehavior: Clip.hardEdge,
+        builder: (context) => const AddBottomSheet(),
+      );
+    }
 
     return Layout(
       RefreshIndicator(
-        onRefresh: () => Future.sync(
-          () => ref.invalidate(findAllFlashcardsProvider),
-        ),
+        onRefresh: () => Future.sync(() {
+          ref.invalidate(getWalletBalanceProvider);
+          ref.invalidate(setRepositoryProvider);
+        }),
         child: SizedBox(
           height: double.infinity,
           child: SingleChildScrollView(
@@ -31,33 +43,51 @@ class HomeScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // TODO: Return this button once we completely designed its businsess logic
-                // const CollectDailyAwardButton(),
-                // const SizedBox(
-                //   height: 24,
-                // ),
-                const TypeSetting(
-                  'Your latest scans',
-                  variant: TextVariants.headlineMedium,
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                flashcards.when(
-                  skipLoadingOnRefresh: false,
-                  data: (flashCards) => FlashCardsList(
-                    flashCards: flashCards.result,
-                  ),
-                  error: (error, _) => const Center(
-                    child: TypeSetting(
-                      "Oops! An error occurred during loading. But don't worry, we're on it! Try again later.",
-                      style: TextStyle(color: Colors.grey),
-                      textAlign: TextAlign.center,
+                HomeAppTitle(wallet: wallet),
+                CardMenu(
+                  onTap: () {
+                    handleAdd(context);
+                  },
+                  backgroundColor: Colors.yellow,
+                  leftComponent: const Text(
+                    "Add a new flashcard",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      height: 1.5,
                     ),
                   ),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                )
+                  rightComponent: Image.asset(
+                    'assets/images/card_example_flower.png',
+                    height: 140,
+                    width: 150,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                SetsNavigationCard(
+                    setsDataFuture:
+                        setsRepository.findAll(const Pagination(page: 1))),
+                CardMenu(
+                  backgroundColor: const Color.fromARGB(255, 32, 53, 33),
+                  leftComponent: const Text(
+                    "Take a quiz",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      height: 1.5,
+                    ),
+                  ),
+                  rightComponent: Image.asset(
+                    'assets/images/quiz_picture.png',
+                    height: 140,
+                    width: 150,
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ],
             ),
           ),
