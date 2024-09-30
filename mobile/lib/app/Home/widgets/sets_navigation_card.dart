@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:mobile/app/Home/widgets/CardMenu/card_menu.dart';
 import 'package:mobile/app/Set/domain/set.dart';
@@ -16,7 +17,7 @@ class SetsNavigationCard extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CardMenu(
             backgroundColor: Colors.orange,
-            leftComponent: const Text(
+            leftComponent: const TypeSetting(
               "Loading sets...",
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -31,7 +32,7 @@ class SetsNavigationCard extends StatelessWidget {
         } else if (snapshot.hasError) {
           return CardMenu(
             backgroundColor: Colors.orange,
-            leftComponent: const Text(
+            leftComponent: const TypeSetting(
               "Failed to load sets.",
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -46,7 +47,7 @@ class SetsNavigationCard extends StatelessWidget {
         } else if (snapshot.hasData && snapshot.data!.result.isEmpty) {
           return CardMenu(
             backgroundColor: Colors.orange,
-            leftComponent: const Text(
+            leftComponent: const TypeSetting(
               "Create your first set",
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -63,7 +64,7 @@ class SetsNavigationCard extends StatelessWidget {
           return CardMenu(
             backgroundColor: Colors.orange,
             leftComponent: Column(children: [
-              const Text(
+              const TypeSetting(
                 "My sets",
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -73,7 +74,7 @@ class SetsNavigationCard extends StatelessWidget {
                   height: 1.5,
                 ),
               ),
-              Text(
+              TypeSetting(
                 "Number of sets: ${snapshot.data!.result.length}",
                 textAlign: TextAlign.center,
                 style: const TextStyle(
@@ -130,8 +131,8 @@ class SetsNavigationCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(firstSet.name),
-              Text(firstSet.flashcards?.length.toString() ?? '0'),
+              TypeSetting(firstSet.name),
+              TypeSetting(firstSet.flashcards?.length.toString() ?? '0'),
             ],
           ),
         ],

@@ -10,6 +10,7 @@ import 'package:mobile/app/Set/data/set_repository.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/app/Home/widgets/sets_navigation_card.dart';
 import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet.dart';
+import 'package:mobile/atoms/type_setting.dart';
 
 @RoutePage()
 class HomeScreen extends ConsumerWidget {
@@ -49,7 +50,7 @@ class HomeScreen extends ConsumerWidget {
                     handleAdd(context);
                   },
                   backgroundColor: Colors.yellow,
-                  leftComponent: const Text(
+                  leftComponent: const TypeSetting(
                     "Add a new flashcard",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -71,7 +72,7 @@ class HomeScreen extends ConsumerWidget {
                         setsRepository.findAll(const Pagination(page: 1))),
                 CardMenu(
                   backgroundColor: const Color.fromARGB(255, 32, 53, 33),
-                  leftComponent: const Text(
+                  leftComponent: const TypeSetting(
                     "Take a quiz",
                     textAlign: TextAlign.center,
                     style: TextStyle(
