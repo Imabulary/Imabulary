@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:mobile/app/Home/widgets/CardMenu/card_menu.dart';
@@ -46,15 +47,14 @@ class SetsNavigationCard extends StatelessWidget {
           );
         } else if (snapshot.hasData && snapshot.data!.result.isEmpty) {
           return CardMenu(
-            backgroundColor: Colors.orange,
+            backgroundColor: AppColors.orange,
             leftComponent: const TypeSetting(
               "Create your first set",
               textAlign: TextAlign.center,
+              variant: TextVariants.headlineLarge,
               style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF303030),
-                height: 1.5,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
             rightComponent: _buildImageContainer(),
@@ -68,22 +68,20 @@ class SetsNavigationCard extends StatelessWidget {
                 const TypeSetting(
                   "My sets",
                   textAlign: TextAlign.center,
+                  variant: TextVariants.headlineLarge,
                   style: TextStyle(
-                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
-                    height: 1.5,
                   ),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 TypeSetting(
                   "Number of sets: ${snapshot.data!.result.length}",
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF303030),
-                    height: 1.5,
-                  ),
+                  variant: TextVariants.bodySmall,
+                  style: const TextStyle(color: AppColors.muted),
                 )
               ],
             ),

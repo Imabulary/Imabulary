@@ -7,6 +7,7 @@ import 'package:mobile/app/Home/widgets/CardMenu/card_menu.dart';
 import 'package:mobile/app/Home/widgets/home_app_title.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/app/Set/data/set_repository.dart';
+import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/app/Home/widgets/sets_navigation_card.dart';
 import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet.dart';
@@ -45,19 +46,21 @@ class HomeScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 HomeAppTitle(wallet: wallet),
+                const SizedBox(
+                  height: 8,
+                ),
                 CardMenu(
                   onTap: () {
                     handleAdd(context);
                   },
-                  backgroundColor: Colors.yellow,
+                  backgroundColor: AppColors.darkYellow,
                   leftComponent: const TypeSetting(
                     "Add a new flashcard",
+                    variant: TextVariants.headlineLarge,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      height: 1.5,
                     ),
                   ),
                   rightComponent: Image.asset(
@@ -68,19 +71,18 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ),
                 SetsNavigationCard(
-                  setsDataFuture:
-                      setsRepository.findAll(const Pagination(page: 1)),
+                  setsDataFuture: setsRepository.findAll(
+                    const Pagination(page: 1),
+                  ),
                 ),
                 CardMenu(
-                  backgroundColor: const Color.fromARGB(255, 32, 53, 33),
+                  backgroundColor: AppColors.success,
                   leftComponent: const TypeSetting(
                     "Take a quiz",
+                    variant: TextVariants.headlineLarge,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      height: 1.5,
                     ),
                   ),
                   rightComponent: Image.asset(
