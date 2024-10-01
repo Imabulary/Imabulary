@@ -68,8 +68,9 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ),
                 SetsNavigationCard(
-                    setsDataFuture:
-                        setsRepository.findAll(const Pagination(page: 1))),
+                  setsDataFuture:
+                      setsRepository.findAll(const Pagination(page: 1)),
+                ),
                 CardMenu(
                   backgroundColor: const Color.fromARGB(255, 32, 53, 33),
                   leftComponent: const TypeSetting(

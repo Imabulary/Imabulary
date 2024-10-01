@@ -63,28 +63,30 @@ class SetsNavigationCard extends StatelessWidget {
           final firstSet = snapshot.data!.result[0];
           return CardMenu(
             backgroundColor: Colors.orange,
-            leftComponent: Column(children: [
-              const TypeSetting(
-                "My sets",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  height: 1.5,
+            leftComponent: Column(
+              children: [
+                const TypeSetting(
+                  "My sets",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    height: 1.5,
+                  ),
                 ),
-              ),
-              TypeSetting(
-                "Number of sets: ${snapshot.data!.result.length}",
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xFF303030),
-                  height: 1.5,
-                ),
-              )
-            ]),
+                TypeSetting(
+                  "Number of sets: ${snapshot.data!.result.length}",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF303030),
+                    height: 1.5,
+                  ),
+                )
+              ],
+            ),
             rightComponent: _buildSetInfo(firstSet),
           );
         } else {
