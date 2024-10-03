@@ -10,7 +10,7 @@ defaults:
     working-directory: ./mobile
 
 jobs:
-  distribution:
+  distribute:
     runs-on: ubuntu-latest
     timeout-minutes: 120
 
@@ -54,9 +54,23 @@ jobs:
           echo "API_URL=$API_URL" > assets/.env
           echo "PURCHASES_KEY=$PURCHASES_KEY" >> assets/.env
 
+      - name: Decode and create keystore
+        run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/imabulary.keystore
+
+      - name: Create key.properties
+        env:
+          STORE_PASSWORD: ${{secrets.STORE_PASSWORD}}
+          KEY_PASSWORD: ${{secrets.KEY_PASSWORD}}
+          KEY_ALIAS: ${{secrets.KEY_ALIAS}}
+          STORE_FILE: ${{secrets.STORE_FILE}}
+        run: |
+          echo "storePassword=$STORE_PASSWORD" > android/key.properties
+          echo "keyPassword=$KEY_PASSWORD" >> android/key.properties
+          echo "keyAlias=$KEY_ALIAS" >> android/key.properties
+          echo "storeFile=$STORE_FILE" >> android/key.properties
+
       - name: Build APK
         run: flutter build apk -v
-        
 
       - name: Upload APK
         if: ${{ !env.ACT }}
