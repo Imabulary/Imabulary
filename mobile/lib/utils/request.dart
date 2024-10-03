@@ -33,6 +33,10 @@ Future<T> request<T>(Future<T> Function() asyncFunc) async {
           .getOrElse(defaultError);
     }
 
+    if (error is ServerError) {
+      exception = error as ServerError;
+    }
+
     // TODO: log the full error to the external system
     print(error.toString());
     print(exception.toJson());
