@@ -56,9 +56,11 @@ jobs:
 
       - name: Decode and create keystore
         run: |
-          echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/imabulary.keystore
-          SHA1=$(keytool -list -v -keystore android/app/imabulary.keystore -alias ${{secrets.KEY_ALIAS}} -storepass ${{secrets.STORE_PASSWORD}} -keypass ${{secrets.KEY_PASSWORD}} | grep 'SHA1' | awk '{ print $2 }')
+          echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/keystore.jks
+          SHA1=$(keytool -list -v -keystore android/app/keystore.jks -alias ${{secrets.KEY_ALIAS}} -storepass ${{secrets.STORE_PASSWORD}} -keypass ${{secrets.KEY_PASSWORD}} | grep 'SHA1' | awk '{ print $2 }')
+          SHA256=$(keytool -list -v -keystore android/app/keystore.jks -alias ${{secrets.KEY_ALIAS}} -storepass ${{secrets.STORE_PASSWORD}} -keypass ${{secrets.KEY_PASSWORD}} | grep 'SHA256' | awk '{ print $2 }')
           echo "SHA1 Key: $SHA1"
+          echo "SHA256 Key: $SHA256"
 
       - name: Create key.properties
         env:
@@ -73,7 +75,7 @@ jobs:
           echo "storeFile=$STORE_FILE" >> android/key.properties
 
       - name: Build APK
-        run: flutter build apk -v
+        run: flutter build apk
 
       - name: Upload APK
         if: ${{ !env.ACT }}
