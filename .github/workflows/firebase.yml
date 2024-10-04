@@ -55,7 +55,10 @@ jobs:
           echo "PURCHASES_KEY=$PURCHASES_KEY" >> assets/.env
 
       - name: Decode and create keystore
-        run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/imabulary.keystore
+        run: |
+          echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/imabulary.keystore
+          SHA1=$(keytool -list -v -keystore android/app/imabulary.keystore -alias ${{secrets.KEY_ALIAS}} -storepass ${{secrets.STORE_PASSWORD}} -keypass ${{secrets.KEY_PASSWORD}} | grep 'SHA1' | awk '{ print $2 }')
+          echo "SHA1 Key: $SHA1"
 
       - name: Create key.properties
         env:
