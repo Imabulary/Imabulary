@@ -55,12 +55,7 @@ jobs:
           echo "PURCHASES_KEY=$PURCHASES_KEY" >> assets/.env
 
       - name: Decode and create keystore
-        run: |
-          echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/keystore.jks
-          SHA1=$(keytool -list -v -keystore android/app/keystore.jks -alias ${{secrets.KEY_ALIAS}} -storepass ${{secrets.STORE_PASSWORD}} -keypass ${{secrets.KEY_PASSWORD}} | grep 'SHA1' | awk '{ print $2 }')
-          SHA256=$(keytool -list -v -keystore android/app/keystore.jks -alias ${{secrets.KEY_ALIAS}} -storepass ${{secrets.STORE_PASSWORD}} -keypass ${{secrets.KEY_PASSWORD}} | grep 'SHA256' | awk '{ print $2 }')
-          echo "SHA1 Key: $SHA1"
-          echo "SHA256 Key: $SHA256"
+        run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/keystore.jks
 
       - name: Create key.properties
         env:
