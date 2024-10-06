@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/FlashCard/data/dto/flashcard_dto.dart';
-import 'package:mobile/app/FlashCard/domain/card.dart';
+import 'package:mobile/app/FlashCard/domain/card/card.dart';
+import 'package:mobile/app/Flashcard/domain/scanPhotoPayload/scan_photo_payload.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:mobile/utils/api.dart';
 import 'package:mobile/utils/query_params_builder.dart';
@@ -49,7 +50,7 @@ class FlashCardRepository {
     });
   }
 
-  Future<FlashCard> scanPhoto(XFile image) {
+  Future<ScanPhotoPayload> scanPhoto(XFile image) {
     return request(() async {
       final file = await MultipartFile.fromFile(image.path);
 
@@ -62,7 +63,7 @@ class FlashCardRepository {
         data: data,
       );
 
-      return FlashCard.fromJson(response.data!['result']);
+      return ScanPhotoPayload.fromJson(response.data['result']);
     });
   }
 

@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { File } from '@google-cloud/storage';
 import { PrismaService } from 'src/prisma';
 import { Filters, ServerPagination } from 'src/shared';
 import {
@@ -36,18 +37,16 @@ export class FlashCardsService {
     private readonly wallet: WalletService,
   ) {}
 
-  async scan(userId: string, fileName: string, file: Buffer) {
+  async scan(fileName: string, file: Buffer) {
     const { storageFile: imageFile, generatedFileName: generatedImageName } =
       await this.storage.upload(IBucketFolders.IMAGE, fileName, file);
 
     try {
       const imageUrl = await this.storage.getFileURL(imageFile);
-      const card = await this.processImage({
-        imageUrl,
-        userId,
-        generatedImageName,
-      });
-      return card;
+
+      const { translatedObjectsOnImage } = await this.processImage(imageUrl);
+
+      return { translatedObjectsOnImage, generatedImageName, imageUrl };
     } catch (error) {
       await imageFile.delete();
 
@@ -64,7 +63,8 @@ export class FlashCardsService {
     }: CreateFlashcardDTO,
     userId: string,
   ) {
-    let audioFile;
+    let audioFile: File;
+
     const imageFileName = imageUrl.split('/').pop();
 
     try {
@@ -129,6 +129,8 @@ export class FlashCardsService {
         },
       });
 
+      await this.wallet.deductBalance(userId, DEFAULT_COST);
+
       return card;
     } catch (error) {
       await this.storage.delete(imageFileName);
@@ -138,117 +140,28 @@ export class FlashCardsService {
     }
   }
 
-  async processImage({
-    imageUrl,
-    userId,
-    generatedImageName,
-    isRegeneration = false,
-  }: {
-    imageUrl: string;
-    userId: string;
-    generatedImageName: string;
-    isRegeneration?: boolean;
-  }) {
-    let audioFile;
+  async processImage(imageUrl: string) {
     // TODO: Take these variables from settings of user profile, once it's done
     const sourceLanguageCode = 'en-US';
     const targetLanguageCode = 'uk-UA';
-    try {
-      const objectOnImage = await this.vision.analyze(imageUrl);
 
-      if (Array.isArray(objectOnImage)) {
-        const notFoundItem = {
-          name: 'The object I wanted is not in this list',
-          score: 0,
-        };
+    const objectsOnImage = await this.vision.analyze(imageUrl);
+    const namesToTranslate = objectsOnImage.map((item) => item.name);
 
-        const namesToTranslate = [...objectOnImage, notFoundItem].map(
-          (item) => item.name,
-        );
-        const translatedWords = await this.translator.translate(
-          namesToTranslate,
-          {
-            sourceLanguageCode,
-            targetLanguageCode,
-          },
-        );
+    const translatedWords = await this.translator.translate(namesToTranslate, {
+      sourceLanguageCode,
+      targetLanguageCode,
+    });
 
-        const translatedObjectOnImage = objectOnImage.map((item, index) => ({
-          name: translatedWords[index],
-          score: item.score,
-        }));
-        return {
-          objectOnImage: translatedObjectOnImage,
-          imageUrl,
-          isRegeneration,
-          generatedImageName,
-        };
-      }
+    const translatedObjectsOnImage = objectsOnImage.map((item, index) => ({
+      name: translatedWords[index],
+      score: item.score,
+    }));
 
-      const audioSpeechStream = await this.sound.synthesizeSpeech(
-        objectOnImage,
-      );
-
-      const {
-        storageFile: uploadedAudioFile,
-        generatedFileName: generatedAudioName,
-      } = await this.storage.upload(
-        IBucketFolders.AUDIO,
-        `${objectOnImage}.mp3`,
-        audioSpeechStream,
-      );
-
-      audioFile = uploadedAudioFile;
-
-      const audioUrl = await this.storage.getFileURL(audioFile);
-
-      const [relatedPhrase, explanation, speechPart, status] =
-        await Promise.all([
-          this.assistant.generatePhrase(objectOnImage),
-          this.assistant.explain(objectOnImage),
-          this.assistant.speechPart(objectOnImage),
-          this.prisma.quizCardStatus.findFirst({
-            where: { name: QUIZ_STATUS.NOT_STUDIED },
-          }),
-        ]);
-
-      const [translatedWord, translatedPhrase, translatedExplanation] =
-        await this.translator.translate(
-          [objectOnImage, relatedPhrase, explanation],
-          {
-            sourceLanguageCode,
-            targetLanguageCode,
-          },
-        );
-
-      const card = await this.prisma.cards.create({
-        data: {
-          word: objectOnImage,
-          phrase: relatedPhrase,
-          speech_part: speechPart,
-          translated_explanation: translatedExplanation,
-          translated_phrase: translatedPhrase,
-          translated_word: translatedWord,
-          target_language: targetLanguageCode,
-          source_language: sourceLanguageCode,
-          image_url: imageUrl,
-          quizStatusId: status?.id,
-          audio_url: audioUrl,
-          is_regenerated: isRegeneration,
-          audio_name: generatedAudioName,
-          userId,
-          image_name: generatedImageName,
-          explanation,
-        },
-      });
-
-      await this.wallet.deductBalance(userId, DEFAULT_COST);
-
-      return card;
-    } catch (error) {
-      audioFile?.delete();
-      throw error;
-    }
+    return {
+      objectsOnImage,
+      translatedObjectsOnImage,
+    };
   }
 
   async findAll(
@@ -299,12 +212,13 @@ export class FlashCardsService {
 
   async like(likeFlashcardDto: LikeFlashcardDto) {
     const { cardId } = likeFlashcardDto;
+
     await this.prisma.feedback.create({
       data: { cardId, isAppropriate: true },
     });
   }
 
-  async deleteCard(cardId: string) {
+  async delete(cardId: string) {
     await Promise.all([
       this.prisma.cards.update({
         where: { id: cardId },
@@ -317,12 +231,13 @@ export class FlashCardsService {
         where: { flashcardId: cardId },
       }),
     ]);
+
     return {
       message: 'Card was successfuly deleted!',
     };
   }
 
-  async regenerateCard(cardId: string, userId: string) {
+  async regenerateCard(cardId: string) {
     const currentCard = await this.prisma.cards.update({
       data: {
         userId: null,
@@ -341,12 +256,7 @@ export class FlashCardsService {
       throw new BadRequestException('This card had already regenerated');
     }
 
-    const card = await this.processImage({
-      imageUrl: currentCard.image_name,
-      userId: userId,
-      generatedImageName: currentCard.image_name,
-      isRegeneration: true,
-    });
+    const card = await this.processImage(currentCard.image_url);
 
     return {
       result: card,

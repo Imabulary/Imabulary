@@ -6,50 +6,106 @@ info:
 
 paths:
   /quiz/learn:
-    $ref: "./paths/quiz/learn.yaml"
+    $ref: './paths/quiz/learn.yaml'
 
   /feedback/categories:
-    $ref: "./paths/feedback/categories.yaml"
+    $ref: './paths/feedback/categories.yaml'
 
   /feedback/create:
-    $ref: "./paths/feedback/create.yaml"
+    $ref: './paths/feedback/create.yaml'
 
   /flashcards/scan:
-    $ref: "./paths/flashcards/scan.yaml"
+    post:
+      tags:
+        - flashcards
+      summary: Scan an image and returns an array with detected objects on it
+      description: |
+        This endpoint:
+        1. Scan an uploaded image
+        2. Detects objects on it
+        3. Returns detected objects sorted by a score that determines the likelihood of depicting this object in a photo.
+        4. Additionally it returns `generatedImageName` and `imageUrl` that will be used to create a flashcard
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Image to scan
+      responses:
+        '200':
+          description: Successfully uploaded image and detected objects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - bearerAuth: []
 
   /flashcards/:
-    $ref: "./paths/flashcards/flashcards.yaml"
+    $ref: './paths/flashcards/flashcards.yaml'
 
   /flashcards/organize:
-    $ref: "./paths/flashcards/organize.yaml"
+    $ref: './paths/flashcards/organize.yaml'
 
   /flashcards/disorganize:
-    $ref: "./paths/flashcards/disorganize.yaml"
+    $ref: './paths/flashcards/disorganize.yaml'
 
   /flashcards/like:
-    $ref: "./paths/flashcards/like.yaml"
+    $ref: './paths/flashcards/like.yaml'
 
   /flashcards/dislike:
-    $ref: "./paths/flashcards/dislike.yaml"
+    $ref: './paths/flashcards/dislike.yaml'
 
   /sets:
-    $ref: "./paths/sets/sets.yaml"
+    $ref: './paths/sets/sets.yaml'
 
   /sets/{id}:
-    $ref: "./paths/sets/sets-id.yaml"
+    $ref: './paths/sets/sets-id.yaml'
 
   /users:
-    $ref: "./paths/users/users.yaml"
+    $ref: './paths/users/users.yaml'
 
   /wallet:
-    $ref: "./paths/wallet/wallet.yaml"
+    $ref: './paths/wallet/wallet.yaml'
 
   /wallet/collect:
-    $ref: "./paths/wallet/collect-award.yaml"
+    $ref: './paths/wallet/collect-award.yaml'
 
 components:
+  responses:
+    InternalServerError:
+      description: Server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    BadRequest:
+      description: Server would not process the request due to something the server considered to be a client error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Unauthorized:
+      description: Occurs when you try to access a page that requires valid authentication credentials, but your current ones aren't recognized or are missing
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    $ref: "./components/schemas/index.yaml"
+    $ref: './components/schemas/index.yaml'
 
   securitySchemes:
     bearerAuth:

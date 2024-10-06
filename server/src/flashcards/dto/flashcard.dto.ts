@@ -5,6 +5,8 @@ import {
   IsUUID,
   IsString,
   IsBoolean,
+  IsOptional,
+  IsUrl,
 } from 'class-validator';
 import { IsRecordExist } from 'src/decorators/is-record-exist.decorator';
 
@@ -42,15 +44,15 @@ export class CreateFlashcardDTO {
   @IsString()
   objectOnImage: string;
 
+  @IsUrl()
   @IsNotEmpty()
-  @IsString()
   imageUrl: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   generatedImageName: string;
 
-  @IsNotEmpty()
   @IsBoolean()
+  @IsOptional()
   isRegeneration: boolean;
 }

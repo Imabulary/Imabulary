@@ -32,7 +32,7 @@ import { FlashCardsService } from './flashcards.service';
 
 const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @Controller('flashcards')
 export class FlashCardsController {
   constructor(private readonly flashCardsService: FlashCardsService) {}
@@ -53,9 +53,7 @@ export class FlashCardsController {
     )
     { file, fileName }: ImageCompressionResult,
   ) {
-    const user: Users = request['user'];
-
-    return this.flashCardsService.scan(user.id, fileName, file);
+    return this.flashCardsService.scan(fileName, file);
   }
 
   @Get('/')
@@ -89,10 +87,8 @@ export class FlashCardsController {
     return this.flashCardsService.dislike(dislikeFlashcardDto);
   }
   @Post('/regenerate')
-  async regenerate(@Req() request: Request, @Body() regenerateDto: CardDto) {
-    const user: Users = request['user'];
-
-    return this.flashCardsService.regenerateCard(regenerateDto.cardId, user.id);
+  regenerate(@Req() request: Request, @Body() regenerateDto: CardDto) {
+    return this.flashCardsService.regenerateCard(regenerateDto.cardId);
   }
 
   @Post('/create')
@@ -107,6 +103,6 @@ export class FlashCardsController {
 
   @Delete('/delete')
   async delete(@Body() regenerateDto: CardDto) {
-    return this.flashCardsService.deleteCard(regenerateDto.cardId);
+    return this.flashCardsService.delete(regenerateDto.cardId);
   }
 }

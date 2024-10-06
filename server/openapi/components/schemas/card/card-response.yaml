@@ -1,4 +1,4 @@
 type: object
 properties:
   result:
-    $ref: "card.yaml"
+    $ref: 'card.yaml'

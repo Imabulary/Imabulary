@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/FlashCard/application/flashcard_providers.dart';
 import 'package:mobile/app/FlashCard/application/flashcard_service.dart';
-import 'package:mobile/app/FlashCard/domain/card.dart';
+import 'package:mobile/app/FlashCard/domain/card/card.dart';
 import 'package:mobile/app/FlashCard/presentation/flashcard_screen.dart';
 import 'package:mobile/app/Layout/components/better_results_dialog.dart';
 import 'package:mobile/app/Layout/components/bottom_sheet_item.dart';
