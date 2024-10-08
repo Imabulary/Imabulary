@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Profile/presentation/profile_screen.dart';
 import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
