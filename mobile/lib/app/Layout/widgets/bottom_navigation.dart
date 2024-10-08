@@ -33,6 +33,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
         ),
       );
     }
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    }
   }
 
   @override

@@ -17,18 +17,29 @@ extension AsyncValueUI on AsyncValue {
     }
   }
 
-  showErrorDialog(BuildContext context, bool doPop) {
+  void showErrorDialog(BuildContext context, bool doPop) {
     if (!isLoading && hasError && hasValue) {
-      final exception = error as ServerError;
+      if (error is ServerError) {
+        final ServerError exception = error as ServerError;
 
-      if (doPop) {
-        Navigator.pop(context);
+        if (doPop) {
+          Navigator.pop(context);
+        }
+
+        showDialog(
+          context: context,
+          builder: (context) => Dialogs.error(exception.message),
+        );
+      } else {
+        if (doPop) {
+          Navigator.pop(context);
+        }
+
+        showDialog(
+          context: context,
+          builder: (context) => Dialogs.error('An unexpected error occurred.'),
+        );
       }
-
-      showDialog(
-        context: context,
-        builder: (context) => Dialogs.error(exception.message),
-      );
     }
   }
 }

@@ -29,7 +29,14 @@ export class SetsService {
         where: { userId },
         include: {
           CardsOnSets: {
-            include: { flashcard: { select: { image_url: true } } },
+            include: {
+              flashcard: {
+                select: {
+                  image_url: true,
+                  QuizStatus: true,
+                },
+              },
+            },
           },
         },
       }),

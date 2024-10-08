@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mobile/shared/constants.dart';
+import 'package:mobile/app/FlashCard/domain/quiz_status.dart';
 
 part 'set.freezed.dart';
 part 'set.g.dart';
 
 // ignore: non_constant_identifier_names
-typedef SetsFlashcards = ({String image_url});
+typedef SetsFlashcards = ({String image_url, QuizStatuses QuizStatus});
 
 @freezed
 class Set with _$Set {

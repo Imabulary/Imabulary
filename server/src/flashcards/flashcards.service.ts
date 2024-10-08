@@ -174,7 +174,8 @@ export class FlashCardsService {
         );
 
         const translatedObjectOnImage = objectOnImage.map((item, index) => ({
-          name: translatedWords[index],
+          name: item.name,
+          translatedName: translatedWords[index],
           score: item.score,
         }));
         return {
@@ -261,6 +262,9 @@ export class FlashCardsService {
         ...pagination,
         orderBy: { createdAt: 'desc' },
         where: { userId, ...filters },
+        include: {
+          QuizStatus: true,
+        },
       }),
       this.prisma.cards.count({ where: { userId, ...filters } }),
     ]);

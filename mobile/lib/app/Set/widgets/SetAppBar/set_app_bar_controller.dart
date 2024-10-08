@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/app/FlashCard/domain/quiz_status.dart';
 import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen.dart';
 import 'package:mobile/app/Set/components/quiz_flashcards_amount_warning.dart';
 import 'package:mobile/app/Set/widgets/actions_list.dart';
@@ -15,7 +16,7 @@ class SetAppBarController {
 
   static Function() startQuiz(
     BuildContext context,
-    List<({String image_url})>? flashcards,
+    List<({String image_url, QuizStatuses QuizStatus})>? flashcards,
   ) {
     return () {
       const kMinimalAmountOfFlashcardsToStartQuiz = 4;

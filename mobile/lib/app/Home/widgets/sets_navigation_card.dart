@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/app/Profile/presentation/profile_screen.dart';
+import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:mobile/app/Home/widgets/CardMenu/card_menu.dart';
 import 'package:mobile/app/Set/domain/set.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mobile/app/Profile/widgets/SetsGrid/sets_grid_controller.dart';
+import 'package:auto_route/auto_route.dart';
 
 class SetsNavigationCard extends StatelessWidget {
   final Future<ServerResponse<List<Set>>> setsDataFuture;
@@ -17,75 +22,77 @@ class SetsNavigationCard extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CardMenu(
-            backgroundColor: Colors.orange,
-            leftComponent: const TypeSetting(
-              "Loading sets...",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF303030),
-                height: 1.5,
-              ),
+            backgroundColor: AppColors.orange,
+            component: Row(
+              children: [
+                _buildImageContainer(),
+                const SizedBox(
+                  width: 10,
+                ),
+                _buildTextContainer("Loading sets..."),
+              ],
             ),
-            rightComponent: _buildImageContainer(),
           );
         } else if (snapshot.hasError) {
           return CardMenu(
             backgroundColor: Colors.orange,
-            leftComponent: const TypeSetting(
-              "Failed to load sets.",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-                color: Colors.red,
-                height: 1.5,
-              ),
+            component: Row(
+              children: [
+                _buildImageContainer(),
+                const SizedBox(
+                  width: 10,
+                ),
+                _buildTextContainer("Failed to load sets.", color: Colors.red)
+              ],
             ),
-            rightComponent: _buildImageContainer(),
           );
         } else if (snapshot.hasData && snapshot.data!.result.isEmpty) {
           return CardMenu(
+            onTap: SetsGridController.showSetFormBottomSheet(context),
             backgroundColor: AppColors.orange,
-            leftComponent: const TypeSetting(
-              "Create your first set",
-              textAlign: TextAlign.center,
-              variant: TextVariants.headlineLarge,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+            component: Row(
+              children: [
+                _buildImageContainer(),
+                const SizedBox(
+                  width: 10,
+                ),
+                _buildTextContainer("Create your first set")
+              ],
             ),
-            rightComponent: _buildImageContainer(),
           );
         } else if (snapshot.hasData && snapshot.data!.result.isNotEmpty) {
-          final firstSet = snapshot.data!.result[0];
+          final int numberOfSets = snapshot.data!.result.length;
+
           return CardMenu(
-            backgroundColor: Colors.orange,
-            leftComponent: Column(
+            onTap: () {
+              context.router.push(
+                ProfileRoute(initialTabIndex: 1),
+              );
+            },
+            backgroundColor: AppColors.orange,
+            component: Row(
               children: [
-                const TypeSetting(
-                  "My sets",
-                  textAlign: TextAlign.center,
-                  variant: TextVariants.headlineLarge,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
+                _buildImageContainer(),
                 const SizedBox(
-                  height: 10,
+                  width: 10,
                 ),
-                TypeSetting(
-                  "Number of sets: ${snapshot.data!.result.length}",
-                  textAlign: TextAlign.center,
-                  variant: TextVariants.bodySmall,
-                  style: const TextStyle(color: AppColors.muted),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTextContainer("My sets"),
+                    TypeSetting(
+                      "Number of sets: $numberOfSets",
+                      variant: TextVariants.bodySmall,
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: AppColors.muted,
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),
-            rightComponent: _buildSetInfo(firstSet),
           );
         } else {
           return const SizedBox.shrink();
@@ -95,47 +102,23 @@ class SetsNavigationCard extends StatelessWidget {
   }
 
   Widget _buildImageContainer() {
-    return Container(
-      height: 140,
-      width: 150,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        color: const Color(0xFF303030),
-      ),
-      child: Image.asset(
-        'assets/images/card_example_flower.png',
-        fit: BoxFit.cover,
+    return SizedBox(
+      width: 40,
+      child: SvgPicture.asset(
+        'assets/images/sets-icon.svg',
+        fit: BoxFit.contain,
       ),
     );
   }
 
-  Widget _buildSetInfo(Set firstSet) {
-    return Container(
-      height: 140,
-      width: 150,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        color: const Color(0xFF303030),
-      ),
-      child: Column(
-        children: [
-          Expanded(
-            child: Image.asset(
-              'assets/images/card_example_flower.png',
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 8.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TypeSetting(firstSet.name),
-              TypeSetting(firstSet.flashcards?.length.toString() ?? '0'),
-            ],
-          ),
-        ],
+  Widget _buildTextContainer(String text, {Color color = Colors.black}) {
+    return TypeSetting(
+      text,
+      variant: TextVariants.headlineMedium,
+      textAlign: TextAlign.start,
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        color: color,
       ),
     );
   }

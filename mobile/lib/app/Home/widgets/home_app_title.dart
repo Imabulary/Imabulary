@@ -3,22 +3,51 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Wallet/domain/wallet/wallet.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/shared/models/ServerResponse/server_response.dart';
+import 'package:mobile/app/FlashCard/domain/card.dart';
 
 class HomeAppTitle extends StatelessWidget {
   final AsyncValue<Wallet> wallet;
-
-  const HomeAppTitle({super.key, required this.wallet});
+  final AsyncValue<ServerResponse<List<FlashCard>>> flashcards;
+  const HomeAppTitle(
+      {super.key, required this.wallet, required this.flashcards});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const TypeSetting(
-          "Welcome back 👋",
-          variant: TextVariants.headlineLarge,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+        flashcards.when(
+          data: (data) {
+            return data.result.length > 1
+                ? const TypeSetting(
+                    "Welcome back 👋",
+                    variant: TextVariants.headlineLarge,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                : const TypeSetting(
+                    "Welcome 👋",
+                    variant: TextVariants.headlineLarge,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+          },
+          error: (error, stackTrace) => const TypeSetting(
+            "Welcome 👋",
+            variant: TextVariants.headlineLarge,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          loading: () => const TypeSetting(
+            "Welcome 👋",
+            variant: TextVariants.headlineLarge,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         const SizedBox(width: 8),
