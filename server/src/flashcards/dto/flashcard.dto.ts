@@ -38,18 +38,18 @@ export class DisorganizeFlashcardsDTO extends PartialType(
 ) {}
 
 export class CreateFlashcardDTO {
+  @IsString({ message: 'Object name must be a string' })
   @IsNotEmpty({
-    message: 'Object name should be defined',
+    message: 'Please provide a name of the object on an image',
   })
-  @IsString()
   objectOnImage: string;
 
-  @IsUrl()
-  @IsNotEmpty()
+  @IsUrl({}, { message: 'Please provide a valid image URL' })
+  @IsNotEmpty({ message: 'Please provide an image URL' })
   imageUrl: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsString({ message: 'Name of the image must be a string' })
+  @IsNotEmpty({ message: 'Please provide an image name' })
   imageName: string;
 
   @IsBoolean()

@@ -4,7 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile/app/Auth/application/auth_provider.dart';
-import 'package:mobile/app/ObjectsOnImage/domain/object_on_image.dart';
+import 'package:mobile/app/ObjectsOnImage/domain/ObjectOnImage/object_on_image.dart';
 import 'package:mobile/app/ObjectsOnImage/presentation/objects_on_image_screen.dart';
 import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';

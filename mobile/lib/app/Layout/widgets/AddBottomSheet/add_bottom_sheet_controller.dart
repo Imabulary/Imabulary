@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/FlashCard/data/flash_card_repository.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
-import 'package:mobile/app/ObjectsOnImage/domain/object_on_image.dart';
+import 'package:mobile/app/ObjectsOnImage/domain/ObjectOnImage/object_on_image.dart';
 import 'package:mobile/app/ObjectsOnImage/presentation/objects_on_image_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

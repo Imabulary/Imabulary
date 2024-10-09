@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/ObjectsOnImage/domain/object_on_image.dart';
+import 'package:mobile/app/ObjectsOnImage/domain/ObjectOnImage/object_on_image.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
-import 'package:mobile/app/ObjectsOnImage/widgets/object_list_item.dart';
+import 'package:mobile/app/ObjectsOnImage/widgets/ObjectListItem/object_list_item.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 

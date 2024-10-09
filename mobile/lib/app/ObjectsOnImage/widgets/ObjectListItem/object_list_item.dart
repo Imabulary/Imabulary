@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/ObjectsOnImage/domain/object_on_image.dart';
+import 'package:mobile/app/ObjectsOnImage/domain/ObjectOnImage/object_on_image.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/widgets/list_item.dart';
 
