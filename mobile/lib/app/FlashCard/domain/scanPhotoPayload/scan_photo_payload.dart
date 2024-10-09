@@ -7,9 +7,9 @@ part 'scan_photo_payload.g.dart';
 @freezed
 class ScanPhotoPayload with _$ScanPhotoPayload {
   const factory ScanPhotoPayload({
-    required List<Map<String, dynamic>> translatedObjectsOnImage,
+    required List<Map<String, dynamic>> objectsOnImage,
     required String imageUrl,
-    required String generatedImageName,
+    required String imageName,
   }) = _ScanPhotoPayload;
 
   factory ScanPhotoPayload.fromJson(Map<String, dynamic> json) =>

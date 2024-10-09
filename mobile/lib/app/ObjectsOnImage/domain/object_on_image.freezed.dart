@@ -22,6 +22,7 @@ ObjectOnImage _$ObjectOnImageFromJson(Map<String, dynamic> json) {
 mixin _$ObjectOnImage {
   String get name => throw _privateConstructorUsedError;
   double get score => throw _privateConstructorUsedError;
+  String get translatedName => throw _privateConstructorUsedError;
 
   /// Serializes this ObjectOnImage to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +40,7 @@ abstract class $ObjectOnImageCopyWith<$Res> {
           ObjectOnImage value, $Res Function(ObjectOnImage) then) =
       _$ObjectOnImageCopyWithImpl<$Res, ObjectOnImage>;
   @useResult
-  $Res call({String name, double score});
+  $Res call({String name, double score, String translatedName});
 }
 
 /// @nodoc
@@ -59,6 +60,7 @@ class _$ObjectOnImageCopyWithImpl<$Res, $Val extends ObjectOnImage>
   $Res call({
     Object? name = null,
     Object? score = null,
+    Object? translatedName = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -69,6 +71,10 @@ class _$ObjectOnImageCopyWithImpl<$Res, $Val extends ObjectOnImage>
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
               as double,
+      translatedName: null == translatedName
+          ? _value.translatedName
+          : translatedName // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -81,7 +87,7 @@ abstract class _$$ObjectOnImageImplCopyWith<$Res>
       __$$ObjectOnImageImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, double score});
+  $Res call({String name, double score, String translatedName});
 }
 
 /// @nodoc
@@ -99,6 +105,7 @@ class __$$ObjectOnImageImplCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? score = null,
+    Object? translatedName = null,
   }) {
     return _then(_$ObjectOnImageImpl(
       name: null == name
@@ -109,6 +116,10 @@ class __$$ObjectOnImageImplCopyWithImpl<$Res>
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
               as double,
+      translatedName: null == translatedName
+          ? _value.translatedName
+          : translatedName // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -118,7 +129,8 @@ class __$$ObjectOnImageImplCopyWithImpl<$Res>
 class _$ObjectOnImageImpl
     with DiagnosticableTreeMixin
     implements _ObjectOnImage {
-  const _$ObjectOnImageImpl({required this.name, required this.score});
+  const _$ObjectOnImageImpl(
+      {required this.name, required this.score, required this.translatedName});
 
   factory _$ObjectOnImageImpl.fromJson(Map<String, dynamic> json) =>
       _$$ObjectOnImageImplFromJson(json);
@@ -127,10 +139,12 @@ class _$ObjectOnImageImpl
   final String name;
   @override
   final double score;
+  @override
+  final String translatedName;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ObjectOnImage(name: $name, score: $score)';
+    return 'ObjectOnImage(name: $name, score: $score, translatedName: $translatedName)';
   }
 
   @override
@@ -139,7 +153,8 @@ class _$ObjectOnImageImpl
     properties
       ..add(DiagnosticsProperty('type', 'ObjectOnImage'))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('score', score));
+      ..add(DiagnosticsProperty('score', score))
+      ..add(DiagnosticsProperty('translatedName', translatedName));
   }
 
   @override
@@ -148,12 +163,14 @@ class _$ObjectOnImageImpl
         (other.runtimeType == runtimeType &&
             other is _$ObjectOnImageImpl &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.score, score) || other.score == score));
+            (identical(other.score, score) || other.score == score) &&
+            (identical(other.translatedName, translatedName) ||
+                other.translatedName == translatedName));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, score);
+  int get hashCode => Object.hash(runtimeType, name, score, translatedName);
 
   /// Create a copy of ObjectOnImage
   /// with the given fields replaced by the non-null parameter values.
@@ -174,7 +191,8 @@ class _$ObjectOnImageImpl
 abstract class _ObjectOnImage implements ObjectOnImage {
   const factory _ObjectOnImage(
       {required final String name,
-      required final double score}) = _$ObjectOnImageImpl;
+      required final double score,
+      required final String translatedName}) = _$ObjectOnImageImpl;
 
   factory _ObjectOnImage.fromJson(Map<String, dynamic> json) =
       _$ObjectOnImageImpl.fromJson;
@@ -183,6 +201,8 @@ abstract class _ObjectOnImage implements ObjectOnImage {
   String get name;
   @override
   double get score;
+  @override
+  String get translatedName;
 
   /// Create a copy of ObjectOnImage
   /// with the given fields replaced by the non-null parameter values.

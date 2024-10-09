@@ -6,8 +6,11 @@ part 'object_on_image.g.dart';
 
 @freezed
 class ObjectOnImage with _$ObjectOnImage {
-  const factory ObjectOnImage({required String name, required double score}) =
-      _ObjectOnImage;
+  const factory ObjectOnImage({
+    required String name,
+    required double score,
+    required String translatedName,
+  }) = _ObjectOnImage;
 
   factory ObjectOnImage.fromJson(Map<String, dynamic> json) =>
       _$ObjectOnImageFromJson(json);

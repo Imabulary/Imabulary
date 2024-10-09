@@ -37,16 +37,22 @@ export class FlashCardsService {
     private readonly wallet: WalletService,
   ) {}
 
-  async scan(fileName: string, file: Buffer) {
-    const { storageFile: imageFile, generatedFileName: generatedImageName } =
+  async scan(userId: string, fileName: string, file: Buffer) {
+    const { storageFile: imageFile, generatedFileName: imageName } =
       await this.storage.upload(IBucketFolders.IMAGE, fileName, file);
 
     try {
       const imageUrl = await this.storage.getFileURL(imageFile);
 
-      const { translatedObjectsOnImage } = await this.processImage(imageUrl);
+      const objectsOnImage = await this.processImage(imageUrl);
 
-      return { translatedObjectsOnImage, generatedImageName, imageUrl };
+      if (objectsOnImage.length === 1) {
+        const objectOnImage = objectsOnImage[0].name;
+
+        return this.create({ imageName, imageUrl, objectOnImage }, userId);
+      }
+
+      return { objectsOnImage, imageName, imageUrl };
     } catch (error) {
       await imageFile.delete();
 
@@ -55,12 +61,7 @@ export class FlashCardsService {
   }
 
   async create(
-    {
-      objectOnImage,
-      imageUrl,
-      isRegeneration,
-      generatedImageName,
-    }: CreateFlashcardDTO,
+    { objectOnImage, imageUrl, isRegeneration, imageName }: CreateFlashcardDTO,
     userId: string,
   ) {
     let audioFile: File;
@@ -124,7 +125,7 @@ export class FlashCardsService {
           is_regenerated: isRegeneration,
           audio_name: generatedAudioName,
           userId,
-          image_name: generatedImageName,
+          image_name: imageName,
           explanation,
         },
       });
@@ -146,6 +147,11 @@ export class FlashCardsService {
     const targetLanguageCode = 'uk-UA';
 
     const objectsOnImage = await this.vision.analyze(imageUrl);
+
+    if (objectsOnImage.length === 1) {
+      return objectsOnImage;
+    }
+
     const namesToTranslate = objectsOnImage.map((item) => item.name);
 
     const translatedWords = await this.translator.translate(namesToTranslate, {
@@ -154,14 +160,11 @@ export class FlashCardsService {
     });
 
     const translatedObjectsOnImage = objectsOnImage.map((item, index) => ({
-      name: translatedWords[index],
-      score: item.score,
+      ...item,
+      translatedName: translatedWords[index],
     }));
 
-    return {
-      objectsOnImage,
-      translatedObjectsOnImage,
-    };
+    return translatedObjectsOnImage;
   }
 
   async findAll(

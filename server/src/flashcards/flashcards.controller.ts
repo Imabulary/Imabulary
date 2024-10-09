@@ -32,7 +32,7 @@ import { FlashCardsService } from './flashcards.service';
 
 const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 @Controller('flashcards')
 export class FlashCardsController {
   constructor(private readonly flashCardsService: FlashCardsService) {}
@@ -53,7 +53,9 @@ export class FlashCardsController {
     )
     { file, fileName }: ImageCompressionResult,
   ) {
-    return this.flashCardsService.scan(fileName, file);
+    const user: Users = request['user'];
+
+    return this.flashCardsService.scan(user.id, fileName, file);
   }
 
   @Get('/')

@@ -78,8 +78,8 @@ paths:
         This endpoint:
         1. Scan an uploaded image
         2. Detects objects on it
-        3. Returns detected objects sorted by a score that determines the likelihood of depicting this object in a photo.
-        4. Additionally it returns `generatedImageName` and `imageUrl` that will be used to create a flashcard
+        3. If the system detected only one object on image, returns a flashcard
+        4. If the system detected a few objects on image, returns detected objects with score that determines the likelihood of depicting this object in a photo. Additionally it returns `generatedImageName` and `imageUrl` that will be used to create a flashcard
       requestBody:
         required: true
         content:
@@ -93,11 +93,46 @@ paths:
                   description: Image to scan
       responses:
         '200':
-          description: Successfully uploaded image and detected objects
+          description: 'Successfully uploaded image and detected objects or, if there was only one object on photo, created flashcard'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ScanResponse'
+                oneOf:
+                  - $ref: '#/components/schemas/ScanResponse'
+                  - $ref: '#/components/schemas/CardResponse'
+              examples:
+                ScanResponse:
+                  value:
+                    $ref: '#/components/schemas/ScanResponse'
+                CardResponse:
+                  value:
+                    image_url: 'https://google.com'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - bearerAuth: []
+  /flashcards/create:
+    post:
+      tags:
+        - flashcards
+      summary: Creates a new flashcard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCardDTO'
+      responses:
+        '200':
+          description: Successfully created flashcard
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Card'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -444,6 +479,21 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    CreateCardDTO:
+      type: object
+      properties:
+        objectOnImage:
+          type: string
+          required: true
+          example: Car
+        imageUrl:
+          type: string
+          required: true
+          example: 'https://images-hosting.com/image/1'
+        generatedImageName:
+          type: string
+          required: true
+          example: generate-image-name.png
     CardResponse:
       type: object
       properties:
@@ -467,12 +517,15 @@ components:
         result:
           type: object
           properties:
-            translatedObjectsOnImage:
+            objectsOnImage:
               type: array
               items:
                 type: object
                 properties:
                   name:
+                    type: string
+                    example: Car
+                  translatedName:
                     type: string
                     example: Машина
                   score:
@@ -549,6 +602,11 @@ components:
           type: string
           description: The name of the uploaded image
           example: image.png
+        is_regenerated:
+          type: boolean
+          description: 'Whether the flashcard was already regenerated, because of incorrect results for example'
+          example: false
+          nullable: true
         audio_url:
           type: string
           description: The URL of the voiceover audio file of a word
@@ -572,6 +630,10 @@ components:
           format: date-time
           description: The date and time when the card was last updated
           example: '2023-07-08T14:48:00.000Z'
+        deletedAt:
+          type: string
+          format: date-time
+          description: 'The date and time when the card was deleted. This property stands for soft deletion of flashcard, meaning that it won''t be deleted physically, but the user won''t see it also'
     OrganizeFlashcardsDTO:
       type: object
       properties:

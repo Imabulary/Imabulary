@@ -23,8 +23,8 @@ paths:
         This endpoint:
         1. Scan an uploaded image
         2. Detects objects on it
-        3. Returns detected objects sorted by a score that determines the likelihood of depicting this object in a photo.
-        4. Additionally it returns `generatedImageName` and `imageUrl` that will be used to create a flashcard
+        3. If the system detected only one object on image, returns a flashcard
+        4. If the system detected a few objects on image, returns detected objects with score that determines the likelihood of depicting this object in a photo. Additionally it returns `generatedImageName` and `imageUrl` that will be used to create a flashcard
       requestBody:
         required: true
         content:
@@ -38,11 +38,48 @@ paths:
                   description: Image to scan
       responses:
         '200':
-          description: Successfully uploaded image and detected objects
+          description: Successfully uploaded image and detected objects or, if there was only one object on photo, created flashcard
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ScanResponse'
+                oneOf:
+                  - $ref: '#/components/schemas/ScanResponse'
+                  - $ref: '#/components/schemas/CardResponse'
+              examples:
+                ScanResponse:
+                  value:
+                    $ref: '#/components/schemas/ScanResponse'
+                CardResponse:
+                  value:
+                    image_url: https://google.com
+
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - bearerAuth: []
+
+  /flashcards/create:
+    post:
+      tags:
+        - flashcards
+      summary: Creates a new flashcard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCardDTO'
+      responses:
+        '200':
+          description: Successfully created flashcard
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Card'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':

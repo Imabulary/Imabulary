@@ -19,7 +19,7 @@ class BottomSheetItem extends ConsumerWidget {
   final String title;
   final IconData icon;
   final ImageSource source;
-  final void Function(ImageSource source)? scanPhoto;
+  final void Function(ImageSource source, BuildContext context)? scanPhoto;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +36,7 @@ class BottomSheetItem extends ConsumerWidget {
       ),
       onTap: () {
         if (isUserHasEnoughCoins) {
-          scanPhoto != null ? scanPhoto!(source) : null;
+          scanPhoto != null ? scanPhoto!(source, context) : null;
         } else {
           showDialog(
             context: context,

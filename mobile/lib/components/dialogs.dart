@@ -21,15 +21,16 @@ class Dialogs {
         ),
       );
 
-  static Widget error(String? error) => AlertDialog(
+  static Widget error(String error) => AlertDialog(
         title: const TypeSetting(
           "Oops! We're sorry",
           variant: TextVariants.headlineLarge,
           textAlign: TextAlign.center,
         ),
         content: TypeSetting(
-          error ??
-              "Something hiccuped. Don't worry, we're on it! Try again later.",
+          error.isNotEmpty
+              ? error
+              : "Something hiccuped. Don't worry, we're on it! Try again later.",
           textAlign: TextAlign.center,
         ),
       );

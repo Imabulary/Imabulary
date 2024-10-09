@@ -3,12 +3,15 @@ properties:
   result:
     type: object
     properties:
-      translatedObjectsOnImage:
+      objectsOnImage:
         type: array
         items:
           type: object
           properties:
             name:
+              type: string
+              example: Car
+            translatedName:
               type: string
               example: Машина
             score:

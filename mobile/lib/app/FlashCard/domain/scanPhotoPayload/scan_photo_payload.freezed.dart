@@ -20,10 +20,10 @@ ScanPhotoPayload _$ScanPhotoPayloadFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ScanPhotoPayload {
-  List<Map<String, dynamic>> get translatedObjectsOnImage =>
+  List<Map<String, dynamic>> get objectsOnImage =>
       throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
-  String get generatedImageName => throw _privateConstructorUsedError;
+  String get imageName => throw _privateConstructorUsedError;
 
   /// Serializes this ScanPhotoPayload to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,9 +42,9 @@ abstract class $ScanPhotoPayloadCopyWith<$Res> {
       _$ScanPhotoPayloadCopyWithImpl<$Res, ScanPhotoPayload>;
   @useResult
   $Res call(
-      {List<Map<String, dynamic>> translatedObjectsOnImage,
+      {List<Map<String, dynamic>> objectsOnImage,
       String imageUrl,
-      String generatedImageName});
+      String imageName});
 }
 
 /// @nodoc
@@ -62,22 +62,22 @@ class _$ScanPhotoPayloadCopyWithImpl<$Res, $Val extends ScanPhotoPayload>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? translatedObjectsOnImage = null,
+    Object? objectsOnImage = null,
     Object? imageUrl = null,
-    Object? generatedImageName = null,
+    Object? imageName = null,
   }) {
     return _then(_value.copyWith(
-      translatedObjectsOnImage: null == translatedObjectsOnImage
-          ? _value.translatedObjectsOnImage
-          : translatedObjectsOnImage // ignore: cast_nullable_to_non_nullable
+      objectsOnImage: null == objectsOnImage
+          ? _value.objectsOnImage
+          : objectsOnImage // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      generatedImageName: null == generatedImageName
-          ? _value.generatedImageName
-          : generatedImageName // ignore: cast_nullable_to_non_nullable
+      imageName: null == imageName
+          ? _value.imageName
+          : imageName // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -92,9 +92,9 @@ abstract class _$$ScanPhotoPayloadImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<Map<String, dynamic>> translatedObjectsOnImage,
+      {List<Map<String, dynamic>> objectsOnImage,
       String imageUrl,
-      String generatedImageName});
+      String imageName});
 }
 
 /// @nodoc
@@ -110,22 +110,22 @@ class __$$ScanPhotoPayloadImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? translatedObjectsOnImage = null,
+    Object? objectsOnImage = null,
     Object? imageUrl = null,
-    Object? generatedImageName = null,
+    Object? imageName = null,
   }) {
     return _then(_$ScanPhotoPayloadImpl(
-      translatedObjectsOnImage: null == translatedObjectsOnImage
-          ? _value._translatedObjectsOnImage
-          : translatedObjectsOnImage // ignore: cast_nullable_to_non_nullable
+      objectsOnImage: null == objectsOnImage
+          ? _value._objectsOnImage
+          : objectsOnImage // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      generatedImageName: null == generatedImageName
-          ? _value.generatedImageName
-          : generatedImageName // ignore: cast_nullable_to_non_nullable
+      imageName: null == imageName
+          ? _value.imageName
+          : imageName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -137,31 +137,30 @@ class _$ScanPhotoPayloadImpl
     with DiagnosticableTreeMixin
     implements _ScanPhotoPayload {
   const _$ScanPhotoPayloadImpl(
-      {required final List<Map<String, dynamic>> translatedObjectsOnImage,
+      {required final List<Map<String, dynamic>> objectsOnImage,
       required this.imageUrl,
-      required this.generatedImageName})
-      : _translatedObjectsOnImage = translatedObjectsOnImage;
+      required this.imageName})
+      : _objectsOnImage = objectsOnImage;
 
   factory _$ScanPhotoPayloadImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScanPhotoPayloadImplFromJson(json);
 
-  final List<Map<String, dynamic>> _translatedObjectsOnImage;
+  final List<Map<String, dynamic>> _objectsOnImage;
   @override
-  List<Map<String, dynamic>> get translatedObjectsOnImage {
-    if (_translatedObjectsOnImage is EqualUnmodifiableListView)
-      return _translatedObjectsOnImage;
+  List<Map<String, dynamic>> get objectsOnImage {
+    if (_objectsOnImage is EqualUnmodifiableListView) return _objectsOnImage;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_translatedObjectsOnImage);
+    return EqualUnmodifiableListView(_objectsOnImage);
   }
 
   @override
   final String imageUrl;
   @override
-  final String generatedImageName;
+  final String imageName;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScanPhotoPayload(translatedObjectsOnImage: $translatedObjectsOnImage, imageUrl: $imageUrl, generatedImageName: $generatedImageName)';
+    return 'ScanPhotoPayload(objectsOnImage: $objectsOnImage, imageUrl: $imageUrl, imageName: $imageName)';
   }
 
   @override
@@ -169,10 +168,9 @@ class _$ScanPhotoPayloadImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ScanPhotoPayload'))
-      ..add(DiagnosticsProperty(
-          'translatedObjectsOnImage', translatedObjectsOnImage))
+      ..add(DiagnosticsProperty('objectsOnImage', objectsOnImage))
       ..add(DiagnosticsProperty('imageUrl', imageUrl))
-      ..add(DiagnosticsProperty('generatedImageName', generatedImageName));
+      ..add(DiagnosticsProperty('imageName', imageName));
   }
 
   @override
@@ -180,21 +178,21 @@ class _$ScanPhotoPayloadImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ScanPhotoPayloadImpl &&
-            const DeepCollectionEquality().equals(
-                other._translatedObjectsOnImage, _translatedObjectsOnImage) &&
+            const DeepCollectionEquality()
+                .equals(other._objectsOnImage, _objectsOnImage) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
-            (identical(other.generatedImageName, generatedImageName) ||
-                other.generatedImageName == generatedImageName));
+            (identical(other.imageName, imageName) ||
+                other.imageName == imageName));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_translatedObjectsOnImage),
+      const DeepCollectionEquality().hash(_objectsOnImage),
       imageUrl,
-      generatedImageName);
+      imageName);
 
   /// Create a copy of ScanPhotoPayload
   /// with the given fields replaced by the non-null parameter values.
@@ -215,19 +213,19 @@ class _$ScanPhotoPayloadImpl
 
 abstract class _ScanPhotoPayload implements ScanPhotoPayload {
   const factory _ScanPhotoPayload(
-      {required final List<Map<String, dynamic>> translatedObjectsOnImage,
+      {required final List<Map<String, dynamic>> objectsOnImage,
       required final String imageUrl,
-      required final String generatedImageName}) = _$ScanPhotoPayloadImpl;
+      required final String imageName}) = _$ScanPhotoPayloadImpl;
 
   factory _ScanPhotoPayload.fromJson(Map<String, dynamic> json) =
       _$ScanPhotoPayloadImpl.fromJson;
 
   @override
-  List<Map<String, dynamic>> get translatedObjectsOnImage;
+  List<Map<String, dynamic>> get objectsOnImage;
   @override
   String get imageUrl;
   @override
-  String get generatedImageName;
+  String get imageName;
 
   /// Create a copy of ScanPhotoPayload
   /// with the given fields replaced by the non-null parameter values.

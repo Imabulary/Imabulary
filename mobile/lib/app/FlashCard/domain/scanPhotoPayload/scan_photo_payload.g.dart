@@ -9,18 +9,17 @@ part of 'scan_photo_payload.dart';
 _$ScanPhotoPayloadImpl _$$ScanPhotoPayloadImplFromJson(
         Map<String, dynamic> json) =>
     _$ScanPhotoPayloadImpl(
-      translatedObjectsOnImage:
-          (json['translatedObjectsOnImage'] as List<dynamic>)
-              .map((e) => e as Map<String, dynamic>)
-              .toList(),
+      objectsOnImage: (json['objectsOnImage'] as List<dynamic>)
+          .map((e) => e as Map<String, dynamic>)
+          .toList(),
       imageUrl: json['imageUrl'] as String,
-      generatedImageName: json['generatedImageName'] as String,
+      imageName: json['imageName'] as String,
     );
 
 Map<String, dynamic> _$$ScanPhotoPayloadImplToJson(
         _$ScanPhotoPayloadImpl instance) =>
     <String, dynamic>{
-      'translatedObjectsOnImage': instance.translatedObjectsOnImage,
+      'objectsOnImage': instance.objectsOnImage,
       'imageUrl': instance.imageUrl,
-      'generatedImageName': instance.generatedImageName,
+      'imageName': instance.imageName,
     };

@@ -1,0 +1,14 @@
+type: object
+properties:
+  objectOnImage:
+    type: string
+    required: true
+    example: Car
+  imageUrl:
+    type: string
+    required: true
+    example: https://images-hosting.com/image/1
+  generatedImageName:
+    type: string
+    required: true
+    example: generate-image-name.png

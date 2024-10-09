@@ -7,7 +7,7 @@ part of 'flash_card_repository.dart';
 // **************************************************************************
 
 String _$flashCardRepositoryHash() =>
-    r'4d36d22042a1a39328e9e9efeb3e8b0762dbce88';
+    r'633c4b1a12edc8be515df42cc26ea54866687cd5';
 
 /// See also [flashCardRepository].
 @ProviderFor(flashCardRepository)

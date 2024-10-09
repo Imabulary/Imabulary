@@ -1,3 +1,6 @@
+CreateCardDTO:
+  $ref: './card/dto/create.yaml'
+
 CardResponse:
   $ref: './card/card-response.yaml'
 

@@ -50,9 +50,9 @@ export class CreateFlashcardDTO {
 
   @IsString()
   @IsNotEmpty()
-  generatedImageName: string;
+  imageName: string;
 
   @IsBoolean()
   @IsOptional()
-  isRegeneration: boolean;
+  isRegeneration?: boolean;
 }

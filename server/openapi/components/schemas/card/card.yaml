@@ -51,6 +51,11 @@ properties:
     type: string
     description: The name of the uploaded image
     example: 'image.png'
+  is_regenerated:
+    type: boolean
+    description: Whether the flashcard was already regenerated, because of incorrect results for example
+    example: false
+    nullable: true
   audio_url:
     type: string
     description: The URL of the voiceover audio file of a word
@@ -73,4 +78,8 @@ properties:
     type: string
     format: date-time
     description: The date and time when the card was last updated
-    example: "2023-07-08T14:48:00.000Z"
+    example: '2023-07-08T14:48:00.000Z'
+  deletedAt:
+    type: string
+    format: date-time
+    description: The date and time when the card was deleted. This property stands for soft deletion of flashcard, meaning that it won't be deleted physically, but the user won't see it also
