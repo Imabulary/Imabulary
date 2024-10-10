@@ -6,16 +6,18 @@ part of 'feedback_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CreateFeedbackDTOImpl _$$CreateFeedbackDTOImplFromJson(
+_$CreateNoDiseredObjectDTOImpl _$$CreateNoDiseredObjectDTOImplFromJson(
         Map<String, dynamic> json) =>
-    _$CreateFeedbackDTOImpl(
-      text: json['text'] as String,
-      metadata: json['metadata'] as Map<String, dynamic>,
+    _$CreateNoDiseredObjectDTOImpl(
+      imageUrl: json['imageUrl'] as String,
+      objectsOnImage: (json['objectsOnImage'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
     );
 
-Map<String, dynamic> _$$CreateFeedbackDTOImplToJson(
-        _$CreateFeedbackDTOImpl instance) =>
+Map<String, dynamic> _$$CreateNoDiseredObjectDTOImplToJson(
+        _$CreateNoDiseredObjectDTOImpl instance) =>
     <String, dynamic>{
-      'text': instance.text,
-      'metadata': instance.metadata,
+      'imageUrl': instance.imageUrl,
+      'objectsOnImage': instance.objectsOnImage,
     };

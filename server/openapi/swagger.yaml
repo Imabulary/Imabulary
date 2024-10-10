@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Imabulary API
-  description: API documentation for the Imabulary API
+  description: Documentation for the Imabulary API
   version: 1.0.0
 
 paths:
@@ -14,10 +14,42 @@ paths:
   /feedback/create:
     $ref: './paths/feedback/create.yaml'
 
+  /feedback/create/no-desired-object:
+    post:
+      tags:
+        - Feedback
+      summary: Creates a feedback when user didn't find desired object in the list of recognized objects
+      description: |
+        It creates a feedback for us which we can later analyze to improve our system in case user scanned
+        an image, we gave him a list of objects, but there was no object he wanted.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNoDesiredObjectFeedbackDTO'
+      responses:
+        '200':
+          description: Successfully submited feedback
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   /flashcards/scan:
     post:
       tags:
-        - flashcards
+        - Flashcards
       summary: Scan an image and returns an array with detected objects on it
       description: |
         This endpoint:
@@ -65,7 +97,7 @@ paths:
   /flashcards/create:
     post:
       tags:
-        - flashcards
+        - Flashcards
       summary: Creates a new flashcard
       requestBody:
         required: true
@@ -136,7 +168,7 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
 
     Unauthorized:
-      description: Occurs when you try to access a page that requires valid authentication credentials, but your current ones aren't recognized or are missing
+      description: Server couldn't recognize your authentication credentials
       content:
         application/json:
           schema:

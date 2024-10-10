@@ -51,7 +51,11 @@ class ObjectsOnImageScreen extends StatelessWidget {
                   const SizedBox(height: 12),
             ),
             const SizedBox(height: 12),
-            const NoDesiredObject(),
+            NoDesiredObject(
+              imageUrl: scanPhotoPayload.imageUrl,
+              objectsOnImage:
+                  objectsOnImage.map((object) => object.name).toList(),
+            ),
           ],
         ),
       ),

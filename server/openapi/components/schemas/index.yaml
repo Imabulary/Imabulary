@@ -1,6 +1,9 @@
 CreateCardDTO:
   $ref: './card/dto/create.yaml'
 
+CreateNoDesiredObjectFeedbackDTO:
+  $ref: './feedback/dto/create-no-desireed-object-feedback.yaml'
+
 CardResponse:
   $ref: './card/card-response.yaml'
 

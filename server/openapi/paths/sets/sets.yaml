@@ -1,6 +1,6 @@
 post:
   tags:
-    - sets
+    - Sets
   summary: Create a new set
   description: Create a new set with a name and optional description
   requestBody:
@@ -8,14 +8,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/set/create-set-dto.yaml"
+          $ref: '../../components/schemas/set/create-set-dto.yaml'
   responses:
-    "201":
+    '201':
       description: Create set
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/set/set-response.yaml"
+            $ref: '../../components/schemas/set/set-response.yaml'
   security:
     - bearerAuth: []
 
@@ -29,14 +29,14 @@ get:
       in: query
       description: Pagination parameters
       schema:
-        $ref: "../../components/schemas/filter/server-pagination.yaml"
+        $ref: '../../components/schemas/filter/server-pagination.yaml'
   responses:
-    "200":
+    '200':
       description: List of all sets
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/set/all-sets-response.yaml"
+            $ref: '../../components/schemas/set/all-sets-response.yaml'
 
   security:
     - bearerAuth: []

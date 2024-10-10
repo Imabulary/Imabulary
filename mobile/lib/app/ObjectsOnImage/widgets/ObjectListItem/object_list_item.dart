@@ -22,7 +22,7 @@ class ObjectListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(objectListItemControllerProvider, (_, state) {
       state.showLoadingDialog(context, message: 'Creating your flashcard');
-      state.showErrorDialog(context, false);
+      state.showErrorDialog(context, true);
 
       state.whenData((value) {
         ref.invalidate(findAllFlashcardsProvider);

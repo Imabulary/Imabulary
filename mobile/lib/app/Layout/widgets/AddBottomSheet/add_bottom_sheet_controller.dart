@@ -48,8 +48,6 @@ class AddBottomSheetController extends _$AddBottomSheetController {
 
           objectsOnImage.sort((a, b) => b.score.compareTo(a.score));
 
-          print(objectsOnImage);
-
           Navigator.push(
             context,
             MaterialPageRoute(

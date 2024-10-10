@@ -1,6 +1,6 @@
 post:
   tags:
-    - users
+    - Users
   summary: Create a new user
   description: Create a new user with UID and email
   requestBody:

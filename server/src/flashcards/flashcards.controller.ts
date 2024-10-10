@@ -80,14 +80,22 @@ export class FlashCardsController {
   }
 
   @Post('/like')
-  like(@Body() likeFlashcardDto: LikeFlashcardDto) {
-    return this.flashCardsService.like(likeFlashcardDto);
+  like(@Req() request: Request, @Body() likeFlashcardDto: LikeFlashcardDto) {
+    const user: Users = request['user'];
+
+    return this.flashCardsService.like(likeFlashcardDto, user.id);
   }
 
   @Post('/dislike')
-  async dislike(@Body() dislikeFlashcardDto: DislikeFlashcardDto) {
-    return this.flashCardsService.dislike(dislikeFlashcardDto);
+  async dislike(
+    @Req() request: Request,
+    @Body() dislikeFlashcardDto: DislikeFlashcardDto,
+  ) {
+    const user: Users = request['user'];
+
+    return this.flashCardsService.dislike(dislikeFlashcardDto, user.id);
   }
+
   @Post('/regenerate')
   regenerate(@Req() request: Request, @Body() regenerateDto: CardDto) {
     return this.flashCardsService.regenerateCard(regenerateDto.cardId);

@@ -1,20 +1,20 @@
- put:
-      tags:
-        - flashcards
-      summary: Organize flashcards
-      description: Organize flashcards into a set
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-               $ref: '../../components/schemas/card/organize-flashcards-dto.yaml'
-      responses:
-       '200':
-          description: Organize flashcards
-          content:
-            application/json:
-              schema:
-                $ref: '../../components/schemas/card/all-cards-response.yaml'    
-      security:
-        - bearerAuth: []
+put:
+  tags:
+    - Flashcards
+  summary: Organize flashcards
+  description: Organize flashcards into a set
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/card/organize-flashcards-dto.yaml'
+  responses:
+    '200':
+      description: Organize flashcards
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/card/all-cards-response.yaml'
+  security:
+    - bearerAuth: []

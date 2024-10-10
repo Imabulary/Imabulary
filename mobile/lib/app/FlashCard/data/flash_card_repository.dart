@@ -78,8 +78,6 @@ class FlashCardRepository {
 
   Future<FlashCard> create(CreateFlashcardDTO createFlashcardDto) {
     return request(() async {
-      print(createFlashcardDto.toJson());
-
       final result = await dio.post(
         '$endpoint/create',
         data: createFlashcardDto.toJson(),

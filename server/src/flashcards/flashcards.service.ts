@@ -33,7 +33,7 @@ export class FlashCardsService {
     private readonly assistant: AssistantService,
     private readonly translator: TranslatorService,
     private readonly sound: SoundService,
-    private readonly feedback: FeedbackService,
+    private readonly feedbackService: FeedbackService,
     private readonly wallet: WalletService,
   ) {}
 
@@ -213,12 +213,10 @@ export class FlashCardsService {
     return true;
   }
 
-  async like(likeFlashcardDto: LikeFlashcardDto) {
+  async like(likeFlashcardDto: LikeFlashcardDto, userId: string) {
     const { cardId } = likeFlashcardDto;
 
-    await this.prisma.feedback.create({
-      data: { cardId, isAppropriate: true },
-    });
+    await this.feedbackService.create({ cardId, isAppropriate: true }, userId);
   }
 
   async delete(cardId: string) {
@@ -266,7 +264,7 @@ export class FlashCardsService {
     };
   }
 
-  async dislike(dislikeFlashcardDto: DislikeFlashcardDto) {
+  async dislike(dislikeFlashcardDto: DislikeFlashcardDto, userId: string) {
     const { cardId, text, categories } = dislikeFlashcardDto;
 
     const existingFeedback = await this.prisma.feedback.findFirst({
@@ -283,11 +281,14 @@ export class FlashCardsService {
       );
     }
 
-    const fetchedFeedback = await this.feedback.create({
-      cardId,
-      text,
-      categories,
-    });
+    const fetchedFeedback = await this.feedbackService.create(
+      {
+        cardId,
+        text,
+        categories,
+      },
+      userId,
+    );
 
     if (!fetchedFeedback.card.user) {
       throw new NotFoundException('User not found for the given card');

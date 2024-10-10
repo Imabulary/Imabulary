@@ -4,12 +4,12 @@ part 'feedback_dto.freezed.dart';
 part 'feedback_dto.g.dart';
 
 @freezed
-class CreateFeedbackDTO with _$CreateFeedbackDTO {
-  const factory CreateFeedbackDTO({
-    required String text,
-    required Map<String, dynamic> metadata,
-  }) = _CreateFeedbackDTO;
+class CreateNoDiseredObjectDTO with _$CreateNoDiseredObjectDTO {
+  const factory CreateNoDiseredObjectDTO({
+    required String imageUrl,
+    required List<String> objectsOnImage,
+  }) = _CreateNoDiseredObjectDTO;
 
-  factory CreateFeedbackDTO.fromJson(Map<String, dynamic> json) =>
-      _$CreateFeedbackDTOFromJson(json);
+  factory CreateNoDiseredObjectDTO.fromJson(Map<String, dynamic> json) =>
+      _$CreateNoDiseredObjectDTOFromJson(json);
 }

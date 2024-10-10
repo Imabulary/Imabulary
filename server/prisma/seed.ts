@@ -9,53 +9,67 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
-  await Promise.all([
-    await prisma.quizCardStatus.createMany({
-      data: [
-        { name: 'still_learning' },
-        { name: 'not_studied' },
-        { name: 'mastered' },
-      ],
+  const feedbackCategories = [
+    {
+      name: 'Word not as in the photo',
+      meaning:
+        'This means that the system does not recognize the element in the photo correctly.',
+    },
+    {
+      name: 'The object I wanted is not in this list',
+      meaning:
+        'This means that the system returned some objects on provided by the user image, but there was object they wanted',
+    },
+    {
+      name: 'Wrong translation of the word in the photo',
+      meaning: 'This means that the system pulled up an incorrect translation.',
+    },
+    {
+      name: 'Sound does not play',
+      meaning: 'This means the sound playback function does not work.',
+    },
+    {
+      name: 'Incorrect word definition',
+      meaning: 'This means that the system pulled up an incorrect definition.',
+    },
+    {
+      name: 'Incorrect example of word usage',
+      meaning:
+        'This means that the system pulled up an incorrect example. It sounds unnaturally.',
+    },
+    {
+      name: 'Other',
+      meaning:
+        'Something else is wrong with the flashcard, I will tell you what in the text field down below.',
+    },
+  ];
+
+  const statuses = ['still_learning', 'not_studied', 'mastered'];
+
+  await Promise.all(
+    feedbackCategories.map((category) => {
+      const categoryWithSlug = {
+        ...category,
+        slug: category.name.replaceAll(' ', '-').toLowerCase(),
+      };
+
+      return prisma.feedbackCategory.upsert({
+        where: { slug: categoryWithSlug.slug },
+        create: categoryWithSlug,
+        update: categoryWithSlug,
+      });
     }),
-    await prisma.feedbackCategory.createMany({
-      data: [
-        {
-          name: 'Word not as in the photo',
-          meaning:
-            'This means that the system does not recognize the element in the photo correctly.',
-        },
-        {
-          name: 'The object I wanted is not in this list',
-          meaning:
-            'This means that the system return a list with options, but none of them was true',
-        },
-        {
-          name: 'Wrong translation of the word in the photo',
-          meaning:
-            'This means that the system pulled up an incorrect translation.',
-        },
-        {
-          name: 'Sound does not play',
-          meaning: 'This means the sound playback function does not work.',
-        },
-        {
-          name: 'Incorrect word definition',
-          meaning:
-            'This means that the system pulled up an incorrect definition.',
-        },
-        {
-          name: 'Incorrect example of word usage',
-          meaning:
-            'This means that the system pulled up an incorrect example. It sounds unnaturally.',
-        },
-        {
-          name: 'Other',
-          meaning:
-            'Something else is wrong with the flashcard, I will tell you what in the text field down below.',
-        },
-      ],
+  );
+
+  await Promise.all(
+    statuses.map((status) => {
+      return prisma.quizCardStatus.upsert({
+        where: { name: status },
+        create: { name: status },
+        update: { name: status },
+      });
     }),
-  ]);
+  );
 }
 
 main()

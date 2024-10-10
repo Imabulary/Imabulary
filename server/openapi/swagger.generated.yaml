@@ -1,13 +1,13 @@
 openapi: 3.0.0
 info:
   title: Imabulary API
-  description: API documentation for the Imabulary API
+  description: Documentation for the Imabulary API
   version: 1.0.0
 paths:
   /quiz/learn:
     post:
       tags:
-        - quiz
+        - Quiz
       summary: User answer to quiz answer
       requestBody:
         required: true
@@ -27,7 +27,7 @@ paths:
   /feedback/categories:
     get:
       tags:
-        - feedback
+        - Feedback
       summary: Get all feedback categories
       responses:
         '200':
@@ -41,7 +41,7 @@ paths:
   /feedback/create:
     post:
       tags:
-        - feedback
+        - Feedback
       summary: Create a feedback
       requestBody:
         required: true
@@ -69,10 +69,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /feedback/create/no-desired-object:
+    post:
+      tags:
+        - Feedback
+      summary: Creates a feedback when user didn't find desired object in the list of recognized objects
+      description: |
+        It creates a feedback for us which we can later analyze to improve our system in case user scanned
+        an image, we gave him a list of objects, but there was no object he wanted.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNoDesiredObjectFeedbackDTO'
+      responses:
+        '200':
+          description: Successfully submited feedback
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /flashcards/scan:
     post:
       tags:
-        - flashcards
+        - Flashcards
       summary: Scan an image and returns an array with detected objects on it
       description: |
         This endpoint:
@@ -118,7 +149,7 @@ paths:
   /flashcards/create:
     post:
       tags:
-        - flashcards
+        - Flashcards
       summary: Creates a new flashcard
       requestBody:
         required: true
@@ -144,7 +175,7 @@ paths:
   /flashcards/:
     get:
       tags:
-        - flashcards
+        - Flashcards
       summary: Get all flashcards
       description: Get a list of all flashcards
       parameters:
@@ -170,7 +201,7 @@ paths:
   /flashcards/organize:
     put:
       tags:
-        - flashcards
+        - Flashcards
       summary: Organize flashcards
       description: Organize flashcards into a set
       requestBody:
@@ -191,7 +222,7 @@ paths:
   /flashcards/disorganize:
     delete:
       tags:
-        - flashcards
+        - Flashcards
       summary: Disorganize flashcards
       description: Disorganize flashcards from a set
       requestBody:
@@ -208,7 +239,7 @@ paths:
   /flashcards/like:
     post:
       tags:
-        - flashcards
+        - Flashcards
       summary: Like a flashcard
       requestBody:
         required: true
@@ -232,7 +263,7 @@ paths:
   /flashcards/dislike:
     post:
       tags:
-        - flashcards
+        - Flashcards
       summary: Dislike a flashcard
       requestBody:
         required: true
@@ -263,7 +294,7 @@ paths:
   /sets:
     post:
       tags:
-        - sets
+        - Sets
       summary: Create a new set
       description: Create a new set with a name and optional description
       requestBody:
@@ -304,7 +335,7 @@ paths:
   '/sets/{id}':
     get:
       tags:
-        - sets
+        - Sets
       summary: Get a single set
       description: Get details of a single set by ID
       parameters:
@@ -380,7 +411,7 @@ paths:
   /users:
     post:
       tags:
-        - users
+        - Users
       summary: Create a new user
       description: Create a new user with UID and email
       requestBody:
@@ -411,7 +442,7 @@ paths:
   /wallet:
     get:
       tags:
-        - wallet
+        - Wallet
       summary: Get wallet info
       description: Get info about user's wallet
       responses:
@@ -436,7 +467,7 @@ paths:
   /wallet/collect:
     put:
       tags:
-        - wallet
+        - Wallet
       summary: Collect daily award
       description: 'Check award availability and collect daily award. Return current balance, expiration time in timestamp, next award prediction, and date of awarding in ISO string'
       responses:
@@ -473,7 +504,7 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
     Unauthorized:
-      description: 'Occurs when you try to access a page that requires valid authentication credentials, but your current ones aren''t recognized or are missing'
+      description: Server couldn't recognize your authentication credentials
       content:
         application/json:
           schema:
@@ -494,6 +525,22 @@ components:
           type: string
           required: true
           example: generate-image-name.png
+    CreateNoDesiredObjectFeedbackDTO:
+      type: object
+      properties:
+        imageUrl:
+          type: string
+          example: 'https://images-hosting.com/image/1'
+          description: Path to the image user uploaded
+        objectsOnImage:
+          type: array
+          items:
+            type: string
+          example:
+            - Car
+            - Wheel
+            - Engine
+          description: Objects that were detected
     CardResponse:
       type: object
       properties:

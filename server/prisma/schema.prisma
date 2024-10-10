@@ -37,13 +37,14 @@ model Cards {
 }
 
 model Users {
-  id         String   @id @default(uuid()) @db.VarChar()
-  externalId String   @unique
-  email      String   @unique
+  id         String     @id @default(uuid()) @db.VarChar()
+  externalId String     @unique
+  email      String     @unique
   flashcards Cards[]
   sets       Sets[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  feedbacks  Feedback[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
   Wallet     Wallet?
 }
 
@@ -99,17 +100,20 @@ model Cashback {
 
 model Feedback {
   id            String             @id @default(uuid()) @db.VarChar()
+  userId        String             @db.VarChar()
   cardId        String?            @unique @db.VarChar()
   isAppropriate Boolean?
   text          String?
   category      FeedbackCategory[] @relation("card_feedbacks_categories")
   card          Cards?             @relation(fields: [cardId], references: [id])
   metadata      Json?
+  user          Users              @relation(fields: [userId], references: [id])
 }
 
 model FeedbackCategory {
   id       String     @id @default(uuid()) @db.VarChar()
   name     String
+  slug     String?    @unique
   meaning  String
   feedback Feedback[] @relation("card_feedbacks_categories")
 }
@@ -121,6 +125,6 @@ enum WalletStatus {
 
 model QuizCardStatus {
   id    String  @id @default(uuid()) @db.VarChar()
-  name  String
+  name  String  @unique
   Cards Cards[]
 }

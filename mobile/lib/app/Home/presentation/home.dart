@@ -31,11 +31,6 @@ class HomeScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // TODO: Return this button once we completely designed its businsess logic
-                // const CollectDailyAwardButton(),
-                // const SizedBox(
-                //   height: 24,
-                // ),
                 const TypeSetting(
                   'Your latest scans',
                   variant: TextVariants.headlineMedium,

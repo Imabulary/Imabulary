@@ -1,15 +1,15 @@
 post:
   tags:
-    - feedback
+    - Feedback
   summary: Create a feedback
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/feedback/create-feedback-dto.yaml"
+          $ref: '../../components/schemas/feedback/create-feedback-dto.yaml'
   responses:
-    "200":
+    '200':
       description: Feedback created successfully
       content:
         application/json:
@@ -21,10 +21,10 @@ post:
           example:
             summary: Successfully created
             value:
-              message: "Thank you for your feedback!"
-    "400":
+              message: 'Thank you for your feedback!'
+    '400':
       description: Bad request
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/error/error-response.yaml"
+            $ref: '../../components/schemas/error/error-response.yaml'

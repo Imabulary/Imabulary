@@ -1,15 +1,15 @@
 post:
   tags:
-    - flashcards
+    - Flashcards
   summary: Dislike a flashcard
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/card/dislike-flashcard-dto.yaml"
+          $ref: '../../components/schemas/card/dislike-flashcard-dto.yaml'
   responses:
-    "200":
+    '200':
       description: Flashcard disliked successfully
       content:
         application/json:
@@ -21,10 +21,10 @@ post:
           example:
             summary: Successfully disliked
             value:
-              message: "Thank you for your feedback!"
-    "400":
+              message: 'Thank you for your feedback!'
+    '400':
       description: Bad request
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/error/error-response.yaml"
+            $ref: '../../components/schemas/error/error-response.yaml'

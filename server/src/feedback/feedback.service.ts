@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateFeedbackDto } from './dto/feedback.dto';
+import {
+  CreateFeedbackDto,
+  CreateNoDesiredObjectFeedbackDTO,
+} from './dto/feedback.dto';
+import { Prisma } from '@prisma/client';
+import { feedbackCategoriesSlugs } from './utils/constants';
 
 @Injectable()
 export class FeedbackService {
@@ -10,13 +15,36 @@ export class FeedbackService {
     return this.prisma.feedbackCategory.findMany();
   }
 
-  async create(createFeedbackDto: CreateFeedbackDto) {
-    const { categories, ...feedbackDto } = createFeedbackDto;
+  async createNoDiseredObjectFeedback(
+    userId: string,
+    createNoDesiredObjectFeedbackDTO: CreateNoDesiredObjectFeedbackDTO,
+  ) {
+    const noDesiredObjectFeedbackCategory = await this.findOneFeedbackCategory({
+      slug: feedbackCategoriesSlugs.NO_DESIRED_OBJECT,
+    });
+
+    await this.create(
+      { categories: [noDesiredObjectFeedbackCategory.id] },
+      userId,
+      createNoDesiredObjectFeedbackDTO,
+    );
+
+    return true;
+  }
+
+  async create(
+    createFeedbackDto: CreateFeedbackDto,
+    userId: string,
+    metadata?: object,
+  ) {
+    const { isAppropriate, categories, ...feedbackDto } = createFeedbackDto;
 
     return this.prisma.feedback.create({
       data: {
         ...feedbackDto,
-        isAppropriate: false,
+        isAppropriate: isAppropriate || false,
+        metadata,
+        userId,
         category: {
           connect: categories.map((categoryId) => ({
             id: categoryId,
@@ -35,5 +63,11 @@ export class FeedbackService {
         },
       },
     });
+  }
+
+  private findOneFeedbackCategory(
+    where: Prisma.FeedbackCategoryWhereUniqueInput,
+  ) {
+    return this.prisma.feedbackCategory.findUnique({ where });
   }
 }

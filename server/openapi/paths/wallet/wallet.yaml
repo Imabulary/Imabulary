@@ -1,6 +1,6 @@
 get:
   tags:
-    - wallet
+    - Wallet
   summary: Get wallet info
   description: Get info about user's wallet
   responses:

@@ -1,0 +1,12 @@
+type: object
+properties:
+  imageUrl:
+    type: string
+    example: https://images-hosting.com/image/1
+    description: Path to the image user uploaded
+  objectsOnImage:
+    type: array
+    items:
+      type: string
+    example: ['Car', 'Wheel', 'Engine']
+    description: Objects that were detected

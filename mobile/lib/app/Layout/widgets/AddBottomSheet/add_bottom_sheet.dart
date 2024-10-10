@@ -15,7 +15,7 @@ class AddBottomSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(addBottomSheetControllerProvider, (_, state) {
-      state.showLoadingDialog(context);
+      state.showLoadingDialog(context, message: 'Scanning your image...');
       state.showErrorDialog(context, true);
 
       state.whenData((value) {
