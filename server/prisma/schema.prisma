@@ -99,11 +99,12 @@ model Cashback {
 
 model Feedback {
   id            String             @id @default(uuid()) @db.VarChar()
-  cardId        String?             @unique @db.VarChar()
+  cardId        String?            @unique @db.VarChar()
   isAppropriate Boolean?
   text          String?
   category      FeedbackCategory[] @relation("card_feedbacks_categories")
-  card          Cards?              @relation(fields: [cardId], references: [id])
+  card          Cards?             @relation(fields: [cardId], references: [id])
+  metadata      Json?
 }
 
 model FeedbackCategory {

@@ -40,19 +40,22 @@ class AddBottomSheetController extends _$AddBottomSheetController {
             ),
           );
         } else {
-          final objectsOnImage = scanResult.left!.objectsOnImage
+          final scanPhotoPayload = scanResult.left;
+
+          final objectsOnImage = scanPhotoPayload!.objectsOnImage
               .map(ObjectOnImage.fromJson)
               .toList();
 
-          if (objectsOnImage.isEmpty) {
-            // TODO: show a "No items were detected" dialog
-          }
+          objectsOnImage.sort((a, b) => b.score.compareTo(a.score));
+
+          print(objectsOnImage);
 
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => ObjectsOnImageScreen(
                 objectsOnImage: objectsOnImage,
+                scanPhotoPayload: scanPhotoPayload,
               ),
             ),
           );

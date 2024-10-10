@@ -10,14 +10,13 @@ export class FeedbackService {
     return this.prisma.feedbackCategory.findMany();
   }
 
-  async create(feedbackDto: CreateFeedbackDto) {
-    const { cardId, text, categories } = feedbackDto;
+  async create(createFeedbackDto: CreateFeedbackDto) {
+    const { categories, ...feedbackDto } = createFeedbackDto;
 
-    const feedback = await this.prisma.feedback.create({
+    return this.prisma.feedback.create({
       data: {
-        cardId,
+        ...feedbackDto,
         isAppropriate: false,
-        text,
         category: {
           connect: categories.map((categoryId) => ({
             id: categoryId,
@@ -36,7 +35,5 @@ export class FeedbackService {
         },
       },
     });
-
-    return feedback;
   }
 }

@@ -28,7 +28,7 @@ class CreateFlashcardDTO with _$CreateFlashcardDTO {
   const factory CreateFlashcardDTO({
     required String objectOnImage,
     required String imageUrl,
-    required String generatedImageName,
+    required String imageName,
   }) = _CreateFlashcardDTO;
 
   factory CreateFlashcardDTO.fromJson(Map<String, dynamic> json) =>

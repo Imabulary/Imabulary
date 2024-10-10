@@ -10,7 +10,7 @@ extension AsyncValueUI on AsyncValue {
   }) {
     if (isLoading) {
       showDialog(
-        barrierDismissible: true,
+        barrierDismissible: false,
         context: context,
         builder: (context) => Dialogs.loading(message),
       );

@@ -366,7 +366,7 @@ CreateFlashcardDTO _$CreateFlashcardDTOFromJson(Map<String, dynamic> json) {
 mixin _$CreateFlashcardDTO {
   String get objectOnImage => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
-  String get generatedImageName => throw _privateConstructorUsedError;
+  String get imageName => throw _privateConstructorUsedError;
 
   /// Serializes this CreateFlashcardDTO to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -384,7 +384,7 @@ abstract class $CreateFlashcardDTOCopyWith<$Res> {
           CreateFlashcardDTO value, $Res Function(CreateFlashcardDTO) then) =
       _$CreateFlashcardDTOCopyWithImpl<$Res, CreateFlashcardDTO>;
   @useResult
-  $Res call({String objectOnImage, String imageUrl, String generatedImageName});
+  $Res call({String objectOnImage, String imageUrl, String imageName});
 }
 
 /// @nodoc
@@ -404,7 +404,7 @@ class _$CreateFlashcardDTOCopyWithImpl<$Res, $Val extends CreateFlashcardDTO>
   $Res call({
     Object? objectOnImage = null,
     Object? imageUrl = null,
-    Object? generatedImageName = null,
+    Object? imageName = null,
   }) {
     return _then(_value.copyWith(
       objectOnImage: null == objectOnImage
@@ -415,9 +415,9 @@ class _$CreateFlashcardDTOCopyWithImpl<$Res, $Val extends CreateFlashcardDTO>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      generatedImageName: null == generatedImageName
-          ? _value.generatedImageName
-          : generatedImageName // ignore: cast_nullable_to_non_nullable
+      imageName: null == imageName
+          ? _value.imageName
+          : imageName // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -431,7 +431,7 @@ abstract class _$$CreateFlashcardDTOImplCopyWith<$Res>
       __$$CreateFlashcardDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String objectOnImage, String imageUrl, String generatedImageName});
+  $Res call({String objectOnImage, String imageUrl, String imageName});
 }
 
 /// @nodoc
@@ -449,7 +449,7 @@ class __$$CreateFlashcardDTOImplCopyWithImpl<$Res>
   $Res call({
     Object? objectOnImage = null,
     Object? imageUrl = null,
-    Object? generatedImageName = null,
+    Object? imageName = null,
   }) {
     return _then(_$CreateFlashcardDTOImpl(
       objectOnImage: null == objectOnImage
@@ -460,9 +460,9 @@ class __$$CreateFlashcardDTOImplCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      generatedImageName: null == generatedImageName
-          ? _value.generatedImageName
-          : generatedImageName // ignore: cast_nullable_to_non_nullable
+      imageName: null == imageName
+          ? _value.imageName
+          : imageName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -474,7 +474,7 @@ class _$CreateFlashcardDTOImpl implements _CreateFlashcardDTO {
   const _$CreateFlashcardDTOImpl(
       {required this.objectOnImage,
       required this.imageUrl,
-      required this.generatedImageName});
+      required this.imageName});
 
   factory _$CreateFlashcardDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateFlashcardDTOImplFromJson(json);
@@ -484,11 +484,11 @@ class _$CreateFlashcardDTOImpl implements _CreateFlashcardDTO {
   @override
   final String imageUrl;
   @override
-  final String generatedImageName;
+  final String imageName;
 
   @override
   String toString() {
-    return 'CreateFlashcardDTO(objectOnImage: $objectOnImage, imageUrl: $imageUrl, generatedImageName: $generatedImageName)';
+    return 'CreateFlashcardDTO(objectOnImage: $objectOnImage, imageUrl: $imageUrl, imageName: $imageName)';
   }
 
   @override
@@ -500,14 +500,14 @@ class _$CreateFlashcardDTOImpl implements _CreateFlashcardDTO {
                 other.objectOnImage == objectOnImage) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
-            (identical(other.generatedImageName, generatedImageName) ||
-                other.generatedImageName == generatedImageName));
+            (identical(other.imageName, imageName) ||
+                other.imageName == imageName));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, objectOnImage, imageUrl, generatedImageName);
+      Object.hash(runtimeType, objectOnImage, imageUrl, imageName);
 
   /// Create a copy of CreateFlashcardDTO
   /// with the given fields replaced by the non-null parameter values.
@@ -530,7 +530,7 @@ abstract class _CreateFlashcardDTO implements CreateFlashcardDTO {
   const factory _CreateFlashcardDTO(
       {required final String objectOnImage,
       required final String imageUrl,
-      required final String generatedImageName}) = _$CreateFlashcardDTOImpl;
+      required final String imageName}) = _$CreateFlashcardDTOImpl;
 
   factory _CreateFlashcardDTO.fromJson(Map<String, dynamic> json) =
       _$CreateFlashcardDTOImpl.fromJson;
@@ -540,7 +540,7 @@ abstract class _CreateFlashcardDTO implements CreateFlashcardDTO {
   @override
   String get imageUrl;
   @override
-  String get generatedImageName;
+  String get imageName;
 
   /// Create a copy of CreateFlashcardDTO
   /// with the given fields replaced by the non-null parameter values.

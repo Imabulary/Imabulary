@@ -27,7 +27,7 @@ _$CreateFlashcardDTOImpl _$$CreateFlashcardDTOImplFromJson(
     _$CreateFlashcardDTOImpl(
       objectOnImage: json['objectOnImage'] as String,
       imageUrl: json['imageUrl'] as String,
-      generatedImageName: json['generatedImageName'] as String,
+      imageName: json['imageName'] as String,
     );
 
 Map<String, dynamic> _$$CreateFlashcardDTOImplToJson(
@@ -35,5 +35,5 @@ Map<String, dynamic> _$$CreateFlashcardDTOImplToJson(
     <String, dynamic>{
       'objectOnImage': instance.objectOnImage,
       'imageUrl': instance.imageUrl,
-      'generatedImageName': instance.generatedImageName,
+      'imageName': instance.imageName,
     };

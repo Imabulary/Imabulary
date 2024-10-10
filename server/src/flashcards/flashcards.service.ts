@@ -274,7 +274,7 @@ export class FlashCardsService {
     });
 
     if (existingFeedback) {
-      throw new NotFoundException('This card has already feedback');
+      throw new NotFoundException('This card has feedback already');
     }
 
     if ((!categories && !text) || (categories && text)) {
