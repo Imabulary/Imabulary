@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/app/FlashCard/presentation/flashcard_screen.dart';
+import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
 import 'package:mobile/app/Home/presentation/home.dart';
 import 'package:mobile/app/Profile/presentation/profile_screen.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen.dart';

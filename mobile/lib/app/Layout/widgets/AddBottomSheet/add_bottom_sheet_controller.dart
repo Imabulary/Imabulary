@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile/app/FlashCard/data/flash_card_repository.dart';
+import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
 import 'package:mobile/app/ObjectsOnImage/domain/ObjectOnImage/object_on_image.dart';

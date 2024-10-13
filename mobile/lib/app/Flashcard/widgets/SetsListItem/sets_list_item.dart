@@ -1,8 +1,8 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/FlashCard/domain/card/card.dart';
-import 'package:mobile/app/FlashCard/widgets/SetsListItem/sets_list_item_controller.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
+import 'package:mobile/app/Flashcard/widgets/SetsListItem/sets_list_item_controller.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/utils/async_value_ui.dart';

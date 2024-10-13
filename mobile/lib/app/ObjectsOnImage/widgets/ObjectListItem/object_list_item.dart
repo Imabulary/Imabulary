@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/FlashCard/application/flashcard_providers.dart';
-import 'package:mobile/app/FlashCard/presentation/flashcard_screen.dart';
+import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
+import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Flashcard/domain/scanPhotoPayload/scan_photo_payload.dart';
 import 'package:mobile/app/ObjectsOnImage/domain/ObjectOnImage/object_on_image.dart';

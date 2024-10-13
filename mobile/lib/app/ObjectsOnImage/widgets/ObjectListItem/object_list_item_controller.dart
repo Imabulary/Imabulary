@@ -1,4 +1,4 @@
-import 'package:mobile/app/FlashCard/application/flashcard_service.dart';
+import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

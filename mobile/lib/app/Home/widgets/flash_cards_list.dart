@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/FlashCard/domain/card/card.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Home/widgets/FlashcardListItem/flashcard_list_item.dart';
 import 'package:mobile/app/Profile/presentation/profile_screen.dart';
 import 'package:mobile/atoms/colors.dart';

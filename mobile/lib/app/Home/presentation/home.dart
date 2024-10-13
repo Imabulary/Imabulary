@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/FlashCard/application/flashcard_providers.dart';
+import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Home/widgets/flash_cards_list.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
