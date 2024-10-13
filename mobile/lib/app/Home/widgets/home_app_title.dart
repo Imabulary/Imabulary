@@ -1,99 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Flashcard/domain/card/card.dart';
-import 'package:mobile/app/Wallet/domain/wallet/wallet.dart';
-import 'package:mobile/atoms/colors.dart';
+import 'package:mobile/app/Home/components/welcome_title.dart';
+import 'package:mobile/app/Wallet/application/wallet_providers.dart';
+import 'package:mobile/app/Wallet/components/balance.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 
-class HomeAppTitle extends StatelessWidget {
-  final AsyncValue<Wallet> wallet;
+class HomeAppTitle extends ConsumerWidget {
+  const HomeAppTitle({
+    super.key,
+    required this.flashcards,
+  });
+
   final AsyncValue<ServerResponse<List<FlashCard>>> flashcards;
-  const HomeAppTitle(
-      {super.key, required this.wallet, required this.flashcards});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final wallet = ref.watch(getWalletBalanceProvider);
+
+    final welcomeTitle =
+        flashcards.hasValue && flashcards.value!.result.isNotEmpty
+            ? const WelcomeTitle(customTitle: "Welcome back 👋")
+            : const WelcomeTitle();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        flashcards.when(
-          data: (data) {
-            return data.result.length > 1
-                ? const TypeSetting(
-                    "Welcome back 👋",
-                    variant: TextVariants.headlineLarge,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                : const TypeSetting(
-                    "Welcome 👋",
-                    variant: TextVariants.headlineLarge,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  );
-          },
-          error: (error, stackTrace) => const TypeSetting(
-            "Welcome 👋",
-            variant: TextVariants.headlineLarge,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          loading: () => const TypeSetting(
-            "Welcome 👋",
-            variant: TextVariants.headlineLarge,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        welcomeTitle,
         const SizedBox(width: 8),
         wallet.when(
-          data: (data) => Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                  color: AppColors.primary,
-                  shape: BoxShape.circle,
-                ),
-                child: const TypeSetting(
-                  "\$",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 6),
-              TypeSetting(
-                data.balance.toString(),
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
-                ),
-              ),
-            ],
-          ),
-          error: (error, _) => const Text(
+          data: (data) => Balance(data.balance),
+          error: (error, _) => const TypeSetting(
             "Failed to fetch coins balance.",
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.red,
-            ),
           ),
-          loading: () => const Text(
-            "Loading...",
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey,
-            ),
-          ),
+          loading: () => const TypeSetting("Loading..."),
         )
       ],
     );

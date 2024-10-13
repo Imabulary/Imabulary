@@ -34,7 +34,7 @@ mixin _$FlashCard {
   String? get image_name => throw _privateConstructorUsedError;
   String? get audio_url => throw _privateConstructorUsedError;
   String? get audio_name => throw _privateConstructorUsedError;
-  QuizStatus? get QuizStatus => throw _privateConstructorUsedError;
+  QuizStatus? get quizStatus => throw _privateConstructorUsedError;
 
   /// Serializes this FlashCard to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -66,9 +66,9 @@ abstract class $FlashCardCopyWith<$Res> {
       String? image_name,
       String? audio_url,
       String? audio_name,
-      QuizStatus? QuizStatus});
+      QuizStatus? quizStatus});
 
-  $QuizStatusCopyWith<$Res>? get QuizStatus;
+  $QuizStatusCopyWith<$Res>? get quizStatus;
 }
 
 /// @nodoc
@@ -100,7 +100,7 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
     Object? image_name = freezed,
     Object? audio_url = freezed,
     Object? audio_name = freezed,
-    Object? QuizStatus = freezed,
+    Object? quizStatus = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -159,9 +159,9 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
           ? _value.audio_name
           : audio_name // ignore: cast_nullable_to_non_nullable
               as String?,
-      QuizStatus: freezed == QuizStatus
-          ? _value.QuizStatus
-          : QuizStatus // ignore: cast_nullable_to_non_nullable
+      quizStatus: freezed == quizStatus
+          ? _value.quizStatus
+          : quizStatus // ignore: cast_nullable_to_non_nullable
               as QuizStatus?,
     ) as $Val);
   }
@@ -170,13 +170,13 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $QuizStatusCopyWith<$Res>? get QuizStatus {
-    if (_value.QuizStatus == null) {
+  $QuizStatusCopyWith<$Res>? get quizStatus {
+    if (_value.quizStatus == null) {
       return null;
     }
 
-    return $QuizStatusCopyWith<$Res>(_value.QuizStatus!, (value) {
-      return _then(_value.copyWith(QuizStatus: value) as $Val);
+    return $QuizStatusCopyWith<$Res>(_value.quizStatus!, (value) {
+      return _then(_value.copyWith(quizStatus: value) as $Val);
     });
   }
 }
@@ -204,10 +204,10 @@ abstract class _$$FlashCardImplCopyWith<$Res>
       String? image_name,
       String? audio_url,
       String? audio_name,
-      QuizStatus? QuizStatus});
+      QuizStatus? quizStatus});
 
   @override
-  $QuizStatusCopyWith<$Res>? get QuizStatus;
+  $QuizStatusCopyWith<$Res>? get quizStatus;
 }
 
 /// @nodoc
@@ -237,7 +237,7 @@ class __$$FlashCardImplCopyWithImpl<$Res>
     Object? image_name = freezed,
     Object? audio_url = freezed,
     Object? audio_name = freezed,
-    Object? QuizStatus = freezed,
+    Object? quizStatus = freezed,
   }) {
     return _then(_$FlashCardImpl(
       id: null == id
@@ -296,9 +296,9 @@ class __$$FlashCardImplCopyWithImpl<$Res>
           ? _value.audio_name
           : audio_name // ignore: cast_nullable_to_non_nullable
               as String?,
-      QuizStatus: freezed == QuizStatus
-          ? _value.QuizStatus
-          : QuizStatus // ignore: cast_nullable_to_non_nullable
+      quizStatus: freezed == quizStatus
+          ? _value.quizStatus
+          : quizStatus // ignore: cast_nullable_to_non_nullable
               as QuizStatus?,
     ));
   }
@@ -306,7 +306,7 @@ class __$$FlashCardImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$FlashCardImpl with DiagnosticableTreeMixin implements _FlashCard {
+class _$FlashCardImpl implements _FlashCard {
   const _$FlashCardImpl(
       {required this.id,
       required this.word,
@@ -322,7 +322,7 @@ class _$FlashCardImpl with DiagnosticableTreeMixin implements _FlashCard {
       this.image_name,
       this.audio_url,
       this.audio_name,
-      this.QuizStatus});
+      this.quizStatus});
 
   factory _$FlashCardImpl.fromJson(Map<String, dynamic> json) =>
       _$$FlashCardImplFromJson(json);
@@ -356,34 +356,11 @@ class _$FlashCardImpl with DiagnosticableTreeMixin implements _FlashCard {
   @override
   final String? audio_name;
   @override
-  final QuizStatus? QuizStatus;
+  final QuizStatus? quizStatus;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'FlashCard(id: $id, word: $word, phrase: $phrase, translated_phrase: $translated_phrase, translated_word: $translated_word, target_language: $target_language, source_language: $source_language, image_url: $image_url, speech_part: $speech_part, translated_explanation: $translated_explanation, explanation: $explanation, image_name: $image_name, audio_url: $audio_url, audio_name: $audio_name, QuizStatus: $QuizStatus)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'FlashCard'))
-      ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('word', word))
-      ..add(DiagnosticsProperty('phrase', phrase))
-      ..add(DiagnosticsProperty('translated_phrase', translated_phrase))
-      ..add(DiagnosticsProperty('translated_word', translated_word))
-      ..add(DiagnosticsProperty('target_language', target_language))
-      ..add(DiagnosticsProperty('source_language', source_language))
-      ..add(DiagnosticsProperty('image_url', image_url))
-      ..add(DiagnosticsProperty('speech_part', speech_part))
-      ..add(
-          DiagnosticsProperty('translated_explanation', translated_explanation))
-      ..add(DiagnosticsProperty('explanation', explanation))
-      ..add(DiagnosticsProperty('image_name', image_name))
-      ..add(DiagnosticsProperty('audio_url', audio_url))
-      ..add(DiagnosticsProperty('audio_name', audio_name))
-      ..add(DiagnosticsProperty('QuizStatus', QuizStatus));
+  String toString() {
+    return 'FlashCard(id: $id, word: $word, phrase: $phrase, translated_phrase: $translated_phrase, translated_word: $translated_word, target_language: $target_language, source_language: $source_language, image_url: $image_url, speech_part: $speech_part, translated_explanation: $translated_explanation, explanation: $explanation, image_name: $image_name, audio_url: $audio_url, audio_name: $audio_name, quizStatus: $quizStatus)';
   }
 
   @override
@@ -416,8 +393,8 @@ class _$FlashCardImpl with DiagnosticableTreeMixin implements _FlashCard {
                 other.audio_url == audio_url) &&
             (identical(other.audio_name, audio_name) ||
                 other.audio_name == audio_name) &&
-            (identical(other.QuizStatus, QuizStatus) ||
-                other.QuizStatus == QuizStatus));
+            (identical(other.quizStatus, quizStatus) ||
+                other.quizStatus == quizStatus));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -438,7 +415,7 @@ class _$FlashCardImpl with DiagnosticableTreeMixin implements _FlashCard {
       image_name,
       audio_url,
       audio_name,
-      QuizStatus);
+      quizStatus);
 
   /// Create a copy of FlashCard
   /// with the given fields replaced by the non-null parameter values.
@@ -472,7 +449,7 @@ abstract class _FlashCard implements FlashCard {
       final String? image_name,
       final String? audio_url,
       final String? audio_name,
-      final QuizStatus? QuizStatus}) = _$FlashCardImpl;
+      final QuizStatus? quizStatus}) = _$FlashCardImpl;
 
   factory _FlashCard.fromJson(Map<String, dynamic> json) =
       _$FlashCardImpl.fromJson;
@@ -506,7 +483,7 @@ abstract class _FlashCard implements FlashCard {
   @override
   String? get audio_name;
   @override
-  QuizStatus? get QuizStatus;
+  QuizStatus? get quizStatus;
 
   /// Create a copy of FlashCard
   /// with the given fields replaced by the non-null parameter values.

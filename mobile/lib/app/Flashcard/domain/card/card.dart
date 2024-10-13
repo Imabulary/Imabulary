@@ -1,8 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
 import 'package:mobile/app/Quiz/domain/QuizStatus/quiz_status.dart';
+
 part 'card.freezed.dart';
 part 'card.g.dart';
 
@@ -23,7 +23,7 @@ class FlashCard with _$FlashCard {
     String? image_name,
     String? audio_url,
     String? audio_name,
-    QuizStatus? QuizStatus,
+    QuizStatus? quizStatus,
   }) = _FlashCard;
 
   factory FlashCard.fromJson(Map<String, dynamic> json) =>

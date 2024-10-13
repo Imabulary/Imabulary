@@ -3,15 +3,16 @@ import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/constants.dart';
 
 class ListItem extends ListTile {
-  const ListItem({
-    super.key,
-    this.image,
-    required this.label,
-    this.sublabel,
-    super.onTap,
-    super.contentPadding,
-    super.tileColor,
-  });
+  const ListItem(
+      {super.key,
+      this.image,
+      required this.label,
+      this.sublabel,
+      super.onTap,
+      super.contentPadding,
+      super.tileColor,
+      super.textColor,
+      super.leading});
 
   final String? image;
   final String label;
@@ -28,26 +29,28 @@ class ListItem extends ListTile {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Image.network(
-          image ?? kStubImageUrl,
-          width: 55,
-          height: 60,
-          fit: BoxFit.cover,
-        ),
-      ),
+      leading: leading != null
+          ? leading
+          : ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                image ?? kStubImageUrl,
+                width: 55,
+                height: 60,
+                fit: BoxFit.cover,
+              ),
+            ),
       title: TypeSetting(
         label,
         variant: sublabel == null
             ? TextVariants.headlineMedium
             : TextVariants.bodyLarge,
+        style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
       ),
       subtitle: sublabel != null
-          ? TypeSetting(
-              sublabel!,
+          ? TypeSetting(sublabel!,
               variant: TextVariants.bodySmall,
-            )
+              style: TextStyle(color: textColor))
           : null,
     );
   }

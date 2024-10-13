@@ -22,7 +22,9 @@ _$FlashCardImpl _$$FlashCardImplFromJson(Map<String, dynamic> json) =>
       image_name: json['image_name'] as String?,
       audio_url: json['audio_url'] as String?,
       audio_name: json['audio_name'] as String?,
-      QuizStatus: json['QuizStatus'],
+      quizStatus: json['quizStatus'] == null
+          ? null
+          : QuizStatus.fromJson(json['quizStatus'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$FlashCardImplToJson(_$FlashCardImpl instance) =>
@@ -41,5 +43,5 @@ Map<String, dynamic> _$$FlashCardImplToJson(_$FlashCardImpl instance) =>
       'image_name': instance.image_name,
       'audio_url': instance.audio_url,
       'audio_name': instance.audio_name,
-      'QuizStatus': instance.QuizStatus,
+      'quizStatus': instance.quizStatus,
     };
