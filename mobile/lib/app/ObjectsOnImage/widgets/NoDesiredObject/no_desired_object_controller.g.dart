@@ -7,7 +7,7 @@ part of 'no_desired_object_controller.dart';
 // **************************************************************************
 
 String _$noDesiredObjectControllerHash() =>
-    r'abe90edc379ed9c567a772a016e54991cf7e900b';
+    r'935c218817324710e60e20cb2548af424f9d5f89';
 
 /// See also [NoDesiredObjectController].
 @ProviderFor(NoDesiredObjectController)

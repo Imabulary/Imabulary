@@ -40,12 +40,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build Dart/Flutter types
-        run: dart run build_runner build --delete-conflicting-outputs
-
-      - name: Verify Flutter installation
-        run: flutter doctor -v
-
       - name: Populate env variables
         env:
           API_URL: ${{ secrets.QA_API_URL }}
