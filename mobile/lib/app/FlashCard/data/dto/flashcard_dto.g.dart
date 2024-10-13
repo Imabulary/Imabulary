@@ -21,3 +21,19 @@ Map<String, dynamic> _$$OrganizeFlashcardDTOImplToJson(
       'setId': instance.setId,
       'flashcardIds': instance.flashcardIds,
     };
+
+_$CreateFlashcardDTOImpl _$$CreateFlashcardDTOImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CreateFlashcardDTOImpl(
+      objectOnImage: json['objectOnImage'] as String,
+      imageUrl: json['imageUrl'] as String,
+      imageName: json['imageName'] as String,
+    );
+
+Map<String, dynamic> _$$CreateFlashcardDTOImplToJson(
+        _$CreateFlashcardDTOImpl instance) =>
+    <String, dynamic>{
+      'objectOnImage': instance.objectOnImage,
+      'imageUrl': instance.imageUrl,
+      'imageName': instance.imageName,
+    };

@@ -1,55 +1,182 @@
 openapi: 3.0.0
 info:
   title: Imabulary API
-  description: API documentation for the Imabulary API
+  description: Documentation for the Imabulary API
   version: 1.0.0
 
 paths:
   /quiz/learn:
-    $ref: "./paths/quiz/learn.yaml"
+    $ref: './paths/quiz/learn.yaml'
 
   /feedback/categories:
-    $ref: "./paths/feedback/categories.yaml"
+    $ref: './paths/feedback/categories.yaml'
 
   /feedback/create:
-    $ref: "./paths/feedback/create.yaml"
+    $ref: './paths/feedback/create.yaml'
+
+  /feedback/create/no-desired-object:
+    post:
+      tags:
+        - Feedback
+      summary: Creates a feedback when user didn't find desired object in the list of recognized objects
+      description: |
+        It creates a feedback for us which we can later analyze to improve our system in case user scanned
+        an image, we gave him a list of objects, but there was no object he wanted.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNoDesiredObjectFeedbackDTO'
+      responses:
+        '200':
+          description: Successfully submited feedback
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - bearerAuth: []
 
   /flashcards/scan:
-    $ref: "./paths/flashcards/scan.yaml"
+    post:
+      tags:
+        - Flashcards
+      summary: Scan an image and returns an array with detected objects on it
+      description: |
+        This endpoint:
+        1. Scan an uploaded image
+        2. Detects objects on it
+        3. If the system detected only one object on image, returns a flashcard
+        4. If the system detected a few objects on image, returns detected objects with score that determines the likelihood of depicting this object in a photo. Additionally it returns `generatedImageName` and `imageUrl` that will be used to create a flashcard
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Image to scan
+      responses:
+        '200':
+          description: Successfully uploaded image and detected objects or, if there was only one object on photo, created flashcard
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ScanResponse'
+                  - $ref: '#/components/schemas/CardResponse'
+              examples:
+                ScanResponse:
+                  value:
+                    $ref: '#/components/schemas/ScanResponse'
+                CardResponse:
+                  value:
+                    image_url: https://google.com
+
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - bearerAuth: []
+
+  /flashcards/create:
+    post:
+      tags:
+        - Flashcards
+      summary: Creates a new flashcard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCardDTO'
+      responses:
+        '200':
+          description: Successfully created flashcard
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Card'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - bearerAuth: []
 
   /flashcards/:
-    $ref: "./paths/flashcards/flashcards.yaml"
+    $ref: './paths/flashcards/flashcards.yaml'
 
   /flashcards/organize:
-    $ref: "./paths/flashcards/organize.yaml"
+    $ref: './paths/flashcards/organize.yaml'
 
   /flashcards/disorganize:
-    $ref: "./paths/flashcards/disorganize.yaml"
+    $ref: './paths/flashcards/disorganize.yaml'
 
   /flashcards/like:
-    $ref: "./paths/flashcards/like.yaml"
+    $ref: './paths/flashcards/like.yaml'
 
   /flashcards/dislike:
-    $ref: "./paths/flashcards/dislike.yaml"
+    $ref: './paths/flashcards/dislike.yaml'
 
   /sets:
-    $ref: "./paths/sets/sets.yaml"
+    $ref: './paths/sets/sets.yaml'
 
   /sets/{id}:
-    $ref: "./paths/sets/sets-id.yaml"
+    $ref: './paths/sets/sets-id.yaml'
 
   /users:
-    $ref: "./paths/users/users.yaml"
+    $ref: './paths/users/users.yaml'
 
   /wallet:
-    $ref: "./paths/wallet/wallet.yaml"
+    $ref: './paths/wallet/wallet.yaml'
 
   /wallet/collect:
-    $ref: "./paths/wallet/collect-award.yaml"
+    $ref: './paths/wallet/collect-award.yaml'
 
 components:
+  responses:
+    InternalServerError:
+      description: Server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    BadRequest:
+      description: Server would not process the request due to something the server considered to be a client error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Unauthorized:
+      description: Server couldn't recognize your authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    $ref: "./components/schemas/index.yaml"
+    $ref: './components/schemas/index.yaml'
 
   securitySchemes:
     bearerAuth:

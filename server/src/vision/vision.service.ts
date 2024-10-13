@@ -4,16 +4,17 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { get, upperFirst } from 'lodash';
+import { get, identity, isEmpty } from 'lodash';
 import * as adminAccount from '../../admin-account.json';
 import {
   OBJECT_IS_NOT_RECOGNIZABLE_ERROR,
   VISION_GENERIC_ERROR,
 } from './utils';
+import { fromNullable } from '@sweet-monads/maybe';
 
 @Injectable()
 export class VisionService {
-  private visionClient = new vision.ImageAnnotatorClient({
+  private readonly visionClient = new vision.ImageAnnotatorClient({
     credentials: adminAccount,
   });
 
@@ -29,7 +30,7 @@ export class VisionService {
       });
     }
 
-    if (!objects.length) {
+    if (isEmpty(objects)) {
       throw new BadRequestException(OBJECT_IS_NOT_RECOGNIZABLE_ERROR, {
         cause: `Image: ${imageUrl}`,
       });
@@ -37,15 +38,11 @@ export class VisionService {
 
     const handledObjects = objects.map((object) => ({
       name: object.description,
-      score: object.score,
+      score: fromNullable(Math.round(object.score * 100) / 100)
+        .map<number>(identity)
+        .unwrapOr(object.score),
     }));
 
-    if (objects.length > 1) {
-      return handledObjects;
-    }
-
-    const signleObjectName = objects[0].description;
-
-    return upperFirst(signleObjectName);
+    return handledObjects;
   }
 }

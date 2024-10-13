@@ -6,11 +6,10 @@ import 'package:mobile/shared/models/ServerError/server_error.dart';
 extension AsyncValueUI on AsyncValue {
   showLoadingDialog(
     BuildContext context, {
-    String message = 'Your image is being processed',
+    String message = 'Loading...',
   }) {
     if (isLoading) {
       showDialog(
-        barrierDismissible: true,
         context: context,
         builder: (context) => Dialogs.loading(message),
       );
@@ -19,16 +18,30 @@ extension AsyncValueUI on AsyncValue {
 
   showErrorDialog(BuildContext context, bool doPop) {
     if (!isLoading && hasError && hasValue) {
-      final exception = error as ServerError;
+      // TODO: push this error to external system
+      print(error);
 
-      if (doPop) {
-        Navigator.pop(context);
+      if (error is ServerError) {
+        final ServerError exception = error as ServerError;
+
+        if (doPop) {
+          Navigator.pop(context);
+        }
+
+        showDialog(
+          context: context,
+          builder: (context) => Dialogs.error(exception.message),
+        );
+      } else {
+        if (doPop) {
+          Navigator.pop(context);
+        }
+
+        showDialog(
+          context: context,
+          builder: (context) => Dialogs.error(''),
+        );
       }
-
-      showDialog(
-        context: context,
-        builder: (context) => Dialogs.error(exception.message),
-      );
     }
   }
 }

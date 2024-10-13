@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mobile/app/FlashCard/application/flashcard_service.dart';
-import 'package:mobile/app/FlashCard/domain/card.dart';
+import 'package:mobile/app/FlashCard/domain/card/card.dart';
 import 'package:mobile/app/Profile/presentation/profile_screen_controller.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/widgets/flash_card_masonry_item.dart';

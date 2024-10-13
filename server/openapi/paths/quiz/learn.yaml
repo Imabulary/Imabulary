@@ -1,19 +1,19 @@
 post:
   tags:
-    - quiz
+    - Quiz
   summary: User answer to quiz answer
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/quiz/learn.yaml"
+          $ref: '../../components/schemas/quiz/learn.yaml'
     responses:
-      "200":
+      '200':
         description: Answer was leaved successfully.
-      "400":
+      '400':
       description: Bad request
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/error/error-response.yaml"
+            $ref: '../../components/schemas/error/error-response.yaml'

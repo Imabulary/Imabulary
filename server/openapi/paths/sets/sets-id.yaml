@@ -1,6 +1,6 @@
 get:
   tags:
-    - sets
+    - Sets
   summary: Get a single set
   description: Get details of a single set by ID
   parameters:
@@ -11,19 +11,19 @@ get:
       schema:
         type: string
   responses:
-    "200":
+    '200':
       description: Set details
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/set/set-response.yaml"
+            $ref: '../../components/schemas/set/set-response.yaml'
 
-    "404":
+    '404':
       description: When set is equals null
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/error/error-response.yaml"
+            $ref: '../../components/schemas/error/error-response.yaml'
   security:
     - bearerAuth: []
 
@@ -44,14 +44,14 @@ patch:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/set/update-set-dto.yaml"
+          $ref: '../../components/schemas/set/update-set-dto.yaml'
   responses:
-    "200":
+    '200':
       description: Set updated successfully
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/set/set-response.yaml"
+            $ref: '../../components/schemas/set/set-response.yaml'
 
   security:
     - bearerAuth: []
@@ -69,12 +69,12 @@ delete:
       schema:
         type: string
   responses:
-    "200":
+    '200':
       description: Set deleted successfully
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/set/set-response.yaml"
+            $ref: '../../components/schemas/set/set-response.yaml'
 
   security:
     - bearerAuth: []
