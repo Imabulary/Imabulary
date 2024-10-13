@@ -1,24 +1,24 @@
 put:
   tags:
-    - wallet
+    - Wallet
   summary: Collect daily award
   description: Check award availability and collect daily award. Return current balance, expiration time in timestamp, next award prediction, and date of awarding in ISO string
   responses:
-    "200":
+    '200':
       description: Award had been collected
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/wallet/collect-award-response.yaml"
-    "400":
+            $ref: '../../components/schemas/wallet/collect-award-response.yaml'
+    '400':
       description: Bad Request
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/error/error-response.yaml"
-    "404":
+            $ref: '../../components/schemas/error/error-response.yaml'
+    '404':
       description: Not found
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/error/error-response.yaml"
+            $ref: '../../components/schemas/error/error-response.yaml'

@@ -17,7 +17,7 @@ _$SetImpl _$$SetImplFromJson(Map<String, dynamic> json) => _$SetImpl(
           ?.map((e) => _$recordConvert(
                 e,
                 ($jsonValue) => (
-                  QuizStatus: QuizStatuses.fromJson(
+                  QuizStatus: QuizStatus.fromJson(
                       $jsonValue['QuizStatus'] as Map<String, dynamic>),
                   image_url: $jsonValue['image_url'] as String,
                 ),

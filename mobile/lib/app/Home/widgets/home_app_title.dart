@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Wallet/domain/wallet/wallet.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
-import 'package:mobile/app/FlashCard/domain/card.dart';
 
 class HomeAppTitle extends StatelessWidget {
   final AsyncValue<Wallet> wallet;

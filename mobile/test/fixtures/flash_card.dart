@@ -1,4 +1,4 @@
-import 'package:mobile/app/FlashCard/domain/card.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
 
 const flashCardFixture = FlashCard(

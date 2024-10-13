@@ -8,8 +8,8 @@ import 'package:mobile/app/Home/widgets/home_app_title.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/app/Set/data/set_repository.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
-import 'package:mobile/app/FlashCard/application/flashcard_providers.dart';
-import 'package:mobile/app/FlashCard/data/dto/flashcard_dto.dart';
+import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
+import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Home/widgets/flash_cards_list.dart';
 import 'package:mobile/atoms/type_setting.dart';
 

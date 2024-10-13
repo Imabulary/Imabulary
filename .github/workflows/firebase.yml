@@ -10,7 +10,7 @@ defaults:
     working-directory: ./mobile
 
 jobs:
-  distribution:
+  distribute:
     runs-on: ubuntu-latest
     timeout-minutes: 120
 
@@ -40,12 +40,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build Dart/Flutter types
-        run: dart run build_runner build --delete-conflicting-outputs
-
-      - name: Verify Flutter installation
-        run: flutter doctor -v
-
       - name: Populate env variables
         env:
           API_URL: ${{ secrets.QA_API_URL }}
@@ -54,9 +48,23 @@ jobs:
           echo "API_URL=$API_URL" > assets/.env
           echo "PURCHASES_KEY=$PURCHASES_KEY" >> assets/.env
 
+      - name: Decode and create keystore
+        run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/keystore.jks
+
+      - name: Create key.properties
+        env:
+          STORE_PASSWORD: ${{secrets.STORE_PASSWORD}}
+          KEY_PASSWORD: ${{secrets.KEY_PASSWORD}}
+          KEY_ALIAS: ${{secrets.KEY_ALIAS}}
+          STORE_FILE: ${{secrets.STORE_FILE}}
+        run: |
+          echo "storePassword=$STORE_PASSWORD" > android/key.properties
+          echo "keyPassword=$KEY_PASSWORD" >> android/key.properties
+          echo "keyAlias=$KEY_ALIAS" >> android/key.properties
+          echo "storeFile=$STORE_FILE" >> android/key.properties
+
       - name: Build APK
-        run: flutter build apk -v
-        
+        run: flutter build apk
 
       - name: Upload APK
         if: ${{ !env.ACT }}

@@ -1,0 +1,25 @@
+type: object
+properties:
+  result:
+    type: object
+    properties:
+      objectsOnImage:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Car
+            translatedName:
+              type: string
+              example: Машина
+            score:
+              type: integer
+              example: 0.9
+      imageUrl:
+        type: string
+        example: https://image-hosting.com/image-1
+      generatedImageName:
+        type: string
+        example: car.png

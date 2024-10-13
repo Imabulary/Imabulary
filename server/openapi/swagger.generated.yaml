@@ -1,13 +1,13 @@
 openapi: 3.0.0
 info:
   title: Imabulary API
-  description: API documentation for the Imabulary API
+  description: Documentation for the Imabulary API
   version: 1.0.0
 paths:
   /quiz/learn:
     post:
       tags:
-        - quiz
+        - Quiz
       summary: User answer to quiz answer
       requestBody:
         required: true
@@ -27,7 +27,7 @@ paths:
   /feedback/categories:
     get:
       tags:
-        - feedback
+        - Feedback
       summary: Get all feedback categories
       responses:
         '200':
@@ -41,7 +41,7 @@ paths:
   /feedback/create:
     post:
       tags:
-        - feedback
+        - Feedback
       summary: Create a feedback
       requestBody:
         required: true
@@ -69,12 +69,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /feedback/create/no-desired-object:
+    post:
+      tags:
+        - Feedback
+      summary: Creates a feedback when user didn't find desired object in the list of recognized objects
+      description: |
+        It creates a feedback for us which we can later analyze to improve our system in case user scanned
+        an image, we gave him a list of objects, but there was no object he wanted.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNoDesiredObjectFeedbackDTO'
+      responses:
+        '200':
+          description: Successfully submited feedback
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: boolean
+                    example: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - bearerAuth: []
   /flashcards/scan:
     post:
       tags:
-        - flashcards
-      summary: Scan photography and generate flashcard
-      description: Scan photography by uploading an image and processing it to generate flashcard. This operation deducts 1 coin from the user's wallet and collect cashback.
+        - Flashcards
+      summary: Scan an image and returns an array with detected objects on it
+      description: |
+        This endpoint:
+        1. Scan an uploaded image
+        2. Detects objects on it
+        3. If the system detected only one object on image, returns a flashcard
+        4. If the system detected a few objects on image, returns detected objects with score that determines the likelihood of depicting this object in a photo. Additionally it returns `generatedImageName` and `imageUrl` that will be used to create a flashcard
       requestBody:
         required: true
         content:
@@ -85,32 +123,61 @@ paths:
                 file:
                   type: string
                   format: binary
-                  description: Photography to be scanned
+                  description: Image to scan
       responses:
-        '201':
-          description: Successfully processed photo and generated flashcard
+        '200':
+          description: 'Successfully uploaded image and detected objects or, if there was only one object on photo, created flashcard'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CardResponse'
+                oneOf:
+                  - $ref: '#/components/schemas/ScanResponse'
+                  - $ref: '#/components/schemas/CardResponse'
+              examples:
+                ScanResponse:
+                  value:
+                    $ref: '#/components/schemas/ScanResponse'
+                CardResponse:
+                  value:
+                    image_url: 'https://google.com'
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '500':
-          description: Internal Server Error
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - bearerAuth: []
+  /flashcards/create:
+    post:
+      tags:
+        - Flashcards
+      summary: Creates a new flashcard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCardDTO'
+      responses:
+        '200':
+          description: Successfully created flashcard
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#components/schemas/Card'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
       security:
         - bearerAuth: []
   /flashcards/:
     get:
       tags:
-        - flashcards
+        - Flashcards
       summary: Get all flashcards
       description: Get a list of all flashcards
       parameters:
@@ -136,7 +203,7 @@ paths:
   /flashcards/organize:
     put:
       tags:
-        - flashcards
+        - Flashcards
       summary: Organize flashcards
       description: Organize flashcards into a set
       requestBody:
@@ -157,7 +224,7 @@ paths:
   /flashcards/disorganize:
     delete:
       tags:
-        - flashcards
+        - Flashcards
       summary: Disorganize flashcards
       description: Disorganize flashcards from a set
       requestBody:
@@ -174,7 +241,7 @@ paths:
   /flashcards/like:
     post:
       tags:
-        - flashcards
+        - Flashcards
       summary: Like a flashcard
       requestBody:
         required: true
@@ -198,7 +265,7 @@ paths:
   /flashcards/dislike:
     post:
       tags:
-        - flashcards
+        - Flashcards
       summary: Dislike a flashcard
       requestBody:
         required: true
@@ -229,7 +296,7 @@ paths:
   /sets:
     post:
       tags:
-        - sets
+        - Sets
       summary: Create a new set
       description: Create a new set with a name and optional description
       requestBody:
@@ -270,7 +337,7 @@ paths:
   '/sets/{id}':
     get:
       tags:
-        - sets
+        - Sets
       summary: Get a single set
       description: Get details of a single set by ID
       parameters:
@@ -346,7 +413,7 @@ paths:
   /users:
     post:
       tags:
-        - users
+        - Users
       summary: Create a new user
       description: Create a new user with UID and email
       requestBody:
@@ -377,7 +444,7 @@ paths:
   /wallet:
     get:
       tags:
-        - wallet
+        - Wallet
       summary: Get wallet info
       description: Get info about user's wallet
       responses:
@@ -402,7 +469,7 @@ paths:
   /wallet/collect:
     put:
       tags:
-        - wallet
+        - Wallet
       summary: Collect daily award
       description: 'Check award availability and collect daily award. Return current balance, expiration time in timestamp, next award prediction, and date of awarding in ISO string'
       responses:
@@ -425,12 +492,100 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  responses:
+    InternalServerError:
+      description: Server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Server would not process the request due to something the server considered to be a client error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Server couldn't recognize your authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    CreateCardDTO:
+      type: object
+      properties:
+        objectOnImage:
+          type: string
+          required: true
+          example: Car
+        imageUrl:
+          type: string
+          required: true
+          example: 'https://images-hosting.com/image/1'
+        generatedImageName:
+          type: string
+          required: true
+          example: generate-image-name.png
+    CreateNoDesiredObjectFeedbackDTO:
+      type: object
+      properties:
+        imageUrl:
+          type: string
+          example: 'https://images-hosting.com/image/1'
+          description: Path to the image user uploaded
+        objectsOnImage:
+          type: array
+          items:
+            type: string
+          example:
+            - Car
+            - Wheel
+            - Engine
+          description: Objects that were detected
     CardResponse:
       type: object
       properties:
         result:
           $ref: '#/components/schemas/Card'
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: The HTTP status code
+        message:
+          type: string
+          description: The error message
+        error:
+          type: string
+          description: The error title
+    ScanResponse:
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            objectsOnImage:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Car
+                  translatedName:
+                    type: string
+                    example: Машина
+                  score:
+                    type: integer
+                    example: 0.9
+            imageUrl:
+              type: string
+              example: 'https://image-hosting.com/image-1'
+            generatedImageName:
+              type: string
+              example: car.png
     AllCardsResponse:
       type: object
       properties:
@@ -496,6 +651,11 @@ components:
           type: string
           description: The name of the uploaded image
           example: image.png
+        is_regenerated:
+          type: boolean
+          description: 'Whether the flashcard was already regenerated, because of incorrect results for example'
+          example: false
+          nullable: true
         audio_url:
           type: string
           description: The URL of the voiceover audio file of a word
@@ -519,18 +679,10 @@ components:
           format: date-time
           description: The date and time when the card was last updated
           example: '2023-07-08T14:48:00.000Z'
-    ErrorResponse:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-          description: The HTTP status code
-        message:
+        deletedAt:
           type: string
-          description: The error message
-        error:
-          type: string
-          description: The error type
+          format: date-time
+          description: 'The date and time when the card was deleted. This property stands for soft deletion of flashcard, meaning that it won''t be deleted physically, but the user won''t see it also'
     OrganizeFlashcardsDTO:
       type: object
       properties:

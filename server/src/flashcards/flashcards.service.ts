@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { File } from '@google-cloud/storage';
 import { PrismaService } from 'src/prisma';
 import { Filters, ServerPagination } from 'src/shared';
 import {
@@ -32,22 +33,26 @@ export class FlashCardsService {
     private readonly assistant: AssistantService,
     private readonly translator: TranslatorService,
     private readonly sound: SoundService,
-    private readonly feedback: FeedbackService,
+    private readonly feedbackService: FeedbackService,
     private readonly wallet: WalletService,
   ) {}
 
   async scan(userId: string, fileName: string, file: Buffer) {
-    const { storageFile: imageFile, generatedFileName: generatedImageName } =
+    const { storageFile: imageFile, generatedFileName: imageName } =
       await this.storage.upload(IBucketFolders.IMAGE, fileName, file);
 
     try {
       const imageUrl = await this.storage.getFileURL(imageFile);
-      const card = await this.processImage({
-        imageUrl,
-        userId,
-        generatedImageName,
-      });
-      return card;
+
+      const objectsOnImage = await this.processImage(imageUrl);
+
+      if (objectsOnImage.length === 1) {
+        const objectOnImage = objectsOnImage[0].name;
+
+        return this.create({ imageName, imageUrl, objectOnImage }, userId);
+      }
+
+      return { objectsOnImage, imageName, imageUrl };
     } catch (error) {
       await imageFile.delete();
 
@@ -56,15 +61,11 @@ export class FlashCardsService {
   }
 
   async create(
-    {
-      objectOnImage,
-      imageUrl,
-      isRegeneration,
-      generatedImageName,
-    }: CreateFlashcardDTO,
+    { objectOnImage, imageUrl, isRegeneration, imageName }: CreateFlashcardDTO,
     userId: string,
   ) {
-    let audioFile;
+    let audioFile: File;
+
     const imageFileName = imageUrl.split('/').pop();
 
     try {
@@ -124,10 +125,12 @@ export class FlashCardsService {
           is_regenerated: isRegeneration,
           audio_name: generatedAudioName,
           userId,
-          image_name: generatedImageName,
+          image_name: imageName,
           explanation,
         },
       });
+
+      await this.wallet.deductBalance(userId, DEFAULT_COST);
 
       return card;
     } catch (error) {
@@ -138,118 +141,30 @@ export class FlashCardsService {
     }
   }
 
-  async processImage({
-    imageUrl,
-    userId,
-    generatedImageName,
-    isRegeneration = false,
-  }: {
-    imageUrl: string;
-    userId: string;
-    generatedImageName: string;
-    isRegeneration?: boolean;
-  }) {
-    let audioFile;
+  async processImage(imageUrl: string) {
     // TODO: Take these variables from settings of user profile, once it's done
     const sourceLanguageCode = 'en-US';
     const targetLanguageCode = 'uk-UA';
-    try {
-      const objectOnImage = await this.vision.analyze(imageUrl);
 
-      if (Array.isArray(objectOnImage)) {
-        const notFoundItem = {
-          name: 'The object I wanted is not in this list',
-          score: 0,
-        };
+    const objectsOnImage = await this.vision.analyze(imageUrl);
 
-        const namesToTranslate = [...objectOnImage, notFoundItem].map(
-          (item) => item.name,
-        );
-        const translatedWords = await this.translator.translate(
-          namesToTranslate,
-          {
-            sourceLanguageCode,
-            targetLanguageCode,
-          },
-        );
-
-        const translatedObjectOnImage = objectOnImage.map((item, index) => ({
-          name: item.name,
-          translatedName: translatedWords[index],
-          score: item.score,
-        }));
-        return {
-          objectOnImage: translatedObjectOnImage,
-          imageUrl,
-          isRegeneration,
-          generatedImageName,
-        };
-      }
-
-      const audioSpeechStream = await this.sound.synthesizeSpeech(
-        objectOnImage,
-      );
-
-      const {
-        storageFile: uploadedAudioFile,
-        generatedFileName: generatedAudioName,
-      } = await this.storage.upload(
-        IBucketFolders.AUDIO,
-        `${objectOnImage}.mp3`,
-        audioSpeechStream,
-      );
-
-      audioFile = uploadedAudioFile;
-
-      const audioUrl = await this.storage.getFileURL(audioFile);
-
-      const [relatedPhrase, explanation, speechPart, status] =
-        await Promise.all([
-          this.assistant.generatePhrase(objectOnImage),
-          this.assistant.explain(objectOnImage),
-          this.assistant.speechPart(objectOnImage),
-          this.prisma.quizCardStatus.findFirst({
-            where: { name: QUIZ_STATUS.NOT_STUDIED },
-          }),
-        ]);
-
-      const [translatedWord, translatedPhrase, translatedExplanation] =
-        await this.translator.translate(
-          [objectOnImage, relatedPhrase, explanation],
-          {
-            sourceLanguageCode,
-            targetLanguageCode,
-          },
-        );
-
-      const card = await this.prisma.cards.create({
-        data: {
-          word: objectOnImage,
-          phrase: relatedPhrase,
-          speech_part: speechPart,
-          translated_explanation: translatedExplanation,
-          translated_phrase: translatedPhrase,
-          translated_word: translatedWord,
-          target_language: targetLanguageCode,
-          source_language: sourceLanguageCode,
-          image_url: imageUrl,
-          quizStatusId: status?.id,
-          audio_url: audioUrl,
-          is_regenerated: isRegeneration,
-          audio_name: generatedAudioName,
-          userId,
-          image_name: generatedImageName,
-          explanation,
-        },
-      });
-
-      await this.wallet.deductBalance(userId, DEFAULT_COST);
-
-      return card;
-    } catch (error) {
-      audioFile?.delete();
-      throw error;
+    if (objectsOnImage.length === 1) {
+      return objectsOnImage;
     }
+
+    const namesToTranslate = objectsOnImage.map((item) => item.name);
+
+    const translatedWords = await this.translator.translate(namesToTranslate, {
+      sourceLanguageCode,
+      targetLanguageCode,
+    });
+
+    const translatedObjectsOnImage = objectsOnImage.map((item, index) => ({
+      ...item,
+      translatedName: translatedWords[index],
+    }));
+
+    return translatedObjectsOnImage;
   }
 
   async findAll(
@@ -301,14 +216,13 @@ export class FlashCardsService {
     return true;
   }
 
-  async like(likeFlashcardDto: LikeFlashcardDto) {
+  async like(likeFlashcardDto: LikeFlashcardDto, userId: string) {
     const { cardId } = likeFlashcardDto;
-    await this.prisma.feedback.create({
-      data: { cardId, isAppropriate: true },
-    });
+
+    await this.feedbackService.create({ cardId, isAppropriate: true }, userId);
   }
 
-  async deleteCard(cardId: string) {
+  async delete(cardId: string) {
     await Promise.all([
       this.prisma.cards.update({
         where: { id: cardId },
@@ -321,12 +235,13 @@ export class FlashCardsService {
         where: { flashcardId: cardId },
       }),
     ]);
+
     return {
       message: 'Card was successfuly deleted!',
     };
   }
 
-  async regenerateCard(cardId: string, userId: string) {
+  async regenerateCard(cardId: string) {
     const currentCard = await this.prisma.cards.update({
       data: {
         userId: null,
@@ -345,19 +260,14 @@ export class FlashCardsService {
       throw new BadRequestException('This card had already regenerated');
     }
 
-    const card = await this.processImage({
-      imageUrl: currentCard.image_name,
-      userId: userId,
-      generatedImageName: currentCard.image_name,
-      isRegeneration: true,
-    });
+    const card = await this.processImage(currentCard.image_url);
 
     return {
       result: card,
     };
   }
 
-  async dislike(dislikeFlashcardDto: DislikeFlashcardDto) {
+  async dislike(dislikeFlashcardDto: DislikeFlashcardDto, userId: string) {
     const { cardId, text, categories } = dislikeFlashcardDto;
 
     const existingFeedback = await this.prisma.feedback.findFirst({
@@ -365,7 +275,7 @@ export class FlashCardsService {
     });
 
     if (existingFeedback) {
-      throw new NotFoundException('This card has already feedback');
+      throw new NotFoundException('This card has feedback already');
     }
 
     if ((!categories && !text) || (categories && text)) {
@@ -374,11 +284,14 @@ export class FlashCardsService {
       );
     }
 
-    const fetchedFeedback = await this.feedback.create({
-      cardId,
-      text,
-      categories,
-    });
+    const fetchedFeedback = await this.feedbackService.create(
+      {
+        cardId,
+        text,
+        categories,
+      },
+      userId,
+    );
 
     if (!fetchedFeedback.card.user) {
       throw new NotFoundException('User not found for the given card');

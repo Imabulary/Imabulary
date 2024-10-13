@@ -5,6 +5,8 @@ import {
   IsUUID,
   IsString,
   IsBoolean,
+  IsOptional,
+  IsUrl,
 } from 'class-validator';
 import { IsRecordExist } from 'src/decorators/is-record-exist.decorator';
 
@@ -36,21 +38,21 @@ export class DisorganizeFlashcardsDTO extends PartialType(
 ) {}
 
 export class CreateFlashcardDTO {
+  @IsString({ message: 'Object name must be a string' })
   @IsNotEmpty({
-    message: 'Object name should be defined',
+    message: 'Please provide a name of the object on an image',
   })
-  @IsString()
   objectOnImage: string;
 
-  @IsNotEmpty()
-  @IsString()
+  @IsUrl({}, { message: 'Please provide a valid image URL' })
+  @IsNotEmpty({ message: 'Please provide an image URL' })
   imageUrl: string;
 
-  @IsNotEmpty()
-  @IsString()
-  generatedImageName: string;
+  @IsString({ message: 'Name of the image must be a string' })
+  @IsNotEmpty({ message: 'Please provide an image name' })
+  imageName: string;
 
-  @IsNotEmpty()
   @IsBoolean()
-  isRegeneration: boolean;
+  @IsOptional()
+  isRegeneration?: boolean;
 }

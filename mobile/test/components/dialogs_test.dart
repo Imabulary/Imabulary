@@ -44,7 +44,7 @@ void main() {
       'should render error dialog with default message',
       (tester) async {
         await tester.pumpWidget(TestApp(
-          Dialogs.error(null),
+          Dialogs.error(''),
         ));
 
         final errorTitle = find.text("Oops! We're sorry");

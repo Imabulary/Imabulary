@@ -7,4 +7,5 @@ class AppColors {
   static const success = Color.fromRGBO(0, 89, 7, 1);
   static const error = Color.fromRGBO(198, 40, 40, 1);
   static const orange = Color.fromRGBO(208, 112, 0, 1);
+  static const lightGrey = Color.fromRGBO(190, 190, 190, 1);
 }

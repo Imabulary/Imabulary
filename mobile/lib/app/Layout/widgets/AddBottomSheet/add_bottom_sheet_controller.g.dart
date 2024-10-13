@@ -7,7 +7,7 @@ part of 'add_bottom_sheet_controller.dart';
 // **************************************************************************
 
 String _$addBottomSheetControllerHash() =>
-    r'87c03849e1e5abd2f7b9d18c1a75237c5ba8293d';
+    r'5bd755d4db4c8e55adadee6e17542508d0ca7677';
 
 /// See also [AddBottomSheetController].
 @ProviderFor(AddBottomSheetController)

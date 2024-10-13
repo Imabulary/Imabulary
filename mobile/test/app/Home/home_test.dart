@@ -5,9 +5,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'package:mobile/app/FlashCard/data/dto/flashcard_dto.dart';
-import 'package:mobile/app/FlashCard/data/flash_card_repository.dart';
-import 'package:mobile/app/FlashCard/domain/card.dart';
+import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
+import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Home/presentation/home.dart';
 import 'package:mobile/app/Home/widgets/flash_cards_list.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
@@ -54,7 +54,7 @@ void main() {
           overrides: [
             flashCardRepositoryProvider.overrideWith(
               (ref) => error
-                  ? FlashCardRepository(client: dio)
+                  ? FlashCardRepository(dio: dio)
                   : FakeFlashCardsRepository(),
             )
           ],

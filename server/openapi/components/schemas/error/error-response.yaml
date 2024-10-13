@@ -8,4 +8,4 @@ properties:
     description: The error message
   error:
     type: string
-    description: The error type
+    description: The error title
