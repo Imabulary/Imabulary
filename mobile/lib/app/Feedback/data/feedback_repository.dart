@@ -23,8 +23,6 @@ class FeedbackRepository {
         data: createFeedbackDto.toJson(),
       );
 
-      print(response.data['result']);
-
       return response.data['result'];
     });
   }

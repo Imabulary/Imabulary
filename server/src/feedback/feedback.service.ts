@@ -23,11 +23,16 @@ export class FeedbackService {
       slug: feedbackCategoriesSlugs.NO_DESIRED_OBJECT,
     });
 
-    await this.create(
-      { categories: [noDesiredObjectFeedbackCategory.id] },
-      userId,
-      createNoDesiredObjectFeedbackDTO,
-    );
+    if (!noDesiredObjectFeedbackCategory) {
+      // TODO: add log indicating that category wasn't found
+      await this.create({}, userId, createNoDesiredObjectFeedbackDTO);
+    } else {
+      await this.create(
+        { categories: [noDesiredObjectFeedbackCategory.id] },
+        userId,
+        createNoDesiredObjectFeedbackDTO,
+      );
+    }
 
     return true;
   }
@@ -37,12 +42,11 @@ export class FeedbackService {
     userId: string,
     metadata?: object,
   ) {
-    const { isAppropriate, categories, ...feedbackDto } = createFeedbackDto;
+    const { categories, ...feedbackDto } = createFeedbackDto;
 
     return this.prisma.feedback.create({
       data: {
         ...feedbackDto,
-        isAppropriate: isAppropriate || false,
         metadata,
         userId,
         category: {
