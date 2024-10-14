@@ -6,15 +6,25 @@ import {
 import {
   FORBIDDEN_ERROR,
   UNAUTHORIZED_ERROR,
-  UNKNOWN_ERROR,
+  UNKNOWN_DELETING_ERROR,
+  UNKNOWN_UPLOADING_ERROR,
 } from './constants';
 import { FirebaseError } from 'firebase-admin';
+import { FirebaseOperation, firebaseOperations } from './types';
 
 const isFirebaseError = (error: FirebaseError): error is FirebaseError => {
   return 'code' in error;
 };
 
-export const handleUploadException = (error: any) => {
+export const handleFirebaseException = (
+  error: any,
+  operation: FirebaseOperation,
+) => {
+  const unknownError = {
+    [firebaseOperations.UPLOAD]: UNKNOWN_UPLOADING_ERROR,
+    [firebaseOperations.DELETE]: UNKNOWN_DELETING_ERROR,
+  };
+
   if (isFirebaseError(error)) {
     const options = {
       cause: error,
@@ -22,11 +32,11 @@ export const handleUploadException = (error: any) => {
 
     const firebaseExceptionsMap = {
       'storage/unknown': new InternalServerErrorException(
-        UNKNOWN_ERROR,
+        unknownError[operation],
         options,
       ),
       'storage/unauthenticated': new UnauthorizedException(
-        UNAUTHORIZED_ERROR,
+        UNAUTHORIZED_ERROR.replace(':operation', operation),
         options,
       ),
       'storage/unauthorized': new ForbiddenException(FORBIDDEN_ERROR, options),
@@ -34,9 +44,9 @@ export const handleUploadException = (error: any) => {
 
     throw (
       firebaseExceptionsMap[error.code] ||
-      new InternalServerErrorException(UNKNOWN_ERROR, options)
+      new InternalServerErrorException(unknownError[operation], options)
     );
   }
 
-  throw new InternalServerErrorException(UNKNOWN_ERROR);
+  throw new InternalServerErrorException(unknownError[operation]);
 };

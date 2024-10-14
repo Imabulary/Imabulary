@@ -66,8 +66,6 @@ export class FlashCardsService {
   ) {
     let audioFile: File;
 
-    const imageFileName = imageUrl.split('/').pop();
-
     try {
       const audioSpeechStream = await this.sound.synthesizeSpeech(
         objectOnImage,
@@ -84,10 +82,9 @@ export class FlashCardsService {
 
       audioFile = uploadedAudioFile;
 
-      const audioUrl = await this.storage.getFileURL(audioFile);
-
-      const [relatedPhrase, explanation, speechPart, status] =
+      const [audioUrl, relatedPhrase, explanation, speechPart, status] =
         await Promise.all([
+          this.storage.getFileURL(audioFile),
           this.assistant.generatePhrase(objectOnImage),
           this.assistant.explain(objectOnImage),
           this.assistant.speechPart(objectOnImage),
@@ -134,7 +131,7 @@ export class FlashCardsService {
 
       return card;
     } catch (error) {
-      await this.storage.delete(imageFileName);
+      await this.storage.delete(imageName);
       await audioFile.delete();
 
       throw error;
