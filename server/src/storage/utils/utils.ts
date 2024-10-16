@@ -3,13 +3,13 @@ import {
   InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { FirebaseError } from 'firebase-admin';
 import {
   FORBIDDEN_ERROR,
   UNAUTHORIZED_ERROR,
   UNKNOWN_DELETING_ERROR,
   UNKNOWN_UPLOADING_ERROR,
 } from './constants';
-import { FirebaseError } from 'firebase-admin';
 import { FirebaseOperation, firebaseOperations } from './types';
 
 const isFirebaseError = (error: FirebaseError): error is FirebaseError => {

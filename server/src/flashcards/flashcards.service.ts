@@ -23,6 +23,7 @@ import { FeedbackService } from 'src/feedback/feedback.service';
 import { QUIZ_STATUS } from 'src/quiz/utils/quiz-status';
 import { WalletService } from 'src/wallet/wallet.service';
 import { DEFAULT_COST } from 'src/shared/constants';
+import { QuizService } from 'src/quiz/quiz.service';
 
 @Injectable()
 export class FlashCardsService {
@@ -35,6 +36,7 @@ export class FlashCardsService {
     private readonly sound: SoundService,
     private readonly feedbackService: FeedbackService,
     private readonly wallet: WalletService,
+    private readonly quizService: QuizService,
   ) {}
 
   async scan(userId: string, fileName: string, file: Buffer) {
@@ -88,9 +90,7 @@ export class FlashCardsService {
           this.assistant.generatePhrase(objectOnImage),
           this.assistant.explain(objectOnImage),
           this.assistant.speechPart(objectOnImage),
-          this.prisma.quizCardStatus.findFirst({
-            where: { name: QUIZ_STATUS.NOT_STUDIED },
-          }),
+          this.quizService.findNotStudiedQuizStatus(),
         ]);
 
       // TODO: Take these variables from settings of user profile, once it's done

@@ -2,14 +2,11 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma';
 import { QuizDTO } from './dto/quiz.dto';
 import { QUIZ_STATUS } from './utils/quiz-status';
+import { QuizStatusMisconfigurationException } from './exceptions/quiz.exception';
 
 @Injectable()
 export class QuizService {
   constructor(private readonly prisma: PrismaService) {}
-
-  private findStatusId(array: { id: string; name: string }[], statusName) {
-    return array.find((item) => statusName === item.name)?.id;
-  }
 
   async learn(quizDto: QuizDTO) {
     const card = await this.prisma.cards.findUnique({
@@ -26,7 +23,10 @@ export class QuizService {
 
     const isCorrect = card.word.toLowerCase() === quizDto.word.toLowerCase();
 
-    const quizStatuses = await this.prisma.quizCardStatus.findMany();
+    const [stillLearningQuizStatus, masteredQuizStatus] = await Promise.all([
+      this.findStillLearningQuizStatus(),
+      this.findMasteredQuizStatus(),
+    ]);
 
     return await this.prisma.cards.update({
       where: {
@@ -34,10 +34,46 @@ export class QuizService {
       },
       data: {
         quizStatusId: isCorrect
-          ? this.findStatusId(quizStatuses, QUIZ_STATUS.MASTERED)
-          : this.findStatusId(quizStatuses, QUIZ_STATUS.STILL_LEARNING),
+          ? masteredQuizStatus.id
+          : stillLearningQuizStatus.id,
         updatedAt: new Date(),
       },
     });
+  }
+
+  async findNotStudiedQuizStatus() {
+    const status = await this.prisma.quizCardStatus.findFirst({
+      where: { name: QUIZ_STATUS.NOT_STUDIED },
+    });
+
+    if (!status) {
+      throw new QuizStatusMisconfigurationException(QUIZ_STATUS.NOT_STUDIED);
+    }
+
+    return status;
+  }
+
+  async findStillLearningQuizStatus() {
+    const status = await this.prisma.quizCardStatus.findFirst({
+      where: { name: QUIZ_STATUS.STILL_LEARNING },
+    });
+
+    if (!status) {
+      throw new QuizStatusMisconfigurationException(QUIZ_STATUS.STILL_LEARNING);
+    }
+
+    return status;
+  }
+
+  async findMasteredQuizStatus() {
+    const status = await this.prisma.quizCardStatus.findFirst({
+      where: { name: QUIZ_STATUS.MASTERED },
+    });
+
+    if (!status) {
+      throw new QuizStatusMisconfigurationException(QUIZ_STATUS.MASTERED);
+    }
+
+    return status;
   }
 }
