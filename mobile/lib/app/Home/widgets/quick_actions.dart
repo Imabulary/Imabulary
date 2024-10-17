@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Home/components/FlashcardQuickAction/flashcard_quick_action.dart';
+import 'package:mobile/app/Home/components/QuizQuickAction/quiz_quick_action.dart';
 import 'package:mobile/app/Home/components/SetQuickAction/set_quick_action.dart';
-import 'package:mobile/app/Home/widgets/quiz_card.dart';
-import 'package:mobile/app/Set/data/set_repository.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
 class QuickActions extends ConsumerWidget {
@@ -11,8 +10,6 @@ class QuickActions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final setsRepository = ref.watch(setRepositoryProvider);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -32,9 +29,9 @@ class QuickActions extends ConsumerWidget {
         ),
         const SetQuickAction(),
         const SizedBox(
-          height: 5,
+          height: 12,
         ),
-        QuizCard(setsRepository: setsRepository)
+        const QuizQuickAction()
       ],
     );
   }

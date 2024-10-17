@@ -8,7 +8,7 @@ import 'package:mobile/app/Home/widgets/home_app_title.dart';
 import 'package:mobile/app/Home/widgets/quick_actions.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
-import 'package:mobile/app/Set/data/set_repository.dart';
+import 'package:mobile/app/Set/application/set_provider.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
@@ -20,14 +20,14 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final flashcards = ref.watch(findAllFlashcardsProvider(
-      const FindAllFlashcardsDTO(pagination: Pagination()),
+      const FindAllFlashcardsDTO(pagination: Pagination(limit: 10)),
     ));
 
     return Layout(
       RefreshIndicator(
         onRefresh: () => Future.sync(() {
           ref.invalidate(getWalletBalanceProvider);
-          ref.invalidate(setRepositoryProvider);
+          ref.invalidate(findAllSetsProvider);
           ref.invalidate(findAllFlashcardsProvider);
         }),
         child: SizedBox(
@@ -45,17 +45,28 @@ class HomeScreen extends ConsumerWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                const TypeSetting(
-                  'Your latest scans',
-                  variant: TextVariants.headlineMedium,
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
                 flashcards.when(
                   skipLoadingOnRefresh: false,
-                  data: (flashCards) => FlashCardsList(
-                    flashCards: flashCards.result,
+                  data: (flashcards) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (flashcards.result.isNotEmpty)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const TypeSetting(
+                              'Your latest scans',
+                              variant: TextVariants.headlineMedium,
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                          ],
+                        ),
+                      FlashCardsList(
+                        flashCards: flashcards.result,
+                      ),
+                    ],
                   ),
                   error: (error, _) => const Center(
                     child: TypeSetting(

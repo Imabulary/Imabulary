@@ -7,6 +7,10 @@ import { QUIZ_STATUS } from './utils/quiz-status';
 export class QuizService {
   constructor(private readonly prisma: PrismaService) {}
 
+  // findAllStatuses() {
+
+  // }
+
   private findStatusId(array: { id: string; name: string }[], statusName) {
     return array.find((item) => statusName === item.name)?.id;
   }

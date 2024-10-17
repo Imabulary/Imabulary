@@ -9,7 +9,7 @@ part 'pagination.g.dart';
 class Pagination with _$Pagination {
   const factory Pagination({
     @Default(1) int? page,
-    @Default(10) int? limit,
+    @Default(100) int? limit,
   }) = _Pagination;
 
   factory Pagination.fromJson(Map<String, dynamic> json) =>

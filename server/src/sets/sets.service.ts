@@ -7,7 +7,7 @@ import { CreateSetDto, UpdateSetDto } from './dto/set.dto';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma';
 import { SET_NOT_FOUND_ERROR_MESSAGE } from './utils';
-import { ServerPagination } from 'src/shared';
+import { Filters, ServerPagination } from 'src/shared';
 
 @Injectable()
 export class SetsService {
@@ -21,12 +21,16 @@ export class SetsService {
     return this.prisma.sets.create({ data: { userId, name, description } });
   }
 
-  async findAll(userId: string, pagination: ServerPagination) {
+  async findAll(
+    userId: string,
+    pagination: ServerPagination,
+    filters: Filters<Prisma.CardsWhereInput> = {},
+  ) {
     const [sets, total] = await this.prisma.$transaction([
       this.prisma.sets.findMany({
         ...pagination,
         orderBy: { createdAt: 'desc' },
-        where: { userId },
+        where: { userId, ...filters },
         include: {
           CardsOnSets: {
             include: {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:mobile/app/Set/application/set_provider.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/presentation/set_screen.dart';
@@ -33,6 +34,7 @@ class SetForm extends ConsumerWidget {
         Navigator.pop(context); // close form
 
         setsPagingController?.refresh();
+        ref.invalidate(findAllSetsProvider);
 
         if (set == null) {
           Navigator.push(
