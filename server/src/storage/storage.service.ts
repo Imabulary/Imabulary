@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import admin from 'firebase-admin';
 import { File } from '@google-cloud/storage';
 import { getDownloadURL } from 'firebase-admin/storage';
-import { handleUploadException, IBucketFolders } from './utils';
+import {
+  firebaseOperations,
+  handleFirebaseException,
+  IBucketFolders,
+} from './utils';
 import { formatFileName } from 'src/utils';
 
 @Injectable()
@@ -16,7 +20,7 @@ export class StorageService {
 
       return { storageFile, generatedFileName };
     } catch (error: any) {
-      handleUploadException(error);
+      handleFirebaseException(error, firebaseOperations.UPLOAD);
     }
   }
 
@@ -37,7 +41,7 @@ export class StorageService {
 
       await storageFile.delete();
     } catch (error: any) {
-      handleUploadException(error);
+      handleFirebaseException(error, firebaseOperations.DELETE);
     }
   }
 }

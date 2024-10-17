@@ -23,6 +23,7 @@ import { FeedbackService } from 'src/feedback/feedback.service';
 import { QUIZ_STATUS } from 'src/quiz/utils/quiz-status';
 import { WalletService } from 'src/wallet/wallet.service';
 import { DEFAULT_COST } from 'src/shared/constants';
+import { QuizService } from 'src/quiz/quiz.service';
 
 @Injectable()
 export class FlashCardsService {
@@ -35,6 +36,7 @@ export class FlashCardsService {
     private readonly sound: SoundService,
     private readonly feedbackService: FeedbackService,
     private readonly wallet: WalletService,
+    private readonly quizService: QuizService,
   ) {}
 
   async scan(userId: string, fileName: string, file: Buffer) {
@@ -66,8 +68,6 @@ export class FlashCardsService {
   ) {
     let audioFile: File;
 
-    const imageFileName = imageUrl.split('/').pop();
-
     try {
       const audioSpeechStream = await this.sound.synthesizeSpeech(
         objectOnImage,
@@ -84,16 +84,13 @@ export class FlashCardsService {
 
       audioFile = uploadedAudioFile;
 
-      const audioUrl = await this.storage.getFileURL(audioFile);
-
-      const [relatedPhrase, explanation, speechPart, status] =
+      const [audioUrl, relatedPhrase, explanation, speechPart, status] =
         await Promise.all([
+          this.storage.getFileURL(audioFile),
           this.assistant.generatePhrase(objectOnImage),
           this.assistant.explain(objectOnImage),
           this.assistant.speechPart(objectOnImage),
-          this.prisma.quizCardStatus.findFirst({
-            where: { name: QUIZ_STATUS.NOT_STUDIED },
-          }),
+          this.quizService.findNotStudiedQuizStatus(),
         ]);
 
       // TODO: Take these variables from settings of user profile, once it's done
@@ -134,7 +131,7 @@ export class FlashCardsService {
 
       return card;
     } catch (error) {
-      await this.storage.delete(imageFileName);
+      await this.storage.delete(imageName);
       await audioFile.delete();
 
       throw error;

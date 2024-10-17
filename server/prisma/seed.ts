@@ -1,11 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 
-const username = process.env.POSTGRES_USER;
-const password = process.env.POSTGRES_PASSWORD;
-const database = process.env.POSTGRES_DB;
+const databaseUrl = process.env.DATABASE_URL;
 
 const prisma = new PrismaClient({
-  datasourceUrl: `postgresql://${username}:${password}@localhost:5433/${database}`,
+  datasourceUrl: databaseUrl,
 });
 
 async function main() {
