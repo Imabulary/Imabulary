@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Flashcard/widgets/SetsListItem/sets_list_item_controller.dart';
+import 'package:mobile/app/Set/application/set_provider.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/utils/async_value_ui.dart';
@@ -22,6 +23,11 @@ class SetsListItem extends ConsumerWidget {
         message: 'Flashcard is being organized...',
       );
       state.showErrorDialog(context, true);
+
+      state.whenData((value) {
+        ref.invalidate(findInProgressSetsProvider);
+        ref.invalidate(findNotStudiedSetsProvider);
+      });
     });
 
     final state = ref.watch(setsListItemControllerProvider);
@@ -33,6 +39,8 @@ class SetsListItem extends ConsumerWidget {
         ? null
         : () => organize(set.id, flashcard?.id).whenComplete(
               () {
+                Navigator.pop(context);
+                Navigator.pop(context);
                 Navigator.pop(context);
                 Navigator.pop(context);
 

@@ -35,6 +35,8 @@ class SetForm extends ConsumerWidget {
 
         setsPagingController?.refresh();
         ref.invalidate(findAllSetsProvider);
+        ref.invalidate(findInProgressSetsProvider);
+        ref.invalidate(findNotStudiedSetsProvider);
 
         if (set == null) {
           Navigator.push(

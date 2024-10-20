@@ -3,16 +3,18 @@ import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/constants.dart';
 
 class ListItem extends ListTile {
-  const ListItem(
-      {super.key,
-      this.image,
-      required this.label,
-      this.sublabel,
-      super.onTap,
-      super.contentPadding,
-      super.tileColor,
-      super.textColor,
-      super.leading});
+  const ListItem({
+    super.key,
+    this.image,
+    required this.label,
+    this.sublabel,
+    super.onTap,
+    super.contentPadding,
+    super.tileColor,
+    super.textColor,
+    super.leading,
+    super.enabled,
+  });
 
   final String? image;
   final String label;
@@ -20,11 +22,15 @@ class ListItem extends ListTile {
 
   @override
   Widget build(BuildContext context) {
+    final sublabelPadding = sublabel == null
+        ? const EdgeInsets.all(10)
+        : const EdgeInsets.only(left: 10, right: 10);
+    final padding = contentPadding != null ? contentPadding : sublabelPadding;
+
     return ListTile(
+      enabled: enabled,
       onTap: onTap,
-      contentPadding: sublabel == null
-          ? const EdgeInsets.all(10)
-          : const EdgeInsets.only(left: 10, right: 10),
+      contentPadding: padding,
       tileColor: tileColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),

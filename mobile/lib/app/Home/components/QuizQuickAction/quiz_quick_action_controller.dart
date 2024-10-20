@@ -1,13 +1,15 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter/material.dart';
+import 'package:mobile/app/Set/domain/set.dart';
+import 'package:mobile/app/Set/widgets/sets_quizzes_list.dart';
 
-part 'quiz_quick_action_controller.g.dart';
-
-@riverpod
-class QuizQuickActionController extends _$QuizQuickActionController {
-  @override
-  FutureOr<void> build() {
-    // no-op
+class QuizQuickActionController {
+  static void showAvailableSets(BuildContext buildContext, List<Set> sets) {
+    showModalBottomSheet(
+      context: buildContext,
+      isScrollControlled: true,
+      builder: (context) => SetsQuizzesList(
+        sets: sets,
+      ),
+    );
   }
-
-  Future findInProgressSets()
 }

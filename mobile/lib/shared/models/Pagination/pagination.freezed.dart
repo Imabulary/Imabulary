@@ -116,7 +116,7 @@ class __$$PaginationImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PaginationImpl with DiagnosticableTreeMixin implements _Pagination {
-  const _$PaginationImpl({this.page = 1, this.limit = 10});
+  const _$PaginationImpl({this.page = 1, this.limit = 100});
 
   factory _$PaginationImpl.fromJson(Map<String, dynamic> json) =>
       _$$PaginationImplFromJson(json);

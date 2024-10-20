@@ -32,7 +32,7 @@ class FlashcardQuickAction extends ConsumerWidget {
         onTap: handleGenerateFlashcard,
       ),
       error: (error, _) => FlashcardQuickActionListItem(
-        'Something wrong with this quick action',
+        'Quick action temporary unavailable. Please try again later.',
       ),
       loading: () => FlashcardQuickActionListItem(
         'Loading...',

@@ -11,7 +11,9 @@ class SetQuickAction extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sets = ref.watch(findAllSetsProvider(Pagination()));
+    final sets = ref.watch(
+      findAllSetsProvider(Pagination()),
+    );
 
     return sets.when(
       data: (data) => SetQuickActionListItem(
@@ -33,7 +35,7 @@ class SetQuickAction extends ConsumerWidget {
       ),
       loading: () => SetQuickActionListItem('Loading...'),
       error: (error, _) => SetQuickActionListItem(
-        'Something wrong with this quick action',
+        'Quick action temporary unavailable. Please try again later.',
       ),
     );
   }

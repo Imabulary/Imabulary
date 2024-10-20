@@ -10,11 +10,11 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { Prisma, Users } from '@prisma/client';
+import { Users } from '@prisma/client';
 import { Request } from 'express';
 import { AuthGuard } from 'src/guards';
 import { PaginationPipe } from 'src/pipes';
-import { Filters, ServerPagination } from 'src/shared';
+import { ServerPagination } from 'src/shared';
 import { CreateSetDto, UpdateSetDto } from './dto/set.dto';
 import { SetsService } from './sets.service';
 
@@ -34,11 +34,10 @@ export class SetsController {
   findAll(
     @Req() request: Request,
     @Query('pagination', PaginationPipe) pagination: ServerPagination,
-    @Query('filters') filters: Filters<Prisma.CardsWhereInput>,
   ) {
     const user: Users = request['user'];
 
-    return this.setsService.findAll(user.id, pagination, filters);
+    return this.setsService.findAll(user.id, pagination);
   }
 
   @Get(':id')

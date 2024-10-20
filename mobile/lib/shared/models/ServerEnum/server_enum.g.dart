@@ -1,18 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'quiz_status.dart';
+part of 'server_enum.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$QuizStatusImpl _$$QuizStatusImplFromJson(Map<String, dynamic> json) =>
-    _$QuizStatusImpl(
+_$ServerEnumImpl _$$ServerEnumImplFromJson(Map<String, dynamic> json) =>
+    _$ServerEnumImpl(
       id: json['id'] as String,
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$$QuizStatusImplToJson(_$QuizStatusImpl instance) =>
+Map<String, dynamic> _$$ServerEnumImplToJson(_$ServerEnumImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

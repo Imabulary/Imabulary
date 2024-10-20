@@ -61,13 +61,13 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
 
     final response = ref.watch(findAllFlashcardsProvider(
       FindAllFlashcardsDTO(
-        pagination: const Pagination(page: 1, limit: 100),
+        pagination: const Pagination(),
         setId: set?.id,
       ),
     ));
 
     if (response.isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const Layout(Center(child: CircularProgressIndicator()));
     }
 
     if (response.hasError) {

@@ -70,7 +70,7 @@ class HomeScreen extends ConsumerWidget {
                   ),
                   error: (error, _) => const Center(
                     child: TypeSetting(
-                      "Oops! An error occurred during loading. But don't worry, we're on it! Try again later.",
+                      "Oops! An error occurred while loading your latest scans. But don't worry, we're on it! Try again later.",
                       style: TextStyle(color: Colors.grey),
                       textAlign: TextAlign.center,
                     ),
