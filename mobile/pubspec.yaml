@@ -101,10 +101,7 @@ flutter:
     - assets/.env
     - assets/images/welcome.svg.vec
     - assets/images/account.png
-    - assets/images/flashcard-icon.svg
     - assets/images/logo.png
-    - assets/images/quiz-white.svg
-    - assets/images/sets-icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
