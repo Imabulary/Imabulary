@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/guards';
 import { QuizService } from './quiz.service';
 import { QuizDTO } from './dto/quiz.dto';
@@ -11,5 +11,10 @@ export class QuizController {
   @Post('learn')
   learn(@Body() quizDto: QuizDTO) {
     return this.quizService.learn(quizDto);
+  }
+
+  @Get('statuses')
+  findAllStatuses() {
+    return this.quizService.findAllStatuses();
   }
 }

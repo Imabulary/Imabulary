@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
 class QuizFlashcardsAmountWarning extends StatelessWidget {
@@ -12,7 +13,7 @@ class QuizFlashcardsAmountWarning extends StatelessWidget {
         variant: TextVariants.titleLarge,
       ),
       content: TypeSetting(
-        'You must have at least 4 flashcards in the set to start a quiz',
+        'You must have at least $kMinimalAmountOfFlashcardsToStartQuiz flashcards in the set to start a quiz',
       ),
     );
   }

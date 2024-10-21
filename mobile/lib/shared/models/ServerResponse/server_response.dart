@@ -29,10 +29,12 @@ class ServerResponse<R> {
       response.data['result'],
     ).map(identity).getOrElse([]);
 
-    final int totalItems =
-        Maybe.fromValue(response.data['meta']['pagination']['total'])
-            .map(identity)
-            .getOrElse(0);
+    final int totalItems = Maybe.fromValue(response.data)
+        .map((data) => data['meta'])
+        .map((meta) => meta['pagination'])
+        .map((pagination) => pagination['total'])
+        .map(identity)
+        .getOrElse(0);
 
     return ServerResponse<List<T>>(
       result: result.map((item) => handler(item)).toList(),

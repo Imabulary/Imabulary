@@ -17,7 +17,7 @@ class SetsGridController {
             builder: (context, scrollController) => SingleChildScrollView(
               controller: scrollController,
               child: Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(24),
                 child: SetForm(set),
               ),
             ),

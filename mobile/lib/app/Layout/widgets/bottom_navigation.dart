@@ -25,14 +25,12 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   void _navigate(int index) {
-    if (index != widget.currentScreen) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => widget.screens[index],
-        ),
-      );
-    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => widget.screens[index],
+      ),
+    );
   }
 
   @override

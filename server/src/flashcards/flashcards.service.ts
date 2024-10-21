@@ -174,6 +174,9 @@ export class FlashCardsService {
         ...pagination,
         orderBy: { createdAt: 'desc' },
         where: { userId, ...filters },
+        include: {
+          QuizStatus: true,
+        },
       }),
       this.prisma.cards.count({ where: { userId, ...filters } }),
     ]);

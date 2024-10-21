@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
+import 'package:mobile/app/Wallet/components/balance.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
 
@@ -12,15 +13,7 @@ class ProfileAppTitle extends ConsumerWidget {
     final wallet = ref.watch(getWalletBalanceProvider);
 
     return wallet.when(
-      data: (data) => Row(
-        children: [
-          const Icon(Icons.paid),
-          const SizedBox(
-            width: 4,
-          ),
-          TypeSetting(data.balance.toString()),
-        ],
-      ),
+      data: (data) => Balance(data.balance),
       error: (error, _) => Container(
         alignment: Alignment.centerLeft,
         child: TypeSetting(error is ServerError

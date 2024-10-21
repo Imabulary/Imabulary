@@ -30,7 +30,7 @@ mixin _$Set {
   String get userId => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  List<({String image_url})>? get flashcards =>
+  List<({String image_url, String quizStatusId})>? get flashcards =>
       throw _privateConstructorUsedError;
 
   /// Serializes this Set to a JSON map.
@@ -58,7 +58,7 @@ abstract class $SetCopyWith<$Res> {
       String userId,
       DateTime createdAt,
       DateTime updatedAt,
-      List<({String image_url})>? flashcards});
+      List<({String image_url, String quizStatusId})>? flashcards});
 }
 
 /// @nodoc
@@ -111,7 +111,7 @@ class _$SetCopyWithImpl<$Res, $Val extends Set> implements $SetCopyWith<$Res> {
       flashcards: freezed == flashcards
           ? _value.flashcards
           : flashcards // ignore: cast_nullable_to_non_nullable
-              as List<({String image_url})>?,
+              as List<({String image_url, String quizStatusId})>?,
     ) as $Val);
   }
 }
@@ -133,7 +133,7 @@ abstract class _$$SetImplCopyWith<$Res> implements $SetCopyWith<$Res> {
       String userId,
       DateTime createdAt,
       DateTime updatedAt,
-      List<({String image_url})>? flashcards});
+      List<({String image_url, String quizStatusId})>? flashcards});
 }
 
 /// @nodoc
@@ -183,7 +183,7 @@ class __$$SetImplCopyWithImpl<$Res> extends _$SetCopyWithImpl<$Res, _$SetImpl>
       flashcards: freezed == flashcards
           ? _value._flashcards
           : flashcards // ignore: cast_nullable_to_non_nullable
-              as List<({String image_url})>?,
+              as List<({String image_url, String quizStatusId})>?,
     ));
   }
 }
@@ -202,7 +202,7 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
       required this.userId,
       required this.createdAt,
       required this.updatedAt,
-      final List<({String image_url})>? flashcards})
+      final List<({String image_url, String quizStatusId})>? flashcards})
       : _flashcards = flashcards;
 
   factory _$SetImpl.fromJson(Map<String, dynamic> json) =>
@@ -224,9 +224,9 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
   final DateTime createdAt;
   @override
   final DateTime updatedAt;
-  final List<({String image_url})>? _flashcards;
+  final List<({String image_url, String quizStatusId})>? _flashcards;
   @override
-  List<({String image_url})>? get flashcards {
+  List<({String image_url, String quizStatusId})>? get flashcards {
     final value = _flashcards;
     if (value == null) return null;
     if (_flashcards is EqualUnmodifiableListView) return _flashcards;
@@ -304,7 +304,8 @@ abstract class _Set implements Set {
       required final String userId,
       required final DateTime createdAt,
       required final DateTime updatedAt,
-      final List<({String image_url})>? flashcards}) = _$SetImpl;
+      final List<({String image_url, String quizStatusId})>?
+          flashcards}) = _$SetImpl;
 
   factory _Set.fromJson(Map<String, dynamic> json) = _$SetImpl.fromJson;
 
@@ -325,7 +326,7 @@ abstract class _Set implements Set {
   @override
   DateTime get updatedAt;
   @override
-  List<({String image_url})>? get flashcards;
+  List<({String image_url, String quizStatusId})>? get flashcards;
 
   /// Create a copy of Set
   /// with the given fields replaced by the non-null parameter values.

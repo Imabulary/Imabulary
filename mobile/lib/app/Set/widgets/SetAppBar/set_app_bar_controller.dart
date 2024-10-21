@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen.dart';
 import 'package:mobile/app/Set/components/quiz_flashcards_amount_warning.dart';
+import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/widgets/actions_list.dart';
+
+const kMinimalAmountOfFlashcardsToStartQuiz = 2;
 
 class SetAppBarController {
   static void Function() showActionsBottomSheet(BuildContext context) => () {
@@ -15,13 +18,10 @@ class SetAppBarController {
 
   static Function() startQuiz(
     BuildContext context,
-    List<({String image_url})>? flashcards,
+    List<SetFlashcard>? flashcards,
   ) {
     return () {
-      const kMinimalAmountOfFlashcardsToStartQuiz = 4;
-
       if (flashcards == null ||
-          flashcards.isEmpty == true ||
           flashcards.length < kMinimalAmountOfFlashcardsToStartQuiz) {
         return showDialog(
           context: context,

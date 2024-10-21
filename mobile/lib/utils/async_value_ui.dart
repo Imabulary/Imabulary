@@ -16,7 +16,7 @@ extension AsyncValueUI on AsyncValue {
     }
   }
 
-  showErrorDialog(BuildContext context, bool doPop) {
+  void showErrorDialog(BuildContext context, bool doPop) {
     if (!isLoading && hasError && hasValue) {
       // TODO: push this error to external system
       print(error);

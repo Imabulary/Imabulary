@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma';
 import { QuizDTO } from './dto/quiz.dto';
 import { QUIZ_STATUS } from './utils/quiz-status';
 import { QuizStatusMisconfigurationException } from './exceptions/quiz.exception';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class QuizService {
@@ -39,6 +40,16 @@ export class QuizService {
         updatedAt: new Date(),
       },
     });
+  }
+
+  async findAllStatuses() {
+    const statuses = await this.prisma.quizCardStatus.findMany();
+
+    if (isEmpty(statuses)) {
+      throw new QuizStatusMisconfigurationException();
+    }
+
+    return statuses;
   }
 
   async findNotStudiedQuizStatus() {

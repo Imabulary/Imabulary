@@ -12,10 +12,13 @@ class QuizScreenController {
     // Create a set to keep track of selected incorrect flashcards
     final selectedIncorrectFlashcards = {correctFlashcard};
 
-    // Generate 3 unique incorrect options
+    // Determine the number of incorrect answers based on flashcards length
+    final int incorrectAnswersCount = flashcards.length >= 4 ? 3 : 1;
+
+    // Generate unique incorrect options
     final List<FlashCard> incorrectFlashcards = [];
 
-    while (incorrectFlashcards.length < 3) {
+    while (incorrectFlashcards.length < incorrectAnswersCount) {
       final randomFlashcard = flashcards[random.nextInt(flashcards.length)];
 
       if (!selectedIncorrectFlashcards.contains(randomFlashcard)) {

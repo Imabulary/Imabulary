@@ -8,8 +8,13 @@ export type ServerPagination = {
   take: number;
 };
 
-export type Filters = {
+export type Filters<
+  S = Record<string, unknown>,
+  E = Record<string, unknown>,
+> = {
   [key: string]: {
     equals: string;
+    some: S;
+    every: E;
   };
 };
