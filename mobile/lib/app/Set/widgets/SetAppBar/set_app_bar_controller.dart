@@ -22,7 +22,6 @@ class SetAppBarController {
   ) {
     return () {
       if (flashcards == null ||
-          flashcards.isEmpty ||
           flashcards.length < kMinimalAmountOfFlashcardsToStartQuiz) {
         return showDialog(
           context: context,

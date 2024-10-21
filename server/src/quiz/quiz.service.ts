@@ -46,7 +46,7 @@ export class QuizService {
     const statuses = await this.prisma.quizCardStatus.findMany();
 
     if (isEmpty(statuses)) {
-      throw new QuizStatusMisconfigurationException(QUIZ_STATUS.NOT_STUDIED);
+      throw new QuizStatusMisconfigurationException();
     }
 
     return statuses;
