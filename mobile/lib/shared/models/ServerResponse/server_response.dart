@@ -8,6 +8,7 @@ class ServerResponse<R> {
   final R result;
   final int? totalItems;
 
+  // TODO: add tests
   bool isLastPage(int fetchedItems) {
     if (totalItems == null) {
       throw Exception(
