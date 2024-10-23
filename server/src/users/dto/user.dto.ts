@@ -9,3 +9,9 @@ export class CreateUserDTO {
   @IsNotEmpty({ message: 'Email cannot be empty' })
   email: string;
 }
+
+export class DeleteUserDTO {
+  @IsString({ message: 'UID must be a valid string' })
+  @IsNotEmpty({ message: 'UID cannot be empty' })
+  uid: string;
+}

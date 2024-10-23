@@ -52,7 +52,7 @@ model Sets {
   id          String        @id @default(uuid()) @db.VarChar()
   name        String        @db.VarChar()
   description String?       @db.Text()
-  user        Users?        @relation(fields: [userId], references: [id])
+  user        Users?        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String?       @db.VarChar()
   flashcards  Cards[]
   createdAt   DateTime      @default(now())
@@ -61,9 +61,9 @@ model Sets {
 }
 
 model CardsOnSets {
-  set         Sets     @relation(fields: [setId], references: [id])
+  set         Sets     @relation(fields: [setId], references: [id], onDelete: Cascade)
   setId       String
-  flashcard   Cards    @relation(fields: [flashcardId], references: [id])
+  flashcard   Cards    @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
   flashcardId String
   createdAt   DateTime @default(now())
 
@@ -75,7 +75,7 @@ model Wallet {
   userId   String       @unique @db.VarChar()
   status   WalletStatus @default(ACTIVE)
   balance  Float        @default(0.0)
-  user     Users        @relation(fields: [userId], references: [id])
+  user     Users        @relation(fields: [userId], references: [id], onDelete: Cascade)
   Awards   Awards?
   Cashback Cashback?
 }
@@ -87,7 +87,7 @@ model Awards {
   streekLevel   Int      @default(1)
   streekCount   Int      @default(0)
   award         Float    @default(1.0)
-  wallet        Wallet   @relation(fields: [walletId], references: [id])
+  wallet        Wallet   @relation(fields: [walletId], references: [id], onDelete: Cascade)
 }
 
 model Cashback {
@@ -95,7 +95,7 @@ model Cashback {
   walletId String @unique @db.VarChar()
   level    Int    @default(1)
   refund   Float  @default(0.1)
-  wallet   Wallet @relation(fields: [walletId], references: [id])
+  wallet   Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
 }
 
 model Feedback {

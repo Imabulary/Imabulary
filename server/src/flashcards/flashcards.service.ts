@@ -131,7 +131,7 @@ export class FlashCardsService {
 
       return card;
     } catch (error) {
-      await this.storage.delete(imageName);
+      await this.storage.delete(IBucketFolders.IMAGE, imageName);
       await audioFile.delete();
 
       throw error;
