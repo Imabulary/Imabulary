@@ -5,6 +5,7 @@ import { type ExtendedPrismaClient } from '../prisma';
 import { CreateUserDTO, DeleteUserDTO } from './dto/user.dto';
 import { StorageService } from 'src/storage/storage.service';
 import { IBucketFolders } from 'src/storage/utils';
+import admin from 'firebase-admin';
 
 @Injectable()
 export class UsersService {
@@ -81,6 +82,8 @@ export class UsersService {
       await prisma.users.delete({
         where: { externalId: uid },
       });
+
+      await admin.auth().deleteUser(uid);
     });
 
     return {
