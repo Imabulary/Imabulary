@@ -4,6 +4,7 @@ import { QuizController } from './quiz.controller';
 import { extendedPrismaClient, PrismaService } from 'src/prisma';
 import { CustomPrismaModule } from 'nestjs-prisma';
 import { UsersService } from 'src/users';
+import { StorageModule } from 'src/storage/storage.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { UsersService } from 'src/users';
       name: 'PrismaService',
       useFactory: () => extendedPrismaClient,
     }),
+    StorageModule,
   ],
   providers: [QuizService, PrismaService, UsersService],
   controllers: [QuizController],

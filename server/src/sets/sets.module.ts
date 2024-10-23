@@ -5,6 +5,7 @@ import { SetsService } from './sets.service';
 import { UsersService } from 'src/users';
 import { CustomPrismaModule } from 'nestjs-prisma';
 import { WalletModule } from 'src/wallet/wallet.module';
+import { StorageModule } from 'src/storage/storage.module';
 
 @Module({
   controllers: [SetsController],
@@ -14,6 +15,7 @@ import { WalletModule } from 'src/wallet/wallet.module';
       useFactory: () => extendedPrismaClient,
     }),
     WalletModule,
+    StorageModule,
   ],
   providers: [SetsService, PrismaService, UsersService],
 })
