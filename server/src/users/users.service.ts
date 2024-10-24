@@ -2,10 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { CustomPrismaService } from 'nestjs-prisma';
 import { type ExtendedPrismaClient } from '../prisma';
-import { CreateUserDTO, DeleteUserDTO } from './dto/user.dto';
+import { CreateUserDTO } from './dto/user.dto';
 import { StorageService } from 'src/storage/storage.service';
 import { IBucketFolders } from 'src/storage/utils';
 import admin from 'firebase-admin';
+import { FeedbackService } from 'src/feedback/feedback.service';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +14,7 @@ export class UsersService {
     @Inject('PrismaService')
     private readonly prisma: CustomPrismaService<ExtendedPrismaClient>,
     private readonly storage: StorageService,
+    private readonly feedback: FeedbackService,
   ) {}
 
   /**
@@ -32,22 +34,21 @@ export class UsersService {
     );
   }
 
-  async findOne(where: Prisma.UsersWhereUniqueInput) {
-    return this.prisma.client.users.findFirst({ where });
+  async findOne(
+    where: Prisma.UsersWhereUniqueInput,
+    include?: Prisma.UsersInclude,
+  ) {
+    return this.prisma.client.users.findFirst({ where, include });
   }
 
-  async delete(deleteUserDto: DeleteUserDTO) {
-    const { uid } = deleteUserDto;
-
-    const user = await this.prisma.client.users.findFirst({
-      where: {
-        externalId: uid,
-      },
-      include: {
+  async delete(uid: string) {
+    const user = await this.findOne(
+      { externalId: uid },
+      {
         flashcards: true,
         feedbacks: true,
       },
-    });
+    );
 
     const soundNames = [];
     const imageNames = [];
@@ -68,16 +69,16 @@ export class UsersService {
     await this.prisma.client.$transaction(async (prisma) => {
       await Promise.all([...imageDeletePromises, ...soundDeletePromises]);
 
-      await prisma.feedback.updateMany({
-        where: {
+      this.feedback.updateMany(
+        {
           user: {
             externalId: uid,
           },
         },
-        data: {
+        {
           userId: null,
         },
-      });
+      );
 
       await prisma.users.delete({
         where: { externalId: uid },
@@ -87,7 +88,7 @@ export class UsersService {
     });
 
     return {
-      message: 'User and his resources deleted successfully!',
+      message: true,
     };
   }
 }

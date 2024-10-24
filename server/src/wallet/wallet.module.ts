@@ -6,6 +6,8 @@ import { UsersService } from 'src/users';
 import { DailyAwardsService } from 'src/awards/awards.service';
 import { CustomPrismaModule } from 'nestjs-prisma';
 import { StorageModule } from 'src/storage/storage.module';
+import { FeedbackModule } from 'src/feedback/feedback.module';
+import { FeedbackService } from 'src/feedback/feedback.service';
 @Module({
   controllers: [WalletController],
   imports: [
@@ -15,7 +17,13 @@ import { StorageModule } from 'src/storage/storage.module';
     }),
     StorageModule,
   ],
-  providers: [PrismaService, WalletService, UsersService, DailyAwardsService],
+  providers: [
+    PrismaService,
+    FeedbackService,
+    WalletService,
+    UsersService,
+    DailyAwardsService,
+  ],
   exports: [WalletService],
 })
 export class WalletModule {}

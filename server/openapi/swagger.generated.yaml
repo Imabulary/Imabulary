@@ -846,15 +846,6 @@ components:
       properties:
         result:
           $ref: '#/components/schemas/User'
-    DeleteUserDto:
-      type: object
-      properties:
-        uid:
-          type: string
-          description: UID must be a valid string
-          example: user-123456
-      required:
-        - uid
     User:
       type: object
       properties:

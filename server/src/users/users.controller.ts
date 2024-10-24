@@ -17,6 +17,6 @@ export class UsersController {
   @Delete('/')
   delete(@Req() request: Request) {
     const user: Users = request['user'];
-    return this.usersService.delete({ uid: user.externalId });
+    return this.usersService.delete(user.externalId);
   }
 }

@@ -1,8 +1,0 @@
-type: object
-properties:
-  uid:
-    type: string
-    description: UID must be a valid string
-    example: "user-123456"
-required:
-  - uid

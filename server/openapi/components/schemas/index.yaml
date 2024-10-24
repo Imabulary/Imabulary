@@ -52,9 +52,6 @@ CardsOnSets:
 UserResponse:
   $ref: './user/user-response.yaml'
 
-DeleteUserDto: 
-  $ref: './user/delete-user-dto.yaml'
-
 User:
   $ref: './user/user.yaml'
 

@@ -5,6 +5,8 @@ import { extendedPrismaClient, PrismaService } from 'src/prisma';
 import { CustomPrismaModule } from 'nestjs-prisma';
 import { UsersService } from 'src/users';
 import { StorageModule } from 'src/storage/storage.module';
+import { FeedbackModule } from 'src/feedback/feedback.module';
+import { FeedbackService } from 'src/feedback/feedback.service';
 
 @Module({
   imports: [
@@ -14,7 +16,7 @@ import { StorageModule } from 'src/storage/storage.module';
     }),
     StorageModule,
   ],
-  providers: [QuizService, PrismaService, UsersService],
+  providers: [QuizService, PrismaService, UsersService, FeedbackService],
   controllers: [QuizController],
 })
 export class QuizModule {}
