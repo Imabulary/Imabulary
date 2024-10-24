@@ -15,3 +15,10 @@ class FeedbackCategory with _$FeedbackCategory {
   factory FeedbackCategory.fromJson(Map<String, dynamic> json) =>
       _$FeedbackCategoryFromJson(json);
 }
+
+final kOtherFeedbackCategory = FeedbackCategory(
+  id: 'other',
+  name: 'Other',
+  slug: 'other',
+  meaning: '',
+);

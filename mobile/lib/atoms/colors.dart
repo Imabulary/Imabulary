@@ -8,4 +8,6 @@ class AppColors {
   static const error = Color.fromRGBO(198, 40, 40, 1);
   static const orange = Color.fromRGBO(208, 112, 0, 1);
   static const lightGrey = Color.fromRGBO(190, 190, 190, 1);
+  static const disabledButtonBackgroundColor = Color.fromRGBO(48, 48, 48, .45);
+  static const disabledButtonTextColor = Color.fromRGBO(253, 253, 253, .5);
 }

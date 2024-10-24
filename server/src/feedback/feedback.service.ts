@@ -82,6 +82,10 @@ export class FeedbackService {
     });
   }
 
+  findOne(where: Prisma.FeedbackWhereInput) {
+    return this.prisma.feedback.findFirst({ where });
+  }
+
   private findOneFeedbackCategory(
     where: Prisma.FeedbackCategoryWhereUniqueInput,
   ) {

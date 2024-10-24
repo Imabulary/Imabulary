@@ -1,29 +1,24 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
 import { File } from '@google-cloud/storage';
-import { PrismaService } from 'src/prisma';
-import { Filters, ServerPagination } from 'src/shared';
-import {
-  DisorganizeFlashcardsDTO,
-  OrganizeFlashcardsDTO,
-  DislikeFlashcardDto,
-  LikeFlashcardDto,
-  CreateFlashcardDTO,
-} from './dto';
-import { StorageService } from 'src/storage/storage.service';
-import { VisionService } from 'src/vision/vision.service';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { AssistantService } from 'src/assistant/assistant.service';
-import { TranslatorService } from 'src/translator/translator.service';
-import { SoundService } from 'src/sound/sound.service';
-import { IBucketFolders } from 'src/storage/utils';
 import { FeedbackService } from 'src/feedback/feedback.service';
-import { QUIZ_STATUS } from 'src/quiz/utils/quiz-status';
-import { WalletService } from 'src/wallet/wallet.service';
-import { DEFAULT_COST } from 'src/shared/constants';
+import { PrismaService } from 'src/prisma';
 import { QuizService } from 'src/quiz/quiz.service';
+import { Filters, ServerPagination } from 'src/shared';
+import { DEFAULT_COST } from 'src/shared/constants';
+import { SoundService } from 'src/sound/sound.service';
+import { StorageService } from 'src/storage/storage.service';
+import { IBucketFolders } from 'src/storage/utils';
+import { TranslatorService } from 'src/translator/translator.service';
+import { VisionService } from 'src/vision/vision.service';
+import { WalletService } from 'src/wallet/wallet.service';
+import {
+  CreateFlashcardDTO,
+  DislikeFlashcardDto,
+  DisorganizeFlashcardsDTO,
+  LikeFlashcardDto,
+  OrganizeFlashcardsDTO,
+} from './dto';
 
 @Injectable()
 export class FlashCardsService {
@@ -233,9 +228,7 @@ export class FlashCardsService {
       }),
     ]);
 
-    return {
-      message: 'Card was successfuly deleted!',
-    };
+    return true;
   }
 
   async regenerateCard(cardId: string) {
@@ -254,7 +247,9 @@ export class FlashCardsService {
     });
 
     if (currentCard.is_regenerated) {
-      throw new BadRequestException('This card had already regenerated');
+      throw new BadRequestException(
+        'This flashcard has been already regenerated',
+      );
     }
 
     const card = await this.processImage(currentCard.image_url);
@@ -267,21 +262,21 @@ export class FlashCardsService {
   async dislike(dislikeFlashcardDto: DislikeFlashcardDto, userId: string) {
     const { cardId, text, categories } = dislikeFlashcardDto;
 
-    const existingFeedback = await this.prisma.feedback.findFirst({
-      where: { id: cardId },
-    });
+    const existingFeedback = await this.feedbackService.findOne({ id: cardId });
 
+    // For the FE `false` means that BE understood the request and handled it correctly
+    // but feedback has already been provided and it cannot be provided twice
     if (existingFeedback) {
-      throw new NotFoundException('This card has feedback already');
+      return false;
     }
 
-    if ((!categories && !text) || (categories && text)) {
+    if (!categories && !text) {
       throw new BadRequestException(
-        'Either categoryId or text must be provided, but not both',
+        'At least one category or text must be provided',
       );
     }
 
-    const fetchedFeedback = await this.feedbackService.create(
+    await this.feedbackService.create(
       {
         cardId,
         text,
@@ -290,12 +285,6 @@ export class FlashCardsService {
       userId,
     );
 
-    if (!fetchedFeedback.card.user) {
-      throw new NotFoundException('User not found for the given card');
-    }
-
-    return {
-      message: 'Thank you for your feedback!',
-    };
+    return true;
   }
 }
