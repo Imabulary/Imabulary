@@ -87,8 +87,6 @@ export class UsersService {
       await admin.auth().deleteUser(uid);
     });
 
-    return {
-      message: true,
-    };
+    return true;
   }
 }
