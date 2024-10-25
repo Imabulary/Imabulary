@@ -441,6 +441,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserResponse'
+    delete:
+      tags:
+        - Users
+      summary: Delete user and his resources permanently
+      description: 'Delete user and his resources permanently includes flashcards, feedbacks, audio and image files'
+      responses:
+        '200':
+          description: User and his resources deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
   /wallet:
     get:
       tags:

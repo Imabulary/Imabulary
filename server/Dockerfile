@@ -6,7 +6,13 @@ EXPOSE 5000
 
 WORKDIR /server
 
-RUN apk --no-cache add g++ make py3-pip
+ARG BUILD_OS=linux
+
+RUN if [ "$BUILD_OS" = "macos" ]; then \
+    apk --no-cache add g++ make py3-pip vips vips-dev fftw-dev; \
+    else \
+    apk --no-cache add g++ make py3-pip; \
+    fi
 
 COPY package.json .
 ARG NODE_ENV

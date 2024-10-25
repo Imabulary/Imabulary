@@ -6,6 +6,15 @@ devBuild() {
   prismaSeed
 }
 
+
+devBuildMacOS() {
+  BUILD_OS=macos docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+  runMigration
+  prismaGenerate
+  prismaSeed
+}
+
+
 # Start containers for development
 devStart() {
   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
