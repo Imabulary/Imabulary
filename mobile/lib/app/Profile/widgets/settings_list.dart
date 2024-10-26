@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Auth/data/auth_repository.dart';
+import 'package:mobile/app/Profile/widgets/ProfileManageAccount/profile_manage_account.dart';
 import 'package:mobile/app/Wallet/presentation/wallet_screen.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
@@ -20,12 +21,13 @@ class SettingsList extends ConsumerWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => WalletScreen(),
+                builder: (context) => const WalletScreen(),
               ),
             );
           },
           title: const TypeSetting('Wallet'),
         ),
+        const ProfileManageAccount(),
         ListTile(
           key: const Key('logout'),
           onTap: signOut,
