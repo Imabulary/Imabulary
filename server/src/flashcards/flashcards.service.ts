@@ -16,9 +16,15 @@ import {
   CreateFlashcardDTO,
   DislikeFlashcardDto,
   DisorganizeFlashcardsDTO,
-  LikeFlashcardDto,
   OrganizeFlashcardsDTO,
 } from './dto';
+import { Prisma } from '@prisma/client';
+import {
+  FlashcardNotFoundException,
+  FlashcardRegeneratedException,
+  FlashcardWithFeedbackException,
+} from './utils';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class FlashCardsService {
@@ -41,15 +47,7 @@ export class FlashCardsService {
     try {
       const imageUrl = await this.storage.getFileURL(imageFile);
 
-      const objectsOnImage = await this.processImage(imageUrl);
-
-      if (objectsOnImage.length === 1) {
-        const objectOnImage = objectsOnImage[0].name;
-
-        return this.create({ imageName, imageUrl, objectOnImage }, userId);
-      }
-
-      return { objectsOnImage, imageName, imageUrl };
+      return this.processImage(imageUrl, imageName, userId);
     } catch (error) {
       await imageFile.delete();
 
@@ -122,7 +120,7 @@ export class FlashCardsService {
         },
       });
 
-      await this.wallet.deductBalance(userId, DEFAULT_COST);
+      await this.wallet.manage(userId, DEFAULT_COST, 'subtract');
 
       return card;
     } catch (error) {
@@ -133,7 +131,7 @@ export class FlashCardsService {
     }
   }
 
-  async processImage(imageUrl: string) {
+  async processImage(imageUrl: string, imageName: string, userId: string) {
     // TODO: Take these variables from settings of user profile, once it's done
     const sourceLanguageCode = 'en-US';
     const targetLanguageCode = 'uk-UA';
@@ -141,7 +139,16 @@ export class FlashCardsService {
     const objectsOnImage = await this.vision.analyze(imageUrl);
 
     if (objectsOnImage.length === 1) {
-      return objectsOnImage;
+      const objectOnImage = objectsOnImage[0].name;
+
+      return this.create(
+        {
+          imageName,
+          imageUrl,
+          objectOnImage,
+        },
+        userId,
+      );
     }
 
     const namesToTranslate = objectsOnImage.map((item) => item.name);
@@ -156,7 +163,7 @@ export class FlashCardsService {
       translatedName: translatedWords[index],
     }));
 
-    return translatedObjectsOnImage;
+    return { objectsOnImage: translatedObjectsOnImage, imageName, imageUrl };
   }
 
   async findAll(
@@ -208,12 +215,6 @@ export class FlashCardsService {
     return true;
   }
 
-  async like(likeFlashcardDto: LikeFlashcardDto, userId: string) {
-    const { cardId } = likeFlashcardDto;
-
-    await this.feedbackService.create({ cardId, isAppropriate: true }, userId);
-  }
-
   async delete(cardId: string) {
     await Promise.all([
       this.prisma.cards.update({
@@ -231,60 +232,78 @@ export class FlashCardsService {
     return true;
   }
 
-  async regenerateCard(cardId: string) {
-    const currentCard = await this.prisma.cards.update({
+  async regenerate(flashcardId: string, userId: string) {
+    const currentFlashcard = await this.prisma.cards.update({
       data: {
         userId: null,
         deletedAt: new Date(),
       },
       where: {
-        id: cardId,
+        id: flashcardId,
       },
     });
 
     await this.prisma.cardsOnSets.deleteMany({
-      where: { flashcardId: cardId },
+      where: { flashcardId },
     });
 
-    if (currentCard.is_regenerated) {
-      throw new BadRequestException(
-        'This flashcard has been already regenerated',
-      );
+    if (currentFlashcard.is_regenerated) {
+      throw new FlashcardRegeneratedException(flashcardId);
     }
 
-    const card = await this.processImage(currentCard.image_url);
+    const imageName = currentFlashcard.image_name;
+    const imageUrl = currentFlashcard.image_url;
 
-    return {
-      result: card,
-    };
+    return this.processImage(imageUrl, imageName, userId);
   }
 
-  async dislike(dislikeFlashcardDto: DislikeFlashcardDto, userId: string) {
-    const { cardId, text, categories } = dislikeFlashcardDto;
+  // TODO: add tests
+  async dislike(
+    cardId: string,
+    dislikeFlashcardDto: DislikeFlashcardDto,
+    userId: string,
+  ) {
+    const { text, categories } = dislikeFlashcardDto;
 
-    const existingFeedback = await this.feedbackService.findOne({ id: cardId });
+    const flashcard = await this.findOne({ id: cardId });
 
-    // For the FE `false` means that BE understood the request and handled it correctly
-    // but feedback has already been provided and it cannot be provided twice
-    if (existingFeedback) {
-      return false;
+    if (!flashcard) {
+      throw new FlashcardNotFoundException(cardId, 'FlashCardsService.dislike');
     }
 
-    if (!categories && !text) {
-      throw new BadRequestException(
-        'At least one category or text must be provided',
+    const existingFeedback = await this.feedbackService.findOne({
+      cardId: flashcard.id,
+    });
+
+    if (existingFeedback) {
+      throw new FlashcardWithFeedbackException(
+        flashcard.id,
+        existingFeedback.id,
       );
     }
 
-    await this.feedbackService.create(
-      {
-        cardId,
-        text,
-        categories,
-      },
-      userId,
-    );
+    if (isEmpty(categories) && isEmpty(text)) {
+      throw new BadRequestException(
+        'Provide at least one category or text to your feedback',
+      );
+    }
+
+    await Promise.all([
+      this.wallet.manage(userId, DEFAULT_COST, 'add'),
+      this.feedbackService.create(
+        {
+          cardId,
+          text,
+          categories,
+        },
+        userId,
+      ),
+    ]);
 
     return true;
+  }
+
+  findOne(where: Prisma.CardsWhereUniqueInput) {
+    return this.prisma.cards.findFirst({ where });
   }
 }

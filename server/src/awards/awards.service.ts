@@ -1,22 +1,23 @@
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
-  BadRequestException,
 } from '@nestjs/common';
+import { Awards, Wallet } from '@prisma/client';
+import { add } from 'lodash';
+import { WALLET_IS_INACTIVE, WALLET_STATUS } from 'src/wallet/utils';
 import { PrismaService } from '../prisma';
 import {
-  HOURS_IN_DAY,
-  checkAwardAvailability,
   AWARDS_IS_UNAVAILABLE,
   AWARDS_NOT_FOUND,
   AWARD_EXPIRATION_TIME,
-  DEFAULT_STREEK_LEVEL,
+  AWARD_PERIOD_UPDATION_IN_DAYS,
   DEFAULT_AWARD,
   DEFAULT_STREEK_COUNT,
-  AWARD_PERIOD_UPDATION_IN_DAYS,
+  DEFAULT_STREEK_LEVEL,
+  HOURS_IN_DAY,
+  checkAwardAvailability,
 } from './utils';
-import { conduct, WALLET_IS_INACTIVE, WALLET_STATUS } from 'src/wallet/utils';
-import { Awards, Wallet } from '@prisma/client';
 
 @Injectable()
 export class DailyAwardsService {
@@ -98,7 +99,7 @@ export class DailyAwardsService {
       return await prisma.wallet.update({
         where: { id: updatedAward.walletId },
         data: {
-          balance: conduct(updatedAward.wallet.balance, updatedAward.award),
+          balance: add(updatedAward.wallet.balance, updatedAward.award),
         },
       });
     });
@@ -120,7 +121,7 @@ export class DailyAwardsService {
       return await prisma.wallet.update({
         where: { id: updatedAward.walletId },
         data: {
-          balance: conduct(updatedAward.wallet.balance, updatedAward.award),
+          balance: add(updatedAward.wallet.balance, updatedAward.award),
         },
       });
     });

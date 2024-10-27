@@ -549,3 +549,199 @@ abstract class _CreateFlashcardDTO implements CreateFlashcardDTO {
   _$$CreateFlashcardDTOImplCopyWith<_$CreateFlashcardDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+DislikeFlashcardDTO _$DislikeFlashcardDTOFromJson(Map<String, dynamic> json) {
+  return _DislikeFlashcardDTO.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DislikeFlashcardDTO {
+  String get id => throw _privateConstructorUsedError;
+  String? get text => throw _privateConstructorUsedError;
+  List<String>? get categories => throw _privateConstructorUsedError;
+
+  /// Serializes this DislikeFlashcardDTO to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of DislikeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $DislikeFlashcardDTOCopyWith<DislikeFlashcardDTO> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DislikeFlashcardDTOCopyWith<$Res> {
+  factory $DislikeFlashcardDTOCopyWith(
+          DislikeFlashcardDTO value, $Res Function(DislikeFlashcardDTO) then) =
+      _$DislikeFlashcardDTOCopyWithImpl<$Res, DislikeFlashcardDTO>;
+  @useResult
+  $Res call({String id, String? text, List<String>? categories});
+}
+
+/// @nodoc
+class _$DislikeFlashcardDTOCopyWithImpl<$Res, $Val extends DislikeFlashcardDTO>
+    implements $DislikeFlashcardDTOCopyWith<$Res> {
+  _$DislikeFlashcardDTOCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of DislikeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? text = freezed,
+    Object? categories = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      text: freezed == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categories: freezed == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$DislikeFlashcardDTOImplCopyWith<$Res>
+    implements $DislikeFlashcardDTOCopyWith<$Res> {
+  factory _$$DislikeFlashcardDTOImplCopyWith(_$DislikeFlashcardDTOImpl value,
+          $Res Function(_$DislikeFlashcardDTOImpl) then) =
+      __$$DislikeFlashcardDTOImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String id, String? text, List<String>? categories});
+}
+
+/// @nodoc
+class __$$DislikeFlashcardDTOImplCopyWithImpl<$Res>
+    extends _$DislikeFlashcardDTOCopyWithImpl<$Res, _$DislikeFlashcardDTOImpl>
+    implements _$$DislikeFlashcardDTOImplCopyWith<$Res> {
+  __$$DislikeFlashcardDTOImplCopyWithImpl(_$DislikeFlashcardDTOImpl _value,
+      $Res Function(_$DislikeFlashcardDTOImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of DislikeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? text = freezed,
+    Object? categories = freezed,
+  }) {
+    return _then(_$DislikeFlashcardDTOImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      text: freezed == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categories: freezed == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$DislikeFlashcardDTOImpl implements _DislikeFlashcardDTO {
+  const _$DislikeFlashcardDTOImpl(
+      {required this.id, this.text, final List<String>? categories})
+      : _categories = categories;
+
+  factory _$DislikeFlashcardDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DislikeFlashcardDTOImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String? text;
+  final List<String>? _categories;
+  @override
+  List<String>? get categories {
+    final value = _categories;
+    if (value == null) return null;
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'DislikeFlashcardDTO(id: $id, text: $text, categories: $categories)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DislikeFlashcardDTOImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.text, text) || other.text == text) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, id, text, const DeepCollectionEquality().hash(_categories));
+
+  /// Create a copy of DislikeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DislikeFlashcardDTOImplCopyWith<_$DislikeFlashcardDTOImpl> get copyWith =>
+      __$$DislikeFlashcardDTOImplCopyWithImpl<_$DislikeFlashcardDTOImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$DislikeFlashcardDTOImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DislikeFlashcardDTO implements DislikeFlashcardDTO {
+  const factory _DislikeFlashcardDTO(
+      {required final String id,
+      final String? text,
+      final List<String>? categories}) = _$DislikeFlashcardDTOImpl;
+
+  factory _DislikeFlashcardDTO.fromJson(Map<String, dynamic> json) =
+      _$DislikeFlashcardDTOImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String? get text;
+  @override
+  List<String>? get categories;
+
+  /// Create a copy of DislikeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DislikeFlashcardDTOImplCopyWith<_$DislikeFlashcardDTOImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

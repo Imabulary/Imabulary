@@ -21,4 +21,8 @@ class FeedbackService extends _$FeedbackService {
       state = {...state, newCategory};
     }
   }
+
+  clear() {
+    state = {};
+  }
 }

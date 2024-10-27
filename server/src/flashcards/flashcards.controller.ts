@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   MaxFileSizeValidator,
+  Param,
   ParseFilePipe,
   Post,
   Put,
@@ -21,12 +22,11 @@ import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
 import { PaginationPipe } from 'src/pipes/pagination.pipe';
 import { Filters, ServerPagination } from 'src/shared';
 import {
+  CardDto,
+  CreateFlashcardDTO,
   DislikeFlashcardDto,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
-  LikeFlashcardDto,
-  CardDto,
-  CreateFlashcardDTO,
 } from './dto';
 import { FlashCardsService } from './flashcards.service';
 
@@ -79,26 +79,26 @@ export class FlashCardsController {
     return this.flashCardsService.disorganize(disorganizeFlashcardsDto);
   }
 
-  @Post('/like')
-  like(@Req() request: Request, @Body() likeFlashcardDto: LikeFlashcardDto) {
-    const user: Users = request['user'];
-
-    return this.flashCardsService.like(likeFlashcardDto, user.id);
-  }
-
-  @Post('/dislike')
+  @Post('/:id/dislike')
   async dislike(
     @Req() request: Request,
+    @Param('id') flashcardId: string,
     @Body() dislikeFlashcardDto: DislikeFlashcardDto,
   ) {
     const user: Users = request['user'];
 
-    return this.flashCardsService.dislike(dislikeFlashcardDto, user.id);
+    return this.flashCardsService.dislike(
+      flashcardId,
+      dislikeFlashcardDto,
+      user.id,
+    );
   }
 
-  @Post('/regenerate')
-  regenerate(@Req() request: Request, @Body() regenerateDto: CardDto) {
-    return this.flashCardsService.regenerateCard(regenerateDto.cardId);
+  @Post('/:id/regenerate')
+  regenerate(@Req() request: Request, @Param('id') flashcardId: string) {
+    const user = request['user'];
+
+    return this.flashCardsService.regenerate(flashcardId, user.id);
   }
 
   @Post('/create')

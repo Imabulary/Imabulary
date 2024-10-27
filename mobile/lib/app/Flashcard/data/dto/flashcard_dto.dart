@@ -34,3 +34,15 @@ class CreateFlashcardDTO with _$CreateFlashcardDTO {
   factory CreateFlashcardDTO.fromJson(Map<String, dynamic> json) =>
       _$CreateFlashcardDTOFromJson(json);
 }
+
+@freezed
+class DislikeFlashcardDTO with _$DislikeFlashcardDTO {
+  const factory DislikeFlashcardDTO({
+    required String id,
+    String? text,
+    List<String>? categories,
+  }) = _DislikeFlashcardDTO;
+
+  factory DislikeFlashcardDTO.fromJson(Map<String, dynamic> json) =>
+      _$DislikeFlashcardDTOFromJson(json);
+}

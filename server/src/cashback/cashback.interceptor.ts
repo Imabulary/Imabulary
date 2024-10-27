@@ -10,7 +10,8 @@ import {
 import { Observable } from 'rxjs';
 import { PrismaService } from '../prisma';
 import { CASHBACK_NOT_FOUND } from './utils';
-import { conduct, validateWallet } from 'src/wallet/utils';
+import { validateWallet } from 'src/wallet/utils';
+import { add } from 'lodash';
 
 export function CollectCashback() {
   return applyDecorators(UseInterceptors(CashbackInterceptor));
@@ -48,7 +49,7 @@ export class CashbackInterceptor implements NestInterceptor {
       await prisma.wallet.update({
         where: { id: cashback.wallet.id },
         data: {
-          balance: conduct(cashback.wallet.balance, cashback.refund),
+          balance: add(cashback.wallet.balance, cashback.refund),
         },
       });
     });

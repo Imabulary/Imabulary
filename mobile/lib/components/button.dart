@@ -15,7 +15,7 @@ class Button extends StatelessWidget {
 
   final ButtonVariant variat;
   final String label;
-  final VoidCallback onPressed;
+  final void Function()? onPressed;
   final bool disabled;
 
   @override

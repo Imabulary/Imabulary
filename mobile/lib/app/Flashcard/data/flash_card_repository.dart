@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mobile/app/Flashcard/application/flashcard_mixin.dart';
 import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Flashcard/domain/scanPhotoPayload/scan_photo_payload.dart';
@@ -15,7 +16,9 @@ part 'flash_card_repository.g.dart';
 
 final picker = ImagePicker();
 
-class FlashCardRepository {
+typedef ImageProcessingResult = Future<Either<ScanPhotoPayload, FlashCard>>;
+
+class FlashCardRepository with FlashcardMixin {
   FlashCardRepository({required this.dio});
 
   final Dio dio;
@@ -51,7 +54,7 @@ class FlashCardRepository {
     });
   }
 
-  Future<Either<ScanPhotoPayload, FlashCard>> scanPhoto(XFile image) {
+  ImageProcessingResult scanPhoto(XFile image) {
     return request(() async {
       final file = await MultipartFile.fromFile(image.path);
 
@@ -64,15 +67,7 @@ class FlashCardRepository {
         data: data,
       );
 
-      if (response.data['result']['objectsOnImage'] != null) {
-        return Either.fromLeft(ScanPhotoPayload.fromJson(
-          response.data['result'],
-        ));
-      }
-
-      return Either.fromRight(FlashCard.fromJson(
-        response.data['result'],
-      ));
+      return parseImageProcessingPayload(response);
     });
   }
 
@@ -108,6 +103,27 @@ class FlashCardRepository {
       );
 
       return response.data['result'];
+    });
+  }
+
+  Future<bool> dislike(DislikeFlashcardDTO dislikeFlashcardDTO) {
+    return request(() async {
+      final response = await dio.post(
+        '$endpoint/${dislikeFlashcardDTO.id}/dislike',
+        data: dislikeFlashcardDTO.toJson(),
+      );
+
+      return response.data['result'];
+    });
+  }
+
+  ImageProcessingResult regenerate(String flashcardId) {
+    return request(() async {
+      final response = await dio.post(
+        '$endpoint/${flashcardId}/regenerate',
+      );
+
+      return parseImageProcessingPayload(response);
     });
   }
 }

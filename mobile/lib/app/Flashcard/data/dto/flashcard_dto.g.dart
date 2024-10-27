@@ -37,3 +37,21 @@ Map<String, dynamic> _$$CreateFlashcardDTOImplToJson(
       'imageUrl': instance.imageUrl,
       'imageName': instance.imageName,
     };
+
+_$DislikeFlashcardDTOImpl _$$DislikeFlashcardDTOImplFromJson(
+        Map<String, dynamic> json) =>
+    _$DislikeFlashcardDTOImpl(
+      id: json['id'] as String,
+      text: json['text'] as String?,
+      categories: (json['categories'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+    );
+
+Map<String, dynamic> _$$DislikeFlashcardDTOImplToJson(
+        _$DislikeFlashcardDTOImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'text': instance.text,
+      'categories': instance.categories,
+    };
