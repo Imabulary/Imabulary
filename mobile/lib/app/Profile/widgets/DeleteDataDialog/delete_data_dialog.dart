@@ -12,7 +12,7 @@ class DeleteDataDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isButtonEnabled = ref.watch(deleteDataDialogControllerProvider);
+    final formState = ref.watch(deleteDataDialogControllerProvider);
     final deleteController =
         ref.read(deleteDataDialogControllerProvider.notifier);
 
@@ -75,7 +75,7 @@ class DeleteDataDialog extends ConsumerWidget {
           ),
         ),
         ElevatedButton(
-          onPressed: isButtonEnabled
+          onPressed: formState.isButtonEnabled
               ? () => deleteController.deleteUser(context)
               : null,
           style: ElevatedButton.styleFrom(
@@ -85,7 +85,7 @@ class DeleteDataDialog extends ConsumerWidget {
           child: TypeSetting(
             "Delete",
             style: TextStyle(
-                color: isButtonEnabled ? Colors.white : AppColors.lightGrey),
+                color: formState.isButtonEnabled ? Colors.white : AppColors.lightGrey),
           ),
         ),
       ],
