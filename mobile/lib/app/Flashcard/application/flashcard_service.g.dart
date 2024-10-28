@@ -8,7 +8,7 @@ part of 'flashcard_service.dart';
 
 String _$flashcardServiceHash() => r'33a4f26f10d5aed9756da72deda8323ddafa8ea6';
 
-/// State might be `null` if user is not on the set page
+/// State might be `null` if user is not on the flashcard page
 ///
 /// Copied from [FlashcardService].
 @ProviderFor(FlashcardService)

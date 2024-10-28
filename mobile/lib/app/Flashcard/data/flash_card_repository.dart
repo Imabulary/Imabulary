@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_mixin.dart';
-import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Flashcard/domain/scanPhotoPayload/scan_photo_payload.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:mobile/utils/api.dart';
@@ -124,6 +124,16 @@ class FlashCardRepository with FlashcardMixin {
       );
 
       return parseImageProcessingPayload(response);
+    });
+  }
+
+  Future<bool> delete(String flashcardId) {
+    return request(() async {
+      final response = await dio.delete(
+        '$endpoint/${flashcardId}',
+      );
+
+      return response.data['result'];
     });
   }
 }

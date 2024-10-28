@@ -14,9 +14,9 @@ import { VisionService } from 'src/vision/vision.service';
 import { WalletService } from 'src/wallet/wallet.service';
 import {
   CreateFlashcardDTO,
-  DislikeFlashcardDto,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
+  ProcessImageDTO,
 } from './dto';
 import { Prisma } from '@prisma/client';
 import {
@@ -25,6 +25,7 @@ import {
   FlashcardWithFeedbackException,
 } from './utils';
 import { isEmpty } from 'lodash';
+import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 
 @Injectable()
 export class FlashCardsService {
@@ -47,7 +48,7 @@ export class FlashCardsService {
     try {
       const imageUrl = await this.storage.getFileURL(imageFile);
 
-      return this.processImage(imageUrl, imageName, userId);
+      return this.processImage({ imageUrl, imageName }, userId);
     } catch (error) {
       await imageFile.delete();
 
@@ -56,7 +57,7 @@ export class FlashCardsService {
   }
 
   async create(
-    { objectOnImage, imageUrl, isRegeneration, imageName }: CreateFlashcardDTO,
+    { objectOnImage, imageUrl, imageName, isRegeneration }: CreateFlashcardDTO,
     userId: string,
   ) {
     let audioFile: File;
@@ -131,7 +132,10 @@ export class FlashCardsService {
     }
   }
 
-  async processImage(imageUrl: string, imageName: string, userId: string) {
+  async processImage(
+    { imageName, imageUrl, isRegeneration }: ProcessImageDTO,
+    userId: string,
+  ) {
     // TODO: Take these variables from settings of user profile, once it's done
     const sourceLanguageCode = 'en-US';
     const targetLanguageCode = 'uk-UA';
@@ -146,6 +150,7 @@ export class FlashCardsService {
           imageName,
           imageUrl,
           objectOnImage,
+          isRegeneration: true,
         },
         userId,
       );
@@ -163,7 +168,12 @@ export class FlashCardsService {
       translatedName: translatedWords[index],
     }));
 
-    return { objectsOnImage: translatedObjectsOnImage, imageName, imageUrl };
+    return {
+      objectsOnImage: translatedObjectsOnImage,
+      imageName,
+      imageUrl,
+      isRegeneration,
+    };
   }
 
   async findAll(
@@ -215,23 +225,31 @@ export class FlashCardsService {
     return true;
   }
 
-  async delete(cardId: string) {
+  // TODO: add tests
+  async delete(id: string, userId: string) {
+    const flashcard = await this.findOne({ id, userId });
+
+    if (!flashcard) {
+      throw new FlashcardNotFoundException(id, 'FlashCardsService.delete');
+    }
+
     await Promise.all([
       this.prisma.cards.update({
-        where: { id: cardId },
+        where: { id },
         data: {
           userId: null,
           deletedAt: new Date(),
         },
       }),
       this.prisma.cardsOnSets.deleteMany({
-        where: { flashcardId: cardId },
+        where: { flashcardId: id },
       }),
     ]);
 
     return true;
   }
 
+  // TODO: add tests
   async regenerate(flashcardId: string, userId: string) {
     const currentFlashcard = await this.prisma.cards.update({
       data: {
@@ -251,16 +269,18 @@ export class FlashCardsService {
       throw new FlashcardRegeneratedException(flashcardId);
     }
 
-    const imageName = currentFlashcard.image_name;
-    const imageUrl = currentFlashcard.image_url;
+    const { image_name: imageName, image_url: imageUrl } = currentFlashcard;
 
-    return this.processImage(imageUrl, imageName, userId);
+    return this.processImage(
+      { imageUrl, imageName, isRegeneration: true },
+      userId,
+    );
   }
 
   // TODO: add tests
   async dislike(
     cardId: string,
-    dislikeFlashcardDto: DislikeFlashcardDto,
+    dislikeFlashcardDto: DislikeFlashcardDTO,
     userId: string,
   ) {
     const { text, categories } = dislikeFlashcardDto;
@@ -298,6 +318,7 @@ export class FlashCardsService {
         },
         userId,
       ),
+      this.delete(cardId, userId),
     ]);
 
     return true;

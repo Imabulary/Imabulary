@@ -4,9 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mobile/app/Feedback/application/feedback_provider.dart';
 import 'package:mobile/app/Feedback/application/feedback_service.dart';
-import 'package:mobile/app/Feedback/domain/FeedbackCategory/feedback_category.dart';
+import 'package:mobile/app/Feedback/domain/feedback.dart';
 import 'package:mobile/app/Feedback/presentation/feedback_screen_controller.dart';
 import 'package:mobile/app/Feedback/widgets/feedback_received_dialog.dart';
+import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/atoms/colors.dart';
@@ -39,6 +40,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
 
         if (isFeedbackReceived) {
           ref.invalidate(getWalletBalanceProvider);
+          ref.invalidate(findAllFlashcardsProvider);
 
           showDialog(
             context: context,
@@ -81,7 +83,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
               height: 16,
             ),
             TypeSetting(
-              "You can choose several options",
+              "Note: this flashcard will be deleted once you submit a feedback",
               variant: TextVariants.bodySmall,
               style: TextStyle(color: AppColors.lightGrey),
             ),

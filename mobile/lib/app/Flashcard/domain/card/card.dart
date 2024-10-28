@@ -17,6 +17,7 @@ class FlashCard with _$FlashCard {
     required String target_language,
     required String source_language,
     required String image_url,
+    required bool is_regenerated,
     String? speech_part,
     String? translated_explanation,
     String? explanation,

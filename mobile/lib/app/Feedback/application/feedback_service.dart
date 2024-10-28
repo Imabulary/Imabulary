@@ -1,4 +1,4 @@
-import 'package:mobile/app/Feedback/domain/FeedbackCategory/feedback_category.dart';
+import 'package:mobile/app/Feedback/domain/feedback.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'feedback_service.g.dart';

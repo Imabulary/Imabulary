@@ -68,17 +68,6 @@ export class FeedbackService {
           })),
         },
       },
-      include: {
-        card: {
-          include: {
-            user: {
-              include: {
-                Wallet: true,
-              },
-            },
-          },
-        },
-      },
     });
   }
 

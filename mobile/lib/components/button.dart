@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
-enum ButtonVariant { elevated, outlined, text }
+enum ButtonVariant { elevated, outlined, text, icon }
 
 class Button extends StatelessWidget {
   const Button({
     super.key,
-    this.variat = ButtonVariant.elevated,
-    required this.label,
     required this.onPressed,
+    this.icon,
+    this.label = '',
+    this.variat = ButtonVariant.elevated,
     this.disabled = false,
   });
 
@@ -17,6 +18,7 @@ class Button extends StatelessWidget {
   final String label;
   final void Function()? onPressed;
   final bool disabled;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,8 @@ class Button extends StatelessWidget {
             : AppColors.primary,
       ),
     );
+    final iconColor =
+        disabled ? AppColors.disabledButtonTextColor : Colors.white;
 
     switch (variat) {
       case ButtonVariant.elevated:
@@ -57,6 +61,14 @@ class Button extends StatelessWidget {
         return TextButton(
           onPressed: onPress,
           child: child,
+        );
+      case ButtonVariant.icon:
+        return IconButton(
+          onPressed: onPress,
+          icon: Icon(
+            icon,
+            color: iconColor,
+          ),
         );
       default:
         return ElevatedButton(onPressed: onPress, child: child, style: style);

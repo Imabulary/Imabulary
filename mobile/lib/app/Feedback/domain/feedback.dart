@@ -1,7 +1,22 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'feedback_category.freezed.dart';
-part 'feedback_category.g.dart';
+part 'feedback.freezed.dart';
+part 'feedback.g.dart';
+
+@freezed
+class Feedback with _$Feedback {
+  const factory Feedback({
+    required String id,
+    required String userId,
+    required String cardId,
+    required bool isAppropriate,
+    String? text,
+    Map<String, dynamic>? metadata,
+  }) = _Feedback;
+
+  factory Feedback.fromJson(Map<String, dynamic> json) =>
+      _$FeedbackFromJson(json);
+}
 
 @freezed
 class FeedbackCategory with _$FeedbackCategory {

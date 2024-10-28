@@ -10,6 +10,7 @@ class ScanPhotoPayload with _$ScanPhotoPayload {
     required List<Map<String, dynamic>> objectsOnImage,
     required String imageUrl,
     required String imageName,
+    bool? isRegeneration,
   }) = _ScanPhotoPayload;
 
   factory ScanPhotoPayload.fromJson(Map<String, dynamic> json) =>

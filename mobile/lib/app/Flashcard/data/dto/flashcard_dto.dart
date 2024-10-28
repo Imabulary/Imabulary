@@ -29,6 +29,7 @@ class CreateFlashcardDTO with _$CreateFlashcardDTO {
     required String objectOnImage,
     required String imageUrl,
     required String imageName,
+    bool? isRegeneration,
   }) = _CreateFlashcardDTO;
 
   factory CreateFlashcardDTO.fromJson(Map<String, dynamic> json) =>

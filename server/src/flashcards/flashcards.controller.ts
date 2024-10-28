@@ -22,13 +22,12 @@ import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
 import { PaginationPipe } from 'src/pipes/pagination.pipe';
 import { Filters, ServerPagination } from 'src/shared';
 import {
-  CardDto,
   CreateFlashcardDTO,
-  DislikeFlashcardDto,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
 } from './dto';
 import { FlashCardsService } from './flashcards.service';
+import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 
 const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
@@ -80,10 +79,10 @@ export class FlashCardsController {
   }
 
   @Post('/:id/dislike')
-  async dislike(
+  dislike(
     @Req() request: Request,
     @Param('id') flashcardId: string,
-    @Body() dislikeFlashcardDto: DislikeFlashcardDto,
+    @Body() dislikeFlashcardDto: DislikeFlashcardDTO,
   ) {
     const user: Users = request['user'];
 
@@ -102,7 +101,7 @@ export class FlashCardsController {
   }
 
   @Post('/create')
-  async create(
+  create(
     @Req() request: Request,
     @Body() createFlashcardDto: CreateFlashcardDTO,
   ) {
@@ -111,8 +110,10 @@ export class FlashCardsController {
     return this.flashCardsService.create(createFlashcardDto, user.id);
   }
 
-  @Delete('/delete')
-  async delete(@Body() regenerateDto: CardDto) {
-    return this.flashCardsService.delete(regenerateDto.cardId);
+  @Delete('/:id')
+  delete(@Req() request: Request, @Param('id') id: string) {
+    const user: Users = request['user'];
+
+    return this.flashCardsService.delete(id, user.id);
   }
 }

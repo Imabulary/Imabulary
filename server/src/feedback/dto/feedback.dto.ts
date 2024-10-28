@@ -10,7 +10,7 @@ import {
   IsUUID,
 } from 'class-validator';
 
-export class DislikeFlashcardDto {
+export class DislikeFlashcardDTO {
   @IsString({ message: 'Text of the feedback must be a string' })
   @IsOptional()
   text?: string;
@@ -24,7 +24,7 @@ export class DislikeFlashcardDto {
   categories?: string[];
 }
 
-export class CreateFeedbackDto extends DislikeFlashcardDto {
+export class CreateFeedbackDto extends DislikeFlashcardDTO {
   @IsUUID(4, { message: 'Card ID must be a valid UUID string' })
   @IsOptional()
   cardId?: string;
@@ -50,4 +50,9 @@ export class CreateNoDesiredObjectFeedbackDTO {
   })
   @ArrayNotEmpty({ message: 'Array with objects on image cannot be empty' })
   objectsOnImage: string[];
+}
+
+export class FindOneDTO {
+  @IsNotEmpty({ message: '' })
+  cardId: string;
 }

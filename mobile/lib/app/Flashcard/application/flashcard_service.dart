@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'flashcard_service.g.dart';
 
-/// State might be `null` if user is not on the set page
+/// State might be `null` if user is not on the flashcard page
 @Riverpod(keepAlive: true)
 class FlashcardService extends _$FlashcardService {
   @override

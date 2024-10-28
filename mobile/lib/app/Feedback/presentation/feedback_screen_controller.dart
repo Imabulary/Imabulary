@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobile/app/Feedback/application/feedback_service.dart';
-import 'package:mobile/app/Feedback/domain/FeedbackCategory/feedback_category.dart';
+import 'package:mobile/app/Feedback/domain/feedback.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';

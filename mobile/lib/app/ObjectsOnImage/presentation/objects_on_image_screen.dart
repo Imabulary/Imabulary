@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Flashcard/domain/scanPhotoPayload/scan_photo_payload.dart';
+import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
 import 'package:mobile/app/ObjectsOnImage/domain/ObjectOnImage/object_on_image.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
+import 'package:mobile/app/ObjectsOnImage/presentation/objects_on_image_screen_controller.dart';
 import 'package:mobile/app/ObjectsOnImage/widgets/NoDesiredObject/no_desired_object.dart';
-import 'package:mobile/app/ObjectsOnImage/widgets/ObjectListItem/object_list_item.dart';
+import 'package:mobile/app/ObjectsOnImage/widgets/object_list_item.dart';
+import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/utils/async_value_ui.dart';
 
-class ObjectsOnImageScreen extends StatelessWidget {
+class ObjectsOnImageScreen extends ConsumerWidget {
   const ObjectsOnImageScreen({
     super.key,
     required this.objectsOnImage,
@@ -18,7 +24,29 @@ class ObjectsOnImageScreen extends StatelessWidget {
   final ScanPhotoPayload scanPhotoPayload;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(objectsOnImageScreenControllerProvider, (_, state) {
+      state.showLoadingDialog(context, message: 'Creating your flashcard...');
+      state.showErrorDialog(context, true);
+
+      state.whenData((value) {
+        ref.invalidate(findAllFlashcardsProvider);
+        ref.invalidate(getWalletBalanceProvider);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const FlashcardScreen(),
+          ),
+        );
+      });
+    });
+
+    final state = ref.watch(objectsOnImageScreenControllerProvider);
+    final create = state.isLoading
+        ? null
+        : ref.read(objectsOnImageScreenControllerProvider.notifier).create;
+
     return Layout(
       SingleChildScrollView(
         child: Column(
@@ -43,6 +71,7 @@ class ObjectsOnImageScreen extends StatelessWidget {
               itemBuilder: (context, index) => ObjectListItem(
                 objectsOnImage[index],
                 scanPhotoPayload: scanPhotoPayload,
+                create: create,
               ),
               itemCount: objectsOnImage.length,
               scrollDirection: Axis.vertical,

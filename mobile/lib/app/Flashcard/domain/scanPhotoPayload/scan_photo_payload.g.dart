@@ -14,6 +14,7 @@ _$ScanPhotoPayloadImpl _$$ScanPhotoPayloadImplFromJson(
           .toList(),
       imageUrl: json['imageUrl'] as String,
       imageName: json['imageName'] as String,
+      isRegeneration: json['isRegeneration'] as bool?,
     );
 
 Map<String, dynamic> _$$ScanPhotoPayloadImplToJson(
@@ -22,4 +23,5 @@ Map<String, dynamic> _$$ScanPhotoPayloadImplToJson(
       'objectsOnImage': instance.objectsOnImage,
       'imageUrl': instance.imageUrl,
       'imageName': instance.imageName,
+      'isRegeneration': instance.isRegeneration,
     };

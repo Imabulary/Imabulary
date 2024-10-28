@@ -1,10 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'feedback_category.dart';
+part of 'feedback.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
+
+_$FeedbackImpl _$$FeedbackImplFromJson(Map<String, dynamic> json) =>
+    _$FeedbackImpl(
+      id: json['id'] as String,
+      userId: json['userId'] as String,
+      cardId: json['cardId'] as String,
+      isAppropriate: json['isAppropriate'] as bool,
+      text: json['text'] as String?,
+      metadata: json['metadata'] as Map<String, dynamic>?,
+    );
+
+Map<String, dynamic> _$$FeedbackImplToJson(_$FeedbackImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'userId': instance.userId,
+      'cardId': instance.cardId,
+      'isAppropriate': instance.isAppropriate,
+      'text': instance.text,
+      'metadata': instance.metadata,
+    };
 
 _$FeedbackCategoryImpl _$$FeedbackCategoryImplFromJson(
         Map<String, dynamic> json) =>

@@ -7,7 +7,7 @@ part of 'feedback_received_dialog_controller.dart';
 // **************************************************************************
 
 String _$feedbackReceivedDialogControllerHash() =>
-    r'd89fbb4b57fe12bca66979445925e36030c2348c';
+    r'642127c82609c1b302a32b5e9bbfd1b33e8e1521';
 
 /// See also [FeedbackReceivedDialogController].
 @ProviderFor(FeedbackReceivedDialogController)

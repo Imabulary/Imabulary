@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mobile/app/Feedback/data/dto/feedback_dto.dart';
-import 'package:mobile/app/Feedback/domain/FeedbackCategory/feedback_category.dart';
+import 'package:mobile/app/Feedback/domain/feedback.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:mobile/utils/api.dart';
 import 'package:mobile/utils/request.dart';

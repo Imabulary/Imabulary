@@ -1,36 +1,40 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class FlashcardNotFoundException extends HttpException {
-  constructor(id: string, incidentMethod: string) {
+  constructor(flashcardId: string, incidentMethod: string) {
     super(
-      'Flashcard with the provided ID has not been found',
+      "We couldn't find the flashcard you've requested. Make sure it exists and isn't deleted.",
       HttpStatus.NOT_FOUND,
       {
-        cause: { id, incidentMethod },
+        cause: { flashcardId, incidentMethod },
       },
     );
   }
 }
 
 export class FlashcardRegeneratedException extends HttpException {
-  constructor(id: string) {
+  constructor(flashcardId: string) {
     super(
-      'Flashcard with the provided ID has already been regenerated',
+      'You have already regenerated this flashcard',
       HttpStatus.BAD_REQUEST,
       {
-        cause: { id, incidentMethod: 'FlashCardsService.regenerate' },
+        cause: { flashcardId, incidentMethod: 'FlashCardsService.regenerate' },
       },
     );
   }
 }
 
 export class FlashcardWithFeedbackException extends HttpException {
-  constructor(id: string, feedbackId: string) {
+  constructor(flashcardId: string, feedbackId: string) {
     super(
       'You have already provided a feedback for this flashcard',
       HttpStatus.BAD_REQUEST,
       {
-        cause: { id, feedbackId, incidentMethod: 'FlashCardsService.dislike' },
+        cause: {
+          flashcardId,
+          feedbackId,
+          incidentMethod: 'FlashCardsService.dislike',
+        },
       },
     );
   }

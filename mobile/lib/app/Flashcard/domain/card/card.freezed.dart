@@ -28,6 +28,7 @@ mixin _$FlashCard {
   String get target_language => throw _privateConstructorUsedError;
   String get source_language => throw _privateConstructorUsedError;
   String get image_url => throw _privateConstructorUsedError;
+  bool get is_regenerated => throw _privateConstructorUsedError;
   String? get speech_part => throw _privateConstructorUsedError;
   String? get translated_explanation => throw _privateConstructorUsedError;
   String? get explanation => throw _privateConstructorUsedError;
@@ -60,6 +61,7 @@ abstract class $FlashCardCopyWith<$Res> {
       String target_language,
       String source_language,
       String image_url,
+      bool is_regenerated,
       String? speech_part,
       String? translated_explanation,
       String? explanation,
@@ -94,6 +96,7 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
     Object? target_language = null,
     Object? source_language = null,
     Object? image_url = null,
+    Object? is_regenerated = null,
     Object? speech_part = freezed,
     Object? translated_explanation = freezed,
     Object? explanation = freezed,
@@ -135,6 +138,10 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
           ? _value.image_url
           : image_url // ignore: cast_nullable_to_non_nullable
               as String,
+      is_regenerated: null == is_regenerated
+          ? _value.is_regenerated
+          : is_regenerated // ignore: cast_nullable_to_non_nullable
+              as bool,
       speech_part: freezed == speech_part
           ? _value.speech_part
           : speech_part // ignore: cast_nullable_to_non_nullable
@@ -198,6 +205,7 @@ abstract class _$$FlashCardImplCopyWith<$Res>
       String target_language,
       String source_language,
       String image_url,
+      bool is_regenerated,
       String? speech_part,
       String? translated_explanation,
       String? explanation,
@@ -231,6 +239,7 @@ class __$$FlashCardImplCopyWithImpl<$Res>
     Object? target_language = null,
     Object? source_language = null,
     Object? image_url = null,
+    Object? is_regenerated = null,
     Object? speech_part = freezed,
     Object? translated_explanation = freezed,
     Object? explanation = freezed,
@@ -272,6 +281,10 @@ class __$$FlashCardImplCopyWithImpl<$Res>
           ? _value.image_url
           : image_url // ignore: cast_nullable_to_non_nullable
               as String,
+      is_regenerated: null == is_regenerated
+          ? _value.is_regenerated
+          : is_regenerated // ignore: cast_nullable_to_non_nullable
+              as bool,
       speech_part: freezed == speech_part
           ? _value.speech_part
           : speech_part // ignore: cast_nullable_to_non_nullable
@@ -316,6 +329,7 @@ class _$FlashCardImpl implements _FlashCard {
       required this.target_language,
       required this.source_language,
       required this.image_url,
+      required this.is_regenerated,
       this.speech_part,
       this.translated_explanation,
       this.explanation,
@@ -344,6 +358,8 @@ class _$FlashCardImpl implements _FlashCard {
   @override
   final String image_url;
   @override
+  final bool is_regenerated;
+  @override
   final String? speech_part;
   @override
   final String? translated_explanation;
@@ -360,7 +376,7 @@ class _$FlashCardImpl implements _FlashCard {
 
   @override
   String toString() {
-    return 'FlashCard(id: $id, word: $word, phrase: $phrase, translated_phrase: $translated_phrase, translated_word: $translated_word, target_language: $target_language, source_language: $source_language, image_url: $image_url, speech_part: $speech_part, translated_explanation: $translated_explanation, explanation: $explanation, image_name: $image_name, audio_url: $audio_url, audio_name: $audio_name, quizStatus: $quizStatus)';
+    return 'FlashCard(id: $id, word: $word, phrase: $phrase, translated_phrase: $translated_phrase, translated_word: $translated_word, target_language: $target_language, source_language: $source_language, image_url: $image_url, is_regenerated: $is_regenerated, speech_part: $speech_part, translated_explanation: $translated_explanation, explanation: $explanation, image_name: $image_name, audio_url: $audio_url, audio_name: $audio_name, quizStatus: $quizStatus)';
   }
 
   @override
@@ -381,6 +397,8 @@ class _$FlashCardImpl implements _FlashCard {
                 other.source_language == source_language) &&
             (identical(other.image_url, image_url) ||
                 other.image_url == image_url) &&
+            (identical(other.is_regenerated, is_regenerated) ||
+                other.is_regenerated == is_regenerated) &&
             (identical(other.speech_part, speech_part) ||
                 other.speech_part == speech_part) &&
             (identical(other.translated_explanation, translated_explanation) ||
@@ -409,6 +427,7 @@ class _$FlashCardImpl implements _FlashCard {
       target_language,
       source_language,
       image_url,
+      is_regenerated,
       speech_part,
       translated_explanation,
       explanation,
@@ -443,6 +462,7 @@ abstract class _FlashCard implements FlashCard {
       required final String target_language,
       required final String source_language,
       required final String image_url,
+      required final bool is_regenerated,
       final String? speech_part,
       final String? translated_explanation,
       final String? explanation,
@@ -470,6 +490,8 @@ abstract class _FlashCard implements FlashCard {
   String get source_language;
   @override
   String get image_url;
+  @override
+  bool get is_regenerated;
   @override
   String? get speech_part;
   @override
