@@ -11,10 +11,10 @@ class UserRepository {
 
   UserRepository({required this.dio});
 
-  Future<int> deleteUser() {
+  Future<bool> deleteUser() {
     return request(() async {
       final response = await dio.delete(endpoint);
-      return response.statusCode ?? 500;
+      return response.data['result'];
     });
   }
 }

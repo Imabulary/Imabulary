@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile/app/Profile/data/user_repository.dart';
 import 'package:mobile/app/Auth/data/auth_repository.dart';
 
-final deleteDataDialogControllerProvider = StateNotifierProvider<DeleteDataDialogController, bool>((ref) {
+final deleteDataDialogControllerProvider =
+    StateNotifierProvider<DeleteDataDialogController, bool>((ref) {
   return DeleteDataDialogController(ref);
 });
 
@@ -26,14 +27,14 @@ class DeleteDataDialogController extends StateNotifier<bool> {
     final userRepository = ref.read(userRepositoryProvider);
     final signOut = ref.read(authRepositoryProvider).signOut;
 
-    final statusCode = await userRepository.deleteUser();
+    final result = await userRepository.deleteUser();
 
-    if (statusCode == 200) {
+    if (result) {
       signOut();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to delete user. Status code: $statusCode'),
+        const SnackBar(
+          content: Text('Failed to delete user.'),
         ),
       );
     }

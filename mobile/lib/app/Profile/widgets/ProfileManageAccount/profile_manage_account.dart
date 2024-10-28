@@ -9,8 +9,9 @@ class ProfileManageAccount extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
-        key: const Key('delete'),
-        onTap: ProfileManageAccountController.showSetsBottomSheet(context),
-        title: const TypeSetting('Manage your account'));
+      key: const Key('delete'),
+      onTap: ProfileManageAccountController.showSetsBottomSheet(context),
+      title: const TypeSetting('Manage your account'),
+    );
   }
 }

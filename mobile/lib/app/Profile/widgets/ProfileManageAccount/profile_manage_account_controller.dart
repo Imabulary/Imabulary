@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile/app/Profile/widgets/DeleteDataDialog/delete_data_dialog.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProfileManageAccountController {
   static void Function() showSetsBottomSheet(BuildContext context) => () {
@@ -24,10 +25,10 @@ class ProfileManageAccountController {
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            child: SvgPicture.asset(
-                              'assets/icons/arrow-left.svg',
-                              width: 24,
-                              height: 24,
+                            child: const Icon(
+                              Icons.arrow_back,
+                              size: 24.0,
+                              color: Color(0xFFE8EAED),
                             ),
                           ),
                           const SizedBox(width: 15),
