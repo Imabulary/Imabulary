@@ -17,20 +17,20 @@ class SetsQuizzesList extends ConsumerWidget {
     final setService = ref.read(setServiceProvider.notifier);
 
     return Padding(
-      padding: EdgeInsets.all(24),
+      padding: const EdgeInsets.all(24),
       child: FractionallySizedBox(
         heightFactor: 0.5,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TypeSetting(
+            const TypeSetting(
               'Select a set',
               variant: TextVariants.headlineLarge,
             ),
             const SizedBox(
               height: 8,
             ),
-            TypeSetting(
+            const TypeSetting(
               'Please select a set to start a quiz.',
               style: TextStyle(color: AppColors.lightGrey),
             ),
@@ -50,7 +50,7 @@ class SetsQuizzesList extends ConsumerWidget {
                       sets[index].flashcards,
                     )();
                   },
-                  contentPadding: EdgeInsets.only(
+                  contentPadding: const EdgeInsets.only(
                     top: 10,
                     right: 10,
                     bottom: 10,
