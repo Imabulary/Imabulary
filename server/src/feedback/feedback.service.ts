@@ -50,6 +50,27 @@ export class FeedbackService {
     return true;
   }
 
+  async update(id: string, data: Prisma.FeedbackUpdateInput) {
+    return await this.prisma.feedback.update({
+      where: {
+        id,
+      },
+      data,
+    });
+  }
+
+  async updateMany(
+    where: Prisma.FeedbackWhereInput,
+    data:
+      | Prisma.FeedbackUpdateManyMutationInput
+      | Prisma.FeedbackUncheckedUpdateManyInput,
+  ) {
+    return await this.prisma.feedback.updateMany({
+      where,
+      data,
+    });
+  }
+
   async create(
     createFeedbackDto: CreateFeedbackDto,
     userId: string,

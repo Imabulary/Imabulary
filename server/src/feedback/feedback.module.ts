@@ -4,6 +4,7 @@ import { FeedbackService } from './feedback.service';
 import { extendedPrismaClient, PrismaService } from 'src/prisma';
 import { UsersService } from 'src/users';
 import { CustomPrismaModule } from 'nestjs-prisma';
+import { StorageModule } from 'src/storage/storage.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { CustomPrismaModule } from 'nestjs-prisma';
       name: 'PrismaService',
       useFactory: () => extendedPrismaClient,
     }),
+    StorageModule,
   ],
   providers: [FeedbackService, PrismaService, UsersService],
   controllers: [FeedbackController],
