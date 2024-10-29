@@ -3,10 +3,10 @@ import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'object_list_item_controller.g.dart';
+part 'objects_on_image_screen_controller.g.dart';
 
 @riverpod
-class ObjectListItemController extends _$ObjectListItemController {
+class ObjectsOnImageScreenController extends _$ObjectsOnImageScreenController {
   @override
   FutureOr<void> build() {
     // no-op

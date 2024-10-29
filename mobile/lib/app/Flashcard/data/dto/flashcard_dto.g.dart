@@ -28,6 +28,7 @@ _$CreateFlashcardDTOImpl _$$CreateFlashcardDTOImplFromJson(
       objectOnImage: json['objectOnImage'] as String,
       imageUrl: json['imageUrl'] as String,
       imageName: json['imageName'] as String,
+      isRegeneration: json['isRegeneration'] as bool?,
     );
 
 Map<String, dynamic> _$$CreateFlashcardDTOImplToJson(
@@ -36,4 +37,23 @@ Map<String, dynamic> _$$CreateFlashcardDTOImplToJson(
       'objectOnImage': instance.objectOnImage,
       'imageUrl': instance.imageUrl,
       'imageName': instance.imageName,
+      'isRegeneration': instance.isRegeneration,
+    };
+
+_$DislikeFlashcardDTOImpl _$$DislikeFlashcardDTOImplFromJson(
+        Map<String, dynamic> json) =>
+    _$DislikeFlashcardDTOImpl(
+      id: json['id'] as String,
+      text: json['text'] as String?,
+      categories: (json['categories'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+    );
+
+Map<String, dynamic> _$$DislikeFlashcardDTOImplToJson(
+        _$DislikeFlashcardDTOImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'text': instance.text,
+      'categories': instance.categories,
     };

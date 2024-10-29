@@ -1,12 +1,13 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType, PickType } from '@nestjs/mapped-types';
+import { Transform } from 'class-transformer';
 import {
   ArrayNotEmpty,
-  IsNotEmpty,
-  IsUUID,
-  IsString,
   IsBoolean,
+  IsNotEmpty,
   IsOptional,
+  IsString,
   IsUrl,
+  IsUUID,
 } from 'class-validator';
 import { IsRecordExist } from 'src/decorators/is-record-exist.decorator';
 
@@ -52,7 +53,14 @@ export class CreateFlashcardDTO {
   @IsNotEmpty({ message: 'Please provide an image name' })
   imageName: string;
 
-  @IsBoolean()
+  @Transform(({ value }) => value || false)
+  @IsBoolean({ message: 'Wrong regeneration flag' })
   @IsOptional()
   isRegeneration?: boolean;
 }
+
+export class ProcessImageDTO extends PickType(CreateFlashcardDTO, [
+  'imageName',
+  'imageUrl',
+  'isRegeneration',
+]) {}

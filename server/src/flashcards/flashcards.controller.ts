@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   MaxFileSizeValidator,
+  Param,
   ParseFilePipe,
   Post,
   Put,
@@ -21,14 +22,12 @@ import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
 import { PaginationPipe } from 'src/pipes/pagination.pipe';
 import { Filters, ServerPagination } from 'src/shared';
 import {
-  DislikeFlashcardDto,
+  CreateFlashcardDTO,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
-  LikeFlashcardDto,
-  CardDto,
-  CreateFlashcardDTO,
 } from './dto';
 import { FlashCardsService } from './flashcards.service';
+import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 
 const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
@@ -79,30 +78,30 @@ export class FlashCardsController {
     return this.flashCardsService.disorganize(disorganizeFlashcardsDto);
   }
 
-  @Post('/like')
-  like(@Req() request: Request, @Body() likeFlashcardDto: LikeFlashcardDto) {
-    const user: Users = request['user'];
-
-    return this.flashCardsService.like(likeFlashcardDto, user.id);
-  }
-
-  @Post('/dislike')
-  async dislike(
+  @Post('/:id/dislike')
+  dislike(
     @Req() request: Request,
-    @Body() dislikeFlashcardDto: DislikeFlashcardDto,
+    @Param('id') flashcardId: string,
+    @Body() dislikeFlashcardDto: DislikeFlashcardDTO,
   ) {
     const user: Users = request['user'];
 
-    return this.flashCardsService.dislike(dislikeFlashcardDto, user.id);
+    return this.flashCardsService.dislike(
+      flashcardId,
+      dislikeFlashcardDto,
+      user.id,
+    );
   }
 
-  @Post('/regenerate')
-  regenerate(@Req() request: Request, @Body() regenerateDto: CardDto) {
-    return this.flashCardsService.regenerateCard(regenerateDto.cardId);
+  @Post('/:id/regenerate')
+  regenerate(@Req() request: Request, @Param('id') flashcardId: string) {
+    const user = request['user'];
+
+    return this.flashCardsService.regenerate(flashcardId, user.id);
   }
 
   @Post('/create')
-  async create(
+  create(
     @Req() request: Request,
     @Body() createFlashcardDto: CreateFlashcardDTO,
   ) {
@@ -111,8 +110,10 @@ export class FlashCardsController {
     return this.flashCardsService.create(createFlashcardDto, user.id);
   }
 
-  @Delete('/delete')
-  async delete(@Body() regenerateDto: CardDto) {
-    return this.flashCardsService.delete(regenerateDto.cardId);
+  @Delete('/:id')
+  delete(@Req() request: Request, @Param('id') id: string) {
+    const user: Users = request['user'];
+
+    return this.flashCardsService.delete(id, user.id);
   }
 }

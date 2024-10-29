@@ -29,8 +29,21 @@ class CreateFlashcardDTO with _$CreateFlashcardDTO {
     required String objectOnImage,
     required String imageUrl,
     required String imageName,
+    bool? isRegeneration,
   }) = _CreateFlashcardDTO;
 
   factory CreateFlashcardDTO.fromJson(Map<String, dynamic> json) =>
       _$CreateFlashcardDTOFromJson(json);
+}
+
+@freezed
+class DislikeFlashcardDTO with _$DislikeFlashcardDTO {
+  const factory DislikeFlashcardDTO({
+    required String id,
+    String? text,
+    List<String>? categories,
+  }) = _DislikeFlashcardDTO;
+
+  factory DislikeFlashcardDTO.fromJson(Map<String, dynamic> json) =>
+      _$DislikeFlashcardDTOFromJson(json);
 }

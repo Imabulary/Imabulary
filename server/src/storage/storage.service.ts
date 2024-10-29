@@ -35,9 +35,12 @@ export class StorageService {
     return storageFile;
   }
 
-  async delete(bucketFolder: IBucketFolders, fileName: string) {
+  async delete(
+    fileName: string,
+    folder: IBucketFolders = IBucketFolders.IMAGE,
+  ) {
     try {
-      const storageFile = this.findOne(bucketFolder, fileName);
+      const storageFile = this.findOne(folder, fileName);
 
       await storageFile.delete();
     } catch (error: any) {

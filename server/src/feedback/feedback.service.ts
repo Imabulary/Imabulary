@@ -1,18 +1,31 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { isEmpty } from 'lodash';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   CreateFeedbackDto,
   CreateNoDesiredObjectFeedbackDTO,
 } from './dto/feedback.dto';
-import { Prisma } from '@prisma/client';
 import { feedbackCategoriesSlugs } from './utils/constants';
+import { FeedbackCategoriesMisconfigurationException } from './utils/feedback.exception';
 
 @Injectable()
 export class FeedbackService {
   constructor(private readonly prisma: PrismaService) {}
 
+  // TODO: add tests
   async getAllFeedbackCategories() {
-    return this.prisma.feedbackCategory.findMany();
+    const categories = await this.prisma.feedbackCategory.findMany({
+      where: {
+        slug: { not: { equals: feedbackCategoriesSlugs.NO_DESIRED_OBJECT } },
+      },
+    });
+
+    if (isEmpty(categories)) {
+      throw new FeedbackCategoriesMisconfigurationException();
+    }
+
+    return categories;
   }
 
   async createNoDiseredObjectFeedback(
@@ -76,18 +89,11 @@ export class FeedbackService {
           })),
         },
       },
-      include: {
-        card: {
-          include: {
-            user: {
-              include: {
-                Wallet: true,
-              },
-            },
-          },
-        },
-      },
     });
+  }
+
+  findOne(where: Prisma.FeedbackWhereInput) {
+    return this.prisma.feedback.findFirst({ where });
   }
 
   private findOneFeedbackCategory(

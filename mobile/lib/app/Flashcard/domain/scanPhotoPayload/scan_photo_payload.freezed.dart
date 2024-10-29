@@ -24,6 +24,7 @@ mixin _$ScanPhotoPayload {
       throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   String get imageName => throw _privateConstructorUsedError;
+  bool? get isRegeneration => throw _privateConstructorUsedError;
 
   /// Serializes this ScanPhotoPayload to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,7 +45,8 @@ abstract class $ScanPhotoPayloadCopyWith<$Res> {
   $Res call(
       {List<Map<String, dynamic>> objectsOnImage,
       String imageUrl,
-      String imageName});
+      String imageName,
+      bool? isRegeneration});
 }
 
 /// @nodoc
@@ -65,6 +67,7 @@ class _$ScanPhotoPayloadCopyWithImpl<$Res, $Val extends ScanPhotoPayload>
     Object? objectsOnImage = null,
     Object? imageUrl = null,
     Object? imageName = null,
+    Object? isRegeneration = freezed,
   }) {
     return _then(_value.copyWith(
       objectsOnImage: null == objectsOnImage
@@ -79,6 +82,10 @@ class _$ScanPhotoPayloadCopyWithImpl<$Res, $Val extends ScanPhotoPayload>
           ? _value.imageName
           : imageName // ignore: cast_nullable_to_non_nullable
               as String,
+      isRegeneration: freezed == isRegeneration
+          ? _value.isRegeneration
+          : isRegeneration // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -94,7 +101,8 @@ abstract class _$$ScanPhotoPayloadImplCopyWith<$Res>
   $Res call(
       {List<Map<String, dynamic>> objectsOnImage,
       String imageUrl,
-      String imageName});
+      String imageName,
+      bool? isRegeneration});
 }
 
 /// @nodoc
@@ -113,6 +121,7 @@ class __$$ScanPhotoPayloadImplCopyWithImpl<$Res>
     Object? objectsOnImage = null,
     Object? imageUrl = null,
     Object? imageName = null,
+    Object? isRegeneration = freezed,
   }) {
     return _then(_$ScanPhotoPayloadImpl(
       objectsOnImage: null == objectsOnImage
@@ -127,6 +136,10 @@ class __$$ScanPhotoPayloadImplCopyWithImpl<$Res>
           ? _value.imageName
           : imageName // ignore: cast_nullable_to_non_nullable
               as String,
+      isRegeneration: freezed == isRegeneration
+          ? _value.isRegeneration
+          : isRegeneration // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -139,7 +152,8 @@ class _$ScanPhotoPayloadImpl
   const _$ScanPhotoPayloadImpl(
       {required final List<Map<String, dynamic>> objectsOnImage,
       required this.imageUrl,
-      required this.imageName})
+      required this.imageName,
+      this.isRegeneration})
       : _objectsOnImage = objectsOnImage;
 
   factory _$ScanPhotoPayloadImpl.fromJson(Map<String, dynamic> json) =>
@@ -157,10 +171,12 @@ class _$ScanPhotoPayloadImpl
   final String imageUrl;
   @override
   final String imageName;
+  @override
+  final bool? isRegeneration;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScanPhotoPayload(objectsOnImage: $objectsOnImage, imageUrl: $imageUrl, imageName: $imageName)';
+    return 'ScanPhotoPayload(objectsOnImage: $objectsOnImage, imageUrl: $imageUrl, imageName: $imageName, isRegeneration: $isRegeneration)';
   }
 
   @override
@@ -170,7 +186,8 @@ class _$ScanPhotoPayloadImpl
       ..add(DiagnosticsProperty('type', 'ScanPhotoPayload'))
       ..add(DiagnosticsProperty('objectsOnImage', objectsOnImage))
       ..add(DiagnosticsProperty('imageUrl', imageUrl))
-      ..add(DiagnosticsProperty('imageName', imageName));
+      ..add(DiagnosticsProperty('imageName', imageName))
+      ..add(DiagnosticsProperty('isRegeneration', isRegeneration));
   }
 
   @override
@@ -183,7 +200,9 @@ class _$ScanPhotoPayloadImpl
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.imageName, imageName) ||
-                other.imageName == imageName));
+                other.imageName == imageName) &&
+            (identical(other.isRegeneration, isRegeneration) ||
+                other.isRegeneration == isRegeneration));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -192,7 +211,8 @@ class _$ScanPhotoPayloadImpl
       runtimeType,
       const DeepCollectionEquality().hash(_objectsOnImage),
       imageUrl,
-      imageName);
+      imageName,
+      isRegeneration);
 
   /// Create a copy of ScanPhotoPayload
   /// with the given fields replaced by the non-null parameter values.
@@ -215,7 +235,8 @@ abstract class _ScanPhotoPayload implements ScanPhotoPayload {
   const factory _ScanPhotoPayload(
       {required final List<Map<String, dynamic>> objectsOnImage,
       required final String imageUrl,
-      required final String imageName}) = _$ScanPhotoPayloadImpl;
+      required final String imageName,
+      final bool? isRegeneration}) = _$ScanPhotoPayloadImpl;
 
   factory _ScanPhotoPayload.fromJson(Map<String, dynamic> json) =
       _$ScanPhotoPayloadImpl.fromJson;
@@ -226,6 +247,8 @@ abstract class _ScanPhotoPayload implements ScanPhotoPayload {
   String get imageUrl;
   @override
   String get imageName;
+  @override
+  bool? get isRegeneration;
 
   /// Create a copy of ScanPhotoPayload
   /// with the given fields replaced by the non-null parameter values.

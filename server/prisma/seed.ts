@@ -35,11 +35,6 @@ async function main() {
       meaning:
         'This means that the system pulled up an incorrect example. It sounds unnaturally.',
     },
-    {
-      name: 'Other',
-      meaning:
-        'Something else is wrong with the flashcard, I will tell you what in the text field down below.',
-    },
   ];
 
   const statuses = ['still_learning', 'not_studied', 'mastered'];

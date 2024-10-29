@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { FeedbackService } from './feedback.service';
 import { AuthGuard } from 'src/guards';
 import {
@@ -15,6 +23,11 @@ export class FeedbackController {
   @Get('/categories')
   getFeedbackCategories() {
     return this.feedbackService.getAllFeedbackCategories();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.feedbackService.findOne({ id });
   }
 
   @Post('/create')

@@ -26,7 +26,7 @@ export class VisionService {
 
     if (error) {
       throw new InternalServerErrorException(VISION_GENERIC_ERROR, {
-        cause: error,
+        cause: { ...error, imageUrl },
       });
     }
 

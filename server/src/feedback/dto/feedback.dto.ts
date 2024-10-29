@@ -9,32 +9,8 @@ import {
   IsUrl,
   IsUUID,
 } from 'class-validator';
-import { IsRecordExist } from 'src/decorators/is-record-exist.decorator';
 
-export class LikeFlashcardDto {
-  @IsString({ message: 'UID must be a valid string' })
-  @IsRecordExist('cards', {
-    message: 'Flashcard is unavailable for feedback',
-  })
-  cardId: string;
-}
-
-export class DislikeFlashcardDto extends LikeFlashcardDto {
-  @IsString()
-  @IsOptional()
-  text?: string;
-
-  @IsArray()
-  @IsString({ each: true })
-  @IsOptional()
-  categories?: string[];
-}
-
-export class CreateFeedbackDto {
-  @IsUUID(4, { message: 'Card ID must be a valid UUID string' })
-  @IsOptional()
-  cardId?: string;
-
+export class DislikeFlashcardDTO {
   @IsString({ message: 'Text of the feedback must be a string' })
   @IsOptional()
   text?: string;
@@ -46,6 +22,12 @@ export class CreateFeedbackDto {
   @IsArray({ message: 'Categories must be an array' })
   @IsOptional()
   categories?: string[];
+}
+
+export class CreateFeedbackDto extends DislikeFlashcardDTO {
+  @IsUUID(4, { message: 'Card ID must be a valid UUID string' })
+  @IsOptional()
+  cardId?: string;
 
   @Transform((value) => value || false)
   @IsBoolean()
@@ -68,4 +50,9 @@ export class CreateNoDesiredObjectFeedbackDTO {
   })
   @ArrayNotEmpty({ message: 'Array with objects on image cannot be empty' })
   objectsOnImage: string[];
+}
+
+export class FindOneDTO {
+  @IsNotEmpty({ message: '' })
+  cardId: string;
 }

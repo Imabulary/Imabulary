@@ -1,29 +1,31 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
 import { File } from '@google-cloud/storage';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { AssistantService } from 'src/assistant/assistant.service';
+import { FeedbackService } from 'src/feedback/feedback.service';
 import { PrismaService } from 'src/prisma';
+import { QuizService } from 'src/quiz/quiz.service';
 import { Filters, ServerPagination } from 'src/shared';
+import { DEFAULT_COST } from 'src/shared/constants';
+import { SoundService } from 'src/sound/sound.service';
+import { StorageService } from 'src/storage/storage.service';
+import { IBucketFolders } from 'src/storage/utils';
+import { TranslatorService } from 'src/translator/translator.service';
+import { VisionService } from 'src/vision/vision.service';
+import { WalletService } from 'src/wallet/wallet.service';
 import {
+  CreateFlashcardDTO,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
-  DislikeFlashcardDto,
-  LikeFlashcardDto,
-  CreateFlashcardDTO,
+  ProcessImageDTO,
 } from './dto';
-import { StorageService } from 'src/storage/storage.service';
-import { VisionService } from 'src/vision/vision.service';
-import { AssistantService } from 'src/assistant/assistant.service';
-import { TranslatorService } from 'src/translator/translator.service';
-import { SoundService } from 'src/sound/sound.service';
-import { IBucketFolders } from 'src/storage/utils';
-import { FeedbackService } from 'src/feedback/feedback.service';
-import { QUIZ_STATUS } from 'src/quiz/utils/quiz-status';
-import { WalletService } from 'src/wallet/wallet.service';
-import { DEFAULT_COST } from 'src/shared/constants';
-import { QuizService } from 'src/quiz/quiz.service';
+import { Prisma } from '@prisma/client';
+import {
+  FlashcardNotFoundException,
+  FlashcardRegeneratedException,
+  FlashcardWithFeedbackException,
+} from './utils';
+import { isEmpty } from 'lodash';
+import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 
 @Injectable()
 export class FlashCardsService {
@@ -46,15 +48,7 @@ export class FlashCardsService {
     try {
       const imageUrl = await this.storage.getFileURL(imageFile);
 
-      const objectsOnImage = await this.processImage(imageUrl);
-
-      if (objectsOnImage.length === 1) {
-        const objectOnImage = objectsOnImage[0].name;
-
-        return this.create({ imageName, imageUrl, objectOnImage }, userId);
-      }
-
-      return { objectsOnImage, imageName, imageUrl };
+      return this.processImage({ imageUrl, imageName }, userId);
     } catch (error) {
       await imageFile.delete();
 
@@ -63,7 +57,7 @@ export class FlashCardsService {
   }
 
   async create(
-    { objectOnImage, imageUrl, isRegeneration, imageName }: CreateFlashcardDTO,
+    { objectOnImage, imageUrl, imageName, isRegeneration }: CreateFlashcardDTO,
     userId: string,
   ) {
     let audioFile: File;
@@ -127,18 +121,21 @@ export class FlashCardsService {
         },
       });
 
-      await this.wallet.deductBalance(userId, DEFAULT_COST);
+      await this.wallet.manage(userId, DEFAULT_COST, 'subtract');
 
       return card;
     } catch (error) {
-      await this.storage.delete(IBucketFolders.IMAGE, imageName);
+      await this.storage.delete(imageName);
       await audioFile.delete();
 
       throw error;
     }
   }
 
-  async processImage(imageUrl: string) {
+  async processImage(
+    { imageName, imageUrl, isRegeneration }: ProcessImageDTO,
+    userId: string,
+  ) {
     // TODO: Take these variables from settings of user profile, once it's done
     const sourceLanguageCode = 'en-US';
     const targetLanguageCode = 'uk-UA';
@@ -146,7 +143,17 @@ export class FlashCardsService {
     const objectsOnImage = await this.vision.analyze(imageUrl);
 
     if (objectsOnImage.length === 1) {
-      return objectsOnImage;
+      const objectOnImage = objectsOnImage[0].name;
+
+      return this.create(
+        {
+          imageName,
+          imageUrl,
+          objectOnImage,
+          isRegeneration: true,
+        },
+        userId,
+      );
     }
 
     const namesToTranslate = objectsOnImage.map((item) => item.name);
@@ -161,7 +168,12 @@ export class FlashCardsService {
       translatedName: translatedWords[index],
     }));
 
-    return translatedObjectsOnImage;
+    return {
+      objectsOnImage: translatedObjectsOnImage,
+      imageName,
+      imageUrl,
+      isRegeneration,
+    };
   }
 
   async findAll(
@@ -213,89 +225,106 @@ export class FlashCardsService {
     return true;
   }
 
-  async like(likeFlashcardDto: LikeFlashcardDto, userId: string) {
-    const { cardId } = likeFlashcardDto;
+  // TODO: add tests
+  async delete(id: string, userId: string) {
+    const flashcard = await this.findOne({ id, userId });
 
-    await this.feedbackService.create({ cardId, isAppropriate: true }, userId);
-  }
+    if (!flashcard) {
+      throw new FlashcardNotFoundException(id, 'FlashCardsService.delete');
+    }
 
-  async delete(cardId: string) {
     await Promise.all([
       this.prisma.cards.update({
-        where: { id: cardId },
+        where: { id },
         data: {
           userId: null,
           deletedAt: new Date(),
         },
       }),
       this.prisma.cardsOnSets.deleteMany({
-        where: { flashcardId: cardId },
+        where: { flashcardId: id },
       }),
     ]);
 
-    return {
-      message: 'Card was successfuly deleted!',
-    };
+    return true;
   }
 
-  async regenerateCard(cardId: string) {
-    const currentCard = await this.prisma.cards.update({
+  // TODO: add tests
+  async regenerate(flashcardId: string, userId: string) {
+    const currentFlashcard = await this.prisma.cards.update({
       data: {
         userId: null,
         deletedAt: new Date(),
       },
       where: {
-        id: cardId,
+        id: flashcardId,
       },
     });
 
     await this.prisma.cardsOnSets.deleteMany({
-      where: { flashcardId: cardId },
+      where: { flashcardId },
     });
 
-    if (currentCard.is_regenerated) {
-      throw new BadRequestException('This card had already regenerated');
+    if (currentFlashcard.is_regenerated) {
+      throw new FlashcardRegeneratedException(flashcardId);
     }
 
-    const card = await this.processImage(currentCard.image_url);
+    const { image_name: imageName, image_url: imageUrl } = currentFlashcard;
 
-    return {
-      result: card,
-    };
+    return this.processImage(
+      { imageUrl, imageName, isRegeneration: true },
+      userId,
+    );
   }
 
-  async dislike(dislikeFlashcardDto: DislikeFlashcardDto, userId: string) {
-    const { cardId, text, categories } = dislikeFlashcardDto;
+  // TODO: add tests
+  async dislike(
+    cardId: string,
+    dislikeFlashcardDto: DislikeFlashcardDTO,
+    userId: string,
+  ) {
+    const { text, categories } = dislikeFlashcardDto;
 
-    const existingFeedback = await this.prisma.feedback.findFirst({
-      where: { id: cardId },
+    const flashcard = await this.findOne({ id: cardId });
+
+    if (!flashcard) {
+      throw new FlashcardNotFoundException(cardId, 'FlashCardsService.dislike');
+    }
+
+    const existingFeedback = await this.feedbackService.findOne({
+      cardId: flashcard.id,
     });
 
     if (existingFeedback) {
-      throw new NotFoundException('This card has feedback already');
-    }
-
-    if ((!categories && !text) || (categories && text)) {
-      throw new BadRequestException(
-        'Either categoryId or text must be provided, but not both',
+      throw new FlashcardWithFeedbackException(
+        flashcard.id,
+        existingFeedback.id,
       );
     }
 
-    const fetchedFeedback = await this.feedbackService.create(
-      {
-        cardId,
-        text,
-        categories,
-      },
-      userId,
-    );
-
-    if (!fetchedFeedback.card.user) {
-      throw new NotFoundException('User not found for the given card');
+    if (isEmpty(categories) && isEmpty(text)) {
+      throw new BadRequestException(
+        'Provide at least one category or text to your feedback',
+      );
     }
 
-    return {
-      message: 'Thank you for your feedback!',
-    };
+    await Promise.all([
+      this.wallet.manage(userId, DEFAULT_COST, 'add'),
+      this.feedbackService.create(
+        {
+          cardId,
+          text,
+          categories,
+        },
+        userId,
+      ),
+      this.delete(cardId, userId),
+    ]);
+
+    return true;
+  }
+
+  findOne(where: Prisma.CardsWhereUniqueInput) {
+    return this.prisma.cards.findFirst({ where });
   }
 }

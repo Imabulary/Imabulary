@@ -1,12 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma';
-import { validateWallet } from './utils';
-import { DailyAwardsService } from 'src/awards/awards.service';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { checkBalanceAvailability } from './utils';
-import { BadRequestException } from '@nestjs/common';
-import { deduct } from './utils';
-import { INSUFFICIENT_FUNDS } from './utils';
+import { add, subtract } from 'lodash';
+import { DailyAwardsService } from 'src/awards/awards.service';
+import { PrismaService } from '../prisma';
+import {
+  checkBalanceAvailability,
+  INSUFFICIENT_FUNDS,
+  validateWallet,
+} from './utils';
+
 @Injectable()
 export class WalletService {
   constructor(
@@ -29,7 +31,9 @@ export class WalletService {
     return wallet;
   }
 
-  async deductBalance(userId: string, cost: number) {
+  async manage(userId: string, cost: number, operation: 'add' | 'subtract') {
+    const operaions = { add, subtract };
+
     await this.prisma.$transaction(async (prisma) => {
       const wallet = await prisma.wallet.findUnique({
         where: { userId },
@@ -43,7 +47,7 @@ export class WalletService {
 
       await prisma.wallet.update({
         where: { userId },
-        data: { balance: deduct(wallet.balance, cost) },
+        data: { balance: operaions[operation](wallet.balance, cost) },
       });
     });
   }
