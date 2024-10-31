@@ -31,7 +31,7 @@ import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 
 const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
-//@UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 @Controller('flashcards')
 export class FlashCardsController {
   constructor(private readonly flashCardsService: FlashCardsService) {}
@@ -111,14 +111,11 @@ export class FlashCardsController {
   }
 
   @Delete('/many')
-  deleteMany(@Query('ids') ids: string) {
-    //const user: Users = request['user'];
+  deleteMany(@Req() request: Request, @Query('ids') ids: string) {
+    const user: Users = request['user'];
 
     const idsArray = ids.split(',');
-    return this.flashCardsService.delete(
-      idsArray,
-      'UQ1Va2SRwGdcF6T2Gl6yHtA2h7L2',
-    );
+    return this.flashCardsService.delete(idsArray, user.id);
   }
 
   @Delete('/:id')
