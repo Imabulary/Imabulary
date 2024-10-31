@@ -24,6 +24,18 @@ export class FlashcardRegeneratedException extends HttpException {
   }
 }
 
+export class FlashcardsNotFoundException extends HttpException {
+  constructor(incidentMethod: string) {
+    super(
+      "We couldn't find the flashcards you've requested. Make sure they exist and aren't deleted.",
+      HttpStatus.NOT_FOUND,
+      {
+        cause: { incidentMethod },
+      },
+    );
+  }
+}
+
 export class FlashcardWithFeedbackException extends HttpException {
   constructor(flashcardId: string, feedbackId: string) {
     super(

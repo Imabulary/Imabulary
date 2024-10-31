@@ -23,6 +23,7 @@ import {
   FlashcardNotFoundException,
   FlashcardRegeneratedException,
   FlashcardWithFeedbackException,
+  FlashcardsNotFoundException,
 } from './utils';
 import { isEmpty } from 'lodash';
 import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
@@ -226,7 +227,43 @@ export class FlashCardsService {
   }
 
   // TODO: add tests
-  async delete(id: string, userId: string) {
+  async delete(id: string | string[], userId: string) {
+    if (Array.isArray(id)) {
+      const flashcard = await this.prisma.cards.findMany({
+        where: {
+          id: {
+            in: id,
+          },
+        },
+      });
+
+      if (!flashcard.length || id.length !== flashcard.length) {
+        throw new FlashcardsNotFoundException('FlashCardsService.delete');
+      }
+
+      this.prisma.$transaction(async (prisma) => {
+        await prisma.cards.updateMany({
+          where: {
+            id: {
+              in: id,
+            },
+          },
+          data: {
+            userId: null,
+            deletedAt: new Date(),
+          },
+        });
+        await prisma.cardsOnSets.deleteMany({
+          where: {
+            flashcardId: {
+              in: id,
+            },
+          },
+        });
+      });
+
+      return true;
+    }
     const flashcard = await this.findOne({ id, userId });
 
     if (!flashcard) {

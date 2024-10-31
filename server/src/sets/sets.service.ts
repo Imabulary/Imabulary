@@ -89,6 +89,16 @@ export class SetsService {
     return this.prisma.sets.delete({ where: { id, userId } });
   }
 
+  async removeCards(ids: string[]) {
+    return await this.prisma.cardsOnSets.deleteMany({
+      where: {
+        flashcardId: {
+          in: ids,
+        },
+      },
+    });
+  }
+
   private async throwIfSetExists(userId: string, name: string) {
     const set = await this.findOne({ userId, name }, false);
 
