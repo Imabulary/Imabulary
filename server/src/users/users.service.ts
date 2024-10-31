@@ -59,11 +59,11 @@ export class UsersService {
     });
 
     const imageDeletePromises = imageNames.map((name) =>
-      this.storage.delete(IBucketFolders.IMAGE, name),
+      this.storage.delete(name, IBucketFolders.IMAGE),
     );
 
     const soundDeletePromises = soundNames.map((name) =>
-      this.storage.delete(IBucketFolders.AUDIO, name),
+      this.storage.delete(name, IBucketFolders.AUDIO),
     );
 
     await this.prisma.client.$transaction(async (prisma) => {
