@@ -12,6 +12,7 @@ import { WalletModule } from 'src/wallet/wallet.module';
 import { SoundService } from 'src/sound/sound.service';
 import { FeedbackService } from 'src/feedback/feedback.service';
 import { QuizService } from 'src/quiz/quiz.service';
+import { FlashcardsRepository } from './flashcards.repository';
 
 @Module({
   controllers: [FlashCardsController],
@@ -34,6 +35,7 @@ import { QuizService } from 'src/quiz/quiz.service';
     UsersService,
     SoundService,
     QuizService,
+    FlashcardsRepository,
   ],
 })
 export class FlashCardsModule {}

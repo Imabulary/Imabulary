@@ -1,19 +1,40 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
+type FlashcardNotFoundExceptionType = {
+  flashcardId?: string;
+  incidentMethod: string;
+  plural?: boolean;
+};
+
+type FlashcardRegeneratedExceptionType = {
+  flashcardId: string;
+};
+
+type FlashcardWithFeedbackExceptionType = {
+  flashcardId: string;
+  feedbackId: string;
+};
+
 export class FlashcardNotFoundException extends HttpException {
-  constructor(flashcardId: string, incidentMethod: string) {
+  constructor({
+    flashcardId,
+    incidentMethod,
+    plural = false,
+  }: FlashcardNotFoundExceptionType) {
     super(
-      "We couldn't find the flashcard you've requested. Make sure it exists and isn't deleted.",
+      plural
+        ? "We couldn't find the flashcards you've requested. Make sure they exist and aren't deleted."
+        : "We couldn't find the flashcard you've requested. Make sure it exists and isn't deleted.",
       HttpStatus.NOT_FOUND,
       {
-        cause: { flashcardId, incidentMethod },
+        cause: { ...(plural && { flashcardId }), incidentMethod },
       },
     );
   }
 }
 
 export class FlashcardRegeneratedException extends HttpException {
-  constructor(flashcardId: string) {
+  constructor({ flashcardId }: FlashcardRegeneratedExceptionType) {
     super(
       'You have already regenerated this flashcard',
       HttpStatus.BAD_REQUEST,
@@ -24,20 +45,8 @@ export class FlashcardRegeneratedException extends HttpException {
   }
 }
 
-export class FlashcardsNotFoundException extends HttpException {
-  constructor(incidentMethod: string) {
-    super(
-      "We couldn't find the flashcards you've requested. Make sure they exist and aren't deleted.",
-      HttpStatus.NOT_FOUND,
-      {
-        cause: { incidentMethod },
-      },
-    );
-  }
-}
-
 export class FlashcardWithFeedbackException extends HttpException {
-  constructor(flashcardId: string, feedbackId: string) {
+  constructor({ flashcardId, feedbackId }: FlashcardWithFeedbackExceptionType) {
     super(
       'You have already provided a feedback for this flashcard',
       HttpStatus.BAD_REQUEST,

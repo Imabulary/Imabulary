@@ -18,15 +18,14 @@ import {
   OrganizeFlashcardsDTO,
   ProcessImageDTO,
 } from './dto';
-import { Prisma } from '@prisma/client';
 import {
   FlashcardNotFoundException,
   FlashcardRegeneratedException,
   FlashcardWithFeedbackException,
-  FlashcardsNotFoundException,
 } from './utils';
 import { isEmpty } from 'lodash';
 import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
+import { FlashcardsRepository } from './flashcards.repository';
 
 @Injectable()
 export class FlashCardsService {
@@ -40,6 +39,7 @@ export class FlashCardsService {
     private readonly feedbackService: FeedbackService,
     private readonly wallet: WalletService,
     private readonly quizService: QuizService,
+    private readonly flashcardsRepository: FlashcardsRepository,
   ) {}
 
   async scan(userId: string, fileName: string, file: Buffer) {
@@ -101,7 +101,7 @@ export class FlashCardsService {
           },
         );
 
-      const card = await this.prisma.cards.create({
+      const card = await this.flashcardsRepository.create({
         data: {
           word: objectOnImage,
           phrase: relatedPhrase,
@@ -182,44 +182,26 @@ export class FlashCardsService {
     pagination: ServerPagination,
     filters: Filters = {},
   ) {
-    const [result, total] = await this.prisma.$transaction([
-      this.prisma.cards.findMany({
-        ...pagination,
-        orderBy: { createdAt: 'desc' },
-        where: { userId, ...filters },
-        include: {
-          QuizStatus: true,
-        },
-      }),
-      this.prisma.cards.count({ where: { userId, ...filters } }),
-    ]);
-
-    return {
-      result,
-      total,
-    };
+    return await this.flashcardsRepository.findAndFilterAll({
+      ...pagination,
+      orderBy: { createdAt: 'desc' },
+      where: { userId, ...filters },
+      include: {
+        QuizStatus: true,
+      },
+    });
   }
 
   async organize(organizeFlashcardsDto: OrganizeFlashcardsDTO) {
     const { flashcardIds, setId } = organizeFlashcardsDto;
 
-    const queries = flashcardIds.map((flashcardId) =>
-      this.prisma.cardsOnSets.upsert({
-        create: { setId, flashcardId },
-        where: { setId_flashcardId: { setId, flashcardId } },
-        update: {},
-      }),
-    );
-
-    const result = await Promise.all(queries);
-
-    return result;
+    return this.flashcardsRepository.upsertCardsOnSets({ flashcardIds, setId });
   }
 
   async disorganize(disorganizeFlashcardsDto: DisorganizeFlashcardsDTO) {
     const { flashcardIds, setId } = disorganizeFlashcardsDto;
 
-    await this.prisma.cardsOnSets.deleteMany({
+    await this.flashcardsRepository.deleteManyCardsOnSets({
       where: { setId, flashcardId: { in: flashcardIds } },
     });
 
@@ -229,7 +211,7 @@ export class FlashCardsService {
   // TODO: add tests
   async delete(id: string | string[], userId: string) {
     if (Array.isArray(id)) {
-      const flashcard = await this.prisma.cards.findMany({
+      const flashcard = await this.flashcardsRepository.findAll({
         where: {
           id: {
             in: id,
@@ -238,72 +220,40 @@ export class FlashCardsService {
       });
 
       if (!flashcard.length || id.length !== flashcard.length) {
-        throw new FlashcardsNotFoundException('FlashCardsService.delete');
+        throw new FlashcardNotFoundException({
+          incidentMethod: 'FlashCardsService.delete',
+          plural: true,
+        });
       }
 
-      this.prisma.$transaction(async (prisma) => {
-        await prisma.cards.updateMany({
-          where: {
-            id: {
-              in: id,
-            },
-          },
-          data: {
-            userId: null,
-            deletedAt: new Date(),
-          },
-        });
-        await prisma.cardsOnSets.deleteMany({
-          where: {
-            flashcardId: {
-              in: id,
-            },
-          },
-        });
-      });
+      await this.flashcardsRepository.softDelete({ id });
 
       return true;
     }
-    const flashcard = await this.findOne({ id, userId });
+    const flashcard = await this.flashcardsRepository.findOne({
+      where: { id, userId },
+    });
 
     if (!flashcard) {
-      throw new FlashcardNotFoundException(id, 'FlashCardsService.delete');
+      throw new FlashcardNotFoundException({
+        flashcardId: id,
+        incidentMethod: 'FlashCardsService.delete',
+      });
     }
 
-    await Promise.all([
-      this.prisma.cards.update({
-        where: { id },
-        data: {
-          userId: null,
-          deletedAt: new Date(),
-        },
-      }),
-      this.prisma.cardsOnSets.deleteMany({
-        where: { flashcardId: id },
-      }),
-    ]);
+    await this.flashcardsRepository.softDelete({ id });
 
     return true;
   }
 
   // TODO: add tests
   async regenerate(flashcardId: string, userId: string) {
-    const currentFlashcard = await this.prisma.cards.update({
-      data: {
-        userId: null,
-        deletedAt: new Date(),
-      },
-      where: {
-        id: flashcardId,
-      },
-    });
-
-    await this.prisma.cardsOnSets.deleteMany({
-      where: { flashcardId },
+    const currentFlashcard = await this.flashcardsRepository.softDelete({
+      id: flashcardId,
     });
 
     if (currentFlashcard.is_regenerated) {
-      throw new FlashcardRegeneratedException(flashcardId);
+      throw new FlashcardRegeneratedException({ flashcardId });
     }
 
     const { image_name: imageName, image_url: imageUrl } = currentFlashcard;
@@ -322,10 +272,15 @@ export class FlashCardsService {
   ) {
     const { text, categories } = dislikeFlashcardDto;
 
-    const flashcard = await this.findOne({ id: cardId });
+    const flashcard = await this.flashcardsRepository.findOne({
+      where: { id: cardId },
+    });
 
     if (!flashcard) {
-      throw new FlashcardNotFoundException(cardId, 'FlashCardsService.dislike');
+      throw new FlashcardNotFoundException({
+        flashcardId: cardId,
+        incidentMethod: 'FlashCardsService.dislike',
+      });
     }
 
     const existingFeedback = await this.feedbackService.findOne({
@@ -333,10 +288,10 @@ export class FlashCardsService {
     });
 
     if (existingFeedback) {
-      throw new FlashcardWithFeedbackException(
-        flashcard.id,
-        existingFeedback.id,
-      );
+      throw new FlashcardWithFeedbackException({
+        flashcardId: flashcard.id,
+        feedbackId: existingFeedback.id,
+      });
     }
 
     if (isEmpty(categories) && isEmpty(text)) {
@@ -359,9 +314,5 @@ export class FlashCardsService {
     ]);
 
     return true;
-  }
-
-  findOne(where: Prisma.CardsWhereUniqueInput) {
-    return this.prisma.cards.findFirst({ where });
   }
 }

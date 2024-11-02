@@ -110,7 +110,7 @@ export class FlashCardsController {
     return this.flashCardsService.create(createFlashcardDto, user.id);
   }
 
-  @Delete('/many')
+  @Delete('/')
   deleteMany(@Req() request: Request, @Query('ids') ids: string) {
     const user: Users = request['user'];
 

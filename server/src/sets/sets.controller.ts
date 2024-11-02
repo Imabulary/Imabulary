@@ -56,13 +56,6 @@ export class SetsController {
     return this.setsService.update(id, user.id, updateSetDto);
   }
 
-  @Delete('/cards')
-  removeCards(@Query('ids') ids: string) {
-    const idsArray = ids.split(',');
-
-    return this.setsService.removeCards(idsArray);
-  }
-
   @Delete(':id')
   remove(@Req() request: Request, @Param('id') id: string) {
     const user: Users = request['user'];
