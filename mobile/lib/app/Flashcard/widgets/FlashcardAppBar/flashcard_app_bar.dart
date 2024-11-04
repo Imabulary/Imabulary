@@ -34,7 +34,14 @@ class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
                   style: TextStyle(color: AppColors.primary),
                 ),
               ),
-              const DislikeButton()
+              const DislikeButton(),
+              Button(
+                onPressed: FlashcardAppBarController.showSettingsBottomSheet(
+                  context,
+                ),
+                icon: Icons.more_vert,
+                variat: ButtonVariant.icon,
+              )
             ],
           ),
         ),
