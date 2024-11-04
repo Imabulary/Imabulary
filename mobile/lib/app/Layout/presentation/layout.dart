@@ -27,13 +27,6 @@ class Layout extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.black,
-      bottomNavigationBar: BottomNavigation(
-        screens: screens,
-        currentScreen: currentScreen,
-      ),
-      floatingActionButton: const FloatingButton(),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
     );
   }
 }

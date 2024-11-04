@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Layout/presentation/layout.dart';
-import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
 import 'package:mobile/app/Profile/widgets/ProfileAppBar/profile_app_bar.dart';
 import 'package:mobile/app/Profile/widgets/SetsGrid/sets_grid.dart';
 import 'package:mobile/app/Profile/widgets/flashcards_grid.dart';
@@ -41,14 +39,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Layout(
-      TabBarView(
-        controller: _tabController,
-        children: const [FlashcardsGrid(), SetsGrid()],
-      ),
-      currentScreen: CurrentScreens.profile.value,
-      appBar: ProfileAppBar(
-        _tabController,
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            ProfileAppBar(_tabController),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: const [FlashcardsGrid(), SetsGrid()],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

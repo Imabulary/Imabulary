@@ -5,6 +5,7 @@ import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
 import 'package:mobile/app/Home/presentation/home.dart';
 import 'package:mobile/app/Profile/presentation/profile_screen.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen.dart';
+import 'package:mobile/app/Main/presentation/main_screen.dart';
 
 part 'app_router.gr.dart';
 
@@ -25,7 +26,7 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
 
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(page: HomeRoute.page, initial: true),
+        AutoRoute(page: MainRoute.page, initial: true),
         AutoRoute(page: ProfileRoute.page),
         AutoRoute(page: WelcomeRoute.page),
         AutoRoute(page: FlashcardRoute.page)

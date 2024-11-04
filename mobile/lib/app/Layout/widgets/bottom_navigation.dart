@@ -1,43 +1,32 @@
 import 'package:flutter/material.dart';
 
-enum CurrentScreens {
+enum CurrentScreen {
   home(0),
   profile(1);
 
-  const CurrentScreens(this.value);
+  const CurrentScreen(this.value);
 
   final int value;
 }
 
-class BottomNavigation extends StatefulWidget {
+class BottomNavigation extends StatelessWidget {
   const BottomNavigation({
     super.key,
-    this.currentScreen = 0,
-    required this.screens,
+    this.currentScreen = CurrentScreen.home,
+    required this.onNewScreenSelected,
   });
 
-  final int currentScreen;
-  final List<Widget> screens;
-
-  @override
-  State<BottomNavigation> createState() => _BottomNavigationState();
-}
-
-class _BottomNavigationState extends State<BottomNavigation> {
-  void _navigate(int index) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => widget.screens[index],
-      ),
-    );
-  }
+  final CurrentScreen currentScreen;
+  final void Function(CurrentScreen) onNewScreenSelected;
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_circle),
           label: 'Profile',
@@ -46,8 +35,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.grey[500],
       backgroundColor: const Color.fromRGBO(48, 48, 48, 1),
-      onTap: _navigate,
-      currentIndex: widget.currentScreen,
+      onTap: (index) {
+        onNewScreenSelected(
+          CurrentScreen.values.where((screen) => screen.value == index).first,
+        );
+      },
+      currentIndex: currentScreen.value,
     );
   }
 }

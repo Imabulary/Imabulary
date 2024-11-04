@@ -5,7 +5,7 @@ import 'package:mobile/app/Profile/widgets/ProfileAppBar/profile_app_bar_control
 import 'package:mobile/app/Profile/widgets/ProfileAppTitle/profile_app_title.dart';
 import 'package:mobile/utils/maybe.dart';
 
-class ProfileAppBar extends ConsumerWidget implements PreferredSizeWidget {
+class ProfileAppBar extends ConsumerWidget {
   const ProfileAppBar(this.tabController, {super.key});
 
   final TabController tabController;
@@ -18,30 +18,31 @@ class ProfileAppBar extends ConsumerWidget implements PreferredSizeWidget {
         .map<ImageProvider>((photo) => NetworkImage(photo!))
         .getOrElse(const AssetImage('assets/images/account.png'));
 
-    return AppBar(
-      automaticallyImplyLeading: false,
-      title: const ProfileAppTitle(),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 16),
-          child: GestureDetector(
-            onTap: ProfileAppBarController.showSettingsBottomSheet(context),
-            child: CircleAvatar(
-              backgroundImage: avatar,
-            ),
-          ),
-        )
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const ProfileAppTitle(),
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: GestureDetector(
+                onTap: ProfileAppBarController.showSettingsBottomSheet(context),
+                child: CircleAvatar(
+                  backgroundImage: avatar,
+                ),
+              ),
+            )
+          ],
+        ),
+        TabBar(
+          tabs: const [
+            Tab(text: 'Flashcards'),
+            Tab(text: 'Sets'),
+          ],
+          controller: tabController,
+        ),
       ],
-      bottom: TabBar(
-        tabs: const [
-          Tab(text: 'Flashcards'),
-          Tab(text: 'Sets'),
-        ],
-        controller: tabController,
-      ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 1.8);
 }

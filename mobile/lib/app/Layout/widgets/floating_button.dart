@@ -3,23 +3,14 @@ import 'package:mobile/atoms/colors.dart';
 import 'AddBottomSheet/add_bottom_sheet.dart';
 
 class FloatingButton extends StatelessWidget {
-  const FloatingButton({super.key});
+  const FloatingButton({super.key, required this.onPressed});
 
-  void _handleAdd(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      clipBehavior: Clip.hardEdge,
-      builder: (context) => const AddBottomSheet(),
-    );
-  }
-
+  final VoidCallback onPressed;
+  
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {
-        _handleAdd(context);
-      },
+      onPressed: onPressed,
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.black,
       child: const Icon(Icons.add),
