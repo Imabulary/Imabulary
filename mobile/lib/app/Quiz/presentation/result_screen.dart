@@ -62,7 +62,7 @@ class ResultScreen extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () => AutoRouter.of(context).popUntilRoot(),
               child: const TypeSetting(
-                'Go to the Home',
+                'Back to home',
                 style: TextStyle(color: AppColors.primary),
               ),
             ),
