@@ -19,7 +19,7 @@ class FeedbackReceivedDialog extends ConsumerStatefulWidget {
 class _FeedbackReceivedDialogState
     extends ConsumerState<FeedbackReceivedDialog> {
   _navigateHome() {
-    AutoRouter.of(context).push(const MainRoute());
+    AutoRouter.of(context).popUntilRoot();
   }
 
   @override

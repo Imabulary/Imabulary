@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
@@ -20,7 +19,7 @@ class NoDesiredObectDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            AutoRouter.of(context).push(const MainRoute());
+            AutoRouter.of(context).popUntilRoot();
           },
           child: const TypeSetting(
             'Close',
