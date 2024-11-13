@@ -1,8 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Feedback/widgets/feedback_received_dialog_controller.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
-import 'package:mobile/app/Home/presentation/home.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/button.dart';
 import 'package:mobile/utils/async_value_ui.dart';
@@ -18,12 +18,7 @@ class FeedbackReceivedDialog extends ConsumerStatefulWidget {
 class _FeedbackReceivedDialogState
     extends ConsumerState<FeedbackReceivedDialog> {
   _navigateHome() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => HomeScreen(),
-      ),
-    );
+    AutoRouter.of(context).popUntilRoot();
   }
 
   @override
@@ -50,11 +45,11 @@ class _FeedbackReceivedDialogState
     final regenerateButtonText = isLoading ? 'Generating...' : 'Generate Again';
 
     return AlertDialog(
-      title: TypeSetting(
+      title: const TypeSetting(
         'Thank you for the feedback!',
         variant: TextVariants.headlineLarge,
       ),
-      content: TypeSetting(
+      content: const TypeSetting(
         'We have returned the coin to you. What do you want to do next?',
       ),
       actions: [

@@ -25,7 +25,7 @@ class ListItem extends ListTile {
     final sublabelPadding = sublabel == null
         ? const EdgeInsets.all(10)
         : const EdgeInsets.only(left: 10, right: 10);
-    final padding = contentPadding != null ? contentPadding : sublabelPadding;
+    final padding = contentPadding ?? sublabelPadding;
 
     return ListTile(
       enabled: enabled,
@@ -35,9 +35,7 @@ class ListItem extends ListTile {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      leading: leading != null
-          ? leading
-          : ClipRRect(
+      leading: leading ?? ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
                 image ?? kStubImageUrl,

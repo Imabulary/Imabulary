@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
@@ -6,6 +7,7 @@ import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/widgets/list_item.dart';
 
+@RoutePage()
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key, required this.results});
 
@@ -52,7 +54,19 @@ class ResultScreen extends StatelessWidget {
                   : AppColors.error,
             ),
             itemCount: results.length,
-          )
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () => AutoRouter.of(context).popUntilRoot(),
+              child: const TypeSetting(
+                'Back to home',
+                style: TextStyle(color: AppColors.primary),
+              ),
+            ),
+          ),
         ],
       ),
     ));

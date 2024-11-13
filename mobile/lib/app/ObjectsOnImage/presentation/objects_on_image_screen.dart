@@ -1,18 +1,20 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Flashcard/domain/scanPhotoPayload/scan_photo_payload.dart';
-import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
 import 'package:mobile/app/ObjectsOnImage/domain/ObjectOnImage/object_on_image.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/ObjectsOnImage/presentation/objects_on_image_screen_controller.dart';
 import 'package:mobile/app/ObjectsOnImage/widgets/NoDesiredObject/no_desired_object.dart';
 import 'package:mobile/app/ObjectsOnImage/widgets/object_list_item.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
+import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 
+@RoutePage()
 class ObjectsOnImageScreen extends ConsumerWidget {
   const ObjectsOnImageScreen({
     super.key,
@@ -33,12 +35,7 @@ class ObjectsOnImageScreen extends ConsumerWidget {
         ref.invalidate(findAllFlashcardsProvider);
         ref.invalidate(getWalletBalanceProvider);
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const FlashcardScreen(),
-          ),
-        );
+        AutoRouter.of(context).push(const FlashcardRoute());
       });
     });
 
@@ -52,14 +49,14 @@ class ObjectsOnImageScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TypeSetting(
+            const TypeSetting(
               'Select an object',
               variant: TextVariants.headlineLarge,
             ),
             const SizedBox(
               height: 16,
             ),
-            TypeSetting(
+            const TypeSetting(
               'We’ve a detected a few objects on your photo. Please select one item and we’ll generate the flashcard for it.',
               style: TextStyle(color: AppColors.lightGrey),
             ),

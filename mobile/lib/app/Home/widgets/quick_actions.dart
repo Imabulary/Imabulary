@@ -10,28 +10,28 @@ class QuickActions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const TypeSetting(
+        TypeSetting(
           "Quick actions",
           variant: TextVariants.headlineMedium,
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(
+        SizedBox(
           height: 12,
         ),
-        const FlashcardQuickAction(),
-        const SizedBox(
+        FlashcardQuickAction(),
+        SizedBox(
           height: 12,
         ),
-        const SetQuickAction(),
-        const SizedBox(
+        SetQuickAction(),
+        SizedBox(
           height: 12,
         ),
-        const QuizQuickAction()
+        QuizQuickAction()
       ],
     );
   }
