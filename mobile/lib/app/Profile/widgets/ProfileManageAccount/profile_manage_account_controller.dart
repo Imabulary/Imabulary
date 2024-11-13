@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile/app/Profile/widgets/DeleteDataDialog/delete_data_dialog.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ProfileManageAccountController {
   static void Function() showSetsBottomSheet(BuildContext context) => () {

@@ -49,14 +49,14 @@ class ObjectsOnImageScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TypeSetting(
+            const TypeSetting(
               'Select an object',
               variant: TextVariants.headlineLarge,
             ),
             const SizedBox(
               height: 16,
             ),
-            TypeSetting(
+            const TypeSetting(
               'We’ve a detected a few objects on your photo. Please select one item and we’ll generate the flashcard for it.',
               style: TextStyle(color: AppColors.lightGrey),
             ),

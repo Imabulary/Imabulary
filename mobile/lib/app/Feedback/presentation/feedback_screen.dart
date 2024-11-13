@@ -77,14 +77,14 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
         data: (data) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TypeSetting(
+            const TypeSetting(
               "We're very sorry. Let us know what happened and we'll fix it",
               variant: TextVariants.headlineMedium,
             ),
             const SizedBox(
               height: 16,
             ),
-            TypeSetting(
+            const TypeSetting(
               "Note: this flashcard will be deleted once you submit a feedback",
               variant: TextVariants.bodySmall,
               style: TextStyle(color: AppColors.lightGrey),
@@ -161,11 +161,11 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
             )
           ],
         ),
-        error: (error, _) => TypeSetting('Oops, something went wrong'),
-        loading: () => TypeSetting('Loading...'),
+        error: (error, _) => const TypeSetting('Oops, something went wrong'),
+        loading: () => const TypeSetting('Loading...'),
       ),
       appBar: AppBar(
-        title: TypeSetting(
+        title: const TypeSetting(
           'Provide a feedback',
           variant: TextVariants.headlineLarge,
         ),

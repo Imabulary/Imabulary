@@ -46,11 +46,11 @@ class _FeedbackReceivedDialogState
     final regenerateButtonText = isLoading ? 'Generating...' : 'Generate Again';
 
     return AlertDialog(
-      title: TypeSetting(
+      title: const TypeSetting(
         'Thank you for the feedback!',
         variant: TextVariants.headlineLarge,
       ),
-      content: TypeSetting(
+      content: const TypeSetting(
         'We have returned the coin to you. What do you want to do next?',
       ),
       actions: [
