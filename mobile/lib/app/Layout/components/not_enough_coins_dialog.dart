@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/app/Wallet/presentation/wallet_screen.dart';
+import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
@@ -22,9 +24,7 @@ class NotEnoughCoinsDialog extends StatelessWidget {
             'Cancel',
             style: TextStyle(color: AppColors.primary),
           ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () => AutoRouter.of(context).maybePop(),
         ),
         ElevatedButton(
           child: const TypeSetting(
@@ -32,11 +32,7 @@ class NotEnoughCoinsDialog extends StatelessWidget {
             style: TextStyle(color: AppColors.primary),
           ),
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const WalletScreen(),
-              ),
-            );
+            AutoRouter.of(context).push(const WalletRoute());
           },
         ),
       ],

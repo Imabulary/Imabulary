@@ -1,8 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen.dart';
 import 'package:mobile/app/Set/components/quiz_flashcards_amount_warning.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/widgets/actions_list.dart';
+import 'package:mobile/app_router.dart';
 
 const kMinimalAmountOfFlashcardsToStartQuiz = 2;
 
@@ -29,10 +30,7 @@ class SetAppBarController {
         );
       }
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const QuizScreen()),
-      );
+      AutoRouter.of(context).push(const QuizRoute());
     };
   }
 }

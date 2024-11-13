@@ -1,13 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Flashcard/presentation/flashcard_screen.dart';
+import 'package:mobile/app_router.dart';
 
 class FlashCardItemController {
   static void redirectToFlashCardScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const FlashcardScreen(),
-      ),
-    );
+    AutoRouter.of(context).push(const FlashcardRoute());
   }
 }

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,6 +17,7 @@ import 'package:mobile/components/button.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 import 'package:mobile/widgets/input.dart';
 
+@RoutePage()
 class FeedbackScreen extends ConsumerStatefulWidget {
   const FeedbackScreen({super.key});
 
@@ -25,7 +27,7 @@ class FeedbackScreen extends ConsumerStatefulWidget {
 
 class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
   _onCancel() {
-    Navigator.pop(context);
+    AutoRouter.of(context).maybePop();
   }
 
   final _formKey = GlobalKey<FormBuilderState>();
@@ -44,7 +46,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
 
           showDialog(
             context: context,
-            builder: (context) => FeedbackReceivedDialog(),
+            builder: (context) => const FeedbackReceivedDialog(),
           );
         }
       });

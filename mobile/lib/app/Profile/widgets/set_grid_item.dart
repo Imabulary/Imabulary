@@ -1,9 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/components/set_preview.dart';
 import 'package:mobile/app/Set/domain/set.dart';
-import 'package:mobile/app/Set/presentation/set_screen.dart';
+import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/utils/plularize.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -22,10 +23,7 @@ class _SetGridItemState extends ConsumerState<SetGridItem> {
   _navigateToSetScreen() {
     ref.read(setServiceProvider.notifier).openSet(widget.set);
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const SetScreen()),
-    );
+    AutoRouter.of(context).push(const SetRoute());
   }
 
   @override

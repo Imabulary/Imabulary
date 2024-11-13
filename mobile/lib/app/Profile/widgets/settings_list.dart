@@ -1,8 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Auth/data/auth_repository.dart';
 import 'package:mobile/app/Profile/widgets/ProfileManageAccount/profile_manage_account.dart';
-import 'package:mobile/app/Wallet/presentation/wallet_screen.dart';
+import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
 class SettingsList extends ConsumerWidget {
@@ -18,12 +19,7 @@ class SettingsList extends ConsumerWidget {
         ListTile(
           key: const Key('wallet'),
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WalletScreen(),
-              ),
-            );
+            AutoRouter.of(context).push(const WalletRoute());
           },
           title: const TypeSetting('Wallet'),
         ),

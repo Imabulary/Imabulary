@@ -9,8 +9,6 @@ import 'package:mobile/app/Profile/presentation/profile_screen.dart';
 import '../../Layout/widgets/floating_button.dart';
 import '../application/main_provider.dart';
 
-
-
 @RoutePage()
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});

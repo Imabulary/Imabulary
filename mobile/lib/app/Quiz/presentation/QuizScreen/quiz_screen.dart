@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
@@ -6,13 +7,14 @@ import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Quiz/domain/result.dart';
 import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen_controller.dart';
-import 'package:mobile/app/Quiz/presentation/result_screen.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
+import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/full_screen_image.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
 
+@RoutePage()
 class QuizScreen extends ConsumerStatefulWidget {
   const QuizScreen({super.key});
 
@@ -44,14 +46,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     }
 
     if (_results.length == flashcards.length) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ResultScreen(
-            results: _results,
-          ),
-        ),
-      );
+      AutoRouter.of(context).push(ResultRoute(results: _results));
     }
   }
 
