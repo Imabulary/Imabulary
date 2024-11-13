@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Feedback/widgets/feedback_received_dialog_controller.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
-import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/button.dart';
 import 'package:mobile/utils/async_value_ui.dart';

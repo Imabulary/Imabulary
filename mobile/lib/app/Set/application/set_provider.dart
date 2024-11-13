@@ -14,7 +14,7 @@ final findInProgressSetsProvider = FutureProvider.autoDispose((ref) async {
   final quizStatuses =
       await ref.watch(quizRepositoryProvider).findAllStatuses();
 
-  final sets = await ref.watch(setRepositoryProvider).findAll(Pagination());
+  final sets = await ref.watch(setRepositoryProvider).findAll(const Pagination());
 
   return sets.result
       .where(
@@ -33,7 +33,7 @@ final findNotStudiedSetsProvider = FutureProvider.autoDispose((ref) async {
   final quizStatuses =
       await ref.watch(quizRepositoryProvider).findAllStatuses();
 
-  final sets = await ref.watch(setRepositoryProvider).findAll(Pagination());
+  final sets = await ref.watch(setRepositoryProvider).findAll(const Pagination());
 
   return sets.result
       .where(

@@ -48,14 +48,14 @@ class Button extends StatelessWidget {
       case ButtonVariant.elevated:
         return ElevatedButton(
           onPressed: onPress,
-          child: child,
           style: style,
+          child: child,
         );
       case ButtonVariant.outlined:
         return OutlinedButton(
           onPressed: onPress,
-          child: child,
           style: outlinedStyle,
+          child: child,
         );
       case ButtonVariant.text:
         return TextButton(
@@ -71,7 +71,7 @@ class Button extends StatelessWidget {
           ),
         );
       default:
-        return ElevatedButton(onPressed: onPress, child: child, style: style);
+        return ElevatedButton(onPressed: onPress, style: style, child: child);
     }
   }
 }

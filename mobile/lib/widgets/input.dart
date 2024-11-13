@@ -24,7 +24,7 @@ class Input extends StatelessWidget {
       name: name,
       validator: validator,
       decoration: InputDecoration(
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
         labelText: label,
         helperText: helperText,
         suffixIcon: clearable != null && clearable!
