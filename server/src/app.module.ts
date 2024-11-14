@@ -12,6 +12,7 @@ import { VisionModule } from './vision/vision.module';
 import { WalletModule } from './wallet/wallet.module';
 import { FeedbackModule } from './feedback/feedback.module';
 import { QuizModule } from './quiz/quiz.module';
+import { NlpService } from './nlp/nlp.service';
 
 @Module({
   imports: [
@@ -30,5 +31,6 @@ import { QuizModule } from './quiz/quiz.module';
     FeedbackModule,
     QuizModule,
   ],
+  providers: [NlpService],
 })
 export class AppModule {}
