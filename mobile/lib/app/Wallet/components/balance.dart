@@ -20,7 +20,7 @@ class Balance extends StatelessWidget {
         ),
         TypeSetting(
           value.toString(),
-          style: TextStyle(color: AppColors.primary),
+          style: const TextStyle(color: AppColors.primary),
         ),
       ],
     );

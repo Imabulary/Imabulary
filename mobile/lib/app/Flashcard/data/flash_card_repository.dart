@@ -136,6 +136,19 @@ class FlashCardRepository with FlashcardMixin {
       return response.data['result'];
     });
   }
+
+  Future<bool> deleteMany(List<String> flashcardIds) {
+    return request(() async {
+      final response = await dio.delete(
+        '$endpoint',
+        data: {
+          'ids': flashcardIds,
+        },
+      );
+
+      return response.data['result'];
+    });
+  }
 }
 
 @riverpod
