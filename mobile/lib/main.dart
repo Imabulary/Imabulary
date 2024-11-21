@@ -40,13 +40,14 @@ class _AppState extends ConsumerState<App> {
         ),
         textTheme: TextTheme(
           titleLarge: GoogleFonts.sourceSans3(fontSize: 32),
-          headlineLarge: GoogleFonts.sourceSans3(fontSize: 24),
+          headlineLarge: GoogleFonts.sourceSans3(fontSize: 24, fontWeight: FontWeight.w700),
           headlineMedium: GoogleFonts.sourceSans3(
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
+          headlineSmall: GoogleFonts.sourceSans3(fontSize: 16, fontWeight: FontWeight.w700),
           bodyLarge: GoogleFonts.sourceSans3(fontSize: 16),
-          labelLarge: GoogleFonts.sourceSans3(fontSize: 14),
+          labelLarge: GoogleFonts.sourceSans3(fontSize: 14, fontWeight: FontWeight.w600),
           bodySmall: GoogleFonts.sourceSans3(fontSize: 12),
         ),
         appBarTheme: const AppBarTheme(backgroundColor: Colors.black),

@@ -19,7 +19,7 @@ class QuizQuickAction extends ConsumerWidget {
       final sets = [...inProgressSetsProvider.value!, ...notStudiedSets.value!];
 
       if (sets.isEmpty) {
-        return QuizQuickActionListItem(
+        return const QuizQuickActionListItem(
           'Take a Quiz',
           sublabel:
               'You have to create at least 1 set with minimum 2 flashcards to start a quiz',
@@ -38,12 +38,12 @@ class QuizQuickAction extends ConsumerWidget {
     }
 
     if (notStudiedSets.isLoading || inProgressSetsProvider.isLoading) {
-      return QuizQuickActionListItem(
+      return const QuizQuickActionListItem(
         'Loading...',
       );
     }
 
-    return QuizQuickActionListItem(
+    return const QuizQuickActionListItem(
       'Quick action temporary unavailable. Please try again later.',
     );
   }
