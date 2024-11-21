@@ -10,7 +10,7 @@ import 'package:mobile/app/ObjectsOnImage/presentation/objects_on_image_screen.d
 import 'package:mobile/app/Profile/presentation/profile_screen.dart';
 import 'package:mobile/app/Quiz/domain/result.dart';
 import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen.dart';
-import 'package:mobile/app/Quiz/presentation/result_screen.dart';
+import 'package:mobile/app/Quiz/presentation/results/result_screen.dart';
 import 'package:mobile/app/Set/presentation/set_screen.dart';
 import 'package:mobile/app/Wallet/presentation/wallet_screen.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen.dart';
@@ -42,7 +42,8 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
         AutoRoute(page: WalletRoute.page),
         AutoRoute(page: FeedbackRoute.page),
         AutoRoute(page: SetRoute.page),
-        AutoRoute(page: QuizRoute.page),
-        AutoRoute(page: ResultRoute.page)
+        AutoRoute(page: QuizRoute.page, initial: false),
+        AutoRoute(page: ResultRoute.page),
+        AutoRoute(page: ObjectsOnImageRoute.page)
       ];
 }

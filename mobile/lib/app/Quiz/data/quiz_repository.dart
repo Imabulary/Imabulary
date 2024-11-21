@@ -28,17 +28,34 @@ class QuizRepository {
         QuizStatuses.mastered.name: null,
       };
 
-      statuses.result.forEach((status) {
+      for (var status in statuses.result) {
         if (statusMap.containsKey(status.name)) {
           statusMap[status.name] = status;
         }
-      });
+      }
 
       return QuizStatusesPayload(
         notStudied: statusMap[QuizStatuses.not_studied.name],
         stillLearning: statusMap[QuizStatuses.still_learning.name],
         mastered: statusMap[QuizStatuses.mastered.name],
       );
+    });
+  }
+
+  Future<List<ServerEnum>> fetchQuizStatuses() async {
+    final response = await dio.get('$endpoint/statuses');
+
+    return ServerResponse.extract(response, ServerEnum.fromJson).result;
+  }
+
+  Future<void> updateQuizAnswer({required String cardId, required String word}) async {
+    return request(() async {
+      final data = {
+        'cardId': cardId,
+        'word': word,
+      };
+      
+      await dio.post('$endpoint/learn', data: data);
     });
   }
 }

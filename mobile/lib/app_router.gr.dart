@@ -74,6 +74,7 @@ abstract class _$AppRouter extends RootStackRouter {
         child: ResultScreen(
           key: args.key,
           results: args.results,
+          flashcards: args.flashcards,
         ),
       );
     },
@@ -255,12 +256,14 @@ class ResultRoute extends PageRouteInfo<ResultRouteArgs> {
   ResultRoute({
     Key? key,
     required List<Result> results,
+    required List<({String image_url, String quizStatusId})> flashcards,
     List<PageRouteInfo>? children,
   }) : super(
           ResultRoute.name,
           args: ResultRouteArgs(
             key: key,
             results: results,
+            flashcards: flashcards,
           ),
           initialChildren: children,
         );
@@ -274,15 +277,18 @@ class ResultRouteArgs {
   const ResultRouteArgs({
     this.key,
     required this.results,
+    required this.flashcards,
   });
 
   final Key? key;
 
   final List<Result> results;
 
+  final List<({String image_url, String quizStatusId})> flashcards;
+
   @override
   String toString() {
-    return 'ResultRouteArgs{key: $key, results: $results}';
+    return 'ResultRouteArgs{key: $key, results: $results, flashcards: $flashcards}';
   }
 }
 

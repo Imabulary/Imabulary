@@ -5,8 +5,11 @@ import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
+import 'package:mobile/app/Quiz/data/quiz_repository.dart';
 import 'package:mobile/app/Quiz/domain/result.dart';
 import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen_controller.dart';
+import 'package:mobile/app/Quiz/presentation/QuizScreen/widgets/quiz_app_bar_widget.dart';
+import 'package:mobile/app/Quiz/presentation/QuizScreen/widgets/quiz_options_grid_widget.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/type_setting.dart';
@@ -36,8 +39,13 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         answer: option.translated_word,
         correctAnswer: quizFlashcard.translated_word,
         imageUrl: quizFlashcard.image_url,
-      ));
+      )); 
     });
+
+    ref.read(quizRepositoryProvider).updateQuizAnswer(
+          cardId: quizFlashcard.id,
+          word: option.translated_word,
+        );
   }
 
   _changeQuestion(List<FlashCard> flashcards) {
@@ -46,7 +54,8 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     }
 
     if (_results.length == flashcards.length) {
-      AutoRouter.of(context).push(ResultRoute(results: _results));
+      final set = ref.read(setServiceProvider);
+      AutoRouter.of(context).push(ResultRoute(results: _results, flashcards: set?.flashcards ?? []));
     }
   }
 
@@ -88,31 +97,31 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     );
 
     return Layout(
-      SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            FullScreenImage(imageUrl: currentFlashcard.image_url),
-            const SizedBox(
-              height: 24,
+      appBar: QuizAppBarWidget(
+        onBackPressed: () => AutoRouter.of(context).maybePop(),
+        currentFlashcardIndex: _currentFlashcardIndex,
+        totalFlashcards: flashcards.length,
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          FullScreenImage(imageUrl: currentFlashcard.image_url),
+          const SizedBox(height: 16),
+          TypeSetting(
+            currentFlashcard.word,
+            variant: TextVariants.titleLarge,
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: QuizOptionsGridWidget(
+              options: options,
+              onTap: (selectedOption) {
+                _saveResult(currentFlashcard, selectedOption);
+                _changeQuestion(flashcards);
+              },
             ),
-            TypeSetting(
-              currentFlashcard.word,
-              variant: TextVariants.titleLarge,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            for (final option in options)
-              OutlinedButton(
-                onPressed: () {
-                  _saveResult(currentFlashcard, option);
-                  _changeQuestion(flashcards);
-                },
-                child: TypeSetting(option.translated_word),
-              )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
