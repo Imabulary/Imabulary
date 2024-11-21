@@ -45,6 +45,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         child: Column(
           children: [
             ProfileAppBar(_tabController),
+            const SizedBox(
+              height: 16,
+            ),
             Expanded(
               child: TabBarView(
                 controller: _tabController,

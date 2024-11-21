@@ -26,7 +26,7 @@ class _QuizOptionsGridWidgetState extends State<QuizOptionsGridWidget> {
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
       crossAxisSpacing: 16,
-      mainAxisSpacing: 8,
+      mainAxisSpacing: 16,
       children: [
         for (final option in widget.options)
           GestureDetector(
@@ -41,16 +41,26 @@ class _QuizOptionsGridWidgetState extends State<QuizOptionsGridWidget> {
             },
             child: AnimatedContainer(
               decoration: BoxDecoration(
-                color: selectedOption == option ? AppColors.darkYellow : Colors.transparent,
+                color: selectedOption == option
+                    ? AppColors.darkYellow
+                    : Colors.transparent,
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: selectedOption == option ? Colors.transparent : AppColors.white),
+                border: Border.all(
+                  color: selectedOption == option
+                      ? Colors.transparent
+                      : AppColors.white,
+                ),
               ),
               duration: const Duration(milliseconds: 100),
               child: Center(
                 child: TypeSetting(
-                  option.translated_word,
-                  style: TextStyle(color: selectedOption == option ? AppColors.black : AppColors.white),
-                  variant: TextVariants.labelLarge,
+                  option.word,
+                  style: TextStyle(
+                    color: selectedOption == option
+                        ? AppColors.black
+                        : AppColors.white,
+                  ),
+                  variant: TextVariants.bodyLarge,
                 ),
               ),
             ),

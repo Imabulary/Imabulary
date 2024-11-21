@@ -37,8 +37,10 @@ class FlashcardsGroupWidget extends StatelessWidget {
           },
           itemCount: flashCards.length,
         ),
+        const SizedBox(
+          height: 16,
+        ),
       ],
     );
   }
-
 }

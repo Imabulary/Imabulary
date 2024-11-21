@@ -36,15 +36,15 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       _results.add(Result(
         flashcardId: quizFlashcard.id,
         question: quizFlashcard.word,
-        answer: option.translated_word,
-        correctAnswer: quizFlashcard.translated_word,
+        answer: option.word,
+        correctAnswer: quizFlashcard.word,
         imageUrl: quizFlashcard.image_url,
-      )); 
+      ));
     });
 
     ref.read(quizRepositoryProvider).updateQuizAnswer(
           cardId: quizFlashcard.id,
-          word: option.translated_word,
+          word: option.word,
         );
   }
 
@@ -55,7 +55,8 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
 
     if (_results.length == flashcards.length) {
       final set = ref.read(setServiceProvider);
-      AutoRouter.of(context).push(ResultRoute(results: _results, flashcards: set?.flashcards ?? []));
+      AutoRouter.of(context).push(
+          ResultRoute(results: _results, flashcards: set?.flashcards ?? []));
     }
   }
 
@@ -108,7 +109,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
           FullScreenImage(imageUrl: currentFlashcard.image_url),
           const SizedBox(height: 16),
           TypeSetting(
-            currentFlashcard.word,
+            currentFlashcard.translated_word,
             variant: TextVariants.titleLarge,
           ),
           const SizedBox(height: 16),

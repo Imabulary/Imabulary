@@ -10,7 +10,11 @@ import 'package:mobile/components/button.dart';
 
 @RoutePage()
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key, required this.results, required this.flashcards,});
+  const ResultScreen({
+    super.key,
+    required this.results,
+    required this.flashcards,
+  });
 
   final List<Result> results;
   final List<SetFlashcard> flashcards;
@@ -72,7 +76,7 @@ class ResultScreen extends StatelessWidget {
                 ],
               ),
             Button(
-              label: 'Back to home',
+              label: 'Finish',
               onPressed: () => AutoRouter.of(context).popUntilRoot(),
               variat: ButtonVariant.elevatedExpanded,
             ),

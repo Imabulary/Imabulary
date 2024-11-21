@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
@@ -36,7 +37,9 @@ class SetScreen extends ConsumerWidget {
                 children: [
                   Button(
                     onPressed: () => SetAppBarController.startQuiz(
-                        context, set?.flashcards)(),
+                      context,
+                      set?.flashcards,
+                    )(),
                     label: 'Start quiz',
                     variat: ButtonVariant.elevatedExpanded,
                   ),
@@ -62,12 +65,14 @@ class SetScreen extends ConsumerWidget {
                         if (notStudiedFlashcards.isNotEmpty)
                           FlashcardsGroupWidget(
                             flashCards: notStudiedFlashcards.toList(),
-                            title: 'Not studied (${notStudiedFlashcards.length})',
+                            title:
+                                'Not studied (${notStudiedFlashcards.length})',
                           ),
                         if (learningFlashcards.isNotEmpty)
                           FlashcardsGroupWidget(
                             flashCards: learningFlashcards.toList(),
-                            title: 'Still learning (${learningFlashcards.length})',
+                            title:
+                                'Still learning (${learningFlashcards.length})',
                           ),
                         if (studiedFlashcards.isNotEmpty)
                           FlashcardsGroupWidget(
