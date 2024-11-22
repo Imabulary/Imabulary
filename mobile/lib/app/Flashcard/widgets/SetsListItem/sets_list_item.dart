@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Flashcard/domain/card/card.dart';
@@ -39,10 +40,11 @@ class SetsListItem extends ConsumerWidget {
         ? null
         : () => organize(set.id, flashcard?.id).whenComplete(
               () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-                Navigator.pop(context);
-                Navigator.pop(context);
+                if (context.mounted) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  AutoRouter.of(context).popUntilRoot();
+                }
 
                 Flushbar(
                   dismissDirection: FlushbarDismissDirection.HORIZONTAL,

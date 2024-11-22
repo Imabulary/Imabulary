@@ -19,6 +19,7 @@ class MainScreen extends ConsumerStatefulWidget {
 
 class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  InitialProfileIndex initialProfileIndex = 0;
 
   @override
   void initState() {
@@ -35,12 +36,13 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTicker
   @override
   Widget build(BuildContext context) {
     final currentIndex = ref.watch(currentTabIndexProvider);
-    InitialProfileIndex initialProfileIndex = 0;
 
     ref.listen<(int, InitialProfileIndex)>(currentTabIndexProvider, (previousIndex, newIndex) {
       if (newIndex.$1 != _tabController.index) {
-        _tabController.index = newIndex.$1;
-        initialProfileIndex = newIndex.$2;
+        setState(() {
+          initialProfileIndex = newIndex.$2;
+          _tabController.index = newIndex.$1;
+        });
       }
     });
 
@@ -50,7 +52,7 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTicker
         controller: _tabController,
         children: [
           const HomeScreen(),
-          ProfileScreen(initialTabIndex: initialProfileIndex),
+          ProfileScreen(key: UniqueKey(), initialTabIndex: initialProfileIndex),
         ],
       ),
       bottomNavigationBar: BottomNavigation(

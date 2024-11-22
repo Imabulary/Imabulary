@@ -23,6 +23,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
   void initState() {
     _tabController = TabController(
       length: 2,
+      animationDuration: const Duration(milliseconds: 300),
       vsync: this,
       initialIndex: widget.initialTabIndex,
     );
