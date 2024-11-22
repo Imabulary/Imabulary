@@ -66,7 +66,6 @@ class ProfileManageAccountController {
                       child: const TypeSetting(
                         'Delete my data',
                         variant: TextVariants.bodyLarge,
-                        style: TextStyle(color: AppColors.primary),
                       ),
                     ),
                   ),

@@ -1,3 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final currentTabIndexProvider = StateProvider<int>((ref) => 0);
+typedef InitialProfileIndex = int;
+
+final currentTabIndexProvider = StateProvider<(int, InitialProfileIndex)>((ref) => (0, 0));

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Set/components/quiz_flashcards_amount_warning.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/widgets/actions_list.dart';
@@ -20,6 +21,7 @@ class SetAppBarController {
   static Function() startQuiz(
     BuildContext context,
     List<SetFlashcard>? flashcards,
+    {List<FlashCard>? flashcardsForQuiz}
   ) {
     return () {
       if (flashcards == null ||
@@ -30,7 +32,7 @@ class SetAppBarController {
         );
       }
 
-      AutoRouter.of(context).push(const QuizRoute());
+      AutoRouter.of(context).push(QuizRoute(flashcards: flashcardsForQuiz));
     };
   }
 }

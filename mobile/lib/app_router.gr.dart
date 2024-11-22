@@ -62,9 +62,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     QuizRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<QuizRouteArgs>(orElse: () => const QuizRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const QuizScreen(),
+        child: QuizScreen(
+          key: args.key,
+          flashcards: args.flashcards,
+        ),
       );
     },
     ResultRoute.name: (routeData) {
@@ -74,6 +79,7 @@ abstract class _$AppRouter extends RootStackRouter {
         child: ResultScreen(
           key: args.key,
           results: args.results,
+          flashcards: args.flashcards,
         ),
       );
     },
@@ -237,16 +243,39 @@ class ProfileRouteArgs {
 
 /// generated route for
 /// [QuizScreen]
-class QuizRoute extends PageRouteInfo<void> {
-  const QuizRoute({List<PageRouteInfo>? children})
-      : super(
+class QuizRoute extends PageRouteInfo<QuizRouteArgs> {
+  QuizRoute({
+    Key? key,
+    List<FlashCard>? flashcards,
+    List<PageRouteInfo>? children,
+  }) : super(
           QuizRoute.name,
+          args: QuizRouteArgs(
+            key: key,
+            flashcards: flashcards,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'QuizRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<QuizRouteArgs> page = PageInfo<QuizRouteArgs>(name);
+}
+
+class QuizRouteArgs {
+  const QuizRouteArgs({
+    this.key,
+    this.flashcards,
+  });
+
+  final Key? key;
+
+  final List<FlashCard>? flashcards;
+
+  @override
+  String toString() {
+    return 'QuizRouteArgs{key: $key, flashcards: $flashcards}';
+  }
 }
 
 /// generated route for
@@ -255,12 +284,14 @@ class ResultRoute extends PageRouteInfo<ResultRouteArgs> {
   ResultRoute({
     Key? key,
     required List<Result> results,
+    required List<({String image_url, String quizStatusId})> flashcards,
     List<PageRouteInfo>? children,
   }) : super(
           ResultRoute.name,
           args: ResultRouteArgs(
             key: key,
             results: results,
+            flashcards: flashcards,
           ),
           initialChildren: children,
         );
@@ -274,15 +305,18 @@ class ResultRouteArgs {
   const ResultRouteArgs({
     this.key,
     required this.results,
+    required this.flashcards,
   });
 
   final Key? key;
 
   final List<Result> results;
 
+  final List<({String image_url, String quizStatusId})> flashcards;
+
   @override
   String toString() {
-    return 'ResultRouteArgs{key: $key, results: $results}';
+    return 'ResultRouteArgs{key: $key, results: $results, flashcards: $flashcards}';
   }
 }
 
