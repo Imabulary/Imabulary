@@ -5,6 +5,7 @@ import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
+import 'package:mobile/app/Quiz/data/dto/update_quiz_answer_DTO.dart';
 import 'package:mobile/app/Quiz/data/quiz_repository.dart';
 import 'package:mobile/app/Quiz/domain/result.dart';
 import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen_controller.dart';
@@ -19,7 +20,9 @@ import 'package:mobile/shared/models/ServerError/server_error.dart';
 
 @RoutePage()
 class QuizScreen extends ConsumerStatefulWidget {
-  const QuizScreen({super.key});
+  const QuizScreen({super.key, this.flashcards});
+
+  final List<FlashCard>? flashcards;
 
   @override
   ConsumerState<QuizScreen> createState() => _QuizScreenState();
@@ -43,8 +46,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     });
 
     ref.read(quizRepositoryProvider).updateQuizAnswer(
-          cardId: quizFlashcard.id,
-          word: option.word,
+          UpdateQuizAnswerDTO(cardId: quizFlashcard.id, word: option.word),
         );
   }
 
@@ -62,38 +64,45 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final set = ref.read(setServiceProvider);
+    final List<FlashCard> flashcardsForQuiz;
+    if (widget.flashcards == null || widget.flashcards!.isEmpty) {
+      final set = ref.read(setServiceProvider);
 
-    final response = ref.watch(findAllFlashcardsProvider(
-      FindAllFlashcardsDTO(
-        pagination: const Pagination(),
-        setId: set?.id,
-      ),
-    ));
-
-    if (response.isLoading) {
-      return const Layout(Center(child: CircularProgressIndicator()));
-    }
-
-    if (response.hasError) {
-      final serverError = response.error as ServerError;
-
-      return Layout(
-        Center(
-          child: TypeSetting(
-            serverError.message,
-            style: const TextStyle(color: Colors.grey),
-            textAlign: TextAlign.center,
-          ),
+      final response = ref.watch(findAllFlashcardsProvider(
+        FindAllFlashcardsDTO(
+          pagination: const Pagination(),
+          setId: set?.id,
         ),
-      );
+      ));
+
+      if (response.isLoading) {
+        return const Layout(Center(child: CircularProgressIndicator()));
+      }
+
+      if (response.hasError) {
+        final serverError = response.error as ServerError;
+
+        return Layout(
+          Center(
+            child: TypeSetting(
+              serverError.message,
+              style: const TextStyle(color: Colors.grey),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
+
+      flashcardsForQuiz = response.value!.result;
+    } else {
+      flashcardsForQuiz = widget.flashcards ?? [];
     }
 
-    final flashcards = response.value!.result;
+    // final flashcards = response.value!.result;
 
-    final currentFlashcard = flashcards[_currentFlashcardIndex];
+    final currentFlashcard = flashcardsForQuiz[_currentFlashcardIndex];
     final options = QuizScreenController.generateOptions(
-      flashcards,
+      flashcardsForQuiz,
       currentFlashcard,
     );
 
@@ -101,7 +110,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       appBar: QuizAppBarWidget(
         onBackPressed: () => AutoRouter.of(context).maybePop(),
         currentFlashcardIndex: _currentFlashcardIndex,
-        totalFlashcards: flashcards.length,
+        totalFlashcards: flashcardsForQuiz.length,
       ),
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -118,7 +127,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
               options: options,
               onTap: (selectedOption) {
                 _saveResult(currentFlashcard, selectedOption);
-                _changeQuestion(flashcards);
+                _changeQuestion(flashcardsForQuiz);
               },
             ),
           ),

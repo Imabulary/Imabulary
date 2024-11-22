@@ -20,15 +20,10 @@ class MainScreen extends ConsumerStatefulWidget {
 class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  final List<Widget> _pages = const [
-    HomeScreen(),
-    ProfileScreen(),
-  ];
-
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: _pages.length, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -40,10 +35,12 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTicker
   @override
   Widget build(BuildContext context) {
     final currentIndex = ref.watch(currentTabIndexProvider);
+    InitialProfileIndex initialProfileIndex = 0;
 
-    ref.listen<int>(currentTabIndexProvider, (previousIndex, newIndex) {
-      if (newIndex != _tabController.index) {
-        _tabController.index = newIndex;
+    ref.listen<(int, InitialProfileIndex)>(currentTabIndexProvider, (previousIndex, newIndex) {
+      if (newIndex.$1 != _tabController.index) {
+        _tabController.index = newIndex.$1;
+        initialProfileIndex = newIndex.$2;
       }
     });
 
@@ -51,12 +48,15 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTicker
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
-        children: _pages,
+        children: [
+          const HomeScreen(),
+          ProfileScreen(initialTabIndex: initialProfileIndex),
+        ],
       ),
       bottomNavigationBar: BottomNavigation(
-        currentScreen: CurrentScreen.values[currentIndex],
+        currentScreen: CurrentScreen.values[currentIndex.$1],
         onNewScreenSelected: (newScreen) {
-          ref.read(currentTabIndexProvider.notifier).state = newScreen.value;
+          ref.read(currentTabIndexProvider.notifier).state = (newScreen.value, 0);
         },
       ),
       floatingActionButton: FloatingButton(onPressed: _showAddBottomSheet),

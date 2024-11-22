@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mobile/app/Quiz/data/dto/update_quiz_answer_DTO.dart';
 import 'package:mobile/app/Quiz/domain/quiz.dart';
 import 'package:mobile/shared/models/ServerEnum/server_enum.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
@@ -48,14 +49,9 @@ class QuizRepository {
     return ServerResponse.extract(response, ServerEnum.fromJson).result;
   }
 
-  Future<void> updateQuizAnswer({required String cardId, required String word}) async {
+  Future<void> updateQuizAnswer(UpdateQuizAnswerDTO quizAnswerDTO) async {
     return request(() async {
-      final data = {
-        'cardId': cardId,
-        'word': word,
-      };
-      
-      await dio.post('$endpoint/learn', data: data);
+      await dio.post('$endpoint/learn', data: quizAnswerDTO.toJson());
     });
   }
 }

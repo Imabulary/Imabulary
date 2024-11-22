@@ -24,7 +24,7 @@ class SetQuickAction extends ConsumerWidget {
         onTap: data.result.isNotEmpty
             ? () {
                 ref.read(currentTabIndexProvider.notifier).state =
-                    CurrentScreen.profile.value;
+                    (CurrentScreen.profile.value, 1);
               }
             : SetsGridController.showSetFormBottomSheet(context),
       ),

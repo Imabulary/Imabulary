@@ -62,9 +62,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     QuizRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<QuizRouteArgs>(orElse: () => const QuizRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const QuizScreen(),
+        child: QuizScreen(
+          key: args.key,
+          flashcards: args.flashcards,
+        ),
       );
     },
     ResultRoute.name: (routeData) {
@@ -238,16 +243,39 @@ class ProfileRouteArgs {
 
 /// generated route for
 /// [QuizScreen]
-class QuizRoute extends PageRouteInfo<void> {
-  const QuizRoute({List<PageRouteInfo>? children})
-      : super(
+class QuizRoute extends PageRouteInfo<QuizRouteArgs> {
+  QuizRoute({
+    Key? key,
+    List<FlashCard>? flashcards,
+    List<PageRouteInfo>? children,
+  }) : super(
           QuizRoute.name,
+          args: QuizRouteArgs(
+            key: key,
+            flashcards: flashcards,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'QuizRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<QuizRouteArgs> page = PageInfo<QuizRouteArgs>(name);
+}
+
+class QuizRouteArgs {
+  const QuizRouteArgs({
+    this.key,
+    this.flashcards,
+  });
+
+  final Key? key;
+
+  final List<FlashCard>? flashcards;
+
+  @override
+  String toString() {
+    return 'QuizRouteArgs{key: $key, flashcards: $flashcards}';
+  }
 }
 
 /// generated route for

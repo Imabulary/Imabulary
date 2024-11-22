@@ -18,7 +18,7 @@ class FlashCardsList extends ConsumerStatefulWidget {
 
 class _FlashCardsListState extends ConsumerState<FlashCardsList> {
   void redirectToProfileScreen() {
-    ref.read(currentTabIndexProvider.notifier).state = CurrentScreen.profile.value;
+    ref.read(currentTabIndexProvider.notifier).state = (CurrentScreen.profile.value, 0);
   }
 
   @override
