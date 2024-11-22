@@ -45,6 +45,6 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
         AutoRoute(page: SetRoute.page),
         AutoRoute(page: QuizRoute.page),
         AutoRoute(page: ResultRoute.page),
-        AutoRoute(page: ObjectsOnImageRoute.page)
+        AutoRoute(page: ObjectsOnImageRoute.page),
       ];
 }
