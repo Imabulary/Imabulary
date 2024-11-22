@@ -43,12 +43,6 @@ class QuizRepository {
     });
   }
 
-  Future<List<ServerEnum>> fetchQuizStatuses() async {
-    final response = await dio.get('$endpoint/statuses');
-
-    return ServerResponse.extract(response, ServerEnum.fromJson).result;
-  }
-
   Future<void> updateQuizAnswer(UpdateQuizAnswerDTO quizAnswerDTO) async {
     return request(() async {
       await dio.post('$endpoint/learn', data: quizAnswerDTO.toJson());
