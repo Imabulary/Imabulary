@@ -25,7 +25,6 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTicker
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    
   }
 
   @override
