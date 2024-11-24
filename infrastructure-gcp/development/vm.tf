@@ -63,3 +63,9 @@ resource "google_compute_instance" "docker_vm" {
     google_artifact_registry_repository_iam_member.artifact_registry_pull,
   ]
 }
+resource "google_project_iam_member" "secret-vm-access" {
+  project = var.project-id
+  role    = "roles/secretmanager.secretAccessor"
+  member = "serviceAccount:${google_service_account.artifact_registry_sa.email}"
+
+}

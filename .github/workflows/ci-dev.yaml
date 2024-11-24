@@ -42,15 +42,16 @@ jobs:
       - name: Docker Auth
         id: docker-auth
         uses: 'docker/login-action@v3'
-        with:
+        with:  
+          encoding: 'base64'
           username: 'oauth2accesstoken'
           password: '${{ steps.auth.outputs.access_token }}'
           registry: '${{ env.AR_REPO_LOCATION }}-docker.pkg.dev'
 
       - name: Build and Push Container
         run: |-
-          echo "${{ steps.secrets.outputs.admin-creds}}" >> ./server/admin-account.json
-          echo "${{ steps.secrets.outputs.sa-creds }}" >> ./server/service-account.json
-          echo "${{ steps.secrets.outputs.env-val }}" >> ./server/.env
+          echo "${{ steps.secrets.outputs.admin-creds}}" | base64 -d >> ./server/admin-account.json
+          echo "${{ steps.secrets.outputs.sa-creds }}" | base64 -d >> ./server/service-account.json
+          echo "${{ steps.secrets.outputs.env-val }}" | base64 -d >> ./server/.env
           docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" ./server/
           docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags
