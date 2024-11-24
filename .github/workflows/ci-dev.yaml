@@ -35,9 +35,9 @@ jobs:
         with:
             secrets: |-
               test:${{ env.PROJECT_ID }}/test
-              admin-creds:${{ env.PROJECT_ID }}/admin-creds-json
-              sa-creds:${{ env.PROJECT_ID }}/sa-creds-jsson
-              env-val:${{ env.PROJECT_ID }}/env-file-dev
+              admin-creds:461121489085/admin-creds-json
+              sa-creds:461121489085/sa-creds-jsson
+              env-val:461121489085461121489085/env-file-dev
 
       - name: Docker Auth
         id: docker-auth
