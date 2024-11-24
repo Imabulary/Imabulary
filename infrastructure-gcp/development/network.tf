@@ -9,13 +9,22 @@ module "vpc" {
             subnet_ip =   "10.0.1.0/24"
             subnet_region = "us-central1"
             description = "Used to host the virtual machine"
-        },
-        {
-            subnet_name = "sql-subnet"
-            subnet_ip =   "10.0.2.0/24"
-            subnet_region = "us-central1"
-            description = "Used to host the SQL instance"
         }
 
+    ]
+    ingress_rules = [
+        {
+            name = "ssh-ingress-iap"
+            description = "Allow SSH from Console"
+            disabled = false
+            source_ranges = ["35.235.240.0/20"]
+
+            allow = [
+                {
+                    protocol = "tcp"
+                    ports = ["22"]
+                }
+             ]
+        }
     ]
 }

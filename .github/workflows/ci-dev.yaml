@@ -1,0 +1,56 @@
+name: Build and Push Dev Image
+on:
+    push:
+        branches: 
+            - infrastructure-terraform
+env:
+  IMAGE_NAME: 'imabulary-dev'
+  PROJECT_ID: 'imabulary'
+  AR_REPO_LOCATION: 'us-central1'
+  AR_URL: 'us-central1-docker.pkg.dev/imabulary/imabulary-dev'
+  SERVICE_ACCOUNT: 'github-oidc-push-image-gcr@imabulary.iam.gserviceaccount.com' 
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/461121489085/locations/global/workloadIdentityPools/imabulary-dev-pool/providers/github-dev-oidc-provider'
+jobs:
+  push_to_ar:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4   
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          token_format: 'access_token'
+          project_id: ${{ env.PROJECT_ID }}
+          service_account: ${{ env.SERVICE_ACCOUNT }}
+          workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+        
+      - id: 'secrets'
+        uses: 'google-github-actions/get-secretmanager-secrets@v2'
+        with:
+            secrets: |-
+              test:${{ env.PROJECT_ID }}/test
+              admin-creds:${{ env.PROJECT_ID }}/admin-creds-json
+              sa-creds:${{ env.PROJECT_ID }}/sa-creds-jsson
+              env-val:${{ env.PROJECT_ID }}/env-file-dev
+
+      - name: Docker Auth
+        id: docker-auth
+        uses: 'docker/login-action@v3'
+        with:
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.access_token }}'
+          registry: '${{ env.AR_REPO_LOCATION }}-docker.pkg.dev'
+
+      - name: Build and Push Container
+        run: |-
+          echo "${{ steps.secrets.outputs.admin-creds}}" >> ./server/admin-account.json
+          echo "${{ steps.secrets.outputs.sa-creds }}" >> ./server/service-account.json
+          echo "${{ steps.secrets.outputs.env-val }}" >> ./server/.env
+          docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" ./server/
+          docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags

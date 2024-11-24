@@ -8,7 +8,6 @@
         id     = "keep-latest-5-versions"
         action = "KEEP"
         most_recent_versions {
-            package_name_prefixes = ["v"] # Matches images with tags like "v1.0.0", "v2.3.4"
             keep_count            = 5    # Keeps the last 5 versions
             }
         }
@@ -17,8 +16,7 @@
     id     = "delete-old-versions"
     action = "DELETE"
     condition {
-        tag_state             = "TAGGED"
-        tag_prefixes          = ["v"]
+        tag_state             = "UNTAGGED"
         older_than            = "0s" # Ensures any version older than the latest 5 is deleted
      }   
     }
