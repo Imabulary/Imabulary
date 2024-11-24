@@ -50,15 +50,13 @@ resource "google_project_iam_binding" "sa-impersonate" {
     "principalSet://iam.googleapis.com/projects/461121489085/locations/global/workloadIdentityPools/imabulary-dev-pool/attribute.repository/Imabulary/Imabulary"
   ]
 }
-resource "google_project_iam_binding" "secret-access" {
+resource "google_project_iam_member" "secret-access" {
   project = var.project-id
   role    = "roles/secretmanager.secretAccessor"
-  members = [
-    "serviceAccount:${google_service_account.gha_service_account.email}"
-  ]
- condition {
-   title = "Control access to specific secrets only"
-   description = "Control access to specific secrets only"
-   expression = "resource.name.startsWith('projects/461121489085/test')   || resource.name.startsWith('projects/461121489085/admin-creds-json') || resource.name.startsWith('projects/461121489085/sa-creds-jsson') || resource.name.startsWith('projects/461121489085/env-file-dev') " 
- }
+  member = "serviceAccount:${google_service_account.gha_service_account.email}"
+#  condition {
+#    title = "Control access to specific secrets only"
+#    description = "Control access to specific secrets only"
+#    expression = "resource.name.startsWith('projects/461121489085/test')   || resource.name.startsWith('projects/461121489085/admin-creds-json') || resource.name.startsWith('projects/461121489085/sa-creds-jsson') || resource.name.startsWith('projects/461121489085/env-file-dev') " 
+#  }
 }
