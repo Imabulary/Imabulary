@@ -53,4 +53,4 @@ jobs:
             gcloud compute ssh docker-vm \
             --zone=us-central1-c \
             --tunnel-through-iap \
-            --command="bash /home/waleedzafar_68/deploy.sh"
+            --command="sudo bash /home/waleedzafar_68/deploy.sh"
