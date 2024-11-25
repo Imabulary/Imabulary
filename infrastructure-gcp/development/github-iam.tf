@@ -60,3 +60,13 @@ resource "google_project_iam_member" "secret-access" {
 #    expression = "resource.name.startsWith('projects/461121489085/test')   || resource.name.startsWith('projects/461121489085/admin-creds-json') || resource.name.startsWith('projects/461121489085/sa-creds-jsson') || resource.name.startsWith('projects/461121489085/env-file-dev') " 
 #  }
 }
+resource "google_project_iam_member" "ssh-access" {
+  project = var.project-id
+  role    = "roles/iap.tunnelResourceAccessor"
+  member = "serviceAccount:${google_service_account.gha_service_account.email}"
+#  condition {
+#    title = "Control access to specific secrets only"
+#    description = "Control access to specific secrets only"
+#    expression = "resource.name.startsWith('projects/461121489085/test')   || resource.name.startsWith('projects/461121489085/admin-creds-json') || resource.name.startsWith('projects/461121489085/sa-creds-jsson') || resource.name.startsWith('projects/461121489085/env-file-dev') " 
+#  }
+}

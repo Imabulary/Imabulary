@@ -20,7 +20,6 @@ docker run \
         --name backend-container \
         -p 5000:5000 \
         -e NODE_ENV=development \
-        --label wud.watch=true \
         us-central1-docker.pkg.dev/imabulary/imabulary-dev/imabulary-dev:latest \
         npm run start:dev
 

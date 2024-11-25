@@ -42,8 +42,17 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          echo $(gcloud secrets versions access latest --secret "admin-creds-json") | base64 -d >> ./server/admin-account.json
-          echo $(gcloud secrets versions access latest --secret "sa-creds-jsson") | base64 -d >> ./server/service-account.json
-          echo $(gcloud secrets versions access latest --secret "env-file-dev") | base64 -d >> ./server/.env
+          echo $(gcloud secrets versions access latest --secret "admin-creds-json") >> ./server/admin-account.json
+          echo $(gcloud secrets versions access latest --secret "sa-creds-jsson")  >> ./server/service-account.json
+          echo $(gcloud secrets versions access latest --secret "env-file-dev") | >> ./server/.env
+          echo "SSH_KEY=$(gcloud secrets versions access latest --secret='ssh-key')" >> $GITHUB_ENV
           docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" ./server/
           docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags
+     
+      - id: 'compute-ssh'
+        uses: 'google-github-actions/ssh-compute@v1'
+        with:
+            instance_name: 'example-instance'
+            zone: 'us-central1-a'
+            ssh_private_key: '${{ env.SSH_KEY }}'
+            script: "${{ github.workspace }}/infrastructure-gcp/development/scripts/deploy.sh"
