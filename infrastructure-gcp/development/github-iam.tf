@@ -70,3 +70,26 @@ resource "google_project_iam_member" "ssh-access" {
 #    expression = "resource.name.startsWith('projects/461121489085/test')   || resource.name.startsWith('projects/461121489085/admin-creds-json') || resource.name.startsWith('projects/461121489085/sa-creds-jsson') || resource.name.startsWith('projects/461121489085/env-file-dev') " 
 #  }
 }
+
+resource "google_project_iam_member" "gh-ssh-access" {
+  project = var.project-id
+  role    = "roles/compute.instanceAdmin.v1"
+  member = "serviceAccount:${google_service_account.gha_service_account.email}"
+#  condition {
+#    title = "Control access to specific secrets only"
+#    description = "Control access to specific secrets only"
+#    expression = "resource.name.startsWith('projects/461121489085/test')   || resource.name.startsWith('projects/461121489085/admin-creds-json') || resource.name.startsWith('projects/461121489085/sa-creds-jsson') || resource.name.startsWith('projects/461121489085/env-file-dev') " 
+#  }
+}
+
+
+resource "google_project_iam_member" "gh-svc-ssh-access" {
+  project = var.project-id
+  role    = "roles/iam.serviceAccountUser"
+  member = "serviceAccount:${google_service_account.gha_service_account.email}"
+#  condition {
+#    title = "Control access to specific secrets only"
+#    description = "Control access to specific secrets only"
+#    expression = "resource.name.startsWith('projects/461121489085/test')   || resource.name.startsWith('projects/461121489085/admin-creds-json') || resource.name.startsWith('projects/461121489085/sa-creds-jsson') || resource.name.startsWith('projects/461121489085/env-file-dev') " 
+#  }
+}
