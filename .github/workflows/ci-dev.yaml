@@ -45,14 +45,12 @@ jobs:
           gcloud secrets versions access latest --secret "admin-creds-json" > ./server/admin-account.json
           gcloud secrets versions access latest --secret "sa-creds-jsson" > ./server/service-account.json
           gcloud secrets versions access latest --secret "env-file-dev" > ./server/.env
-          echo "SSH_KEY_VM=$(gcloud secrets versions access latest --secret='ssh-key')" >> $GITHUB_ENV
           docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" ./server/
           docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags
      
-      - id: 'compute-ssh'
-        uses: 'google-github-actions/ssh-compute@v1'
-        with:
-            instance_name: 'example-instance'
-            zone: 'us-central1-a'
-            ssh_private_key: '${{ env.SSH_KEY_VM }}'
-            script: "${{ github.workspace }}/infrastructure-gcp/development/scripts/deploy.sh"
+      - name: Set up SSH key
+        run: |
+            gcloud compute ssh docker-vm \
+            --zone=us-central1-c \
+            --tunnel-through-iap \
+            --command="bash infrastructure-gcp/development/scripts/deploy.sh"
