@@ -43,7 +43,7 @@ jobs:
       - name: Build and Push Container
         run: |-
           gcloud secrets versions access latest --secret "admin-creds-json" > ./server/admin-account.json
-          gcloud secrets versions access latest --secret "sa-credss-json" > ./server/service-account.json
+          gcloud secrets versions access latest --secret "sa-creds-jsson" > ./server/service-account.json
           gcloud secrets versions access latest --secret "env-file-dev" > ./server/.env
           echo "SSH_KEY=$(gcloud secrets versions access latest --secret='ssh-key')" >> $GITHUB_ENV
           docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" ./server/
