@@ -11,14 +11,25 @@ docker run \
   -v //var/run/docker.sock:/var/run/docker.sock \
   -v /wud-vol:/store \
   -v /home/waleedzafar_68/certs:/certs \
+  -p 3000:3000 \
   getwud/wud
 
 
 
-  docker run -d \
-  --name backend-container \
-  -p 5000:5000 \
-  -e NODE_ENV=development \
-  --label wud.watch=true \
-  us-central1-docker.pkg.dev/imabulary/imabulary-dev/imabulary-dev:latest \
-  npm run start:dev
+        docker run -d \
+        --name backend-container \
+        -p 5000:5000 \
+        -e NODE_ENV=development \
+        --label wud.watch=true \
+        us-central1-docker.pkg.dev/imabulary/imabulary-dev/imabulary-dev:latest \
+        npm run start:dev
+
+
+bash echo -n "_json_key:$(gcloud secrets versions access latest --secret=sa-creds-repo-poll)" | base64 -w0
+
+docker run -d \
+    --name watchtower \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -e WATCHTOWER_POLL_INTERVAL=300 \
+    -v /home/waleedzafar_68/config.json:/config.json \
+    containrrr/watchtower 

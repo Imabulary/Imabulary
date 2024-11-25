@@ -29,16 +29,8 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           service_account: ${{ env.SERVICE_ACCOUNT }}
           workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
-        
-      - id: 'secrets'
-        uses: 'google-github-actions/get-secretmanager-secrets@v2'
-        with:
-            encoding: 'base64'
-            secrets: |-
-              test:${{ env.PROJECT_ID }}/test
-              admin-creds:461121489085/admin-creds-json
-              sa-creds:461121489085/sa-creds-jsson
-              env-val:461121489085/env-file-dev
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
 
       - name: Docker Auth
         id: docker-auth
@@ -50,8 +42,8 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          echo "${{ steps.secrets.outputs.admin-creds}}" | base64 -d >> ./server/admin-account.json
-          echo "${{ steps.secrets.outputs.sa-creds }}" | base64 -d >> ./server/service-account.json
-          echo "${{ steps.secrets.outputs.env-val }}" | base64 -d >> ./server/.env
+          echo $(gcloud secrets versions access latest --secret "admin-creds-json") | base64 -d >> ./server/admin-account.json
+          echo $(gcloud secrets versions access latest --secret "sa-creds-jsson") | base64 -d >> ./server/service-account.json
+          echo $(gcloud secrets versions access latest --secret "env-file-dev") | base64 -d >> ./server/.env
           docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" ./server/
           docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags
