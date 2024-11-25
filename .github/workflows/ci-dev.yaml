@@ -2,7 +2,7 @@ name: Build and Push Dev Image
 on:
     push:
         branches: 
-            - infrastructure-terraform
+            - develop
 env:
   IMAGE_NAME: 'imabulary-dev'
   PROJECT_ID: 'imabulary'
