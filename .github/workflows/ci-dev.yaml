@@ -42,15 +42,23 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          gcloud secrets versions access latest --secret "admin-creds-json" > ./server/admin-account.json
-          gcloud secrets versions access latest --secret "sa-creds-jsson" > ./server/service-account.json
-          gcloud secrets versions access latest --secret "env-file-dev" > ./server/.env
+          echo ${{ secrets.ADMIN_CREDS_JSON }} > ./server/admin-account.json
+          echo ${{ secrets.SA_CREDS_JSON }} > ./server/service-account.json
+          echo ${{ secrets.DEV_ENV_FILE }} > ./server/.env
           docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" ./server/
           docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags
      
-      - name: Set up SSH key
-        run: |
-            gcloud compute ssh docker-vm \
-            --zone=us-central1-c \
-            --tunnel-through-iap \
-            --command="sudo bash /home/waleedzafar_68/deploy.sh"
+    #   - name: Set up SSH key
+    #     run: |
+    #         gcloud compute ssh docker-vm \
+    #         --zone=us-central1-c \
+    #         --tunnel-through-iap \
+    #         --command="sudo bash /home/waleedzafar_68/deploy.sh"
+      - name: 'SSH to GCP instance'
+        id: 'ssh'
+        uses: 'google-github-actions/ssh-compute@v1'
+        with:
+            instance_name: 'docker-vm'
+            zone: 'us-central1-c'
+            ssh_private_key: '${{ secrets.SSH_KEY }}'
+            script: "${{ github.workspace }}/infrastructure-gcp/development/scripts/deploy.sh"
