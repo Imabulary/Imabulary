@@ -25,6 +25,19 @@ module "vpc" {
                     ports = ["22"]
                 }
              ]
+        },
+         {
+            name = "api-ingress-public"
+            description = "Allow API to be hit on port 5000"
+            disabled = false
+            source_ranges = ["0.0.0.0/0"]
+
+            allow = [
+                {
+                    protocol = "tcp"
+                    ports = ["5000"]
+                }
+             ]
         }
     ]
 }

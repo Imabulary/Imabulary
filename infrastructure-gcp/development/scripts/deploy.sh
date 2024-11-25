@@ -19,7 +19,7 @@ if docker images --format '{{.Repository}}:{{.Tag}}' | grep -Eq "^${IMAGE_NAME}$
 else
   echo "No existing image named ${IMAGE_NAME} found."
 fi
-
+gcloud auth configure-docker us-central1-docker.pkg.dev
 # Step 3: Pull the image again
 echo "Pulling the image: ${IMAGE_NAME}"
 docker pull "${IMAGE_NAME}"
