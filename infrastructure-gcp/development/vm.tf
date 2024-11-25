@@ -13,7 +13,11 @@ resource "google_artifact_registry_repository_iam_member" "artifact_registry_pul
   member     = "serviceAccount:${google_service_account.artifact_registry_sa.email}"
   depends_on = [ google_artifact_registry_repository.imabulary-dev-repo ]
 }
-
+# External IP
+resource "google_compute_address" "vm-ip" {
+  name         = "vm-reserved-ext-ip"
+  region       = "us-central1"
+}
 # VM Instance
 resource "google_compute_instance" "docker_vm" {
   name         = "docker-vm"
@@ -22,7 +26,9 @@ resource "google_compute_instance" "docker_vm" {
   network_interface {
     network = module.vpc.network_name
     subnetwork = module.vpc.subnets["us-central1/vm-subnet"].id
-    access_config {}
+    access_config {
+            nat_ip = google_compute_address.vm-ip.address
+    }
   }
 
   # Boot disk with Ubuntu
