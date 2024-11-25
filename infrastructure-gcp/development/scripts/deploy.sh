@@ -1,4 +1,6 @@
+#!/bin/bash
 
+# Define constants
 CONTAINER_NAME="backend-container"
 IMAGE_NAME="us-central1-docker.pkg.dev/imabulary/imabulary-dev/imabulary-dev:latest"
 
