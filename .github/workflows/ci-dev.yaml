@@ -41,10 +41,12 @@ jobs:
           registry: '${{ env.AR_REPO_LOCATION }}-docker.pkg.dev'
 
       - name: Build and Push Container
+        env:
+            ENV_FILE: ${{ secrets.DEV_ENV_FILE }}
         run: |-
           echo "${{ secrets.ADMIN_CREDS_JSON }}" > ./server/admin-account.json
           echo "${{ secrets.SA_CREDS_JSON }}" > ./server/service-account.json
-          echo "${{ secrets.DEV_ENV_FILE }}" > ./server/.env
+          echo "$ENV_FILE" > ./server/.env
           docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" ./server/
           docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags
      
