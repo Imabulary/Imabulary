@@ -16,7 +16,7 @@
     id     = "delete-old-versions"
     action = "DELETE"
     condition {
-        tag_state             = "UNTAGGED"
+        tag_state             = "ANY"
         older_than            = "0s" # Ensures any version older than the latest 5 is deleted
      }   
     }
