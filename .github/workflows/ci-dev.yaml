@@ -42,9 +42,9 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          echo ${{ secrets.ADMIN_CREDS_JSON }} > ./server/admin-account.json
-          echo ${{ secrets.SA_CREDS_JSON }} > ./server/service-account.json
-          echo ${{ secrets.DEV_ENV_FILE }} > ./server/.env
+          echo "${{ secrets.ADMIN_CREDS_JSON }}" > ./server/admin-account.json
+          echo "${{ secrets.SA_CREDS_JSON }}" > ./server/service-account.json
+          echo "${{ secrets.DEV_ENV_FILE }}" > ./server/.env
           docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" ./server/
           docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags
      
