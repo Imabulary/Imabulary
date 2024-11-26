@@ -18,12 +18,12 @@ class SetAppBarController {
         );
       };
 
-  static Function() startQuiz(
+  static Future<void> startQuiz(
     BuildContext context,
     List<SetFlashcard>? flashcards,
     {List<FlashCard>? flashcardsForQuiz}
   ) {
-    return () {
+    {
       if (flashcards == null ||
           flashcards.length < kMinimalAmountOfFlashcardsToStartQuiz) {
         return showDialog(
@@ -32,7 +32,7 @@ class SetAppBarController {
         );
       }
 
-      AutoRouter.of(context).push(QuizRoute(flashcards: flashcardsForQuiz));
-    };
+      return AutoRouter.of(context).push(QuizRoute(flashcards: flashcardsForQuiz));
+    }
   }
 }
