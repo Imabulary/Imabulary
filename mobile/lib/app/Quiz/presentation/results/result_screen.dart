@@ -72,7 +72,7 @@ class ResultScreen extends ConsumerWidget {
                         label: 'Fix my mistake',
                         onPressed: () {
                           AutoRouter.of(context).popUntilRoot();
-                          SetAppBarController.startQuiz(context, flashcards, flashcardsForQuiz: wrongFlashcards.toList())();
+                          SetAppBarController.startQuiz(context, flashcards, flashcardsForQuiz: wrongFlashcards.toList());
                         },
                         variat: ButtonVariant.elevatedExpanded,
                       ),
