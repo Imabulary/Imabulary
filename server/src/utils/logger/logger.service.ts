@@ -5,7 +5,6 @@ import { isString } from 'lodash';
 export class LoggerService extends ConsoleLogger {
   error(message: any, stack?: string, context?: string) {
     captureException(message, {
-      tags: { appEnvironment: process.env.NODE_ENV },
       extra: { stack, context },
     });
 

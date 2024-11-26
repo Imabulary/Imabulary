@@ -5,6 +5,7 @@ Sentry.init({
   dsn: 'https://4403674a4a1f9fab536da6c719e06f15@o4508365012598784.ingest.de.sentry.io/4508365016203344',
   integrations: [nodeProfilingIntegration()],
   tracesSampleRate: 1.0, //  Capture 100% of the transactions
+  environment: process.env.NODE_ENV,
 });
 // Manually call startProfiler and stopProfiler
 // to profile the code in between
