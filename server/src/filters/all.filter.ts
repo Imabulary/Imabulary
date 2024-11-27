@@ -23,7 +23,6 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
       return this.handlePrismaException(exception);
     }
 
-    // TODO: send errors to external logging system
     this.logger.error(exception);
     super.catch(exception, host);
   }

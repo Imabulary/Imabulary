@@ -30,13 +30,13 @@ jobs:
       - id: create-service-account-json
         uses: jsdaniell/create-json@v1.2.3
         with:
-          name: "service-account.json"
+          name: 'service-account.json'
           json: ${{ secrets.SERVICE_ACCOUNT }}
 
       - id: create-admin-account-json
         uses: jsdaniell/create-json@v1.2.3
         with:
-          name: "admin-account.json"
+          name: 'admin-account.json'
           json: ${{ secrets.ADMIN_ACCOUNT }}
 
       - id: 'auth'
@@ -49,13 +49,14 @@ jobs:
 
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
-  
-      - name: "Docker auth"
+
+      - name: 'Docker auth'
         run: |
           gcloud auth configure-docker ${{ env.GOOGLE_COMPUTE_ZONE }}-docker.pkg.dev --quiet
 
       - name: Build and Push Docker Image to GCR
         run: |
+          echo "${{ secrets.SENTRYCLIRC }}" > server/.sentryclirc
           echo "PORT=${{ secrets.PORT }}" > server/.env
           echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> server/.env
           echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> server/.env
@@ -63,6 +64,7 @@ jobs:
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> server/.env
           echo "STORAGE_URL=${{ secrets.STORAGE_URL }}" >> server/.env
           echo "PROJECT_ID=${{ secrets.GCP_PROJECT_ID }}" >> server/.env
+          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> server/.env
           source ./scripts.sh
           prodBuildPushGCR
 

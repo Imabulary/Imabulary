@@ -8,7 +8,7 @@ import 'package:mobile/app/Flashcard/domain/scanPhotoPayload/scan_photo_payload.
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:mobile/utils/api.dart';
 import 'package:mobile/utils/either.dart';
-import 'package:mobile/utils/query_params_builder.dart';
+import 'package:mobile/utils/builders/query_params_builder.dart';
 import 'package:mobile/utils/request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

@@ -203,3 +203,5 @@ override.tf.json
 
 # Ignore output files
 *.out
+
+.sentryclirc

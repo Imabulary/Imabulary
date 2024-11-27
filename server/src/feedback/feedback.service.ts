@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { isEmpty } from 'lodash';
 import { PrismaService } from '../prisma/prisma.service';
@@ -11,6 +11,7 @@ import { FeedbackCategoriesMisconfigurationException } from './utils/feedback.ex
 
 @Injectable()
 export class FeedbackService {
+  private readonly logger = new Logger(FeedbackService.name);
   constructor(private readonly prisma: PrismaService) {}
 
   // TODO: add tests
@@ -37,7 +38,11 @@ export class FeedbackService {
     });
 
     if (!noDesiredObjectFeedbackCategory) {
-      // TODO: add log indicating that category wasn't found
+      this.logger.warn(
+        "No desired object on image feedback category wasn't found",
+        { slug: feedbackCategoriesSlugs.NO_DESIRED_OBJECT },
+      );
+
       await this.create({}, userId, createNoDesiredObjectFeedbackDTO);
     } else {
       await this.create(
