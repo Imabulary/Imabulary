@@ -9,7 +9,8 @@ const flashCardFixture = FlashCard(
   translated_word: 'Hola',
   target_language: 'Spanish',
   source_language: 'English',
-  image_url: 'https://example.com/hello.png',
+  image_url: 'https://example.com/hello.png', 
+  is_regenerated: false,
 );
 
 const flashCardMapFixture = {

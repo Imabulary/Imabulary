@@ -29,7 +29,7 @@ class QuizQuickAction extends ConsumerWidget {
       return QuizQuickActionListItem('Take a Quiz', onTap: () {
         if (availableSets!.length == 1) {
           setService.openSet(availableSets[0]);
-          SetAppBarController.startQuiz(context, availableSets[0].flashcards)();
+          SetAppBarController.startQuiz(context, availableSets[0].flashcards);
         } else {
           QuizQuickActionController.showAvailableSets(context, availableSets);
         }
