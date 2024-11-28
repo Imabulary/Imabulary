@@ -13,10 +13,15 @@ class QuizQuickAction extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final setService = ref.read(setServiceProvider.notifier);
-    final allSets = ref.watch(findAllSetsProvider(const Pagination()),);
+    final allSets = ref.watch(
+      findAllSetsProvider(const Pagination()),
+    );
 
     if (!allSets.isLoading) {
-      final availableSets = allSets.value?.result.where((set) => (set.flashcards?.length ?? 0) > 1).toList();
+      final availableSets = allSets.value?.result
+          .where((set) => (set.flashcards?.length ?? 0) > 1)
+          .toList();
+
       if (availableSets?.isEmpty ?? true) {
         return const QuizQuickActionListItem(
           'Take a Quiz',

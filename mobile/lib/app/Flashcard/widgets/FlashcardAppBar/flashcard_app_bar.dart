@@ -14,8 +14,9 @@ class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: Button(
         variat: ButtonVariant.icon,
-        onPressed: () => AutoRouter.of(context).popUntilRoot(), 
-        icon: Icons.arrow_back,),
+        onPressed: () => AutoRouter.of(context).maybePop(),
+        icon: Icons.arrow_back,
+      ),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 16),

@@ -36,8 +36,6 @@ class SetForm extends ConsumerWidget {
 
         setsPagingController?.refresh();
         ref.invalidate(findAllSetsProvider);
-        ref.invalidate(findInProgressSetsProvider);
-        ref.invalidate(findNotStudiedSetsProvider);
 
         if (set == null) {
           AutoRouter.of(context).push(const SetRoute());

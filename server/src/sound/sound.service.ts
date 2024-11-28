@@ -26,7 +26,9 @@ export class SoundService implements OnModuleInit {
     };
 
     const [response] = await this.client.synthesizeSpeech(request);
+
     const audioContent = response.audioContent as Uint8Array;
+
     return Buffer.from(audioContent);
   }
 }

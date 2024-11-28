@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/app/Quiz/domain/result.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/app/Quiz/presentation/results/widgets/result_item_widget.dart';
+import 'package:mobile/widgets/list_item.dart';
 
 class FlashcardResultsWidget extends StatelessWidget {
   const FlashcardResultsWidget({
@@ -31,8 +31,13 @@ class FlashcardResultsWidget extends StatelessWidget {
           shrinkWrap: true,
           separatorBuilder: (context, index) => const SizedBox(height: 8),
           itemBuilder: (BuildContext context, int index) {
-            return ResultItemWidget(
-              result: results[index],
+            return ListItem(
+              label: 'Correct answer: ${results[index].correctAnswer}',
+              sublabel: 'Your answer: ${results[index].answer}',
+              image: results[index].imageUrl,
+              borderColor: results[index].correctAnswer == results[index].answer
+                  ? AppColors.success
+                  : AppColors.error,
             );
           },
           itemCount: results.length,

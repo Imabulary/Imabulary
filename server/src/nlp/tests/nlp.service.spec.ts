@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { NlpService } from './nlp.service';
-import { PartOfSpeechTag } from './utils';
+import { NlpService } from '../nlp.service';
+import { PartOfSpeechTag } from '../utils';
 
 describe('NlpService', () => {
   let service: NlpService;
