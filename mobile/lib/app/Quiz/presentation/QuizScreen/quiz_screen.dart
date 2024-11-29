@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
-import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Quiz/data/dto/update_quiz_answer_DTO.dart';
 import 'package:mobile/app/Quiz/data/quiz_repository.dart';
@@ -11,6 +11,7 @@ import 'package:mobile/app/Quiz/domain/result.dart';
 import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen_controller.dart';
 import 'package:mobile/app/Quiz/presentation/QuizScreen/widgets/quiz_app_bar_widget.dart';
 import 'package:mobile/app/Quiz/presentation/QuizScreen/widgets/quiz_options_grid_widget.dart';
+import 'package:mobile/app/Set/application/set_provider.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/type_setting.dart';
@@ -57,6 +58,9 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
 
     if (_results.length == flashcards.length) {
       final set = ref.read(setServiceProvider);
+
+      ref.invalidate(findSetFlashcardsProvider);
+
       AutoRouter.of(context).push(
           ResultRoute(results: _results, flashcards: set?.flashcards ?? []));
     }
@@ -65,6 +69,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
   @override
   Widget build(BuildContext context) {
     final List<FlashCard> flashcardsForQuiz;
+
     if (widget.flashcards == null || widget.flashcards!.isEmpty) {
       final set = ref.read(setServiceProvider);
 
@@ -98,8 +103,6 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       flashcardsForQuiz = widget.flashcards ?? [];
     }
 
-    // final flashcards = response.value!.result;
-
     final currentFlashcard = flashcardsForQuiz[_currentFlashcardIndex];
     final options = QuizScreenController.generateOptions(
       flashcardsForQuiz,
@@ -108,7 +111,10 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
 
     return Layout(
       appBar: QuizAppBarWidget(
-        onBackPressed: () => AutoRouter.of(context).maybePop(),
+        onBackPressed: () {
+          ref.invalidate(findSetFlashcardsProvider);
+          AutoRouter.of(context).maybePop();
+        },
         currentFlashcardIndex: _currentFlashcardIndex,
         totalFlashcards: flashcardsForQuiz.length,
       ),
