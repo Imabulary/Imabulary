@@ -4,7 +4,6 @@ import { Prisma } from '@prisma/client';
 import { Request, Response } from 'express';
 import { getMaybe } from 'src/utils';
 
-// TODO: add tests
 @Catch()
 export class AllExceptionsFilter extends BaseExceptionFilter {
   private readonly logger = new Logger(AllExceptionsFilter.name);
@@ -24,7 +23,6 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
       return this.handlePrismaException(exception);
     }
 
-    // TODO: send errors to external logging system
     this.logger.error(exception);
     super.catch(exception, host);
   }

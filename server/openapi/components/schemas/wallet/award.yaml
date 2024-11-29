@@ -1,0 +1,27 @@
+type: object
+properties:
+  id:
+    type: string
+    description: 'ID of an award'
+    example: '49dfb4db-175d-4591-a47a-07920188bb82'
+  walletId:
+    type: string
+    description: 'ID of the wallet to which the reward belongs'
+    example: 'a732fc90-9d1a-4794-bc4c-dd1cf2ace327'
+  lastAwardedAt:
+    type: string
+    format: date-time
+    description: 'Last time the award was collected'
+    example: '2024-07-30T13:49:44.081Z'
+  streekLevel:
+    type: integer
+    description: "Streek level representing the amount of weeks user's collecting the daily award"
+    example: 1
+  streekCount:
+    type: integer
+    description: 'Days in current streek'
+    example: 0
+  award:
+    type: float
+    description: 'Sum of award'
+    example: 1

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/constants.dart';
 
@@ -6,48 +7,60 @@ class ListItem extends ListTile {
   const ListItem({
     super.key,
     this.image,
+    this.borderColor,
     required this.label,
     this.sublabel,
     super.onTap,
     super.contentPadding,
     super.tileColor,
+    super.textColor,
+    super.leading,
+    super.enabled,
   });
 
   final String? image;
   final String label;
   final String? sublabel;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
+    final sublabelPadding = sublabel == null
+        ? const EdgeInsets.all(10)
+        : const EdgeInsets.only(left: 10, right: 10);
+    final padding = contentPadding ?? sublabelPadding;
+
     return ListTile(
+      enabled: enabled,
       onTap: onTap,
-      contentPadding: sublabel == null
-          ? const EdgeInsets.all(10)
-          : const EdgeInsets.only(left: 10, right: 10),
-      tileColor: tileColor,
+      contentPadding: padding,
+      tileColor: tileColor ?? AppColors.muted,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Image.network(
-          image ?? kStubImageUrl,
-          width: 55,
-          height: 60,
-          fit: BoxFit.cover,
-        ),
-      ),
+          borderRadius: BorderRadius.circular(12),
+          side: borderColor != null
+              ? BorderSide(width: 2, color: borderColor!)
+              : BorderSide.none),
+      leading: leading ??
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.network(
+              image ?? kStubImageUrl,
+              width: 55,
+              height: 60,
+              fit: BoxFit.cover,
+            ),
+          ),
       title: TypeSetting(
         label,
         variant: sublabel == null
             ? TextVariants.headlineMedium
             : TextVariants.bodyLarge,
+        style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
       ),
       subtitle: sublabel != null
-          ? TypeSetting(
-              sublabel!,
+          ? TypeSetting(sublabel!,
               variant: TextVariants.bodySmall,
-            )
+              style: TextStyle(color: textColor))
           : null,
     );
   }

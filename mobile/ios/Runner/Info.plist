@@ -8,7 +8,7 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Imabulary</string>
-  <key>CFBundleExecutable</key>
+	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
@@ -29,7 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.222626452683-gpqqh6k9lmndj9r4grokf9e2qkrsccld</string>
+				<string>com.googleusercontent.apps.222626452683-823iovqtt4e9aukg6rl8bkr6c34oj7r5</string>
 			</array>
 		</dict>
 	</array>

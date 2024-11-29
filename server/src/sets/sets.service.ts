@@ -3,11 +3,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateSetDto, UpdateSetDto } from './dto/set.dto';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma';
-import { SET_NOT_FOUND_ERROR_MESSAGE } from './utils';
 import { ServerPagination } from 'src/shared';
+import { CreateSetDto, UpdateSetDto } from './dto/set.dto';
+import { SET_NOT_FOUND_ERROR_MESSAGE } from './utils';
 
 @Injectable()
 export class SetsService {
@@ -29,7 +29,14 @@ export class SetsService {
         where: { userId },
         include: {
           CardsOnSets: {
-            include: { flashcard: { select: { image_url: true } } },
+            include: {
+              flashcard: {
+                select: {
+                  image_url: true,
+                  quizStatusId: true,
+                },
+              },
+            },
           },
         },
       }),

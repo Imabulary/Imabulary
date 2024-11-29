@@ -7,17 +7,49 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:222626452683:android:08adf5e6016a134a0ff74e",
+        "mobilesdk_app_id": "1:222626452683:android:77361b1bd591ed9e0ff74e",
         "android_client_info": {
-          "package_name": "com.example.mobile"
+          "package_name": "com.byterhyme.imabulary"
         }
       },
       "oauth_client": [
         {
-          "client_id": "222626452683-onsj5ja8fa08k9tk977nel89tca18rcr.apps.googleusercontent.com",
+          "client_id": "222626452683-6e62oh12qg57dg31226f5amnldeftm5d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.mobile",
+            "package_name": "com.byterhyme.imabulary",
+            "certificate_hash": "03d47041aadd6fa1446246e5cceb803ae3e72441"
+          }
+        },
+        {
+          "client_id": "222626452683-871njpo1ssnejluhui23k5rbjt9l0ndl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.byterhyme.imabulary",
+            "certificate_hash": "45666545d636ef6fb0b75fa8ede8de0ed4b8f80e"
+          }
+        },
+        {
+          "client_id": "222626452683-b1oai6nnp949bcpcu6eeo86retnic31n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.byterhyme.imabulary",
+            "certificate_hash": "9a268faf5adb358dafed4e87fc000bb1b67f76f1"
+          }
+        },
+        {
+          "client_id": "222626452683-chkqvklg2mijbeqraukuunhpv6d6sgnt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.byterhyme.imabulary",
+            "certificate_hash": "fe2fc72a6f59ecabcf7cca82e649830596debd98"
+          }
+        },
+        {
+          "client_id": "222626452683-fckpog6sg8rdqj2tjkmf0bij4tnbke83.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.byterhyme.imabulary",
             "certificate_hash": "23a1855f224080eecbc79aa652a54a50bd01004b"
           }
         },
@@ -39,10 +71,10 @@
               "client_type": 3
             },
             {
-              "client_id": "222626452683-gpqqh6k9lmndj9r4grokf9e2qkrsccld.apps.googleusercontent.com",
+              "client_id": "222626452683-823iovqtt4e9aukg6rl8bkr6c34oj7r5.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.mobile"
+                "bundle_id": "com.example.imabulary"
               }
             }
           ]

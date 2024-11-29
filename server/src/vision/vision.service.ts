@@ -4,37 +4,45 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { get, upperFirst } from 'lodash';
+import { get, identity, isEmpty } from 'lodash';
 import * as adminAccount from '../../admin-account.json';
 import {
   OBJECT_IS_NOT_RECOGNIZABLE_ERROR,
   VISION_GENERIC_ERROR,
 } from './utils';
+import { fromNullable } from '@sweet-monads/maybe';
 
 @Injectable()
 export class VisionService {
-  private visionClient = new vision.ImageAnnotatorClient({
+  private readonly visionClient = new vision.ImageAnnotatorClient({
     credentials: adminAccount,
   });
 
   async analyze(imageUrl: string) {
-    const [result] = await this.visionClient.objectLocalization(imageUrl);
+    const [result] = await this.visionClient.labelDetection(imageUrl);
 
-    const object = get(result, 'localizedObjectAnnotations[0].name');
+    const objects = get(result, 'labelAnnotations');
     const error = get(result, 'error');
 
     if (error) {
       throw new InternalServerErrorException(VISION_GENERIC_ERROR, {
-        cause: error,
+        cause: { ...error, imageUrl },
       });
     }
 
-    if (!object) {
+    if (isEmpty(objects)) {
       throw new BadRequestException(OBJECT_IS_NOT_RECOGNIZABLE_ERROR, {
         cause: `Image: ${imageUrl}`,
       });
     }
 
-    return upperFirst(object);
+    const handledObjects = objects.map((object) => ({
+      name: object.description,
+      score: fromNullable(Math.round(object.score * 100) / 100)
+        .map<number>(identity)
+        .unwrapOr(object.score),
+    }));
+
+    return handledObjects;
   }
 }

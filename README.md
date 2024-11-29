@@ -5,7 +5,7 @@
 </h1>
 
 <h3>
-  Imabulary - your brain will remember!
+  Imabulary - the whole world is your dictionary!
 </h3>
 
 <details open="open">
@@ -26,7 +26,7 @@
 
 ## About
 
-Imabulary helps to develop a long-term memory when it comes to learning new words and phrases in a foreign language. It allows users to take a picture or choose one from gallery and the tool will provide an instant description and translation of the item on the picture in your target language.
+Imabulary helps you learn a foreign language through visualizations and associations utilizing your surroundings. Take a picture and the app will provide an instant description and translation of the item on the picture in your target language.
 
 ## Built With
 
@@ -50,11 +50,14 @@ Imabulary helps to develop a long-term memory when it comes to learning new word
 
 ### Start a local development
 
-1. Make sure that Docker and `docker-compose` tools are installed on your local device.
+1. Ensure that Docker and `docker-compose` tools are installed on your local device.
 2. Create all required `.env` files to start the project. [How to work with `.env` files](docs/SECURITY.md).
-3. Populate project's CLI commands by running `source scripts.sh` in the terminal being in the root directory of the project. Yes, you have to have a UNIX-based machine or environment.
-4. Run `devBuild` command in the terminal. By doing it, you start a backend and database using Docker, so make sure that Docker daemon is running on your machine.
-5. To start a mobile app, you have to have either an emulator running on your device or a real device connected to your machine. Then run `flutter run` in the terminal and choose your prefered device.
+   - Create `.env` for the flutter app inside the `mobile/assets` folder. Also, you will find there `.env.example`
+   - Create `.env` for the backend inside the root of the `server` folder. Also, you will find there `.env.example`
+4. In the root of the `server` directory create 2 files `admin-account.json` and `service-account.json`. You can find the content of those files in our [secrets vault](https://vault.bitwarden.com/#/vault). 
+5. Populate the project's CLI commands by running `source scripts.sh` in the terminal being in the project's root directory. Yes, you have to have a UNIX-based machine or environment.
+6. Run the `devBuild` command in the terminal. By doing it, you start a backend and database using Docker, so make sure that the Docker daemon is running on your machine.
+7. To start a mobile app, you must have either an emulator running on your device or a real device connected to your machine. Then run `flutter run` in the terminal and choose your preferred device.
 
 ## Project structure
 

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
-import 'package:mobile/app/Flashcard/domain/card.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Profile/presentation/profile_screen_controller.dart';
+import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/widgets/flash_card_masonry_item.dart';
 
 class FlashcardsGrid extends ConsumerStatefulWidget {
@@ -48,7 +49,10 @@ class _FlashcardsGridState extends ConsumerState<FlashcardsGrid> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () => Future.sync(
-        () => _pagingController.refresh(),
+        () {
+          ref.invalidate(getWalletBalanceProvider);
+          _pagingController.refresh();
+        },
       ),
       // TODO: add tests for the case when data is presented. Additionally, add builder for the case when data is empty
       child: PagedMasonryGridView.count(

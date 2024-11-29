@@ -23,8 +23,12 @@ mixin _$Pagination {
   int? get page => throw _privateConstructorUsedError;
   int? get limit => throw _privateConstructorUsedError;
 
+  /// Serializes this Pagination to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Pagination
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PaginationCopyWith<Pagination> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$PaginationCopyWithImpl<$Res, $Val extends Pagination>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Pagination
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -86,6 +92,8 @@ class __$$PaginationImplCopyWithImpl<$Res>
       _$PaginationImpl _value, $Res Function(_$PaginationImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Pagination
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -108,7 +116,7 @@ class __$$PaginationImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PaginationImpl with DiagnosticableTreeMixin implements _Pagination {
-  const _$PaginationImpl({this.page = 1, this.limit = 10});
+  const _$PaginationImpl({this.page = 1, this.limit = 100});
 
   factory _$PaginationImpl.fromJson(Map<String, dynamic> json) =>
       _$$PaginationImplFromJson(json);
@@ -143,11 +151,13 @@ class _$PaginationImpl with DiagnosticableTreeMixin implements _Pagination {
             (identical(other.limit, limit) || other.limit == limit));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, page, limit);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Pagination
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PaginationImplCopyWith<_$PaginationImpl> get copyWith =>
@@ -172,8 +182,11 @@ abstract class _Pagination implements Pagination {
   int? get page;
   @override
   int? get limit;
+
+  /// Create a copy of Pagination
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PaginationImplCopyWith<_$PaginationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,14 +1,17 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:mobile/app/Set/application/set_provider.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
-import 'package:mobile/app/Set/presentation/set_screen.dart';
 import 'package:mobile/app/Set/presentation/set_screen_controller.dart';
+import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/utils/async_value_ui.dart';
+import 'package:mobile/shared/constants.dart';
 
 class SetForm extends ConsumerWidget {
   const SetForm(this.set, {super.key});
@@ -32,14 +35,10 @@ class SetForm extends ConsumerWidget {
         Navigator.pop(context); // close form
 
         setsPagingController?.refresh();
+        ref.invalidate(findAllSetsProvider);
 
         if (set == null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const SetScreen(),
-            ),
-          );
+          AutoRouter.of(context).push(const SetRoute());
         }
       });
     });
@@ -61,22 +60,31 @@ class SetForm extends ConsumerWidget {
           const SizedBox(height: 8),
           FormBuilderTextField(
             name: 'name',
+            maxLength: kMaxSetNameLength,
             initialValue: set?.name,
             decoration: const InputDecoration(
               labelText: 'Name',
               border: OutlineInputBorder(),
             ),
-            validator: FormBuilderValidators.required(),
+            validator: FormBuilderValidators.compose([
+              FormBuilderValidators.required(),
+              FormBuilderValidators.maxLength(kMaxSetNameLength),
+            ]),
           ),
           const SizedBox(height: 16),
           FormBuilderTextField(
             name: 'description',
+            maxLength: kMaxSetDescriptionLength,
             initialValue: set?.description,
             decoration: const InputDecoration(
               labelText: 'Description',
               border: OutlineInputBorder(),
             ),
             maxLines: null,
+            validator: FormBuilderValidators.maxLength(
+              kMaxSetDescriptionLength,
+              checkNullOrEmpty: false,
+            ),
           ),
           const SizedBox(height: 16),
           ElevatedButton(

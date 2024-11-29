@@ -22,3 +22,24 @@ Map<String, dynamic> omitNullables(Map<String, dynamic> map) {
 
   return cleanMap;
 }
+
+String capitalize(String word) {
+  if (word.isEmpty) return word;
+
+  return word[0].toUpperCase() + word.substring(1).toLowerCase();
+}
+
+Map<K, List<V>> groupBy<K, V>(Iterable<V> items, K Function(V) keyFunction) {
+  final Map<K, List<V>> grouped = {};
+
+  for (var item in items) {
+    final key = keyFunction(item);
+    grouped.putIfAbsent(key, () => []).add(item);
+  }
+
+  return grouped;
+}
+
+bool isSingle<T>(List<T>? array) {
+  return array == null || array.isEmpty ? false : array.length == 1;
+}

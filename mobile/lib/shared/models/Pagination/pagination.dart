@@ -4,12 +4,12 @@ import 'package:flutter/foundation.dart';
 part 'pagination.freezed.dart';
 part 'pagination.g.dart';
 
-/// Standard values are `page = 1` and `limit = 10`
 @freezed
 class Pagination with _$Pagination {
+  /// Standard values are `page = 1` and `limit = 100`
   const factory Pagination({
     @Default(1) int? page,
-    @Default(10) int? limit,
+    @Default(100) int? limit,
   }) = _Pagination;
 
   factory Pagination.fromJson(Map<String, dynamic> json) =>

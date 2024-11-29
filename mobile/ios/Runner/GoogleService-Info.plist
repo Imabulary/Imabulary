@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>222626452683-gpqqh6k9lmndj9r4grokf9e2qkrsccld.apps.googleusercontent.com</string>
+	<string>222626452683-823iovqtt4e9aukg6rl8bkr6c34oj7r5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.222626452683-gpqqh6k9lmndj9r4grokf9e2qkrsccld</string>
+	<string>com.googleusercontent.apps.222626452683-823iovqtt4e9aukg6rl8bkr6c34oj7r5</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>222626452683-onsj5ja8fa08k9tk977nel89tca18rcr.apps.googleusercontent.com</string>
+	<string>222626452683-0o2mplaachv3a188p8akvhklpu510r07.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyABWjnLQKACnyyJf6q4bXgKjFW7DAwGh2o</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.mobile</string>
+	<string>com.example.imabulary</string>
 	<key>PROJECT_ID</key>
 	<string>imabulary-fc20f</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:222626452683:ios:a1e7c5988804a7ec0ff74e</string>
+	<string>1:222626452683:ios:4b8d61be542ec4eb0ff74e</string>
 </dict>
 </plist>

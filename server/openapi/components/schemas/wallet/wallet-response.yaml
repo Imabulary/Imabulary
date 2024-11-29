@@ -1,0 +1,25 @@
+type: object
+properties:
+  result:
+    type: object
+    properties:
+      id:
+        description: ID of the wallet
+        type: string
+        format: uuid
+        example: ac94c2fa-8f89-43c9-abb4-2a8d417cd7fa
+      userId:
+        description: User id to which the wallet belongs
+        type: string
+        format: uuid
+        example: a5780ee9-419e-445d-810f-12284cc3a9c4
+      balance:
+        description: User coin balance
+        type: number
+        format: float
+        example: 1.0
+      status:
+        description: Wallet's status
+        type: string
+        enum: [ACTIVE, INACTIVE]
+        example: ACTIVE

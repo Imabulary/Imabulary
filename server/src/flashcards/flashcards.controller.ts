@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   MaxFileSizeValidator,
+  Param,
   ParseFilePipe,
   Post,
   Put,
@@ -13,15 +14,20 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import type { Users } from '@prisma/client';
+import { Request } from 'express';
 import { AuthGuard } from 'src/guards';
+import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
 import { PaginationPipe } from 'src/pipes/pagination.pipe';
 import { Filters, ServerPagination } from 'src/shared';
-import { Request } from 'express';
+import {
+  CreateFlashcardDTO,
+  DisorganizeFlashcardsDTO,
+  OrganizeFlashcardsDTO,
+} from './dto';
 import { FlashCardsService } from './flashcards.service';
-import type { Users } from '@prisma/client';
-import { DisorganizeFlashcardsDTO, OrganizeFlashcardsDTO } from './dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
+import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 
 const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
@@ -70,5 +76,44 @@ export class FlashCardsController {
   @Delete('/disorganize')
   disorganize(@Body() disorganizeFlashcardsDto: DisorganizeFlashcardsDTO) {
     return this.flashCardsService.disorganize(disorganizeFlashcardsDto);
+  }
+
+  @Post('/:id/dislike')
+  dislike(
+    @Req() request: Request,
+    @Param('id') flashcardId: string,
+    @Body() dislikeFlashcardDto: DislikeFlashcardDTO,
+  ) {
+    const user: Users = request['user'];
+
+    return this.flashCardsService.dislike(
+      flashcardId,
+      dislikeFlashcardDto,
+      user.id,
+    );
+  }
+
+  @Post('/:id/regenerate')
+  regenerate(@Req() request: Request, @Param('id') flashcardId: string) {
+    const user = request['user'];
+
+    return this.flashCardsService.regenerate(flashcardId, user.id);
+  }
+
+  @Post('/create')
+  create(
+    @Req() request: Request,
+    @Body() createFlashcardDto: CreateFlashcardDTO,
+  ) {
+    const user: Users = request['user'];
+
+    return this.flashCardsService.create(createFlashcardDto, user.id);
+  }
+
+  @Delete('/:id')
+  delete(@Req() request: Request, @Param('id') id: string) {
+    const user: Users = request['user'];
+
+    return this.flashCardsService.delete(id, user.id);
   }
 }

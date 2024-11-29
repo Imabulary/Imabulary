@@ -15,6 +15,7 @@ dist
 .env.development.local
 .env.test.local
 .env.production.local
+.secrets
 
 # Logs
 npm-debug.log*
@@ -77,7 +78,7 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
+build/
 
 # Symbolication related
 app.*.symbols
@@ -85,8 +86,124 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
 prod-sa.json
+
+# Android Studio will place build artifacts here
+android/app/debug
+android/app/profile
+android/app/release
+prod-sa.json
+
+gradle-wrapper.jar
+.gradle
+captures/
+gradlew
+gradlew.bat
+local.properties
+GeneratedPluginRegistrant.java
+
+# Remember to never publicly share your keystore.
+# See https://flutter.dev/docs/deployment/android#reference-the-keystore-from-the-app
+key.properties
+**/*.keystore
+**/*.jks
+**/google-services.json
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Terraform plan files
+*.tfplan
+
+# Terraform variable files
+*.tfvars
+*.tfvars.json
+
+# Override files (not meant to be versioned)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Generated backend configuration
+# backend.tf
+
+# Sensitive files (like private keys or credentials)
+*.pem
+*.key
+*.crt
+*.env
+
+# Lock file
+.terraform.lock.hcl
+
+# Local .terraform directories
+.terraform/
+
+# IDE or editor-specific files
+.vscode/
+.idea/
+*.swp
+*.bak
+*.tmp
+
+# Ignore logs
+*.log
+
+# Ignore output files
+*.out# Terraform state files
+*.tfstate
+*.tfstate.*
+*/providers/*
+.terraform/
+.terraform/providers/
+
+# Crash log files
+crash.log
+
+# Terraform plan files
+*.tfplan
+
+# Terraform variable files
+*.tfvars
+*.tfvars.json
+
+# Override files (not meant to be versioned)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Generated backend configuration
+# backend.tf
+
+# Sensitive files (like private keys or credentials)
+*.pem
+*.key
+*.crt
+*.env
+
+# Lock file
+.terraform.lock.hcl
+
+# Local .terraform directories
+.terraform/
+
+# IDE or editor-specific files
+.vscode/
+.idea/
+*.swp
+*.bak
+*.tmp
+
+# Ignore logs
+*.log
+
+# Ignore output files
+*.out
+
+.sentryclirc

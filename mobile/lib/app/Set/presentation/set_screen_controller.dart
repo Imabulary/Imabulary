@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Set/data/dto/set_dto.dart';
 import 'package:mobile/app/Set/data/set_repository.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/utils/fp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../shared/models/Pagination/pagination.dart';
+import '../../Flashcard/data/dto/flashcard_dto.dart';
 
 part 'set_screen_controller.g.dart';
 
@@ -13,6 +18,16 @@ class SetScreenController extends _$SetScreenController {
   @override
   FutureOr<void> build() {
     // no-op
+  }
+
+  Future<List<FlashCard>> fetchFlashcards({required String setId}) async {
+    final flashCardsRepository = ref.watch(flashCardRepositoryProvider);
+
+    final flashcards = await flashCardsRepository.findAll(
+      FindAllFlashcardsDTO(pagination: const Pagination(), setId: setId),
+    );
+
+    return flashcards.result;
   }
 
   // TODO: add tests

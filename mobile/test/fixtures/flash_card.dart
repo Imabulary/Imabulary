@@ -1,4 +1,4 @@
-import 'package:mobile/app/Flashcard/domain/card.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
 
 const flashCardFixture = FlashCard(
@@ -9,7 +9,8 @@ const flashCardFixture = FlashCard(
   translated_word: 'Hola',
   target_language: 'Spanish',
   source_language: 'English',
-  image_url: 'https://example.com/hello.png',
+  image_url: 'https://example.com/hello.png', 
+  is_regenerated: false,
 );
 
 const flashCardMapFixture = {

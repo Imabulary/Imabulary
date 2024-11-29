@@ -24,7 +24,7 @@ export class ResponseInterceptor<R> implements NestInterceptor<R, Response<R>> {
   ): Observable<Response<R>> {
     return next.handle().pipe(
       map((response) =>
-        response.result
+        response?.result
           ? {
               result: response.result,
               meta: { pagination: { total: response.total } },

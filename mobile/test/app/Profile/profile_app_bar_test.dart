@@ -33,7 +33,9 @@ void main() {
       ],
       child: TestApp(
         Scaffold(
-          appBar: ProfileAppBar(mockedTabController),
+          appBar: ProfileAppBar(
+            mockedTabController,
+          ),
         ),
       ),
     ));

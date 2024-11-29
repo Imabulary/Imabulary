@@ -6,26 +6,24 @@ EXPOSE 5000
 
 WORKDIR /server
 
-RUN apk --no-cache add g++ make py3-pip
+ARG BUILD_OS=linux
 
-COPY package*.json ./
+RUN if [ "$BUILD_OS" = "macos" ]; then \
+    apk --no-cache add fftw-dev g++ make py3-pip vips vips-dev; \
+    else \
+    apk --no-cache add g++ make py3-pip; \
+    fi
 
+COPY package.json .
 ARG NODE_ENV
 
 RUN if [ "$NODE_ENV" = "development" ]; \
-    then npm ci; \
-    else npm ci --omit=dev; \
+    then npm install; \
+    else npm install --omit=dev; \
     fi
-
-RUN npm install --force @img/sharp-linuxmusl-arm64
 
 COPY . ./
 
-RUN npx prisma generate
-RUN npm run build
+RUN npm install --force @img/sharp-linuxmusl-arm64 && npx prisma generate
 
-COPY entrypoint.sh ./
-
-RUN chmod +x ./entrypoint.sh
-
-ENTRYPOINT ["./entrypoint.sh"]
+CMD ["npm", "run", "start:dev"]

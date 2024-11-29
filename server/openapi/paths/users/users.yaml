@@ -1,0 +1,31 @@
+post:
+  tags:
+    - Users
+  summary: Create a new user
+  description: Create a new user with UID and email
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/user/create-user-dto.yaml'
+  responses:
+    '201':
+      description: User created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/user/user-response.yaml'
+
+delete:
+  tags:
+   - Users
+  summary: Delete user and his resources permanently
+  description: Delete user and his resources permanently includes flashcards, feedbacks, audio and image files
+  responses:
+    '200':
+      description: User and his resources deleted successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/user/user-response.yaml'

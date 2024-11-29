@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
+import 'package:mobile/utils/logger.dart';
 import 'package:mobile/utils/maybe.dart';
 
 Future<T> request<T>(Future<T> Function() asyncFunc) async {
   try {
     return await asyncFunc();
-  } on Exception catch (error) {
+  } on Exception catch (error, stackTrace) {
     const defaultError = ServerError(
       statusCode: 500,
       message: ServerError.defaultError,
@@ -33,9 +34,11 @@ Future<T> request<T>(Future<T> Function() asyncFunc) async {
           .getOrElse(defaultError);
     }
 
-    // TODO: log the full error to the external system
-    print(error.toString());
-    print(exception.toJson());
+    if (error is ServerError) {
+      exception = error as ServerError;
+    }
+
+    appLogger.severe(exception, error, stackTrace);
 
     throw exception;
   }

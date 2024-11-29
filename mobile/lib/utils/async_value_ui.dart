@@ -2,33 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/components/dialogs.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
+import 'package:mobile/utils/logger.dart';
 
 extension AsyncValueUI on AsyncValue {
   showLoadingDialog(
     BuildContext context, {
-    String message = 'Your image is being processed',
+    String message = 'Loading...',
   }) {
     if (isLoading) {
       showDialog(
-        barrierDismissible: true,
         context: context,
         builder: (context) => Dialogs.loading(message),
       );
     }
   }
 
-  showErrorDialog(BuildContext context, bool doPop) {
+  void showErrorDialog(BuildContext context, bool doPop) {
     if (!isLoading && hasError && hasValue) {
-      final exception = error as ServerError;
+      appLogger.severe(error, stackTrace);
 
-      if (doPop) {
-        Navigator.pop(context);
+      if (error is ServerError) {
+        final ServerError exception = error as ServerError;
+
+        if (doPop) {
+          Navigator.pop(context);
+        }
+
+        showDialog(
+          context: context,
+          builder: (context) => Dialogs.error(exception.message),
+        );
+      } else {
+        if (doPop) {
+          Navigator.pop(context);
+        }
+
+        showDialog(
+          context: context,
+          builder: (context) => Dialogs.error(''),
+        );
       }
-
-      showDialog(
-        context: context,
-        builder: (context) => Dialogs.error(exception.message),
-      );
     }
   }
 }

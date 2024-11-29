@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Flashcard/domain/card.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Home/widgets/FlashcardListItem/flashcard_list_item.dart';
-import 'package:mobile/app/Profile/presentation/profile.dart';
+import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
+import 'package:mobile/app/Main/application/main_provider.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
-class FlashCardsList extends StatefulWidget {
+class FlashCardsList extends ConsumerStatefulWidget {
   const FlashCardsList({super.key, required this.flashCards});
 
   final List<FlashCard> flashCards;
 
   @override
-  State<FlashCardsList> createState() => _FlashCardsListState();
+  ConsumerState<FlashCardsList> createState() => _FlashCardsListState();
 }
 
-class _FlashCardsListState extends State<FlashCardsList> {
+class _FlashCardsListState extends ConsumerState<FlashCardsList> {
   void redirectToProfileScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ProfileScreen(),
-      ),
-    );
+    ref.read(currentTabIndexProvider.notifier).state = (CurrentScreen.profile.value, 0);
   }
 
   @override

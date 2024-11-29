@@ -1,17 +1,36 @@
 # Build and start containers for development
 devBuild() {
   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+  runMigration
+  prismaGenerate
+  prismaSeed
 }
+
+
+devBuildMacOS() {
+  BUILD_OS=macos docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+  runMigration
+  prismaGenerate
+  prismaSeed
+}
+
 
 # Start containers for development
 devStart() {
   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+  runMigration
   prismaGenerate
+  prismaSeed
 }
 
-# Shutdown containers that was run for development
+# Shutdown containers that were run for development
 devDown() {
   docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
+}
+
+# Shutdown containers and delete volumes that were run for development
+devDownWithVolumes() {
+  docker-compose -f docker-compose.yml -f docker-compose.dev.yml down -v
 }
 
 # Build and start containers for production
@@ -25,7 +44,7 @@ prodStart() {
   prismaGenerate
 }
 
-# Shutdown containers that was run for production
+# Shutdown containers that were run for production
 prodDown() {
   docker-compose -f docker-compose.yml -f docker-compose.prod.yml down
 }
@@ -36,6 +55,8 @@ runMigration() {
 
   if [ -z $MIGRATION_NAME ]; then
     docker exec -it imabulary_backend sh -c "npx prisma migrate dev"
+
+    return
   fi
 
   docker exec -it imabulary_backend sh -c "npx prisma migrate dev --name $MIGRATION_NAME"
@@ -44,6 +65,11 @@ runMigration() {
 # Generate TypeScript types based on prisma schema
 prismaGenerate() {
   docker exec -it imabulary_backend sh -c "npx prisma generate"
+}
+
+# Seed an initial data inside database
+prismaSeed() {
+  docker exec -it imabulary_backend sh -c "npx prisma db seed"
 }
 
 # Build & Push to GCP

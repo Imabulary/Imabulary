@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/FlashCard/application/flashcard_service.dart';
-import 'package:mobile/app/Flashcard/domain/card.dart';
+import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
+import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/app/Home/widgets/FlashcardListItem/flashcard_list_item_controller.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/widgets/list_item.dart';
 
 class FlashCardListItem extends ConsumerWidget {
@@ -15,6 +16,7 @@ class FlashCardListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ListItem(
       onTap: () {
+        analyticsEngine.trackSelectContentEvent('Flashcard', flashCard.id);
         ref.read(flashcardServiceProvider.notifier).openFlashcard(flashCard);
         FlashCardItemController.redirectToFlashCardScreen(context);
       },

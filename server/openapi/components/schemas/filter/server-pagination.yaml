@@ -1,0 +1,10 @@
+type: object
+properties:
+  take:
+    type: integer
+    description: Number of items per page
+    example: 100
+  skip:
+    type: integer
+    description: Number of items to skip
+    example: 0

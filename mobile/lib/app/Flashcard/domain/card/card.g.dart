@@ -1,0 +1,49 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'card.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$FlashCardImpl _$$FlashCardImplFromJson(Map<String, dynamic> json) =>
+    _$FlashCardImpl(
+      id: json['id'] as String,
+      word: json['word'] as String,
+      phrase: json['phrase'] as String,
+      translated_phrase: json['translated_phrase'] as String,
+      translated_word: json['translated_word'] as String,
+      target_language: json['target_language'] as String,
+      source_language: json['source_language'] as String,
+      image_url: json['image_url'] as String,
+      is_regenerated: json['is_regenerated'] as bool,
+      speech_part: json['speech_part'] as String?,
+      translated_explanation: json['translated_explanation'] as String?,
+      explanation: json['explanation'] as String?,
+      image_name: json['image_name'] as String?,
+      audio_url: json['audio_url'] as String?,
+      audio_name: json['audio_name'] as String?,
+      quizStatus: json['QuizStatus'] == null
+          ? null
+          : ServerEnum.fromJson(json['QuizStatus'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$FlashCardImplToJson(_$FlashCardImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'word': instance.word,
+      'phrase': instance.phrase,
+      'translated_phrase': instance.translated_phrase,
+      'translated_word': instance.translated_word,
+      'target_language': instance.target_language,
+      'source_language': instance.source_language,
+      'image_url': instance.image_url,
+      'is_regenerated': instance.is_regenerated,
+      'speech_part': instance.speech_part,
+      'translated_explanation': instance.translated_explanation,
+      'explanation': instance.explanation,
+      'image_name': instance.image_name,
+      'audio_url': instance.audio_url,
+      'audio_name': instance.audio_name,
+      'quizStatus': instance.quizStatus,
+    };

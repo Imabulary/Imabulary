@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mobile/app/Layout/components/not_enough_coins_dialog.dart';
+import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
-class BottomSheetItem extends StatelessWidget {
+const kSingleFlashcardCost = 1;
+
+class BottomSheetItem extends ConsumerWidget {
   const BottomSheetItem({
     super.key,
     this.scanPhoto,
@@ -14,10 +19,14 @@ class BottomSheetItem extends StatelessWidget {
   final String title;
   final IconData icon;
   final ImageSource source;
-  final void Function(ImageSource source)? scanPhoto;
+  final void Function(ImageSource source, BuildContext context)? scanPhoto;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final wallet = ref.watch(getWalletBalanceProvider).value;
+    final isUserHasEnoughCoins =
+        wallet != null && wallet.balance >= kSingleFlashcardCost;
+
     return ListTile(
       leading: Icon(icon),
       title: TypeSetting(title),
@@ -26,7 +35,14 @@ class BottomSheetItem extends StatelessWidget {
         variant: TextVariants.bodySmall,
       ),
       onTap: () {
-        scanPhoto != null ? scanPhoto!(source) : null;
+        if (isUserHasEnoughCoins) {
+          scanPhoto != null ? scanPhoto!(source, context) : null;
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) => const NotEnoughCoinsDialog(),
+          );
+        }
       },
     );
   }

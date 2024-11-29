@@ -1,6 +1,6 @@
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x", "linux-arm64-openssl-3.0.x"]
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x", "linux-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -9,37 +9,50 @@ datasource db {
 }
 
 model Cards {
-  id                String        @id @default(uuid()) @db.VarChar()
-  word              String        @db.VarChar()
-  phrase            String
-  translated_word   String        @db.VarChar()
-  translated_phrase String
-  target_language   String        @db.VarChar()
-  source_language   String        @db.VarChar()
-  image_url         String        @db.VarChar()
-  user              Users?        @relation(fields: [userId], references: [id])
-  userId            String?       @db.VarChar()
-  sets              Sets[]
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
-  CardsOnSets       CardsOnSets[]
+  id                     String         @id @default(uuid()) @db.VarChar()
+  word                   String         @db.VarChar()
+  phrase                 String
+  explanation            String?
+  speech_part            String?        @db.VarChar()
+  translated_word        String         @db.VarChar()
+  translated_phrase      String
+  translated_explanation String?
+  target_language        String         @db.VarChar()
+  source_language        String         @db.VarChar()
+  image_url              String         @db.VarChar()
+  image_name             String?
+  is_regenerated         Boolean        @default(false)
+  audio_url              String?        @db.VarChar()
+  audio_name             String?
+  quizStatusId           String
+  userId                 String?        @db.VarChar()
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+  deletedAt              DateTime?
+  user                   Users?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sets                   Sets[]
+  CardsOnSets            CardsOnSets[]
+  Feedback               Feedback?
+  QuizStatus             QuizCardStatus @relation(fields: [quizStatusId], references: [id])
 }
 
 model Users {
-  id         String   @id @default(uuid()) @db.VarChar()
-  externalId String   @unique
-  email      String   @unique
+  id         String     @id @default(uuid()) @db.VarChar()
+  externalId String     @unique
+  email      String     @unique
   flashcards Cards[]
   sets       Sets[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  feedbacks  Feedback[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  Wallet     Wallet?
 }
 
 model Sets {
   id          String        @id @default(uuid()) @db.VarChar()
   name        String        @db.VarChar()
   description String?       @db.Text()
-  user        Users?        @relation(fields: [userId], references: [id])
+  user        Users?        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String?       @db.VarChar()
   flashcards  Cards[]
   createdAt   DateTime      @default(now())
@@ -48,11 +61,70 @@ model Sets {
 }
 
 model CardsOnSets {
-  set         Sets     @relation(fields: [setId], references: [id])
+  set         Sets     @relation(fields: [setId], references: [id], onDelete: Cascade)
   setId       String
-  flashcard   Cards    @relation(fields: [flashcardId], references: [id])
+  flashcard   Cards    @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
   flashcardId String
   createdAt   DateTime @default(now())
 
   @@id([setId, flashcardId])
+}
+
+model Wallet {
+  id       String       @id @default(uuid()) @db.VarChar()
+  userId   String       @unique @db.VarChar()
+  status   WalletStatus @default(ACTIVE)
+  balance  Float        @default(0.0)
+  user     Users        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Awards   Awards?
+  Cashback Cashback?
+}
+
+model Awards {
+  id            String   @id @default(uuid()) @db.VarChar()
+  walletId      String   @unique @db.VarChar()
+  lastAwardedAt DateTime @default(now())
+  streekLevel   Int      @default(1)
+  streekCount   Int      @default(0)
+  award         Float    @default(1.0)
+  wallet        Wallet   @relation(fields: [walletId], references: [id], onDelete: Cascade)
+}
+
+model Cashback {
+  id       String @id @default(uuid()) @db.VarChar()
+  walletId String @unique @db.VarChar()
+  level    Int    @default(1)
+  refund   Float  @default(0.1)
+  wallet   Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+}
+
+model Feedback {
+  id            String             @id @default(uuid()) @db.VarChar()
+  userId        String?            @db.VarChar()
+  cardId        String?            @unique @db.VarChar()
+  isAppropriate Boolean?           @default(false)
+  text          String?
+  category      FeedbackCategory[] @relation("card_feedbacks_categories")
+  card          Cards?             @relation(fields: [cardId], references: [id])
+  metadata      Json?
+  user          Users?             @relation(fields: [userId], references: [id])
+}
+
+model FeedbackCategory {
+  id       String     @id @default(uuid()) @db.VarChar()
+  name     String
+  slug     String?    @unique
+  meaning  String
+  feedback Feedback[] @relation("card_feedbacks_categories")
+}
+
+enum WalletStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model QuizCardStatus {
+  id    String  @id @default(uuid()) @db.VarChar()
+  name  String  @unique
+  Cards Cards[]
 }

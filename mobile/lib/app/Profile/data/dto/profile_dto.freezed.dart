@@ -23,8 +23,12 @@ mixin _$ProfileDTO {
   String get uid => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
 
+  /// Serializes this ProfileDTO to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ProfileDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ProfileDTOCopyWith<ProfileDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$ProfileDTOCopyWithImpl<$Res, $Val extends ProfileDTO>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ProfileDTO
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -86,6 +92,8 @@ class __$$ProfileDTOImplCopyWithImpl<$Res>
       _$ProfileDTOImpl _value, $Res Function(_$ProfileDTOImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ProfileDTO
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -132,11 +140,13 @@ class _$ProfileDTOImpl implements _ProfileDTO {
             (identical(other.email, email) || other.email == email));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, uid, email);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ProfileDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ProfileDTOImplCopyWith<_$ProfileDTOImpl> get copyWith =>
@@ -162,8 +172,11 @@ abstract class _ProfileDTO implements ProfileDTO {
   String get uid;
   @override
   String get email;
+
+  /// Create a copy of ProfileDTO
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProfileDTOImplCopyWith<_$ProfileDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

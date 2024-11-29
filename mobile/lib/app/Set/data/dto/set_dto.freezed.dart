@@ -23,8 +23,12 @@ mixin _$SetDTO {
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
 
+  /// Serializes this SetDTO to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SetDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SetDTOCopyWith<SetDTO> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -46,6 +50,8 @@ class _$SetDTOCopyWithImpl<$Res, $Val extends SetDTO>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SetDTO
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -83,6 +89,8 @@ class __$$SetDTOImplCopyWithImpl<$Res>
       _$SetDTOImpl _value, $Res Function(_$SetDTOImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SetDTO
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -130,11 +138,13 @@ class _$SetDTOImpl implements _SetDTO {
                 other.description == description));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, description);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SetDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SetDTOImplCopyWith<_$SetDTOImpl> get copyWith =>
@@ -158,8 +168,216 @@ abstract class _SetDTO implements SetDTO {
   String? get name;
   @override
   String? get description;
+
+  /// Create a copy of SetDTO
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SetDTOImplCopyWith<_$SetDTOImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+FindAllSetsDTO _$FindAllSetsDTOFromJson(Map<String, dynamic> json) {
+  return _FindAllSetsDTO.fromJson(json);
+}
+
+/// @nodoc
+mixin _$FindAllSetsDTO {
+  Pagination get pagination => throw _privateConstructorUsedError;
+  String? get filterStrategy => throw _privateConstructorUsedError;
+  String? get statusId => throw _privateConstructorUsedError;
+
+  /// Serializes this FindAllSetsDTO to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of FindAllSetsDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $FindAllSetsDTOCopyWith<FindAllSetsDTO> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $FindAllSetsDTOCopyWith<$Res> {
+  factory $FindAllSetsDTOCopyWith(
+          FindAllSetsDTO value, $Res Function(FindAllSetsDTO) then) =
+      _$FindAllSetsDTOCopyWithImpl<$Res, FindAllSetsDTO>;
+  @useResult
+  $Res call({Pagination pagination, String? filterStrategy, String? statusId});
+
+  $PaginationCopyWith<$Res> get pagination;
+}
+
+/// @nodoc
+class _$FindAllSetsDTOCopyWithImpl<$Res, $Val extends FindAllSetsDTO>
+    implements $FindAllSetsDTOCopyWith<$Res> {
+  _$FindAllSetsDTOCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of FindAllSetsDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pagination = null,
+    Object? filterStrategy = freezed,
+    Object? statusId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      pagination: null == pagination
+          ? _value.pagination
+          : pagination // ignore: cast_nullable_to_non_nullable
+              as Pagination,
+      filterStrategy: freezed == filterStrategy
+          ? _value.filterStrategy
+          : filterStrategy // ignore: cast_nullable_to_non_nullable
+              as String?,
+      statusId: freezed == statusId
+          ? _value.statusId
+          : statusId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+
+  /// Create a copy of FindAllSetsDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PaginationCopyWith<$Res> get pagination {
+    return $PaginationCopyWith<$Res>(_value.pagination, (value) {
+      return _then(_value.copyWith(pagination: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$FindAllSetsDTOImplCopyWith<$Res>
+    implements $FindAllSetsDTOCopyWith<$Res> {
+  factory _$$FindAllSetsDTOImplCopyWith(_$FindAllSetsDTOImpl value,
+          $Res Function(_$FindAllSetsDTOImpl) then) =
+      __$$FindAllSetsDTOImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Pagination pagination, String? filterStrategy, String? statusId});
+
+  @override
+  $PaginationCopyWith<$Res> get pagination;
+}
+
+/// @nodoc
+class __$$FindAllSetsDTOImplCopyWithImpl<$Res>
+    extends _$FindAllSetsDTOCopyWithImpl<$Res, _$FindAllSetsDTOImpl>
+    implements _$$FindAllSetsDTOImplCopyWith<$Res> {
+  __$$FindAllSetsDTOImplCopyWithImpl(
+      _$FindAllSetsDTOImpl _value, $Res Function(_$FindAllSetsDTOImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of FindAllSetsDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pagination = null,
+    Object? filterStrategy = freezed,
+    Object? statusId = freezed,
+  }) {
+    return _then(_$FindAllSetsDTOImpl(
+      pagination: null == pagination
+          ? _value.pagination
+          : pagination // ignore: cast_nullable_to_non_nullable
+              as Pagination,
+      filterStrategy: freezed == filterStrategy
+          ? _value.filterStrategy
+          : filterStrategy // ignore: cast_nullable_to_non_nullable
+              as String?,
+      statusId: freezed == statusId
+          ? _value.statusId
+          : statusId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$FindAllSetsDTOImpl implements _FindAllSetsDTO {
+  const _$FindAllSetsDTOImpl(
+      {required this.pagination, this.filterStrategy, this.statusId});
+
+  factory _$FindAllSetsDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FindAllSetsDTOImplFromJson(json);
+
+  @override
+  final Pagination pagination;
+  @override
+  final String? filterStrategy;
+  @override
+  final String? statusId;
+
+  @override
+  String toString() {
+    return 'FindAllSetsDTO(pagination: $pagination, filterStrategy: $filterStrategy, statusId: $statusId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FindAllSetsDTOImpl &&
+            (identical(other.pagination, pagination) ||
+                other.pagination == pagination) &&
+            (identical(other.filterStrategy, filterStrategy) ||
+                other.filterStrategy == filterStrategy) &&
+            (identical(other.statusId, statusId) ||
+                other.statusId == statusId));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, pagination, filterStrategy, statusId);
+
+  /// Create a copy of FindAllSetsDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FindAllSetsDTOImplCopyWith<_$FindAllSetsDTOImpl> get copyWith =>
+      __$$FindAllSetsDTOImplCopyWithImpl<_$FindAllSetsDTOImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$FindAllSetsDTOImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _FindAllSetsDTO implements FindAllSetsDTO {
+  const factory _FindAllSetsDTO(
+      {required final Pagination pagination,
+      final String? filterStrategy,
+      final String? statusId}) = _$FindAllSetsDTOImpl;
+
+  factory _FindAllSetsDTO.fromJson(Map<String, dynamic> json) =
+      _$FindAllSetsDTOImpl.fromJson;
+
+  @override
+  Pagination get pagination;
+  @override
+  String? get filterStrategy;
+  @override
+  String? get statusId;
+
+  /// Create a copy of FindAllSetsDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$FindAllSetsDTOImplCopyWith<_$FindAllSetsDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

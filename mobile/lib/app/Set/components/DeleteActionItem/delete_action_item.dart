@@ -1,6 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Profile/presentation/profile.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/components/DeleteActionItem/delete_action_item_controller.dart';
 import 'package:mobile/app/Set/presentation/set_screen_controller.dart';
@@ -21,13 +21,7 @@ class DeleteActionItem extends ConsumerWidget {
 
       state.whenData((value) {
         setsPagingController?.refresh();
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ProfileScreen(initialTabIndex: 1),
-          ),
-        );
+        AutoRouter.of(context).popUntilRoot();
       });
     });
 

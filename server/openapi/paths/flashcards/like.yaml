@@ -1,0 +1,23 @@
+post:
+  tags:
+    - Flashcards
+  summary: Like a flashcard
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/card/like-flashcard-dto.yaml'
+  responses:
+    '200':
+      description: Flashcard liked successfully
+      content:
+        application/json:
+          schema:
+            type: boolean
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/error/error-response.yaml'

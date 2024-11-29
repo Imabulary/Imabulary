@@ -1,0 +1,26 @@
+type: object
+properties:
+  currentBalance:
+    type: number
+    format: float
+    description: The current balance of the wallet
+    example: 123.45
+  lastAwardedAt:
+    type: string
+    format: date-time
+    description: The ISO date when the last award was given
+    example: "2023-07-08T14:48:00.000Z"
+  nextAward:
+    type: number
+    format: float
+    description: The next award amount
+    example: 50.00
+  expirationTime:
+    type: integer
+    description: The expiration time in seconds
+    example: 3600
+required:
+  - currentBalance
+  - lastAwardedAt
+  - nextAward
+  - expirationTime

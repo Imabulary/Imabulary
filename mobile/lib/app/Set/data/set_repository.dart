@@ -20,9 +20,12 @@ class SetRepository {
 
   Future<ServerResponse<List<Set>>> findAll(Pagination pagination) {
     return request(() async {
-      final response = await client.get(endpoint, queryParameters: {
-        "pagination": pagination.toJson(),
-      });
+      final response = await client.get(
+        endpoint,
+        queryParameters: {
+          "pagination": pagination.toJson(),
+        },
+      );
 
       return ServerResponse.extract(response, Set.fromJson);
     });
