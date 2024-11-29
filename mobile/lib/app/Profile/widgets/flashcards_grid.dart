@@ -8,10 +8,19 @@ import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/widgets/flash_card_masonry_item.dart';
 
 class FlashcardsGrid extends ConsumerStatefulWidget {
-  const FlashcardsGrid({super.key, this.setId, this.onGridItemLongPress});
+  const FlashcardsGrid(
+      {super.key,
+      this.setId,
+      this.onGridItemLongPress,
+      this.toggleFlashcardById,
+      this.selectedFlashcards = const [],
+      this.isDeleteMode = false});
 
   final String? setId;
   final void Function(String flashcardId)? onGridItemLongPress;
+  final bool isDeleteMode;
+  final List<String> selectedFlashcards;
+  final void Function(String flashcardId)? toggleFlashcardById;
 
   @override
   ConsumerState<FlashcardsGrid> createState() => _FlashcardsGridState();
@@ -19,6 +28,17 @@ class FlashcardsGrid extends ConsumerStatefulWidget {
 
 class _FlashcardsGridState extends ConsumerState<FlashcardsGrid> {
   final _pagingController = PagingController<int, FlashCard>(firstPageKey: 1);
+
+  @override
+  void didUpdateWidget(covariant FlashcardsGrid oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.isDeleteMode == true && widget.isDeleteMode == false) {
+      setState(() {
+        widget.selectedFlashcards.clear();
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -64,6 +84,9 @@ class _FlashcardsGridState extends ConsumerState<FlashcardsGrid> {
           itemBuilder: (context, item, index) => FlashCardMasonryItem(
             item,
             onLongPress: widget.onGridItemLongPress,
+            isSelected: widget.selectedFlashcards.contains(item.id),
+            isDeleteMode: widget.isDeleteMode,
+            selectItem: widget.toggleFlashcardById,
           ),
         ),
       ),

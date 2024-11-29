@@ -18,6 +18,25 @@ class ProfileScreen extends ConsumerStatefulWidget {
 class _ProfileScreenState extends ConsumerState<ProfileScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  bool isDeleteMode = false;
+  List<String> selectedFlashcards = [];
+
+  void toggleDeleteMode() {
+    setState(() {
+      isDeleteMode = !isDeleteMode;
+      selectedFlashcards.clear();
+    });
+  }
+
+  void toggleFlashcardById(String flashcardId) {
+    setState(() {
+      if (selectedFlashcards.contains(flashcardId)) {
+        selectedFlashcards.remove(flashcardId);
+      } else {
+        selectedFlashcards.add(flashcardId);
+      }
+    });
+  }
 
   @override
   void initState() {
