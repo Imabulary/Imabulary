@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mobile/app/Quiz/data/dto/update_quiz_answer_DTO.dart';
 import 'package:mobile/app/Quiz/domain/quiz.dart';
 import 'package:mobile/shared/models/ServerEnum/server_enum.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
@@ -28,17 +29,23 @@ class QuizRepository {
         QuizStatuses.mastered.name: null,
       };
 
-      statuses.result.forEach((status) {
+      for (var status in statuses.result) {
         if (statusMap.containsKey(status.name)) {
           statusMap[status.name] = status;
         }
-      });
+      }
 
       return QuizStatusesPayload(
         notStudied: statusMap[QuizStatuses.not_studied.name],
         stillLearning: statusMap[QuizStatuses.still_learning.name],
         mastered: statusMap[QuizStatuses.mastered.name],
       );
+    });
+  }
+
+  Future<void> updateQuizAnswer(UpdateQuizAnswerDTO quizAnswerDTO) async {
+    return request(() async {
+      await dio.post('$endpoint/learn', data: quizAnswerDTO.toJson());
     });
   }
 }

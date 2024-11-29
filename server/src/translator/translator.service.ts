@@ -8,7 +8,7 @@ const { TranslationServiceClient } = v3;
 
 @Injectable()
 export class TranslatorService {
-  private translator = new TranslationServiceClient({
+  private readonly translator = new TranslationServiceClient({
     credentials: adminAccount,
   });
 

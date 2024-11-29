@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
-import { QuizService } from './quiz.service';
-import { QuizController } from './quiz.controller';
-import { extendedPrismaClient, PrismaService } from 'src/prisma';
 import { CustomPrismaModule } from 'nestjs-prisma';
-import { UsersService } from 'src/users';
-import { StorageModule } from 'src/storage/storage.module';
-import { FeedbackModule } from 'src/feedback/feedback.module';
 import { FeedbackService } from 'src/feedback/feedback.service';
+import { extendedPrismaClient, PrismaService } from 'src/prisma';
+import { StorageModule } from 'src/storage/storage.module';
+import { UsersService } from 'src/users';
+import { QuizController } from './quiz.controller';
+import { QuizService } from './quiz.service';
 
 @Module({
   imports: [

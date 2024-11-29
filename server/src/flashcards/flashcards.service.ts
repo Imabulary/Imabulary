@@ -26,6 +26,8 @@ import {
 import { isEmpty } from 'lodash';
 import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 import { FlashcardsRepository } from './flashcards.repository';
+import { NlpService } from 'src/nlp';
+import { isSingle } from 'src/utils';
 
 @Injectable()
 export class FlashCardsService {
@@ -34,6 +36,7 @@ export class FlashCardsService {
     private readonly storage: StorageService,
     private readonly vision: VisionService,
     private readonly assistant: AssistantService,
+    private readonly nlp: NlpService,
     private readonly translator: TranslatorService,
     private readonly sound: SoundService,
     private readonly feedbackService: FeedbackService,
@@ -84,7 +87,7 @@ export class FlashCardsService {
           this.storage.getFileURL(audioFile),
           this.assistant.generatePhrase(objectOnImage),
           this.assistant.explain(objectOnImage),
-          this.assistant.speechPart(objectOnImage),
+          this.nlp.speechPart(objectOnImage),
           this.quizService.findNotStudiedQuizStatus(),
         ]);
 
@@ -143,7 +146,7 @@ export class FlashCardsService {
 
     const objectsOnImage = await this.vision.analyze(imageUrl);
 
-    if (objectsOnImage.length === 1) {
+    if (isSingle(objectsOnImage)) {
       const objectOnImage = objectsOnImage[0].name;
 
       return this.create(

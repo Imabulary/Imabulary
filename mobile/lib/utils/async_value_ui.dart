@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/components/dialogs.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
+import 'package:mobile/utils/logger.dart';
 
 extension AsyncValueUI on AsyncValue {
   showLoadingDialog(
@@ -18,8 +19,7 @@ extension AsyncValueUI on AsyncValue {
 
   void showErrorDialog(BuildContext context, bool doPop) {
     if (!isLoading && hasError && hasValue) {
-      // TODO: push this error to external system
-      print(error);
+      appLogger.severe(error, stackTrace);
 
       if (error is ServerError) {
         final ServerError exception = error as ServerError;

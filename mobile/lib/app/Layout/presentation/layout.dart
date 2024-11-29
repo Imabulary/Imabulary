@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/app/Home/presentation/home.dart';
-import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
-import 'package:mobile/app/Layout/widgets/floating_button.dart';
 import 'package:mobile/app/Profile/presentation/profile_screen.dart';
 
 const screens = [
@@ -27,13 +25,6 @@ class Layout extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.black,
-      bottomNavigationBar: BottomNavigation(
-        screens: screens,
-        currentScreen: currentScreen,
-      ),
-      floatingActionButton: const FloatingButton(),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
     );
   }
 }

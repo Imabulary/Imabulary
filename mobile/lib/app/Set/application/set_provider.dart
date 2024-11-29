@@ -1,49 +1,29 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/app/Quiz/data/quiz_repository.dart';
+import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
+import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
+import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/data/set_repository.dart';
-import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
+import 'package:mobile/utils/fp.dart';
 
 final findAllSetsProvider = FutureProvider.autoDispose.family(
   (ref, Pagination pagination) =>
       ref.watch(setRepositoryProvider).findAll(pagination),
 );
 
-// TODO: merge next 2 methods and use controller to fetch quizStatuses and sets
-final findInProgressSetsProvider = FutureProvider.autoDispose((ref) async {
-  final quizStatuses =
-      await ref.watch(quizRepositoryProvider).findAllStatuses();
+final findSetFlashcardsProvider = FutureProvider.autoDispose(
+  (ref) async {
+    final set = ref.watch(setServiceProvider);
 
-  final sets = await ref.watch(setRepositoryProvider).findAll(Pagination());
+    final flashcards = await ref.watch(flashCardRepositoryProvider).findAll(
+          FindAllFlashcardsDTO(pagination: const Pagination(), setId: set?.id),
+        );
 
-  return sets.result
-      .where(
-        (set) =>
-            set.flashcards!.isNotEmpty &&
-            set.flashcards!.length >= kMinimalAmountOfFlashcardsToStartQuiz &&
-            set.flashcards!.any(
-              (flashcard) =>
-                  flashcard.quizStatusId == quizStatuses.stillLearning.id,
-            ),
-      )
-      .toList();
-});
+    final groupedFlashcards = groupBy(
+      flashcards.result,
+      (flashcard) => flashcard.quizStatus?.name ?? 'other',
+    );
 
-final findNotStudiedSetsProvider = FutureProvider.autoDispose((ref) async {
-  final quizStatuses =
-      await ref.watch(quizRepositoryProvider).findAllStatuses();
-
-  final sets = await ref.watch(setRepositoryProvider).findAll(Pagination());
-
-  return sets.result
-      .where(
-        (set) =>
-            set.flashcards!.isNotEmpty &&
-            set.flashcards!.length >= kMinimalAmountOfFlashcardsToStartQuiz &&
-            set.flashcards!.every(
-              (flashcard) =>
-                  flashcard.quizStatusId == quizStatuses.notStudied.id,
-            ),
-      )
-      .toList();
-});
+    return groupedFlashcards;
+  },
+);

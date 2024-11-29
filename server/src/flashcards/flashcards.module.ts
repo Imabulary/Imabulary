@@ -13,6 +13,7 @@ import { SoundService } from 'src/sound/sound.service';
 import { FeedbackService } from 'src/feedback/feedback.service';
 import { QuizService } from 'src/quiz/quiz.service';
 import { FlashcardsRepository } from './flashcards.repository';
+import { NlpService } from 'src/nlp';
 
 @Module({
   controllers: [FlashCardsController],
@@ -36,6 +37,7 @@ import { FlashcardsRepository } from './flashcards.repository';
     SoundService,
     QuizService,
     FlashcardsRepository,
+    NlpService,
   ],
 })
 export class FlashCardsModule {}

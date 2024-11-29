@@ -5,21 +5,25 @@ import 'package:mobile/app/Home/components/QuizQuickAction/quiz_quick_action_lis
 import 'package:mobile/app/Set/application/set_provider.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
+import 'package:mobile/shared/models/Pagination/pagination.dart';
 
 class QuizQuickAction extends ConsumerWidget {
   const QuizQuickAction({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final inProgressSetsProvider = ref.watch(findInProgressSetsProvider);
-    final notStudiedSets = ref.watch(findNotStudiedSetsProvider);
     final setService = ref.read(setServiceProvider.notifier);
+    final allSets = ref.watch(
+      findAllSetsProvider(const Pagination()),
+    );
 
-    if (inProgressSetsProvider.hasValue && notStudiedSets.hasValue) {
-      final sets = [...inProgressSetsProvider.value!, ...notStudiedSets.value!];
+    if (!allSets.isLoading) {
+      final availableSets = allSets.value?.result
+          .where((set) => (set.flashcards?.length ?? 0) > 1)
+          .toList();
 
-      if (sets.isEmpty) {
-        return QuizQuickActionListItem(
+      if (availableSets?.isEmpty ?? true) {
+        return const QuizQuickActionListItem(
           'Take a Quiz',
           sublabel:
               'You have to create at least 1 set with minimum 2 flashcards to start a quiz',
@@ -28,22 +32,22 @@ class QuizQuickAction extends ConsumerWidget {
       }
 
       return QuizQuickActionListItem('Take a Quiz', onTap: () {
-        if (sets.length == 1) {
-          setService.openSet(sets[0]);
-          SetAppBarController.startQuiz(context, sets[0].flashcards)();
+        if (availableSets!.length == 1) {
+          setService.openSet(availableSets[0]);
+          SetAppBarController.startQuiz(context, availableSets[0].flashcards);
         } else {
-          QuizQuickActionController.showAvailableSets(context, sets);
+          QuizQuickActionController.showAvailableSets(context, availableSets);
         }
       });
     }
 
-    if (notStudiedSets.isLoading || inProgressSetsProvider.isLoading) {
-      return QuizQuickActionListItem(
+    if (allSets.isLoading) {
+      return const QuizQuickActionListItem(
         'Loading...',
       );
     }
 
-    return QuizQuickActionListItem(
+    return const QuizQuickActionListItem(
       'Quick action temporary unavailable. Please try again later.',
     );
   }

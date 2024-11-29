@@ -41,7 +41,10 @@ export class WalletService {
 
       validateWallet(wallet);
 
-      if (!checkBalanceAvailability(wallet.balance, cost)) {
+      if (
+        operation === 'subtract' &&
+        !checkBalanceAvailability(wallet.balance, cost)
+      ) {
         throw new BadRequestException(INSUFFICIENT_FUNDS);
       }
 

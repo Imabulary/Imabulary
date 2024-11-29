@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
@@ -7,6 +8,7 @@ import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
 import 'package:mobile/utils/plularize.dart';
 
+@RoutePage()
 class WalletScreen extends ConsumerWidget {
   const WalletScreen({Key? key}) : super(key: key);
 

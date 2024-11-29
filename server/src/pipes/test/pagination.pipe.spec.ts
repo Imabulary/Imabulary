@@ -36,7 +36,9 @@ describe('PaginationPipe', () => {
       page: '10' as any,
       limit: '10' as any,
     };
+
     const result = pipe.transform(pagination);
+
     expect(result).toEqual<ServerPagination>({ take: 10, skip: 90 });
   });
 

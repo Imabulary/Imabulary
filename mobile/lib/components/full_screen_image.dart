@@ -8,11 +8,11 @@ class FullScreenImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(16),
       child: Image.network(
         imageUrl,
         width: double.infinity,
-        height: 256,
+        height: 212,
         fit: BoxFit.cover,
       ),
     );

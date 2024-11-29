@@ -1,8 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Flashcard/widgets/SecondNegativeFeedbackDialog/second_negative_feedback_dialog_controller.dart';
-import 'package:mobile/app/Home/presentation/home.dart';
 import 'package:mobile/components/button.dart';
 import 'package:mobile/components/dialogs.dart';
 import 'package:mobile/utils/async_value_ui.dart';
@@ -21,10 +21,7 @@ class SecondNegativeFeedbackDialog extends ConsumerWidget {
         ref.invalidate(findAllFlashcardsProvider);
 
         if (isFlashcardDeleted) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-          );
+          AutoRouter.of(context).popUntilRoot();
         }
       });
     });

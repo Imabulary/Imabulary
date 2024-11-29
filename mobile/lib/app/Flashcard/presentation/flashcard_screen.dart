@@ -8,6 +8,7 @@ import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/full_screen_image.dart';
+import 'package:mobile/utils/fp.dart';
 
 @RoutePage()
 class FlashcardScreen extends ConsumerWidget {
@@ -42,7 +43,7 @@ class FlashcardScreen extends ConsumerWidget {
             ),
             if (flashcard.speech_part != null)
               TypeSetting(
-                flashcard.speech_part!,
+                capitalize(flashcard.speech_part!),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
