@@ -98,6 +98,10 @@ jobs:
             --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet \
             --container-env=NODE_ENV=production
 
+          gcloud compute instances delete-access-config "$NEW_INSTANCE" \
+            --access-config-name "external-nat" \
+            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
+
           gcloud compute instances add-access-config "$NEW_INSTANCE" \
             --access-config-name "external-nat" --address ${{ env.PROD_IP }} \
             --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
