@@ -79,23 +79,24 @@ jobs:
       - name: Deploy new instance and manage IPs
         run: |
           NEW_INSTANCE="instance-build-${SHORT_SHA}"
+
+          OLD_INSTANCE=$(gcloud compute instances list --filter="EXTERNAL_IP=(${{ env.PROD_IP }})" --zones ${{ env.GOOGLE_COMPUTE_ZONE }}-a --format=json | jq '.[0].name' --raw-output)
+
+          if [ "$OLD_INSTANCE" != "null" ]; then
+            gcloud compute instances delete-access-config "$OLD_INSTANCE" \
+              --access-config-name "external-nat" \
+              --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
+
+            gcloud compute instances delete "$OLD_INSTANCE" \
+              --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
+          fi
+
           gcloud compute instances create-with-container "$NEW_INSTANCE" \
             --machine-type=${{ env.MACHINE_TYPE }} \
             --container-image=${{ env.GAR_LOCATION }}:${SHORT_SHA} \
             --tags http-server,https-server \
             --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet \
             --container-env=NODE_ENV=production
-
-          OLD_INSTANCE=$(gcloud compute instances list --filter="EXTERNAL_IP=(${{ env.PROD_IP }})" --zones ${{ env.GOOGLE_COMPUTE_ZONE }}-a --format=json | jq '.[0].name' --raw-output)
-
-          gcloud compute instances delete-access-config "$NEW_INSTANCE" \
-            --access-config-name "external-nat" \
-            --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
-
-          if [ "$OLD_INSTANCE" != "null" ]; then
-            gcloud compute instances delete "$OLD_INSTANCE" \
-              --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
-          fi
 
           gcloud compute instances add-access-config "$NEW_INSTANCE" \
             --access-config-name "external-nat" --address ${{ env.PROD_IP }} \
