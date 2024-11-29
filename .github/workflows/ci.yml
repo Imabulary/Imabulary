@@ -87,6 +87,12 @@ jobs:
               --access-config-name "external-nat" \
               --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
 
+            # Wait for the IP to be released
+            while gcloud compute addresses describe ${{ env.PROD_IP }} \
+              --region=${{ env.GOOGLE_COMPUTE_ZONE }} --format=json | jq '.users' | grep -q "$OLD_INSTANCE"; do
+              sleep 5
+            done
+
             gcloud compute instances delete "$OLD_INSTANCE" \
               --zone ${{ env.GOOGLE_COMPUTE_ZONE }}-a --quiet
           fi
