@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import admin from 'firebase-admin';
 import { CustomPrismaService } from 'nestjs-prisma';
-import { type ExtendedPrismaClient } from '../prisma';
-import { CreateUserDTO } from './dto/user.dto';
+import { FeedbackService } from 'src/feedback/feedback.service';
 import { StorageService } from 'src/storage/storage.service';
 import { IBucketFolders } from 'src/storage/utils';
-import admin from 'firebase-admin';
-import { FeedbackService } from 'src/feedback/feedback.service';
+import { type ExtendedPrismaClient } from '../prisma';
+import { CreateUserDTO } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -26,12 +26,11 @@ export class UsersService {
   async findOneOrCreate(createUserDto: CreateUserDTO) {
     const { uid, email } = createUserDto;
 
-    const user = await this.findOne({ externalId: uid, email });
+    const data = { externalId: uid, email };
 
-    return (
-      user ||
-      this.prisma.client.users.create({ data: { externalId: uid, email } })
-    );
+    const user = await this.findOne(data);
+
+    return user || this.prisma.client.users.create({ data });
   }
 
   async findOne(

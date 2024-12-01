@@ -36,6 +36,7 @@ class FlashcardsGroupWidget extends ConsumerWidget {
           itemBuilder: (BuildContext context, int index) => ListItem(
             image: flashCards[index].image_url,
             label: flashCards[index].word,
+            tileColor: AppColors.grey,
             sublabel: flashCards[index].translated_word,
             onTap: () {
               ref

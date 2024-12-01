@@ -124,7 +124,7 @@ export class FlashCardsService {
         },
       });
 
-      await this.wallet.manage(userId, DEFAULT_COST, 'subtract');
+      // await this.wallet.manage(userId, DEFAULT_COST, 'subtract');
 
       return card;
     } catch (error) {

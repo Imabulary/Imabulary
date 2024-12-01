@@ -19,9 +19,11 @@ final findSetFlashcardsProvider = FutureProvider.autoDispose(
           FindAllFlashcardsDTO(pagination: const Pagination(), setId: set?.id),
         );
 
+    print(flashcards.result[0].QuizStatus);
+
     final groupedFlashcards = groupBy(
       flashcards.result,
-      (flashcard) => flashcard.quizStatus?.name ?? 'other',
+      (flashcard) => flashcard.QuizStatus?.name ?? 'other',
     );
 
     return groupedFlashcards;
