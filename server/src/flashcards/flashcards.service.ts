@@ -14,6 +14,7 @@ import { VisionService } from 'src/vision/vision.service';
 import { WalletService } from 'src/wallet/wallet.service';
 import {
   CreateFlashcardDTO,
+  DeleteFlashcardsDTO,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
   ProcessImageDTO,
@@ -212,35 +213,22 @@ export class FlashCardsService {
   }
 
   // TODO: add tests
-  async delete(id: string | string[], userId: string) {
-    if (Array.isArray(id)) {
-      const flashcard = await this.flashcardsRepository.findAll({
-        where: {
-          id: {
-            in: id,
-          },
+  async delete(deleteFlashcardsDTO: DeleteFlashcardsDTO, userId: string) {
+    const id = deleteFlashcardsDTO.id.split(',');
+
+    const flashcards = await this.flashcardsRepository.findAll({
+      where: {
+        id: {
+          in: id,
         },
-      });
-
-      if (!flashcard.length || id.length !== flashcard.length) {
-        throw new FlashcardNotFoundException({
-          incidentMethod: 'FlashCardsService.delete',
-          plural: true,
-        });
-      }
-
-      await this.flashcardsRepository.softDelete({ id });
-
-      return true;
-    }
-    const flashcard = await this.flashcardsRepository.findOne({
-      where: { id, userId },
+        userId,
+      },
     });
 
-    if (!flashcard) {
+    if (isEmpty(flashcards) || id.length !== flashcards.length) {
       throw new FlashcardNotFoundException({
-        flashcardId: id,
         incidentMethod: 'FlashCardsService.delete',
+        plural: true,
       });
     }
 
@@ -313,7 +301,7 @@ export class FlashCardsService {
         },
         userId,
       ),
-      this.delete(cardId, userId),
+      this.delete({ id: cardId }, userId),
     ]);
 
     return true;

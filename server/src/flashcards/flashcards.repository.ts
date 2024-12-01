@@ -1,5 +1,3 @@
-// src/users/user.repository.ts
-
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Cards, CardsOnSets } from '@prisma/client';
@@ -7,7 +5,7 @@ import * as ICardsRepo from './flashcards.repository.interface';
 
 @Injectable()
 export class FlashcardsRepository implements ICardsRepo.IFlashcardsRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findAll({
     where,
@@ -86,7 +84,7 @@ export class FlashcardsRepository implements ICardsRepo.IFlashcardsRepository {
     take,
     skip,
     include,
-  }: ICardsRepo.FlashcardsFindAllAndFilterType): Promise<{
+  }: ICardsRepo.FlashcardsFindAllType): Promise<{
     result: Cards[];
     total: number;
   }> {

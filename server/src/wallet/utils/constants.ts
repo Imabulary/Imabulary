@@ -6,3 +6,5 @@ export enum WALLET_STATUS {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
 }
+
+export const DEFAULT_USER_BALANCE = 5;

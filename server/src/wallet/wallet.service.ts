@@ -1,20 +1,23 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { add, subtract } from 'lodash';
-import { DailyAwardsService } from 'src/awards/awards.service';
 import { PrismaService } from '../prisma';
 import {
   checkBalanceAvailability,
+  DEFAULT_USER_BALANCE,
   INSUFFICIENT_FUNDS,
   validateWallet,
 } from './utils';
 
 @Injectable()
 export class WalletService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly awardsService: DailyAwardsService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
+
+  create(userId: string) {
+    return this.prisma.wallet.create({
+      data: { userId, balance: DEFAULT_USER_BALANCE },
+    });
+  }
 
   findOne(
     where: Prisma.WalletWhereUniqueInput,
@@ -53,21 +56,5 @@ export class WalletService {
         data: { balance: operaions[operation](wallet.balance, cost) },
       });
     });
-  }
-
-  async collectAward(userId: string) {
-    const { isAwardExpired, award, currentTime, expirationTime } =
-      await this.awardsService.checkAward(userId);
-
-    const updatedWallet = isAwardExpired
-      ? await this.awardsService.expiredAwardTransaction(award, currentTime)
-      : await this.awardsService.updateAwardTransaction(award, currentTime);
-
-    return {
-      currentBalance: updatedWallet.balance,
-      lastAwardedAt: currentTime,
-      nextAward: award.award,
-      expirationTime,
-    };
   }
 }

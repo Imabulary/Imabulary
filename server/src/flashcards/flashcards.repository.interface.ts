@@ -45,8 +45,6 @@ export type FlashcardsCountType = {
   where: Prisma.CardsWhereInput;
 };
 
-export type FlashcardsFindAllAndFilterType = FlashcardsFindAllType;
-
 export type SoftDeleteReturnType<T> = T extends string[] ? Cards[] : Cards;
 
 export interface IFlashcardsRepository {

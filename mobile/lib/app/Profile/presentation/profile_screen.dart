@@ -64,7 +64,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            ProfileAppBar(_tabController),
+            ProfileAppBar(
+              _tabController,
+              isDeleteMode: false,
+              selectedFlashcards: [],
+            ),
             const SizedBox(
               height: 16,
             ),

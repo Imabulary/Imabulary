@@ -23,6 +23,7 @@ import { PaginationPipe } from 'src/pipes/pagination.pipe';
 import { Filters, ServerPagination } from 'src/shared';
 import {
   CreateFlashcardDTO,
+  DeleteFlashcardsDTO,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
 } from './dto';
@@ -111,17 +112,12 @@ export class FlashCardsController {
   }
 
   @Delete('/')
-  deleteMany(@Req() request: Request, @Query('ids') ids: string) {
+  delete(
+    @Req() request: Request,
+    @Query() deleteFlashcardsDTO: DeleteFlashcardsDTO,
+  ) {
     const user: Users = request['user'];
 
-    const idsArray = ids.split(',');
-    return this.flashCardsService.delete(idsArray, user.id);
-  }
-
-  @Delete('/:id')
-  delete(@Req() request: Request, @Param('id') id: string) {
-    const user: Users = request['user'];
-
-    return this.flashCardsService.delete(id, user.id);
+    return this.flashCardsService.delete(deleteFlashcardsDTO, user.id);
   }
 }
