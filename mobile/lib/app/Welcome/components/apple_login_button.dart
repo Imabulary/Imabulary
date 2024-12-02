@@ -27,6 +27,9 @@ class AppleLoginButton extends ConsumerWidget {
       return const Button(onPressed: null, label: 'Logging in...');
     }
 
-    return SignInWithAppleButton(onPressed: handleAppleSignIn);
+    return SignInWithAppleButton(
+      onPressed: handleAppleSignIn,
+      style: SignInWithAppleButtonStyle.white,
+    );
   }
 }
