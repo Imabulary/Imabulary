@@ -48,8 +48,8 @@ class WelcomeScreen extends ConsumerWidget {
                 const SizedBox(
                   height: 88,
                 ),
-                if (Platform.isAndroid) GoogleLoginButton(),
-                if (Platform.isIOS) AppleLoginButton()
+                if (Platform.isAndroid) const GoogleLoginButton(),
+                if (Platform.isIOS) const AppleLoginButton()
               ],
             ),
           ),

@@ -4,6 +4,7 @@ import 'package:mobile/app/Auth/domain/auth.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen_controller.dart';
 import 'package:mobile/components/button.dart';
 import 'package:mobile/utils/async_value_ui.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AppleLoginButton extends ConsumerWidget {
   const AppleLoginButton({super.key});
@@ -16,18 +17,16 @@ class AppleLoginButton extends ConsumerWidget {
 
     final state = ref.watch(welcomeScreenControllerProvider);
 
-    final handleAppleSignIn = () => state.isLoading
+    handleAppleSignIn() => state.isLoading
         ? null
         : ref
             .read(welcomeScreenControllerProvider.notifier)
             .login(AppAuthProvider.apple);
+    
+    if (state.isLoading && !state.hasError) {
+      return const Button(onPressed: null, label: 'Logging in...');
+    }
 
-    return Button(
-      key: const Key('apple-login'),
-      onPressed: handleAppleSignIn,
-      label: state.isLoading && !state.hasError
-          ? 'Logging in...'
-          : 'Sign in with Apple',
-    );
+    return SignInWithAppleButton(onPressed: handleAppleSignIn);
   }
 }
