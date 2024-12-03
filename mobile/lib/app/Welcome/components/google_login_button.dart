@@ -16,7 +16,7 @@ class GoogleLoginButton extends ConsumerWidget {
 
     final state = ref.watch(welcomeScreenControllerProvider);
 
-    final handleGoogleSignIn = () => state.isLoading
+    handleGoogleSignIn() => state.isLoading
         ? null
         : ref
             .read(welcomeScreenControllerProvider.notifier)
