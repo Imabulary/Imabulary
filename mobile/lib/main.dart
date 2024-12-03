@@ -10,6 +10,7 @@ import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/firebase_options.dart';
 import 'package:mobile/utils/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:qonversion_flutter/qonversion_flutter.dart';
 
 Future main() async {
   AppLogging();
@@ -27,6 +28,11 @@ Future main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+
+    final qonversionConfig = QonversionConfigBuilder(
+            dotenv.env['API_URL'] ?? '', QLaunchMode.subscriptionManagement)
+        .build();
+    Qonversion.initialize(qonversionConfig);
 
     runApp(const ProviderScope(child: App()));
   });
