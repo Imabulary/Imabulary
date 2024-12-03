@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mobile/app/Welcome/components/anonymus_login_button.dart';
 import 'package:mobile/app/Welcome/components/apple_login_button.dart';
 import 'package:mobile/app/Welcome/components/google_login_button.dart';
 import 'package:mobile/atoms/type_setting.dart';
@@ -49,7 +50,23 @@ class WelcomeScreen extends ConsumerWidget {
                   height: 88,
                 ),
                 if (Platform.isAndroid) GoogleLoginButton(),
-                if (Platform.isIOS) AppleLoginButton()
+                if (Platform.isIOS) AppleLoginButton(),
+                Row(children: [
+                  Expanded(
+                    child: Divider(
+                      height: 50,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Text("OR"),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Expanded(child: Divider()),
+                ]),
+                AnonymusLoginButton()
               ],
             ),
           ),

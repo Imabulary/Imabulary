@@ -20,6 +20,7 @@ class WelcomeScreenController extends _$WelcomeScreenController {
     final providers = {
       AppAuthProvider.apple.name: authRepository.loginWithApple,
       AppAuthProvider.google.name: authRepository.loginWithGoogle,
+      AppAuthProvider.anonymus.name: authRepository.loginAnonymously,
     };
 
     if (providers[provider.name] == null) {

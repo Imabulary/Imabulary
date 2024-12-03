@@ -16,13 +16,13 @@ class SettingsList extends ConsumerWidget {
     return ListView(
       shrinkWrap: true,
       children: [
-        ListTile(
-          key: const Key('wallet'),
-          onTap: () {
-            AutoRouter.of(context).push(const WalletRoute());
-          },
-          title: const TypeSetting('Wallet'),
-        ),
+        // ListTile(
+        //   key: const Key('wallet'),
+        //   onTap: () {
+        //     AutoRouter.of(context).push(const WalletRoute());
+        //   },
+        //   title: const TypeSetting('Wallet'),
+        // ),
         const ProfileManageAccount(),
         ListTile(
           key: const Key('logout'),

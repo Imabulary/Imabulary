@@ -60,6 +60,23 @@ class AuthRepository {
     });
   }
 
+  Future<ProfileDTO> loginAnonymously() {
+    return request(() async {
+      final token = await firebase.signInAnonymously();
+      final user = token.user;
+
+      if (user == null) {
+        throw const ServerError(
+          statusCode: 401,
+          message:
+              "Unexpected error happened during logging you into system. Don't worry, we're on it! Try again later.",
+        );
+      }
+
+      return ProfileDTO(uid: user.uid, email: user.email);
+    });
+  }
+
   Future signOut() {
     return request(() async {
       await firebase.signOut();

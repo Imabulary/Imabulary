@@ -124,8 +124,6 @@ export class FlashCardsService {
         },
       });
 
-      // await this.wallet.manage(userId, DEFAULT_COST, 'subtract');
-
       return card;
     } catch (error) {
       await this.storage.delete(imageName);
@@ -312,7 +310,6 @@ export class FlashCardsService {
     }
 
     await Promise.all([
-      this.wallet.manage(userId, DEFAULT_COST, 'add'),
       this.feedbackService.create(
         {
           cardId,

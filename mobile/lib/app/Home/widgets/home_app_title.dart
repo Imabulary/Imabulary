@@ -28,14 +28,12 @@ class HomeAppTitle extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         welcomeTitle,
-        const SizedBox(width: 8),
-        wallet.when(
-          data: (data) => Balance(data.balance),
-          error: (error, _) => const TypeSetting(
-            "Failed to fetch coins balance.",
-          ),
-          loading: () => const TypeSetting("Loading..."),
-        )
+        // const SizedBox(width: 8),
+        // wallet.when(
+        //   data: (data) => Balance(data.balance),
+        //   error: (error, _) => const Balance(0),
+        //   loading: () => const Balance(0),
+        // )
       ],
     );
   }
