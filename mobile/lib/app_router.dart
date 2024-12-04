@@ -16,6 +16,7 @@ import 'package:mobile/app/Set/presentation/set_screen.dart';
 import 'package:mobile/app/Wallet/presentation/wallet_screen.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen.dart';
 import 'package:mobile/app/Main/presentation/main_screen.dart';
+import 'package:mobile/shared/screens/web_view_screen.dart';
 
 part 'app_router.gr.dart';
 
@@ -27,7 +28,9 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    if (user != null || resolver.route.name == WelcomeRoute.name) {
+    if (user != null ||
+        resolver.route.name == WelcomeRoute.name ||
+        resolver.route.name == WebViewRoute.name) {
       resolver.next(true);
     } else {
       resolver.redirect(const WelcomeRoute());
@@ -46,5 +49,6 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
         AutoRoute(page: QuizRoute.page),
         AutoRoute(page: ResultRoute.page),
         AutoRoute(page: ObjectsOnImageRoute.page),
+        AutoRoute(page: WebViewRoute.page)
       ];
 }
