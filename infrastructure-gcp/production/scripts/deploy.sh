@@ -2,7 +2,7 @@
 
 # Define constants
 CONTAINER_NAME="backend-container"
-IMAGE_NAME="us-central1-docker.pkg.dev/imabulary/imabulary-dev/imabulary-dev:latest"
+IMAGE_NAME="us-central1-docker.pkg.dev/imabulary/imabulary-prod/imabulary-prod:latest"
 
 # Function: Run migration
 runMigration() {
@@ -10,10 +10,10 @@ runMigration() {
 
   if [ -z "$MIGRATION_NAME" ]; then
     echo "Running default migration..."
-    docker exec -it "${CONTAINER_NAME}" sh -c "npx prisma migrate dev"
+    docker exec -it "${CONTAINER_NAME}" sh -c "npx prisma migrate deploy"
   else
     echo "Running migration with name: $MIGRATION_NAME"
-    docker exec -it "${CONTAINER_NAME}" sh -c "npx prisma migrate dev --name $MIGRATION_NAME"
+    docker exec -it "${CONTAINER_NAME}" sh -c "npx prisma migrate deploy --name $MIGRATION_NAME"
   fi
 }
 
@@ -57,9 +57,9 @@ echo "Running the container: ${CONTAINER_NAME}"
 docker run -d \
   --name "${CONTAINER_NAME}" \
   -p 5000:5000 \
-  -e NODE_ENV=development \
+  -e NODE_ENV=production \
   "${IMAGE_NAME}" \
-  npm run start:dev
+  npm run start:prod
 
 # Step 5: Run Prisma-related tasks
 echo "Executing Prisma migration..."
