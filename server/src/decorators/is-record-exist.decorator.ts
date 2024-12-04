@@ -8,13 +8,13 @@ import { PrismaService } from 'src/prisma';
 
 @ValidatorConstraint({ async: true })
 export class IsRecordExistConstraint implements ValidatorConstraintInterface {
-  private entity: string;
+  private readonly entity: string;
 
   constructor(private readonly prisma: PrismaService, entity: string) {
     this.entity = entity;
   }
 
-  async validate(id: string) {
+  async validate(id: string | string[]) {
     const record = await this.prisma[this.entity].findFirst({ where: { id } });
 
     return !!record;

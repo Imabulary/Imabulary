@@ -20,7 +20,7 @@ class SecondNegativeFeedbackDialogController
 
     state = const AsyncLoading();
     state = await AsyncValue.guard(
-      () => flashcardRepository.delete(flashcard.id),
+      () => flashcardRepository.delete([flashcard.id]),
     );
   }
 }

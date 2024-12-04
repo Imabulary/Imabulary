@@ -1,28 +1,22 @@
 import { Module } from '@nestjs/common';
-import { CustomPrismaModule } from 'nestjs-prisma';
 import { AssistantService } from 'src/assistant/assistant.service';
-import { extendedPrismaClient, PrismaService } from 'src/prisma';
+import { FeedbackService } from 'src/feedback/feedback.service';
+import { NlpService } from 'src/nlp';
+import { PrismaService } from 'src/prisma';
+import { QuizService } from 'src/quiz/quiz.service';
+import { SoundService } from 'src/sound/sound.service';
 import { StorageService } from 'src/storage/storage.service';
 import { TranslatorService } from 'src/translator/translator.service';
 import { UsersService } from 'src/users';
 import { VisionService } from 'src/vision/vision.service';
-import { FlashCardsController } from './flashcards.controller';
-import { FlashCardsService } from './flashcards.service';
 import { WalletModule } from 'src/wallet/wallet.module';
-import { SoundService } from 'src/sound/sound.service';
-import { FeedbackService } from 'src/feedback/feedback.service';
-import { QuizService } from 'src/quiz/quiz.service';
-import { NlpService } from 'src/nlp';
+import { FlashCardsController } from './flashcards.controller';
+import { FlashcardsRepository } from './flashcards.repository';
+import { FlashCardsService } from './flashcards.service';
 
 @Module({
   controllers: [FlashCardsController],
-  imports: [
-    CustomPrismaModule.forRootAsync({
-      name: 'PrismaService',
-      useFactory: () => extendedPrismaClient,
-    }),
-    WalletModule,
-  ],
+  imports: [WalletModule],
   providers: [
     FlashCardsService,
     PrismaService,
@@ -35,6 +29,7 @@ import { NlpService } from 'src/nlp';
     UsersService,
     SoundService,
     QuizService,
+    FlashcardsRepository,
     NlpService,
   ],
 })

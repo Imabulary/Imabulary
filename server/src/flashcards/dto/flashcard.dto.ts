@@ -64,3 +64,8 @@ export class ProcessImageDTO extends PickType(CreateFlashcardDTO, [
   'imageUrl',
   'isRegeneration',
 ]) {}
+
+export class DeleteFlashcardsDTO {
+  @IsNotEmpty({ message: 'Provide flashcards you want to delete' })
+  id: string;
+}

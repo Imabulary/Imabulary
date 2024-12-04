@@ -6,9 +6,18 @@ import 'package:mobile/app/Profile/widgets/ProfileAppTitle/profile_app_title.dar
 import 'package:mobile/utils/maybe.dart';
 
 class ProfileAppBar extends ConsumerWidget {
-  const ProfileAppBar(this.tabController, {super.key});
+  const ProfileAppBar(
+    this.tabController, {
+    super.key,
+    required this.isDeleteMode,
+    required this.selectedFlashcards,
+    this.toggleDeleteMode,
+  });
 
   final TabController tabController;
+  final void Function()? toggleDeleteMode;
+  final bool isDeleteMode;
+  final List<String> selectedFlashcards;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

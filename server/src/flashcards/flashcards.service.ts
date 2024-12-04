@@ -14,11 +14,11 @@ import { VisionService } from 'src/vision/vision.service';
 import { WalletService } from 'src/wallet/wallet.service';
 import {
   CreateFlashcardDTO,
+  DeleteFlashcardsDTO,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
   ProcessImageDTO,
 } from './dto';
-import { Prisma } from '@prisma/client';
 import {
   FlashcardNotFoundException,
   FlashcardRegeneratedException,
@@ -26,6 +26,7 @@ import {
 } from './utils';
 import { isEmpty } from 'lodash';
 import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
+import { FlashcardsRepository } from './flashcards.repository';
 import { NlpService } from 'src/nlp';
 import { isSingle } from 'src/utils';
 
@@ -42,6 +43,7 @@ export class FlashCardsService {
     private readonly feedbackService: FeedbackService,
     private readonly wallet: WalletService,
     private readonly quizService: QuizService,
+    private readonly flashcardsRepository: FlashcardsRepository,
   ) {}
 
   async scan(userId: string, fileName: string, file: Buffer) {
@@ -103,7 +105,7 @@ export class FlashCardsService {
           },
         );
 
-      const card = await this.prisma.cards.create({
+      const card = await this.flashcardsRepository.create({
         data: {
           word: objectOnImage,
           phrase: relatedPhrase,
@@ -184,44 +186,26 @@ export class FlashCardsService {
     pagination: ServerPagination,
     filters: Filters = {},
   ) {
-    const [result, total] = await this.prisma.$transaction([
-      this.prisma.cards.findMany({
-        ...pagination,
-        orderBy: { createdAt: 'desc' },
-        where: { userId, ...filters },
-        include: {
-          QuizStatus: true,
-        },
-      }),
-      this.prisma.cards.count({ where: { userId, ...filters } }),
-    ]);
-
-    return {
-      result,
-      total,
-    };
+    return await this.flashcardsRepository.findAndFilterAll({
+      ...pagination,
+      orderBy: { createdAt: 'desc' },
+      where: { userId, ...filters },
+      include: {
+        QuizStatus: true,
+      },
+    });
   }
 
   async organize(organizeFlashcardsDto: OrganizeFlashcardsDTO) {
     const { flashcardIds, setId } = organizeFlashcardsDto;
 
-    const queries = flashcardIds.map((flashcardId) =>
-      this.prisma.cardsOnSets.upsert({
-        create: { setId, flashcardId },
-        where: { setId_flashcardId: { setId, flashcardId } },
-        update: {},
-      }),
-    );
-
-    const result = await Promise.all(queries);
-
-    return result;
+    return this.flashcardsRepository.upsertCardsOnSets({ flashcardIds, setId });
   }
 
   async disorganize(disorganizeFlashcardsDto: DisorganizeFlashcardsDTO) {
     const { flashcardIds, setId } = disorganizeFlashcardsDto;
 
-    await this.prisma.cardsOnSets.deleteMany({
+    await this.flashcardsRepository.deleteManyCardsOnSets({
       where: { setId, flashcardId: { in: flashcardIds } },
     });
 
@@ -229,47 +213,38 @@ export class FlashCardsService {
   }
 
   // TODO: add tests
-  async delete(id: string, userId: string) {
-    const flashcard = await this.findOne({ id, userId });
+  async delete(deleteFlashcardsDTO: DeleteFlashcardsDTO, userId: string) {
+    const id = deleteFlashcardsDTO.id.split(',');
 
-    if (!flashcard) {
-      throw new FlashcardNotFoundException(id, 'FlashCardsService.delete');
+    const flashcards = await this.flashcardsRepository.findAll({
+      where: {
+        id: {
+          in: id,
+        },
+        userId,
+      },
+    });
+
+    if (isEmpty(flashcards) || id.length !== flashcards.length) {
+      throw new FlashcardNotFoundException({
+        incidentMethod: 'FlashCardsService.delete',
+        plural: true,
+      });
     }
 
-    await Promise.all([
-      this.prisma.cards.update({
-        where: { id },
-        data: {
-          userId: null,
-          deletedAt: new Date(),
-        },
-      }),
-      this.prisma.cardsOnSets.deleteMany({
-        where: { flashcardId: id },
-      }),
-    ]);
+    await this.flashcardsRepository.softDelete({ id });
 
     return true;
   }
 
   // TODO: add tests
   async regenerate(flashcardId: string, userId: string) {
-    const currentFlashcard = await this.prisma.cards.update({
-      data: {
-        userId: null,
-        deletedAt: new Date(),
-      },
-      where: {
-        id: flashcardId,
-      },
-    });
-
-    await this.prisma.cardsOnSets.deleteMany({
-      where: { flashcardId },
+    const currentFlashcard = await this.flashcardsRepository.softDelete({
+      id: flashcardId,
     });
 
     if (currentFlashcard.is_regenerated) {
-      throw new FlashcardRegeneratedException(flashcardId);
+      throw new FlashcardRegeneratedException({ flashcardId });
     }
 
     const { image_name: imageName, image_url: imageUrl } = currentFlashcard;
@@ -288,10 +263,15 @@ export class FlashCardsService {
   ) {
     const { text, categories } = dislikeFlashcardDto;
 
-    const flashcard = await this.findOne({ id: cardId });
+    const flashcard = await this.flashcardsRepository.findOne({
+      where: { id: cardId },
+    });
 
     if (!flashcard) {
-      throw new FlashcardNotFoundException(cardId, 'FlashCardsService.dislike');
+      throw new FlashcardNotFoundException({
+        flashcardId: cardId,
+        incidentMethod: 'FlashCardsService.dislike',
+      });
     }
 
     const existingFeedback = await this.feedbackService.findOne({
@@ -299,10 +279,10 @@ export class FlashCardsService {
     });
 
     if (existingFeedback) {
-      throw new FlashcardWithFeedbackException(
-        flashcard.id,
-        existingFeedback.id,
-      );
+      throw new FlashcardWithFeedbackException({
+        flashcardId: flashcard.id,
+        feedbackId: existingFeedback.id,
+      });
     }
 
     if (isEmpty(categories) && isEmpty(text)) {
@@ -321,13 +301,9 @@ export class FlashCardsService {
         },
         userId,
       ),
-      this.delete(cardId, userId),
+      this.delete({ id: cardId }, userId),
     ]);
 
     return true;
-  }
-
-  findOne(where: Prisma.CardsWhereUniqueInput) {
-    return this.prisma.cards.findFirst({ where });
   }
 }

@@ -18,22 +18,26 @@ class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: Icons.arrow_back,
       ),
       actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 16),
-          child: Row(
-            children: [
-              ElevatedButton(
-                onPressed: FlashcardAppBarController.showSetsBottomSheet(
-                  context,
-                ),
-                child: const TypeSetting(
-                  'Organize',
-                  style: TextStyle(color: AppColors.primary),
-                ),
+        Row(
+          children: [
+            ElevatedButton(
+              onPressed: FlashcardAppBarController.showSetsBottomSheet(
+                context,
               ),
-              const DislikeButton()
-            ],
-          ),
+              child: const TypeSetting(
+                'Organize',
+                style: TextStyle(color: AppColors.primary),
+              ),
+            ),
+            const DislikeButton(),
+            Button(
+              onPressed: FlashcardAppBarController.showSettingsBottomSheet(
+                context,
+              ),
+              icon: Icons.more_vert,
+              variat: ButtonVariant.icon,
+            )
+          ],
         ),
       ],
     );

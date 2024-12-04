@@ -127,10 +127,13 @@ class FlashCardRepository with FlashcardMixin {
     });
   }
 
-  Future<bool> delete(String flashcardId) {
+  Future<bool> delete(List<String> id) {
     return request(() async {
       final response = await dio.delete(
-        '$endpoint/${flashcardId}',
+        '$endpoint',
+        queryParameters: {
+          "id": id.join(','),
+        },
       );
 
       return response.data['result'];
