@@ -1,0 +1,72 @@
+name: Build and Push Dev Image
+on:
+  push:
+    branches:
+      - production
+env:
+  IMAGE_NAME: 'imabulary-prod'
+  PROJECT_ID: 'imabulary'
+  AR_REPO_LOCATION: 'us-central1'
+  AR_URL: 'us-central1-docker.pkg.dev/imabulary/imabulary-prod'
+  SERVICE_ACCOUNT: 'github-oidc-push-image-gcr@imabulary.iam.gserviceaccount.com'
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/461121489085/locations/global/workloadIdentityPools/imabulary-dev-pool/providers/github-dev-oidc-provider'
+jobs:
+  push_to_ar:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          token_format: 'access_token'
+          project_id: ${{ env.PROJECT_ID }}
+          service_account: ${{ env.SERVICE_ACCOUNT }}
+          workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: Docker Auth
+        id: docker-auth
+        uses: 'docker/login-action@v3'
+        with:
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.access_token }}'
+          registry: '${{ env.AR_REPO_LOCATION }}-docker.pkg.dev'
+
+      - name: Build and Push Container
+        env:
+          ENV_FILE: ${{ secrets.PROD_ENV_FILE }}
+        run: |-
+          echo "${{ secrets.ADMIN_CREDS_JSON }}" | base64 -d > ./server/admin-account.json
+          echo "${{ secrets.SA_CREDS_JSON }}" | base64 -d > ./server/service-account.json
+          echo "${{ secrets.SENTRYCLIRC }}" > ./server/.sentryclirc
+          echo "$ENV_FILE" | base64 -d > ./server/.env
+          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> ./server/.env
+          docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" ./server/
+          docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags
+
+      - name: Set up SSH key
+        run: |
+          gcloud compute ssh prod-docker-vm \
+          --zone=us-central1-a \
+          --tunnel-through-iap \
+          --command="sudo bash /home/waleedzafar_68/deploy.sh"
+    #   - name: 'SSH to GCP instance'
+    #     id: 'ssh'
+    #     uses: 'google-github-actions/ssh-compute@v1'
+    #     with:
+    #         instance_name: 'docker-vm'
+    #         zone: 'us-central1-c'
+    #         ssh_private_key: ${{ secrets.SSH_KEY }}
+    #         script: "${{ github.workspace }}/infrastructure-gcp/development/scripts/deploy.sh"
+
+
+
+    
