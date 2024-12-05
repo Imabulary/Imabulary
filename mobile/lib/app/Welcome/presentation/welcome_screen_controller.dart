@@ -17,17 +17,7 @@ class WelcomeScreenController extends _$WelcomeScreenController {
 
     analyticsEngine.trackLoginEvent(provider.name);
 
-    final providers = {
-      AppAuthProvider.apple.name: authRepository.loginWithApple,
-      AppAuthProvider.google.name: authRepository.loginWithGoogle,
-      AppAuthProvider.anonymus.name: authRepository.loginAnonymously,
-    };
-
-    if (providers[provider.name] == null) {
-      return;
-    }
-
     state = const AsyncLoading();
-    state = await AsyncValue.guard(providers[provider.name]!);
+    state = await AsyncValue.guard(() => authRepository.signIn(provider));
   }
 }
