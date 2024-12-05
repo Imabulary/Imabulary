@@ -10,6 +10,7 @@ import 'package:mobile/app/Welcome/components/google_login_button.dart';
 import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/button.dart';
+import 'package:mobile/components/divider.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
 @RoutePage()
@@ -71,21 +72,7 @@ class WelcomeScreen extends ConsumerWidget {
                 const Spacer(),
                 if (Platform.isAndroid) const GoogleLoginButton(),
                 if (Platform.isIOS) const AppleLoginButton(),
-                const Row(children: [
-                  Expanded(
-                    child: Divider(
-                      height: 50,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text("OR"),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(child: Divider()),
-                ]),
+                const AppDivider('OR'),
                 const AnonymusLoginButton(),
                 const Spacer(),
                 Row(

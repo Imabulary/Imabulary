@@ -12,8 +12,10 @@ class AppDialog extends StatelessWidget {
     this.onSubmit,
     this.noSubmit = false,
     this.noActions = false,
+    this.disabled = false,
     this.cancelText,
     this.submitText,
+    this.submitStyle,
   });
 
   final String? title;
@@ -25,6 +27,8 @@ class AppDialog extends StatelessWidget {
   final bool noActions;
   final String? cancelText;
   final String? submitText;
+  final ButtonStyle? submitStyle;
+  final bool disabled;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,12 @@ class AppDialog extends StatelessWidget {
             variat: ButtonVariant.text,
           ),
           if (!noSubmit)
-            Button(onPressed: onSubmit, label: submitText ?? 'Submit')
+            Button(
+              onPressed: onSubmit,
+              label: submitText ?? 'Submit',
+              disabled: disabled,
+              customStyle: submitStyle,
+            )
         ];
 
     return AlertDialog(

@@ -72,6 +72,7 @@ class ResultScreen extends ConsumerWidget {
 
                         return Button(
                           label: 'Fix my mistake',
+                          expanded: true,
                           onPressed: () {
                             AutoRouter.of(context).popUntilRoot();
                             SetAppBarController.startQuiz(
@@ -81,7 +82,6 @@ class ResultScreen extends ConsumerWidget {
                                   QuizStatuses.still_learning.name],
                             );
                           },
-                          variat: ButtonVariant.elevatedExpanded,
                         );
                       },
                       loading: () => const SizedBox(),
@@ -103,7 +103,7 @@ class ResultScreen extends ConsumerWidget {
               Button(
                 label: 'Finish',
                 onPressed: () => AutoRouter.of(context).popUntilRoot(),
-                variat: ButtonVariant.elevatedExpanded,
+                expanded: true,
               ),
             ],
           );

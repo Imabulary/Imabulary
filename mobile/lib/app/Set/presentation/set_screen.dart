@@ -30,7 +30,7 @@ class SetScreen extends ConsumerWidget {
                 set?.flashcards,
               ),
               label: 'Start quiz',
-              variat: ButtonVariant.elevatedExpanded,
+              expanded: true,
             ),
             const SizedBox(height: 16),
             setFlashcards.when(

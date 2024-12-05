@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Auth/application/auth_provider.dart';
-import 'package:mobile/atoms/colors.dart';
-import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/app/Profile/widgets/DeleteDataDialog/delete_data_dialog_controller.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobile/components/dialogs.dart';
+import 'package:mobile/widgets/input.dart';
 
 class DeleteDataDialog extends ConsumerWidget {
   DeleteDataDialog({super.key});
@@ -22,6 +21,10 @@ class DeleteDataDialog extends ConsumerWidget {
     final isUserEmailExists = user.value?.email != null;
 
     return AppDialog(
+      disabled: formState.isButtonEnabled || !isUserEmailExists,
+      onSubmit: () => deleteController.deleteUser(context),
+      submitText: "Delete",
+      submitStyle: ElevatedButton.styleFrom(backgroundColor: Colors.red),
       title:
           isUserEmailExists ? "Delete your data?" : 'Are you absolutely sure?',
       customContent: !isUserEmailExists
@@ -31,72 +34,21 @@ class DeleteDataDialog extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  FormBuilderTextField(
+                  Input(
                     name: 'email',
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      hintText: 'example@mail.com',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide:
-                            const BorderSide(color: Colors.black, width: 1),
-                      ),
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () {
-                          _formKey.currentState?.fields['email']?.didChange('');
-                          deleteController.checkEmailMatch('');
-                        },
-                      ),
-                    ),
+                    label: 'Email',
+                    helperText: 'Please type your email to confirm',
+                    clearable: true,
                     onChanged: (value) {
                       deleteController.checkEmailMatch(value ?? '');
                     },
-                  ),
-                  const SizedBox(height: 8),
-                  const Text.rich(
-                    TextSpan(
-                      text: 'Please type ',
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
-                      children: [
-                        TextSpan(
-                          text: 'your',
-                          style: TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                        TextSpan(
-                          text: ' email to confirm.',
-                        ),
-                      ],
-                    ),
+                    onClear: () {
+                      deleteController.checkEmailMatch('');
+                    },
                   ),
                 ],
               ),
             ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const TypeSetting(
-            "Close",
-            style: TextStyle(color: AppColors.primary),
-          ),
-        ),
-        ElevatedButton(
-          onPressed: formState.isButtonEnabled || !isUserEmailExists
-              ? () => deleteController.deleteUser(context)
-              : null,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-          ),
-          child: TypeSetting(
-            "Delete",
-            style: TextStyle(
-                color: formState.isButtonEnabled || !isUserEmailExists
-                    ? Colors.white
-                    : AppColors.lightGrey),
-          ),
-        ),
-      ],
     );
   }
 }

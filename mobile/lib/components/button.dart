@@ -19,13 +19,17 @@ class Button extends StatelessWidget {
     this.label = '',
     this.variat = ButtonVariant.elevated,
     this.disabled = false,
+    this.expanded = false,
+    this.customStyle,
   });
 
   final ButtonVariant variat;
   final String label;
   final void Function()? onPressed;
   final bool disabled;
+  final bool expanded;
   final IconData? icon;
+  final ButtonStyle? customStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -55,25 +59,25 @@ class Button extends StatelessWidget {
       case ButtonVariant.elevated:
         return ElevatedButton(
           onPressed: onPress,
-          style: style,
-          child: child,
-        );
-      case ButtonVariant.elevatedExpanded:
-        return ElevatedButton(
-          onPressed: onPress,
-          style: style,
-          child: SizedBox(width: double.infinity, child: Center(child: child)),
+          style: style.merge(customStyle),
+          child: expanded
+              ? SizedBox(width: double.infinity, child: Center(child: child))
+              : child,
         );
       case ButtonVariant.outlined:
         return OutlinedButton(
           onPressed: onPress,
-          style: outlinedStyle,
-          child: child,
+          style: outlinedStyle.merge(customStyle),
+          child: expanded
+              ? SizedBox(width: double.infinity, child: Center(child: child))
+              : child,
         );
       case ButtonVariant.text:
         return TextButton(
           onPressed: onPress,
-          child: child,
+          child: expanded
+              ? SizedBox(width: double.infinity, child: Center(child: child))
+              : child,
         );
       case ButtonVariant.icon:
         return IconButton(
@@ -83,30 +87,14 @@ class Button extends StatelessWidget {
             color: iconColor,
           ),
         );
-      case ButtonVariant.textIcon:
-        return TextButton(
-          onPressed: onPress,
-          style: TextButton.styleFrom(foregroundColor: AppColors.darkYellow),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.add,
-                size: 18,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                label,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(color: AppColors.darkYellow),
-              ),
-            ],
-          ),
-        );
       default:
-        return ElevatedButton(onPressed: onPress, style: style, child: child);
+        return ElevatedButton(
+          onPressed: onPress,
+          style: outlinedStyle.merge(customStyle),
+          child: expanded
+              ? SizedBox(width: double.infinity, child: Center(child: child))
+              : child,
+        );
     }
   }
 }
