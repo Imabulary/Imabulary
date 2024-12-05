@@ -15,7 +15,7 @@ class AppDialog extends StatelessWidget {
     this.disabled = false,
     this.cancelText,
     this.submitText,
-    this.submitStyle,
+    this.submitColor = ButtonColor.standard,
   });
 
   final String? title;
@@ -27,7 +27,7 @@ class AppDialog extends StatelessWidget {
   final bool noActions;
   final String? cancelText;
   final String? submitText;
-  final ButtonStyle? submitStyle;
+  final ButtonColor submitColor;
   final bool disabled;
 
   @override
@@ -44,7 +44,7 @@ class AppDialog extends StatelessWidget {
               onPressed: onSubmit,
               label: submitText ?? 'Submit',
               disabled: disabled,
-              customStyle: submitStyle,
+              color: submitColor,
             )
         ];
 

@@ -23,7 +23,7 @@ class AuthRepository {
       AppAuthProvider.google.name: LoginWithGoogleTemplate(firebase: firebase),
     };
 
-    final loginTemplate = authProviders[authProvider];
+    final loginTemplate = authProviders[authProvider.name];
 
     if (loginTemplate == null) {
       throw new Exception('Undefined auth provider has been used.');

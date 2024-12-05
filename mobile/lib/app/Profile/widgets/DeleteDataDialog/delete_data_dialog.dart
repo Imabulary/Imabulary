@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Auth/application/auth_provider.dart';
 import 'package:mobile/app/Profile/widgets/DeleteDataDialog/delete_data_dialog_controller.dart';
+import 'package:mobile/components/button.dart';
 import 'package:mobile/components/dialogs.dart';
 import 'package:mobile/widgets/input.dart';
 
@@ -21,10 +22,10 @@ class DeleteDataDialog extends ConsumerWidget {
     final isUserEmailExists = user.value?.email != null;
 
     return AppDialog(
-      disabled: formState.isButtonEnabled || !isUserEmailExists,
+      disabled: formState.isButtonEnabled,
       onSubmit: () => deleteController.deleteUser(context),
       submitText: "Delete",
-      submitStyle: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+      submitColor: ButtonColor.danger,
       title:
           isUserEmailExists ? "Delete your data?" : 'Are you absolutely sure?',
       customContent: !isUserEmailExists

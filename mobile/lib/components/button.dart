@@ -11,6 +11,8 @@ enum ButtonVariant {
   textIcon,
 }
 
+enum ButtonColor { standard, danger }
+
 class Button extends StatelessWidget {
   const Button({
     super.key,
@@ -21,6 +23,8 @@ class Button extends StatelessWidget {
     this.disabled = false,
     this.expanded = false,
     this.customStyle,
+    this.textStyle,
+    this.color = ButtonColor.standard,
   });
 
   final ButtonVariant variat;
@@ -29,22 +33,30 @@ class Button extends StatelessWidget {
   final bool disabled;
   final bool expanded;
   final IconData? icon;
+  final ButtonColor color;
   final ButtonStyle? customStyle;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
     final onPress = disabled ? null : onPressed;
-    final child = TypeSetting(
-      label,
-      style: TextStyle(
-        color: disabled ? AppColors.disabledButtonTextColor : AppColors.primary,
-      ),
-    );
 
-    // Styles
-    final style = ElevatedButton.styleFrom(
+    final Map<String, Color> backgroundColors = {
+      ButtonColor.standard.name:
+          Theme.of(context).colorScheme.surfaceContainerLow,
+      ButtonColor.danger.name: Colors.red
+    };
+
+    final Map<String, Color> textColors = {
+      ButtonColor.standard.name: AppColors.primary,
+      ButtonColor.danger.name: Colors.white
+    };
+
+    final elevatedStyle = ElevatedButton.styleFrom(
+      backgroundColor: backgroundColors[color.name],
       disabledBackgroundColor: AppColors.disabledButtonBackgroundColor,
     );
+
     final outlinedStyle = OutlinedButton.styleFrom(
       side: BorderSide(
         color: disabled
@@ -52,14 +64,25 @@ class Button extends StatelessWidget {
             : AppColors.primary,
       ),
     );
+
     final iconColor =
         disabled ? AppColors.disabledButtonTextColor : Colors.white;
+
+    final child = TypeSetting(
+      label,
+      style: textStyle ??
+          TextStyle(
+            color: disabled
+                ? AppColors.disabledButtonTextColor
+                : textColors[color.name],
+          ),
+    );
 
     switch (variat) {
       case ButtonVariant.elevated:
         return ElevatedButton(
           onPressed: onPress,
-          style: style.merge(customStyle),
+          style: elevatedStyle.merge(customStyle),
           child: expanded
               ? SizedBox(width: double.infinity, child: Center(child: child))
               : child,
@@ -67,7 +90,7 @@ class Button extends StatelessWidget {
       case ButtonVariant.outlined:
         return OutlinedButton(
           onPressed: onPress,
-          style: outlinedStyle.merge(customStyle),
+          style: customStyle?.merge(outlinedStyle),
           child: expanded
               ? SizedBox(width: double.infinity, child: Center(child: child))
               : child,
@@ -90,7 +113,7 @@ class Button extends StatelessWidget {
       default:
         return ElevatedButton(
           onPressed: onPress,
-          style: outlinedStyle.merge(customStyle),
+          style: elevatedStyle.merge(customStyle),
           child: expanded
               ? SizedBox(width: double.infinity, child: Center(child: child))
               : child,
