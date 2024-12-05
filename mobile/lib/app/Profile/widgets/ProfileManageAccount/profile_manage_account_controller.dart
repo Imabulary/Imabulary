@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/app/Profile/widgets/DeleteDataDialog/delete_data_dialog.dart';
+import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
@@ -21,12 +23,11 @@ class ProfileManageAccountController {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.pop(context);
+                              AutoRouter.of(context).maybePop();
                             },
                             child: const Icon(
                               Icons.arrow_back,
-                              size: 24.0,
-                              color: Color(0xFFE8EAED),
+                              size: 24,
                             ),
                           ),
                           const SizedBox(width: 15),

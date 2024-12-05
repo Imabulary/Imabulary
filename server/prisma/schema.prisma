@@ -39,7 +39,7 @@ model Cards {
 model Users {
   id         String     @id @default(uuid()) @db.VarChar()
   externalId String     @unique
-  email      String     @unique
+  email      String?    @unique // email is optional because Apple doesn't provide user's email
   flashcards Cards[]
   sets       Sets[]
   feedbacks  Feedback[]
