@@ -71,31 +71,11 @@ model CardsOnSets {
 }
 
 model Wallet {
-  id       String       @id @default(uuid()) @db.VarChar()
-  userId   String       @unique @db.VarChar()
-  status   WalletStatus @default(ACTIVE)
-  balance  Float        @default(0.0)
-  user     Users        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Awards   Awards?
-  Cashback Cashback?
-}
-
-model Awards {
-  id            String   @id @default(uuid()) @db.VarChar()
-  walletId      String   @unique @db.VarChar()
-  lastAwardedAt DateTime @default(now())
-  streekLevel   Int      @default(1)
-  streekCount   Int      @default(0)
-  award         Float    @default(1.0)
-  wallet        Wallet   @relation(fields: [walletId], references: [id], onDelete: Cascade)
-}
-
-model Cashback {
-  id       String @id @default(uuid()) @db.VarChar()
-  walletId String @unique @db.VarChar()
-  level    Int    @default(1)
-  refund   Float  @default(0.1)
-  wallet   Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  id      String       @id @default(uuid()) @db.VarChar()
+  userId  String       @unique @db.VarChar()
+  status  WalletStatus @default(ACTIVE)
+  balance Float        @default(0.0)
+  user    Users        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Feedback {
