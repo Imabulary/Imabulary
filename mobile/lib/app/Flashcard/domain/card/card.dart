@@ -24,7 +24,7 @@ class FlashCard with _$FlashCard {
     String? image_name,
     String? audio_url,
     String? audio_name,
-    ServerEnum? quizStatus,
+    ServerEnum? QuizStatus,
   }) = _FlashCard;
 
   factory FlashCard.fromJson(Map<String, dynamic> json) =>

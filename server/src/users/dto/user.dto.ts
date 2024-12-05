@@ -5,7 +5,11 @@ export class CreateUserDTO {
   @IsNotEmpty({ message: 'UID cannot be empty' })
   uid: string;
 
+  /**
+   * Email is required if DTO is provided through the API, but still can be undefined
+   * if user has used Apple sign in
+   */
   @IsEmail({}, { message: 'Email must be a valid email address' })
   @IsNotEmpty({ message: 'Email cannot be empty' })
-  email: string;
+  email?: string;
 }

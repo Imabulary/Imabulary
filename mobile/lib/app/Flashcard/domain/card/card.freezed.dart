@@ -35,7 +35,7 @@ mixin _$FlashCard {
   String? get image_name => throw _privateConstructorUsedError;
   String? get audio_url => throw _privateConstructorUsedError;
   String? get audio_name => throw _privateConstructorUsedError;
-  ServerEnum? get quizStatus => throw _privateConstructorUsedError;
+  ServerEnum? get QuizStatus => throw _privateConstructorUsedError;
 
   /// Serializes this FlashCard to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -68,9 +68,9 @@ abstract class $FlashCardCopyWith<$Res> {
       String? image_name,
       String? audio_url,
       String? audio_name,
-      ServerEnum? quizStatus});
+      ServerEnum? QuizStatus});
 
-  $ServerEnumCopyWith<$Res>? get quizStatus;
+  $ServerEnumCopyWith<$Res>? get QuizStatus;
 }
 
 /// @nodoc
@@ -103,7 +103,7 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
     Object? image_name = freezed,
     Object? audio_url = freezed,
     Object? audio_name = freezed,
-    Object? quizStatus = freezed,
+    Object? QuizStatus = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -166,9 +166,9 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
           ? _value.audio_name
           : audio_name // ignore: cast_nullable_to_non_nullable
               as String?,
-      quizStatus: freezed == quizStatus
-          ? _value.quizStatus
-          : quizStatus // ignore: cast_nullable_to_non_nullable
+      QuizStatus: freezed == QuizStatus
+          ? _value.QuizStatus
+          : QuizStatus // ignore: cast_nullable_to_non_nullable
               as ServerEnum?,
     ) as $Val);
   }
@@ -177,13 +177,13 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ServerEnumCopyWith<$Res>? get quizStatus {
-    if (_value.quizStatus == null) {
+  $ServerEnumCopyWith<$Res>? get QuizStatus {
+    if (_value.QuizStatus == null) {
       return null;
     }
 
-    return $ServerEnumCopyWith<$Res>(_value.quizStatus!, (value) {
-      return _then(_value.copyWith(quizStatus: value) as $Val);
+    return $ServerEnumCopyWith<$Res>(_value.QuizStatus!, (value) {
+      return _then(_value.copyWith(QuizStatus: value) as $Val);
     });
   }
 }
@@ -212,10 +212,10 @@ abstract class _$$FlashCardImplCopyWith<$Res>
       String? image_name,
       String? audio_url,
       String? audio_name,
-      ServerEnum? quizStatus});
+      ServerEnum? QuizStatus});
 
   @override
-  $ServerEnumCopyWith<$Res>? get quizStatus;
+  $ServerEnumCopyWith<$Res>? get QuizStatus;
 }
 
 /// @nodoc
@@ -246,7 +246,7 @@ class __$$FlashCardImplCopyWithImpl<$Res>
     Object? image_name = freezed,
     Object? audio_url = freezed,
     Object? audio_name = freezed,
-    Object? quizStatus = freezed,
+    Object? QuizStatus = freezed,
   }) {
     return _then(_$FlashCardImpl(
       id: null == id
@@ -309,9 +309,9 @@ class __$$FlashCardImplCopyWithImpl<$Res>
           ? _value.audio_name
           : audio_name // ignore: cast_nullable_to_non_nullable
               as String?,
-      quizStatus: freezed == quizStatus
-          ? _value.quizStatus
-          : quizStatus // ignore: cast_nullable_to_non_nullable
+      QuizStatus: freezed == QuizStatus
+          ? _value.QuizStatus
+          : QuizStatus // ignore: cast_nullable_to_non_nullable
               as ServerEnum?,
     ));
   }
@@ -336,7 +336,7 @@ class _$FlashCardImpl implements _FlashCard {
       this.image_name,
       this.audio_url,
       this.audio_name,
-      this.quizStatus});
+      this.QuizStatus});
 
   factory _$FlashCardImpl.fromJson(Map<String, dynamic> json) =>
       _$$FlashCardImplFromJson(json);
@@ -372,11 +372,11 @@ class _$FlashCardImpl implements _FlashCard {
   @override
   final String? audio_name;
   @override
-  final ServerEnum? quizStatus;
+  final ServerEnum? QuizStatus;
 
   @override
   String toString() {
-    return 'FlashCard(id: $id, word: $word, phrase: $phrase, translated_phrase: $translated_phrase, translated_word: $translated_word, target_language: $target_language, source_language: $source_language, image_url: $image_url, is_regenerated: $is_regenerated, speech_part: $speech_part, translated_explanation: $translated_explanation, explanation: $explanation, image_name: $image_name, audio_url: $audio_url, audio_name: $audio_name, quizStatus: $quizStatus)';
+    return 'FlashCard(id: $id, word: $word, phrase: $phrase, translated_phrase: $translated_phrase, translated_word: $translated_word, target_language: $target_language, source_language: $source_language, image_url: $image_url, is_regenerated: $is_regenerated, speech_part: $speech_part, translated_explanation: $translated_explanation, explanation: $explanation, image_name: $image_name, audio_url: $audio_url, audio_name: $audio_name, QuizStatus: $QuizStatus)';
   }
 
   @override
@@ -411,8 +411,8 @@ class _$FlashCardImpl implements _FlashCard {
                 other.audio_url == audio_url) &&
             (identical(other.audio_name, audio_name) ||
                 other.audio_name == audio_name) &&
-            (identical(other.quizStatus, quizStatus) ||
-                other.quizStatus == quizStatus));
+            (identical(other.QuizStatus, QuizStatus) ||
+                other.QuizStatus == QuizStatus));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -434,7 +434,7 @@ class _$FlashCardImpl implements _FlashCard {
       image_name,
       audio_url,
       audio_name,
-      quizStatus);
+      QuizStatus);
 
   /// Create a copy of FlashCard
   /// with the given fields replaced by the non-null parameter values.
@@ -469,7 +469,7 @@ abstract class _FlashCard implements FlashCard {
       final String? image_name,
       final String? audio_url,
       final String? audio_name,
-      final ServerEnum? quizStatus}) = _$FlashCardImpl;
+      final ServerEnum? QuizStatus}) = _$FlashCardImpl;
 
   factory _FlashCard.fromJson(Map<String, dynamic> json) =
       _$FlashCardImpl.fromJson;
@@ -505,7 +505,7 @@ abstract class _FlashCard implements FlashCard {
   @override
   String? get audio_name;
   @override
-  ServerEnum? get quizStatus;
+  ServerEnum? get QuizStatus;
 
   /// Create a copy of FlashCard
   /// with the given fields replaced by the non-null parameter values.

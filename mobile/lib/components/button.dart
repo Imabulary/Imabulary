@@ -11,6 +11,8 @@ enum ButtonVariant {
   textIcon,
 }
 
+enum ButtonColor { standard, danger }
+
 class Button extends StatelessWidget {
   const Button({
     super.key,
@@ -19,28 +21,42 @@ class Button extends StatelessWidget {
     this.label = '',
     this.variat = ButtonVariant.elevated,
     this.disabled = false,
+    this.expanded = false,
+    this.customStyle,
+    this.textStyle,
+    this.color = ButtonColor.standard,
   });
 
   final ButtonVariant variat;
   final String label;
   final void Function()? onPressed;
   final bool disabled;
+  final bool expanded;
   final IconData? icon;
+  final ButtonColor color;
+  final ButtonStyle? customStyle;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
     final onPress = disabled ? null : onPressed;
-    final child = TypeSetting(
-      label,
-      style: TextStyle(
-        color: disabled ? AppColors.disabledButtonTextColor : AppColors.primary,
-      ),
-    );
 
-    // Styles
-    final style = ElevatedButton.styleFrom(
+    final Map<String, Color> backgroundColors = {
+      ButtonColor.standard.name:
+          Theme.of(context).colorScheme.surfaceContainerLow,
+      ButtonColor.danger.name: Colors.red
+    };
+
+    final Map<String, Color> textColors = {
+      ButtonColor.standard.name: AppColors.primary,
+      ButtonColor.danger.name: Colors.white
+    };
+
+    final elevatedStyle = ElevatedButton.styleFrom(
+      backgroundColor: backgroundColors[color.name],
       disabledBackgroundColor: AppColors.disabledButtonBackgroundColor,
     );
+
     final outlinedStyle = OutlinedButton.styleFrom(
       side: BorderSide(
         color: disabled
@@ -48,32 +64,43 @@ class Button extends StatelessWidget {
             : AppColors.primary,
       ),
     );
+
     final iconColor =
         disabled ? AppColors.disabledButtonTextColor : Colors.white;
+
+    final child = TypeSetting(
+      label,
+      style: textStyle ??
+          TextStyle(
+            color: disabled
+                ? AppColors.disabledButtonTextColor
+                : textColors[color.name],
+          ),
+    );
 
     switch (variat) {
       case ButtonVariant.elevated:
         return ElevatedButton(
           onPressed: onPress,
-          style: style,
-          child: child,
-        );
-      case ButtonVariant.elevatedExpanded:
-        return ElevatedButton(
-          onPressed: onPress,
-          style: style,
-          child: SizedBox(width: double.infinity, child: Center(child: child)),
+          style: elevatedStyle.merge(customStyle),
+          child: expanded
+              ? SizedBox(width: double.infinity, child: Center(child: child))
+              : child,
         );
       case ButtonVariant.outlined:
         return OutlinedButton(
           onPressed: onPress,
-          style: outlinedStyle,
-          child: child,
+          style: customStyle?.merge(outlinedStyle),
+          child: expanded
+              ? SizedBox(width: double.infinity, child: Center(child: child))
+              : child,
         );
       case ButtonVariant.text:
         return TextButton(
           onPressed: onPress,
-          child: child,
+          child: expanded
+              ? SizedBox(width: double.infinity, child: Center(child: child))
+              : child,
         );
       case ButtonVariant.icon:
         return IconButton(
@@ -83,30 +110,14 @@ class Button extends StatelessWidget {
             color: iconColor,
           ),
         );
-      case ButtonVariant.textIcon:
-        return TextButton(
-          onPressed: onPress,
-          style: TextButton.styleFrom(foregroundColor: AppColors.darkYellow),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.add,
-                size: 18,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                label,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(color: AppColors.darkYellow),
-              ),
-            ],
-          ),
-        );
       default:
-        return ElevatedButton(onPressed: onPress, style: style, child: child);
+        return ElevatedButton(
+          onPressed: onPress,
+          style: elevatedStyle.merge(customStyle),
+          child: expanded
+              ? SizedBox(width: double.infinity, child: Center(child: child))
+              : child,
+        );
     }
   }
 }

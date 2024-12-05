@@ -14,6 +14,7 @@ class UserRepository {
   Future<bool> deleteUser() {
     return request(() async {
       final response = await dio.delete(endpoint);
+
       return response.data['result'];
     });
   }

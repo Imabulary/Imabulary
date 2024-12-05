@@ -7,7 +7,7 @@ part 'profile_dto.g.dart';
 class ProfileDTO with _$ProfileDTO {
   const factory ProfileDTO({
     required String uid,
-    required String email,
+    String? email,
   }) = _ProfileDTO;
 
   factory ProfileDTO.fromJson(Map<String, dynamic> json) =>

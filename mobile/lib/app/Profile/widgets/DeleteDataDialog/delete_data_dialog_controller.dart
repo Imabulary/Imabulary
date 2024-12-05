@@ -5,7 +5,8 @@ import 'package:mobile/app/Profile/data/user_repository.dart';
 import 'package:mobile/app/Auth/data/auth_repository.dart';
 
 final deleteDataDialogControllerProvider =
-    StateNotifierProvider<DeleteDataDialogController, DeleteDataDialogState>((ref) {
+    StateNotifierProvider<DeleteDataDialogController, DeleteDataDialogState>(
+        (ref) {
   return DeleteDataDialogController(ref);
 });
 
@@ -30,8 +31,6 @@ class DeleteDataDialogController extends StateNotifier<DeleteDataDialogState> {
 
   final Ref ref;
   String? _userEmail;
-
-  String? get userEmail => _userEmail;
 
   void checkEmailMatch(String inputEmail) {
     state = DeleteDataDialogState(
@@ -73,7 +72,9 @@ class DeleteDataDialogController extends StateNotifier<DeleteDataDialogState> {
       loading: () {},
       error: (error, stack) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('An error occurred while deleting user.')),
+          const SnackBar(
+            content: Text('An error occurred while deleting user.'),
+          ),
         );
       },
     );

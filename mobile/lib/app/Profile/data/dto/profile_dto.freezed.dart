@@ -21,7 +21,7 @@ ProfileDTO _$ProfileDTOFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ProfileDTO {
   String get uid => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
 
   /// Serializes this ProfileDTO to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $ProfileDTOCopyWith<$Res> {
           ProfileDTO value, $Res Function(ProfileDTO) then) =
       _$ProfileDTOCopyWithImpl<$Res, ProfileDTO>;
   @useResult
-  $Res call({String uid, String email});
+  $Res call({String uid, String? email});
 }
 
 /// @nodoc
@@ -58,17 +58,17 @@ class _$ProfileDTOCopyWithImpl<$Res, $Val extends ProfileDTO>
   @override
   $Res call({
     Object? uid = null,
-    Object? email = null,
+    Object? email = freezed,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -81,7 +81,7 @@ abstract class _$$ProfileDTOImplCopyWith<$Res>
       __$$ProfileDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uid, String email});
+  $Res call({String uid, String? email});
 }
 
 /// @nodoc
@@ -98,17 +98,17 @@ class __$$ProfileDTOImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? uid = null,
-    Object? email = null,
+    Object? email = freezed,
   }) {
     return _then(_$ProfileDTOImpl(
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -116,7 +116,7 @@ class __$$ProfileDTOImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ProfileDTOImpl implements _ProfileDTO {
-  const _$ProfileDTOImpl({required this.uid, required this.email});
+  const _$ProfileDTOImpl({required this.uid, this.email});
 
   factory _$ProfileDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileDTOImplFromJson(json);
@@ -124,7 +124,7 @@ class _$ProfileDTOImpl implements _ProfileDTO {
   @override
   final String uid;
   @override
-  final String email;
+  final String? email;
 
   @override
   String toString() {
@@ -161,9 +161,8 @@ class _$ProfileDTOImpl implements _ProfileDTO {
 }
 
 abstract class _ProfileDTO implements ProfileDTO {
-  const factory _ProfileDTO(
-      {required final String uid,
-      required final String email}) = _$ProfileDTOImpl;
+  const factory _ProfileDTO({required final String uid, final String? email}) =
+      _$ProfileDTOImpl;
 
   factory _ProfileDTO.fromJson(Map<String, dynamic> json) =
       _$ProfileDTOImpl.fromJson;
@@ -171,7 +170,7 @@ abstract class _ProfileDTO implements ProfileDTO {
   @override
   String get uid;
   @override
-  String get email;
+  String? get email;
 
   /// Create a copy of ProfileDTO
   /// with the given fields replaced by the non-null parameter values.

@@ -21,7 +21,7 @@ final findSetFlashcardsProvider = FutureProvider.autoDispose(
 
     final groupedFlashcards = groupBy(
       flashcards.result,
-      (flashcard) => flashcard.quizStatus?.name ?? 'other',
+      (flashcard) => flashcard.QuizStatus?.name ?? 'other',
     );
 
     return groupedFlashcards;
