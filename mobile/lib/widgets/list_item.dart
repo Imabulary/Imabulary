@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/shared/constants.dart';
 
@@ -34,7 +33,7 @@ class ListItem extends ListTile {
       enabled: enabled,
       onTap: onTap,
       contentPadding: padding,
-      tileColor: tileColor ?? AppColors.muted,
+      tileColor: tileColor,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
           side: borderColor != null

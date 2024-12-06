@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mobile/app/Quiz/data/dto/update_quiz_answer_DTO.dart';
+import 'package:mobile/app/Quiz/data/dto/quiz_dto.dart';
 import 'package:mobile/app/Quiz/domain/quiz.dart';
 import 'package:mobile/shared/models/ServerEnum/server_enum.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';

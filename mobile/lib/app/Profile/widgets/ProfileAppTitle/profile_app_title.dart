@@ -12,15 +12,12 @@ class ProfileAppTitle extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final wallet = ref.watch(getWalletBalanceProvider);
 
+    return SizedBox();
+
     return wallet.when(
       data: (data) => Balance(data.balance),
-      error: (error, _) => Container(
-        alignment: Alignment.centerLeft,
-        child: TypeSetting(error is ServerError
-            ? error.message
-            : 'Failed to fetch coins balance. Try again later'),
-      ),
-      loading: () => const TypeSetting('Loading...'),
+      error: (error, _) => const Balance(0),
+      loading: () => const Balance(0),
     );
   }
 }

@@ -1,10 +1,17 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mobile/app/Welcome/components/anonymus_login_button.dart';
+import 'package:mobile/app/Welcome/components/apple_login_button.dart';
+import 'package:mobile/app/Welcome/components/google_login_button.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen_controller.dart';
-import 'package:mobile/atoms/colors.dart';
+import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/components/button.dart';
+import 'package:mobile/components/divider.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
@@ -12,18 +19,31 @@ import 'package:vector_graphics/vector_graphics.dart';
 class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({super.key});
 
+  void openPrivacyPolicy(BuildContext context) {
+    AutoRouter.of(context).push(
+      WebViewRoute(
+        title: 'Privacy Policy',
+        url:
+            'https://www.termsfeed.com/live/60e494f3-2d53-476c-b63c-5bdabd589f2d',
+      ),
+    );
+  }
+
+  void openTerms(BuildContext context) {
+    AutoRouter.of(context).push(
+      WebViewRoute(
+        title: 'Terms and conditions',
+        url:
+            'https://cdn.prod.website-files.com/663dec74d369b9ac82ea80bc/66ddd7c1c5e6c9bbd189dae9_Terms%20of%20use.pdf',
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: add tests verifying whether the dialog is showed in case of an error
     ref.listen((welcomeScreenControllerProvider), (_, state) {
       state.showErrorDialog(context, false);
     });
-
-    final state = ref.watch(welcomeScreenControllerProvider);
-
-    final handleGoogleSignIn = state.isLoading
-        ? null
-        : ref.read(welcomeScreenControllerProvider.notifier).loginWithGoogle;
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -55,18 +75,26 @@ class WelcomeScreen extends ConsumerWidget {
                   variant: TextVariants.headlineLarge,
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(
-                  height: 88,
-                ),
-                ElevatedButton(
-                  key: const Key('google-login'),
-                  onPressed: handleGoogleSignIn,
-                  child: TypeSetting(
-                    state.isLoading && !state.hasError
-                        ? 'Logging in...'
-                        : 'Sign in with Google',
-                    style: const TextStyle(color: AppColors.primary),
-                  ),
+                const Spacer(),
+                if (Platform.isAndroid) const GoogleLoginButton(),
+                if (Platform.isIOS) const AppleLoginButton(),
+                const AppDivider('OR'),
+                const AnonymusLoginButton(),
+                const Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Button(
+                      onPressed: () => openPrivacyPolicy(context),
+                      label: 'Privacy Policy',
+                      variat: ButtonVariant.text,
+                    ),
+                    Button(
+                      onPressed: () => openTerms(context),
+                      label: 'Terms and conditions',
+                      variat: ButtonVariant.text,
+                    ),
+                  ],
                 )
               ],
             ),

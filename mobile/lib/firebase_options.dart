@@ -59,13 +59,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyABWjnLQKACnyyJf6q4bXgKjFW7DAwGh2o',
-    appId: '1:222626452683:ios:4b8d61be542ec4eb0ff74e',
+    appId: '1:222626452683:ios:1026380c8aad3a880ff74e',
     messagingSenderId: '222626452683',
     projectId: 'imabulary-fc20f',
     storageBucket: 'imabulary-fc20f.appspot.com',
     androidClientId: '222626452683-0o2mplaachv3a188p8akvhklpu510r07.apps.googleusercontent.com',
-    iosClientId: '222626452683-823iovqtt4e9aukg6rl8bkr6c34oj7r5.apps.googleusercontent.com',
-    iosBundleId: 'com.example.imabulary',
+    iosClientId: '222626452683-rcdq31u24p0sac0tms1uvgp546f3cssm.apps.googleusercontent.com',
+    iosBundleId: 'com.byterhyme.imabulary',
   );
 
 }

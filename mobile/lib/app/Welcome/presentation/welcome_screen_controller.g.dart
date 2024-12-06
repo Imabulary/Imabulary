@@ -7,7 +7,7 @@ part of 'welcome_screen_controller.dart';
 // **************************************************************************
 
 String _$welcomeScreenControllerHash() =>
-    r'ed3b1420c86234d583042e98f9456a6e0c787d8c';
+    r'ce4df258451ccb7eb69fee89fa00913560a999ba';
 
 /// See also [WelcomeScreenController].
 @ProviderFor(WelcomeScreenController)
