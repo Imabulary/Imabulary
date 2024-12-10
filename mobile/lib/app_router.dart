@@ -13,6 +13,7 @@ import 'package:mobile/app/Quiz/domain/result.dart';
 import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen.dart';
 import 'package:mobile/app/Quiz/presentation/results/result_screen.dart';
 import 'package:mobile/app/Set/presentation/set_screen.dart';
+import 'package:mobile/app/Subscription/presentation/subscription_screen.dart';
 import 'package:mobile/app/Wallet/presentation/wallet_screen.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen.dart';
 import 'package:mobile/app/Main/presentation/main_screen.dart';
@@ -49,6 +50,7 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
         AutoRoute(page: QuizRoute.page),
         AutoRoute(page: ResultRoute.page),
         AutoRoute(page: ObjectsOnImageRoute.page),
-        AutoRoute(page: WebViewRoute.page)
+        AutoRoute(page: WebViewRoute.page),
+        AutoRoute(page: SubscriptionRoute.page),
       ];
 }

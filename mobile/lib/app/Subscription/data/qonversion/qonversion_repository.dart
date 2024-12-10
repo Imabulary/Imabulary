@@ -2,22 +2,22 @@ import 'package:mobile/utils/request.dart';
 import 'package:qonversion_flutter/qonversion_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'subscription_repository.g.dart';
+part 'qonversion_repository.g.dart';
 
 enum OfferingTypes {
-  imabulary_next,
+  subscriptions,
 }
 
-class SubscriptionRepository {
-  SubscriptionRepository({required this.qonversion});
+class QonversionRepository {
+  QonversionRepository({required this.qonversion});
 
   final Qonversion qonversion;
 
-  Future<List<QProduct>?> findOne(OfferingTypes offering) {
+  Future<List<QProduct>> findAllProducts(OfferingTypes offering) {
     return request(() async {
       final offerings = await qonversion.offerings();
 
-      return offerings.offeringForIdentifier(offering.name)?.products;
+      return offerings.offeringForIdentifier(offering.name)?.products ?? [];
     });
   }
 
@@ -29,5 +29,5 @@ class SubscriptionRepository {
 }
 
 @riverpod
-SubscriptionRepository subscriptionRepository(SubscriptionRepositoryRef ref) =>
-    SubscriptionRepository(qonversion: Qonversion.getSharedInstance());
+QonversionRepository qonversionRepository(QonversionRepositoryRef ref) =>
+    QonversionRepository(qonversion: Qonversion.getSharedInstance());

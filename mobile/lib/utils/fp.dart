@@ -41,5 +41,9 @@ Map<K, List<V>> groupBy<K, V>(Iterable<V> items, K Function(V) keyFunction) {
 }
 
 bool isSingle<T>(List<T>? array) {
-  return array == null || array.isEmpty ? false : array.length == 1;
+  return isEmpty(array) ? false : array!.length == 1;
+}
+
+bool isEmpty<T>(List<T>? array) {
+  return array == null || array.isEmpty;
 }

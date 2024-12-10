@@ -35,10 +35,11 @@ class ListItem extends ListTile {
       contentPadding: padding,
       tileColor: tileColor,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: borderColor != null
-              ? BorderSide(width: 2, color: borderColor!)
-              : BorderSide.none),
+        borderRadius: BorderRadius.circular(12),
+        side: borderColor != null
+            ? BorderSide(width: 2, color: borderColor!)
+            : BorderSide.none,
+      ),
       leading: leading ??
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
@@ -57,9 +58,11 @@ class ListItem extends ListTile {
         style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
       ),
       subtitle: sublabel != null
-          ? TypeSetting(sublabel!,
+          ? TypeSetting(
+              sublabel!,
               variant: TextVariants.bodySmall,
-              style: TextStyle(color: textColor))
+              style: TextStyle(color: textColor),
+            )
           : null,
     );
   }

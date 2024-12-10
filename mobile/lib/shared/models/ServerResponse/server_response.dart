@@ -35,7 +35,7 @@ class ServerResponse<R> {
         .map((meta) => meta['pagination'])
         .map((pagination) => pagination['total'])
         .map(identity)
-        .getOrElse(0);
+        .getOrElse(result.length);
 
     return ServerResponse<List<T>>(
       result: result.map((item) => handler(item)).toList(),

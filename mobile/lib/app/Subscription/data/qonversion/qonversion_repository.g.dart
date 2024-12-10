@@ -1,28 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'subscription_repository.dart';
+part of 'qonversion_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$subscriptionRepositoryHash() =>
-    r'9e468b375b427f418b237460ae472a9bb0c832a2';
+String _$qonversionRepositoryHash() =>
+    r'de8909551837497abd33c4978e5ffb30e4c9dccc';
 
-/// See also [subscriptionRepository].
-@ProviderFor(subscriptionRepository)
-final subscriptionRepositoryProvider =
-    AutoDisposeProvider<SubscriptionRepository>.internal(
-  subscriptionRepository,
-  name: r'subscriptionRepositoryProvider',
+/// See also [qonversionRepository].
+@ProviderFor(qonversionRepository)
+final qonversionRepositoryProvider =
+    AutoDisposeProvider<QonversionRepository>.internal(
+  qonversionRepository,
+  name: r'qonversionRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$subscriptionRepositoryHash,
+      : _$qonversionRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef SubscriptionRepositoryRef
-    = AutoDisposeProviderRef<SubscriptionRepository>;
+typedef QonversionRepositoryRef = AutoDisposeProviderRef<QonversionRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

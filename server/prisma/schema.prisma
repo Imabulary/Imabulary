@@ -108,3 +108,13 @@ model QuizCardStatus {
   name  String  @unique
   Cards Cards[]
 }
+
+// Products (in our case these are subscriptions) that we're selling in our app
+model Products {
+  id          String  @id @default(uuid()) @db.VarChar()
+  name        String  @db.VarChar()
+  description String  @db.Text
+  internalId  String  @unique // manually defined id of the product on our side
+  externalId  String? @unique // id of the product in Google Play, AppStore, or any other app distribution system
+  benefits    Json
+}

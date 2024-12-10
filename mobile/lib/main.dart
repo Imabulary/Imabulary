@@ -30,8 +30,10 @@ Future main() async {
     );
 
     final qonversionConfig = QonversionConfigBuilder(
-            dotenv.env['API_URL'] ?? '', QLaunchMode.subscriptionManagement)
-        .build();
+      dotenv.env['PURCHASES_KEY']!,
+      QLaunchMode.subscriptionManagement,
+    ).build();
+
     Qonversion.initialize(qonversionConfig);
 
     runApp(const ProviderScope(child: App()));
