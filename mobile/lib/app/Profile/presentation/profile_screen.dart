@@ -52,7 +52,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: const [FlashcardsGrid(), SetsGrid()],
+                children: const [
+                  FlashcardsGrid(
+                    key: ValueKey('FlashcardsGrid'),
+                  ),
+                  SetsGrid(
+                    key: ValueKey('SetsGrid'),
+                  )
+                ],
               ),
             ),
           ],
