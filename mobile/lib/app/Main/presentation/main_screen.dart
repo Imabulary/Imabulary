@@ -17,7 +17,8 @@ class MainScreen extends ConsumerStatefulWidget {
   ConsumerState<MainScreen> createState() => _MainTabNavigatorState();
 }
 
-class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTickerProviderStateMixin {
+class _MainTabNavigatorState extends ConsumerState<MainScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   InitialProfileIndex initialProfileIndex = 0;
 
@@ -37,7 +38,8 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTicker
   Widget build(BuildContext context) {
     final currentIndex = ref.watch(currentTabIndexProvider);
 
-    ref.listen<(int, InitialProfileIndex)>(currentTabIndexProvider, (previousIndex, newIndex) {
+    ref.listen<(int, InitialProfileIndex)>(currentTabIndexProvider,
+        (previousIndex, newIndex) {
       if (newIndex.$1 != _tabController.index) {
         setState(() {
           initialProfileIndex = newIndex.$2;
@@ -52,17 +54,21 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTicker
         controller: _tabController,
         children: [
           const HomeScreen(),
-          ProfileScreen(key: UniqueKey(), initialTabIndex: initialProfileIndex),
+          ProfileScreen(
+              key: const ValueKey('ProfileScreen'),
+              initialTabIndex: initialProfileIndex),
         ],
       ),
       bottomNavigationBar: BottomNavigation(
         currentScreen: CurrentScreen.values[currentIndex.$1],
         onNewScreenSelected: (newScreen) {
-          ref.read(currentTabIndexProvider.notifier).state = (newScreen.value, 0);
+          ref.read(currentTabIndexProvider.notifier).state =
+              (newScreen.value, 0);
         },
       ),
       floatingActionButton: FloatingButton(onPressed: _showAddBottomSheet),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
     );
   }
 

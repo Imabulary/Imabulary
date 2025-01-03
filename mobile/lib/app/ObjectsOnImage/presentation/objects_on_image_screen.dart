@@ -35,6 +35,7 @@ class ObjectsOnImageScreen extends ConsumerWidget {
         ref.invalidate(findAllFlashcardsProvider);
         ref.invalidate(getWalletBalanceProvider);
 
+        AutoRouter.of(context).popUntilRoot();
         AutoRouter.of(context).push(const FlashcardRoute());
       });
     });
@@ -71,10 +72,8 @@ class ObjectsOnImageScreen extends ConsumerWidget {
                 create: create,
               ),
               itemCount: objectsOnImage.length,
-              scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              separatorBuilder: (BuildContext context, int index) =>
-                  const SizedBox(height: 12),
+              separatorBuilder: (_, __) => const SizedBox(height: 12),
             ),
             const SizedBox(height: 12),
             NoDesiredObject(
