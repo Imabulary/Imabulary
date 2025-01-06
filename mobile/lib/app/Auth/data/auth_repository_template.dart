@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mobile/app/Profile/data/dto/profile_dto.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
 import 'package:mobile/utils/request.dart';
@@ -7,9 +9,12 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 /// Abstract base class for login templates
 abstract class LoginTemplate {
-  LoginTemplate({required this.firebase});
+  LoginTemplate({required this.firebase, required this.dio});
 
   final FirebaseAuth firebase;
+  final Dio dio;
+
+  String get endpoint => '${dotenv.env['API_URL']}/users';
 
   /// Main method to execute the login and map the user to ProfileDTO
   Future<ProfileDTO> run() {
@@ -18,7 +23,11 @@ abstract class LoginTemplate {
 
       throwIfUserIsNull(user);
 
-      return mapUser(user!);
+      final profile = mapUser(user!);
+
+      await dio.post(endpoint, data: profile.toJson());
+
+      return profile;
     });
   }
 
@@ -47,7 +56,7 @@ abstract class LoginTemplate {
 
 /// Implementation for Google login
 class LoginWithGoogleTemplate extends LoginTemplate {
-  LoginWithGoogleTemplate({required super.firebase});
+  LoginWithGoogleTemplate({required super.firebase, required super.dio});
 
   @override
   Future<User?> signIn() async {
@@ -59,7 +68,7 @@ class LoginWithGoogleTemplate extends LoginTemplate {
 
 /// Implementation for Apple login
 class LoginWithAppleTemplate extends LoginTemplate {
-  LoginWithAppleTemplate({required super.firebase});
+  LoginWithAppleTemplate({required super.firebase, required super.dio});
 
   @override
   Future<User?> signIn() async {
@@ -73,18 +82,6 @@ class LoginWithAppleTemplate extends LoginTemplate {
     );
 
     final token = await firebase.signInWithCredential(oauthCredential);
-
-    return token.user;
-  }
-}
-
-/// Implementation for Anonymous login
-class LoginAnonymouslyTemplate extends LoginTemplate {
-  LoginAnonymouslyTemplate({required super.firebase});
-
-  @override
-  Future<User?> signIn() async {
-    final token = await firebase.signInAnonymously();
 
     return token.user;
   }
