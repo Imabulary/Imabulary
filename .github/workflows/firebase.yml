@@ -63,7 +63,27 @@ jobs:
           echo "keyAlias=$KEY_ALIAS" >> android/key.properties
           echo "storeFile=$STORE_FILE" >> android/key.properties
 
-      - name: Populate env variables
+      # Build APK for QA
+      - name: Populate QA env variables
+        env:
+          QA_API_URL: ${{ secrets.QA_API_URL }}
+          PURCHASES_KEY: ${{ secrets.PURCHASES_KEY }}
+        run: |
+          echo "API_URL=$QA_API_URL" > assets/.env
+          echo "PURCHASES_KEY=$PURCHASES_KEY" >> assets/.env
+
+      - name: Build QA APK
+        run: flutter build apk
+
+      - name: Upload QA APK as artifact
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: QA_APK
+          path: ./mobile/build/app/outputs/flutter-apk/app-release.apk
+
+      # Build APK for general users
+      - name: Populate general env variables
         env:
           API_URL: ${{ secrets.API_URL }}
           PURCHASES_KEY: ${{ secrets.PURCHASES_KEY }}
@@ -71,17 +91,17 @@ jobs:
           echo "API_URL=$API_URL" > assets/.env
           echo "PURCHASES_KEY=$PURCHASES_KEY" >> assets/.env
 
-      - name: Build APK
+      - name: Build General APK
         run: flutter build apk
 
-      - name: Upload APK as artifact
+      - name: Upload General APK as artifact
         if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v4
         with:
           name: General_APK
           path: ./mobile/build/app/outputs/flutter-apk/app-release.apk
 
-      - name: Upload APK to Firebase
+      - name: Upload General APK to Firebase
         if: ${{ !env.ACT }}
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
