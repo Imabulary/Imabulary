@@ -20,6 +20,9 @@ class HomeScreen extends ConsumerWidget {
     final flashcards = ref.watch(findAllFlashcardsProvider(
       const FindAllFlashcardsDTO(pagination: Pagination(limit: 10)),
     ));
+    final sets = ref.watch(
+      findAllSetsProvider(const Pagination()),
+    );
 
     return SafeArea(
       child: Padding(
@@ -41,7 +44,10 @@ class HomeScreen extends ConsumerWidget {
                   const SizedBox(
                     height: 24,
                   ),
-                  const QuickActions(),
+                  QuickActions(
+                    sets: sets,
+                    flashcards: flashcards,
+                  ),
                   const SizedBox(
                     height: 24,
                   ),
