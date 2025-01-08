@@ -75,7 +75,6 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen>
   void _showAddBottomSheet() {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true,
       clipBehavior: Clip.hardEdge,
       builder: (context) => const AddBottomSheet(),
     );
