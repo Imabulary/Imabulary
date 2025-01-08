@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
-import 'package:mobile/app/Layout/widgets/floating_button.dart';
+import 'package:mobile/app/Layout/widgets/FloatingButton/floating_button.dart';
 
 import '../../test_utils/test_app.dart';
 

@@ -80,25 +80,28 @@ class Button extends StatelessWidget {
 
     switch (variat) {
       case ButtonVariant.elevated:
-        return ElevatedButton(
+        return ElevatedButton.icon(
+          icon: Icon(icon),
           onPressed: onPress,
           style: elevatedStyle.merge(customStyle),
-          child: expanded
+          label: expanded
               ? SizedBox(width: double.infinity, child: Center(child: child))
               : child,
         );
       case ButtonVariant.outlined:
-        return OutlinedButton(
+        return OutlinedButton.icon(
+          icon: Icon(icon),
           onPressed: onPress,
           style: customStyle?.merge(outlinedStyle),
-          child: expanded
+          label: expanded
               ? SizedBox(width: double.infinity, child: Center(child: child))
               : child,
         );
       case ButtonVariant.text:
-        return TextButton(
+        return TextButton.icon(
+          icon: Icon(icon),
           onPressed: onPress,
-          child: expanded
+          label: expanded
               ? SizedBox(width: double.infinity, child: Center(child: child))
               : child,
         );
