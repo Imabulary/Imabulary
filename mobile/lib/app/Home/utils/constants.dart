@@ -1,4 +1,3 @@
-const kQuickActionUnavailableErrorTitle =
-    'This action is unavaliable at the moment';
+const kQuickActionUnavailableErrorTitle = 'Action is unavaliable';
 const kQuickActionUnavailableErrorSubtitle =
-    "Try to reload the page and if the issue persists contact us.";
+    "Drag down to refresh the page and if the issue persists contact us.";

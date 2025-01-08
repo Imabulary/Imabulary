@@ -29,10 +29,8 @@ class _FlashCardsListState extends ConsumerState<FlashCardsList> {
     if (widget.flashCards.isEmpty) {
       return EmptyState(
         message:
-            'You will see here 10 of your latest flashcards. Go ahead and create the first one!',
-        actionLabel: 'Create Flashcard',
-        onActionPressed:
-            FloatingButtonController.showCreateFlashcardBottomModal(context),
+            "You'll see your 10 latest flashcards here. Click on '+' to create the first one!",
+        icon: 'NoFlashcards/no_flashcards.svg.vec',
       );
     }
 

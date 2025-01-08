@@ -53,7 +53,7 @@ class WelcomeScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SvgPicture(
-                  AssetBytesLoader('assets/images/welcome.svg.vec'),
+                  AssetBytesLoader('assets/images/Welcome/welcome.svg.vec'),
                   width: 200,
                 ),
                 const SizedBox(
