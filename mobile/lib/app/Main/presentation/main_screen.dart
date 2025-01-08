@@ -2,11 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Home/presentation/home.dart';
-import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet.dart';
 import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
 import 'package:mobile/app/Profile/presentation/profile_screen.dart';
 
-import '../../Layout/widgets/floating_button.dart';
+import '../../Layout/widgets/FloatingButton/floating_button.dart';
 import '../application/main_provider.dart';
 
 @RoutePage()
@@ -66,18 +65,9 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen>
               (newScreen.value, 0);
         },
       ),
-      floatingActionButton: FloatingButton(onPressed: _showAddBottomSheet),
+      floatingActionButton: FloatingButton(),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
-    );
-  }
-
-  void _showAddBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      clipBehavior: Clip.hardEdge,
-      builder: (context) => const AddBottomSheet(),
     );
   }
 }

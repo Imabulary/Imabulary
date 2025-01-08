@@ -56,19 +56,18 @@ class HomeScreen extends ConsumerWidget {
                     data: (flashcards) => Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        if (flashcards.result.isNotEmpty)
-                          const Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              TypeSetting(
-                                'Your latest scans',
-                                variant: TextVariants.headlineMedium,
-                              ),
-                              SizedBox(
-                                height: 12,
-                              ),
-                            ],
-                          ),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            TypeSetting(
+                              'Your latest scans',
+                              variant: TextVariants.headlineMedium,
+                            ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                          ],
+                        ),
                         FlashCardsList(
                           flashCards: flashcards.result,
                         ),
