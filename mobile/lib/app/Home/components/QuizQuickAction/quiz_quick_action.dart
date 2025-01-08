@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Home/components/QuizQuickAction/quiz_quick_action_controller.dart';
 import 'package:mobile/app/Home/components/QuizQuickAction/quiz_quick_action_list_item.dart';
+import 'package:mobile/app/Home/utils/constants.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
@@ -49,7 +50,8 @@ class QuizQuickAction extends ConsumerWidget {
               );
       },
       error: (error, stackTrace) => const QuizQuickActionListItem(
-        'Quick action temporary unavailable. Please try again later.',
+        kQuickActionUnavailableErrorTitle,
+        sublabel: kQuickActionUnavailableErrorSubtitle,
       ),
       loading: () => const QuizQuickActionListItem(
         'Loading...',
