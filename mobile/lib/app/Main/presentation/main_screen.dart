@@ -2,11 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Home/presentation/home.dart';
-import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet.dart';
 import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
 import 'package:mobile/app/Profile/presentation/profile_screen.dart';
 
-import '../../Layout/widgets/floating_button.dart';
+import '../../Layout/widgets/FloatingButton/floating_button.dart';
 import '../application/main_provider.dart';
 
 @RoutePage()
@@ -17,7 +16,8 @@ class MainScreen extends ConsumerStatefulWidget {
   ConsumerState<MainScreen> createState() => _MainTabNavigatorState();
 }
 
-class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTickerProviderStateMixin {
+class _MainTabNavigatorState extends ConsumerState<MainScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   InitialProfileIndex initialProfileIndex = 0;
 
@@ -37,7 +37,8 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTicker
   Widget build(BuildContext context) {
     final currentIndex = ref.watch(currentTabIndexProvider);
 
-    ref.listen<(int, InitialProfileIndex)>(currentTabIndexProvider, (previousIndex, newIndex) {
+    ref.listen<(int, InitialProfileIndex)>(currentTabIndexProvider,
+        (previousIndex, newIndex) {
       if (newIndex.$1 != _tabController.index) {
         setState(() {
           initialProfileIndex = newIndex.$2;
@@ -52,26 +53,21 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen> with SingleTicker
         controller: _tabController,
         children: [
           const HomeScreen(),
-          ProfileScreen(key: UniqueKey(), initialTabIndex: initialProfileIndex),
+          ProfileScreen(
+              key: const ValueKey('ProfileScreen'),
+              initialTabIndex: initialProfileIndex),
         ],
       ),
       bottomNavigationBar: BottomNavigation(
         currentScreen: CurrentScreen.values[currentIndex.$1],
         onNewScreenSelected: (newScreen) {
-          ref.read(currentTabIndexProvider.notifier).state = (newScreen.value, 0);
+          ref.read(currentTabIndexProvider.notifier).state =
+              (newScreen.value, 0);
         },
       ),
-      floatingActionButton: FloatingButton(onPressed: _showAddBottomSheet),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
-    );
-  }
-
-  void _showAddBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      clipBehavior: Clip.hardEdge,
-      builder: (context) => const AddBottomSheet(),
+      floatingActionButton: FloatingButton(),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
     );
   }
 }
