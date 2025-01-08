@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Subscription/application/subscription_provider.dart';
+import 'package:mobile/app/Subscription/widgets/subscription_limit_dialog.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/components/app_top_bar.dart';
 import 'package:mobile/components/error_state.dart';
@@ -34,6 +35,12 @@ class SubscriptionScreen extends ConsumerWidget {
                     label: subscription.left!.name,
                     sublabel: '${subscription.left!.price} / month',
                     tileColor: AppColors.grey,
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => SubscriptionLimitDialog(),
+                      );
+                    },
                   );
                 }
 
