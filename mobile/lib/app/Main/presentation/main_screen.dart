@@ -65,17 +65,9 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen>
               (newScreen.value, 0);
         },
       ),
-      floatingActionButton: FloatingButton(),
+      floatingActionButton: const FloatingButton(),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
-    );
-  }
-
-  void _showAddBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      clipBehavior: Clip.hardEdge,
-      builder: (context) => const AddBottomSheet(),
     );
   }
 }
