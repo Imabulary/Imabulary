@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Auth/data/auth_repository.dart';
 import 'package:mobile/app/Profile/widgets/ProfileManageAccount/profile_manage_account.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/components/bottom_sheet_wrapper.dart';
 
 class SettingsList extends ConsumerWidget {
   const SettingsList({super.key});
@@ -11,8 +12,9 @@ class SettingsList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final signOut = ref.read(authRepositoryProvider).signOut;
 
-    return ListView(
-      shrinkWrap: true,
+    // It's more prefferable to use InkWell and Ink instead of ListView and ListTile
+    return BottomSheetWrapper(
+      padding: const EdgeInsets.all(8),
       children: [
         const ProfileManageAccount(),
         ListTile(
