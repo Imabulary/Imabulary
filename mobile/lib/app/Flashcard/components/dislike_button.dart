@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/widgets/SecondNegativeFeedbackDialog/second_negative_feedback_dialog.dart';
 import 'package:mobile/app_router.dart';
-import 'package:mobile/components/button.dart';
+import 'package:mobile/components/button/button.dart';
 
 class DislikeButton extends ConsumerWidget {
   const DislikeButton({super.key});
@@ -35,7 +35,7 @@ class DislikeButton extends ConsumerWidget {
         flashcard!.is_regenerated,
       ),
       icon: Icons.thumb_down_outlined,
-      variat: ButtonVariant.icon,
+      variant: ButtonVariant.icon,
     );
   }
 }

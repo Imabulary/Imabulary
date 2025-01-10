@@ -8,7 +8,7 @@ import 'package:mobile/app/Set/utils/map_status.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
 import 'package:mobile/app/Set/widgets/flashcards_group_widget.dart';
-import 'package:mobile/components/button.dart';
+import 'package:mobile/components/button/button.dart';
 
 @RoutePage()
 class SetScreen extends ConsumerWidget {

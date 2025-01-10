@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/components/button.dart';
+import 'package:mobile/components/button/button.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
 class EmptyState extends StatelessWidget {

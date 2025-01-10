@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Auth/domain/auth.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen_controller.dart';
-import 'package:mobile/components/button.dart';
+import 'package:mobile/components/button/button.dart';
 
 class GoogleLoginButton extends ConsumerWidget {
   const GoogleLoginButton({super.key});

@@ -9,7 +9,7 @@ import 'package:mobile/app/Set/application/set_provider.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/components/button.dart';
+import 'package:mobile/components/button/button.dart';
 import 'package:mobile/utils/fp.dart';
 
 @RoutePage()

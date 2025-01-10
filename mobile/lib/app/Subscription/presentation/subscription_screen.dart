@@ -38,6 +38,9 @@ class SubscriptionScreen extends ConsumerWidget {
                     onTap: () {
                       showModalBottomSheet(
                         context: context,
+                        isScrollControlled: true,
+                        clipBehavior: Clip.hardEdge,
+                        useSafeArea: true,
                         builder: (context) => SubscriptionLimitDialog(),
                       );
                     },

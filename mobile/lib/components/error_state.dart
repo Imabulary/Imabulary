@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/components/button.dart';
+import 'package:mobile/components/button/button.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
 
 class ErrorState extends StatelessWidget {

@@ -11,8 +11,9 @@ enum TextVariants {
   bodyLarge,
   labelLarge,
   bodySmall,
-  link
 }
+
+enum TextType { link, text }
 
 class TypeSetting extends Text {
   const TypeSetting(
@@ -21,11 +22,13 @@ class TypeSetting extends Text {
     super.style,
     super.textAlign,
     this.variant = TextVariants.bodyLarge,
+    this.type = TextType.text,
     this.onTap,
   }) : super(text);
 
   final String text;
   final TextVariants variant;
+  final TextType type;
   final void Function()? onTap;
 
   @override
@@ -40,13 +43,13 @@ class TypeSetting extends Text {
       TextVariants.bodySmall: Theme.of(context).textTheme.bodySmall,
     };
 
-    return variant == TextVariants.link
+    return type == TextType.link
         ? RichText(
             textAlign: textAlign ?? TextAlign.left,
             text: TextSpan(children: [
               TextSpan(
                 text: text,
-                style: variants[TextVariants.bodyLarge]!.copyWith(
+                style: variants[variant]!.copyWith(
                   color: AppColors.primary,
                   decoration: TextDecoration.underline,
                   decorationColor: AppColors.primary,
