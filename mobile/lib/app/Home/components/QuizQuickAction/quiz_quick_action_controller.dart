@@ -6,7 +6,6 @@ class QuizQuickActionController {
   static void showAvailableSets(BuildContext buildContext, List<Set> sets) {
     showModalBottomSheet(
       context: buildContext,
-      isScrollControlled: true,
       builder: (context) => SetsQuizzesList(
         sets: sets,
       ),

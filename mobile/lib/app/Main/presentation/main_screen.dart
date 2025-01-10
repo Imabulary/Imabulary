@@ -65,7 +65,7 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen>
               (newScreen.value, 0);
         },
       ),
-      floatingActionButton: FloatingButton(),
+      floatingActionButton: const FloatingButton(),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
     );

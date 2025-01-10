@@ -11,7 +11,6 @@ const kMinimalAmountOfFlashcardsToStartQuiz = 2;
 class SetAppBarController {
   static void Function() showActionsBottomSheet(BuildContext context) => () {
         showModalBottomSheet(
-          isScrollControlled: true,
           clipBehavior: Clip.hardEdge,
           context: context,
           builder: (context) => const ActionsList(),
@@ -19,10 +18,8 @@ class SetAppBarController {
       };
 
   static Future<void> startQuiz(
-    BuildContext context,
-    List<SetFlashcard>? flashcards,
-    {List<FlashCard>? flashcardsForQuiz}
-  ) {
+      BuildContext context, List<SetFlashcard>? flashcards,
+      {List<FlashCard>? flashcardsForQuiz}) {
     {
       if (flashcards == null ||
           flashcards.length < kMinimalAmountOfFlashcardsToStartQuiz) {
@@ -32,7 +29,8 @@ class SetAppBarController {
         );
       }
 
-      return AutoRouter.of(context).push(QuizRoute(flashcards: flashcardsForQuiz));
+      return AutoRouter.of(context)
+          .push(QuizRoute(flashcards: flashcardsForQuiz));
     }
   }
 }
