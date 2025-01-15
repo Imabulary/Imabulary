@@ -22,6 +22,8 @@ class _FlashcardsGridState extends ConsumerState<FlashcardsGrid> {
 
   @override
   void initState() {
+    super.initState();
+
     Future(() {
       ref
           .read(flashcardPagingControllerProvider.notifier)
@@ -30,12 +32,9 @@ class _FlashcardsGridState extends ConsumerState<FlashcardsGrid> {
 
     final findUserFlashcards =
         ref.read(profileScreenControllerProvider.notifier).findUserFlashcards;
-
     _pagingController.addPageRequestListener((pageKey) {
       findUserFlashcards(pageKey, _pagingController, setId: widget.setId);
     });
-
-    super.initState();
   }
 
   @override
