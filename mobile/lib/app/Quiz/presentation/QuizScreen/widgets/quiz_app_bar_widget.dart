@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/app/Quiz/presentation/QuizScreen/widgets/quiz_progress_bar_widget.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/components/button.dart';
+import 'package:mobile/components/button/button.dart';
 
 class QuizAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const QuizAppBarWidget({
@@ -26,7 +26,7 @@ class QuizAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           child: Row(
             children: [
               Button(
-                variat: ButtonVariant.icon,
+                variant: ButtonVariant.icon,
                 onPressed: onBackPressed,
                 icon: Icons.arrow_back,
               ),
@@ -48,7 +48,7 @@ class QuizAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-  
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

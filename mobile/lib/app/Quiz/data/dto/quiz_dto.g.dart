@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'update_quiz_answer_DTO.dart';
+part of 'quiz_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

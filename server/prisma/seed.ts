@@ -39,6 +39,34 @@ async function main() {
 
   const statuses = ['still_learning', 'not_studied', 'mastered'];
 
+  const products = [
+    {
+      name: 'Imabulary Free',
+      description: 'Best for the beginners',
+      internalId: 'imabulary_free',
+      benefits: {
+        coins: 5,
+        sets: 3,
+        flashcardsInSet: 20,
+        ads: true,
+        coinsFrequency: 'daily',
+      },
+    },
+    {
+      name: 'Imabulary NEXT',
+      description: 'Best for the quick progress',
+      internalId: 'imabulary_next_monthly',
+      externalId: 'imabulary_next_monthly',
+      benefits: {
+        coins: 500,
+        sets: 50,
+        flashcardsInSet: null,
+        ads: false,
+        coinsFrequency: 'monthly',
+      },
+    },
+  ];
+
   await Promise.all(
     feedbackCategories.map((category) => {
       const categoryWithSlug = {
@@ -62,6 +90,16 @@ async function main() {
         update: { name: status },
       });
     }),
+  );
+
+  await Promise.all(
+    products.map((product) =>
+      prisma.products.upsert({
+        where: { internalId: product.internalId },
+        create: product,
+        update: product,
+      }),
+    ),
   );
 }
 

@@ -5,7 +5,7 @@ import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
-import 'package:mobile/app/Quiz/data/dto/update_quiz_answer_DTO.dart';
+import 'package:mobile/app/Quiz/data/dto/quiz_dto.dart';
 import 'package:mobile/app/Quiz/data/quiz_repository.dart';
 import 'package:mobile/app/Quiz/domain/result.dart';
 import 'package:mobile/app/Quiz/presentation/QuizScreen/quiz_screen_controller.dart';

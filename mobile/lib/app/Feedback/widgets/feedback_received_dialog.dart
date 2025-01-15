@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Feedback/widgets/feedback_received_dialog_controller.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/components/button.dart';
+import 'package:mobile/components/button/button.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 
 class FeedbackReceivedDialog extends ConsumerStatefulWidget {
@@ -56,13 +56,13 @@ class _FeedbackReceivedDialogState
         Button(
           label: 'Return Home',
           onPressed: _navigateHome,
-          variat: ButtonVariant.text,
+          variant: ButtonVariant.text,
           disabled: isLoading,
         ),
         Button(
           label: regenerateButtonText,
           onPressed: onRegenerate,
-          variat: ButtonVariant.outlined,
+          variant: ButtonVariant.outlined,
           disabled: isLoading,
         ),
       ],

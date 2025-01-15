@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'update_quiz_answer_dto.freezed.dart';
-part 'update_quiz_answer_dto.g.dart';
+part 'quiz_dto.freezed.dart';
+part 'quiz_dto.g.dart';
 
 @freezed
 class UpdateQuizAnswerDTO with _$UpdateQuizAnswerDTO {
@@ -10,5 +10,6 @@ class UpdateQuizAnswerDTO with _$UpdateQuizAnswerDTO {
     required String word,
   }) = _UpdateQuizAnswerDTO;
 
-  factory UpdateQuizAnswerDTO.fromJson(Map<String, dynamic> json) => _$UpdateQuizAnswerDTOFromJson(json);
+  factory UpdateQuizAnswerDTO.fromJson(Map<String, dynamic> json) =>
+      _$UpdateQuizAnswerDTOFromJson(json);
 }

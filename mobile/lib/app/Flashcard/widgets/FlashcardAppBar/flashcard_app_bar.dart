@@ -4,7 +4,7 @@ import 'package:mobile/app/Flashcard/components/dislike_button.dart';
 import 'package:mobile/app/Flashcard/widgets/FlashcardAppBar/flashcard_app_bar_controller.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/components/button.dart';
+import 'package:mobile/components/button/button.dart';
 
 class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
   const FlashcardAppBar({super.key});
@@ -13,7 +13,7 @@ class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: Button(
-        variat: ButtonVariant.icon,
+        variant: ButtonVariant.icon,
         onPressed: () => AutoRouter.of(context).popUntilRoot(),
         icon: Icons.arrow_back,
       ),

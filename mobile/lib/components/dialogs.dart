@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/components/button.dart';
+import 'package:mobile/components/button/button.dart';
 
 class AppDialog extends StatelessWidget {
   const AppDialog({
@@ -37,7 +37,7 @@ class AppDialog extends StatelessWidget {
           Button(
             onPressed: () => Navigator.pop(context),
             label: cancelText ?? 'Close',
-            variat: ButtonVariant.text,
+            variant: ButtonVariant.text,
           ),
           if (!noSubmit)
             Button(

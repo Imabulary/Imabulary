@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Flashcard/widgets/SecondNegativeFeedbackDialog/second_negative_feedback_dialog_controller.dart';
-import 'package:mobile/components/button.dart';
+import 'package:mobile/components/button/button.dart';
 import 'package:mobile/components/dialogs.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 
@@ -43,13 +43,13 @@ class SecondNegativeFeedbackDialog extends ConsumerWidget {
       actions: [
         Button(
           onPressed: onDelete,
-          variat: ButtonVariant.text,
+          variant: ButtonVariant.text,
           label: isLoading ? 'Deleting...' : 'Delete',
           disabled: isLoading,
         ),
         Button(
           onPressed: () => Navigator.pop(context),
-          variat: ButtonVariant.outlined,
+          variant: ButtonVariant.outlined,
           label: 'Keep',
           disabled: isLoading,
         )

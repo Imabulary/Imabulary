@@ -13,7 +13,7 @@ import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/components/button.dart';
+import 'package:mobile/components/button/button.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 import 'package:mobile/widgets/input.dart';
 
@@ -146,7 +146,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
                 Button(
                   label: 'Cancel',
                   onPressed: _onCancel,
-                  variat: ButtonVariant.text,
+                  variant: ButtonVariant.text,
                   disabled: isLoading,
                 ),
                 const SizedBox(

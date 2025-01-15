@@ -89,6 +89,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const SetScreen(),
       );
     },
+    SubscriptionRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SubscriptionScreen(),
+      );
+    },
     WalletRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -341,6 +347,20 @@ class SetRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SetRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SubscriptionScreen]
+class SubscriptionRoute extends PageRouteInfo<void> {
+  const SubscriptionRoute({List<PageRouteInfo>? children})
+      : super(
+          SubscriptionRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SubscriptionRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

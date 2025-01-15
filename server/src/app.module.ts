@@ -15,6 +15,7 @@ import { UsersModule } from './users/users.module';
 import { VisionModule } from './vision/vision.module';
 import { WalletModule } from './wallet/wallet.module';
 import { LoggerModule } from './utils/logger/';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { LoggerModule } from './utils/logger/';
     FeedbackModule,
     QuizModule,
     LoggerModule,
+    ProductsModule,
   ],
   providers: [NlpService],
 })

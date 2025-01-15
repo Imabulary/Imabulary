@@ -1,5 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile/atoms/colors.dart';
 
 enum TextVariants {
   titleLarge,
@@ -8,8 +10,10 @@ enum TextVariants {
   headlineSmall,
   bodyLarge,
   labelLarge,
-  bodySmall
+  bodySmall,
 }
+
+enum TextType { link, text }
 
 class TypeSetting extends Text {
   const TypeSetting(
@@ -18,10 +22,14 @@ class TypeSetting extends Text {
     super.style,
     super.textAlign,
     this.variant = TextVariants.bodyLarge,
+    this.type = TextType.text,
+    this.onTap,
   }) : super(text);
 
   final String text;
   final TextVariants variant;
+  final TextType type;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +43,31 @@ class TypeSetting extends Text {
       TextVariants.bodySmall: Theme.of(context).textTheme.bodySmall,
     };
 
-    return Text(
-      text,
-      textAlign: textAlign ?? TextAlign.left,
-      style: variants[variant]!.copyWith(
-        color: style?.color ?? Colors.white,
-        fontWeight: style?.fontWeight,
-        fontStyle: style?.fontStyle,
-        fontFamily: GoogleFonts.sourceSans3().fontFamily,
-      ),
-    );
+    return type == TextType.link
+        ? RichText(
+            textAlign: textAlign ?? TextAlign.left,
+            text: TextSpan(children: [
+              TextSpan(
+                text: text,
+                style: variants[variant]!.copyWith(
+                  color: AppColors.primary,
+                  decoration: TextDecoration.underline,
+                  decorationColor: AppColors.primary,
+                  fontFamily: GoogleFonts.sourceSans3().fontFamily,
+                ),
+                recognizer: TapGestureRecognizer()..onTap = onTap,
+              )
+            ]),
+          )
+        : Text(
+            text,
+            textAlign: textAlign ?? TextAlign.left,
+            style: variants[variant]!.copyWith(
+              color: style?.color ?? Colors.white,
+              fontWeight: style?.fontWeight,
+              fontStyle: style?.fontStyle,
+              fontFamily: GoogleFonts.sourceSans3().fontFamily,
+            ),
+          );
   }
 }
