@@ -54,8 +54,8 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen>
         children: [
           const HomeScreen(),
           ProfileScreen(
-              key: const ValueKey('ProfileScreen'),
-              initialTabIndex: initialProfileIndex),
+            initialTabIndex: initialProfileIndex,
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigation(

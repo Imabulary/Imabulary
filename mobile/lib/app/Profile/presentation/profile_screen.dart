@@ -21,14 +21,23 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
 
   @override
   void initState() {
+    super.initState();
+
     _tabController = TabController(
       length: 2,
       animationDuration: const Duration(milliseconds: 300),
       vsync: this,
       initialIndex: widget.initialTabIndex,
     );
+  }
 
-    super.initState();
+  @override
+  void didUpdateWidget(covariant ProfileScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.initialTabIndex != _tabController.index) {
+      _tabController.animateTo(widget.initialTabIndex);
+    }
   }
 
   @override
