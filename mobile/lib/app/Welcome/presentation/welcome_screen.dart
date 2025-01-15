@@ -28,11 +28,16 @@ class WelcomeScreen extends ConsumerWidget {
   }
 
   void openTerms(BuildContext context) {
+    String termsAndConditionsUrl =
+        'https://cdn.prod.website-files.com/663dec74d369b9ac82ea80bc/66ddd7c1c5e6c9bbd189dae9_Terms%20of%20use.pdf';
+    if (Platform.isAndroid) {
+      termsAndConditionsUrl =
+          'https://docs.google.com/gview?embedded=true&url=$termsAndConditionsUrl';
+    }
     AutoRouter.of(context).push(
       WebViewRoute(
         title: 'Terms and conditions',
-        url:
-            'https://cdn.prod.website-files.com/663dec74d369b9ac82ea80bc/66ddd7c1c5e6c9bbd189dae9_Terms%20of%20use.pdf',
+        url: termsAndConditionsUrl,
       ),
     );
   }
