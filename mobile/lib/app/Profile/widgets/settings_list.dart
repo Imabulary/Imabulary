@@ -12,7 +12,7 @@ class SettingsList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final signOut = ref.read(authRepositoryProvider).signOut;
 
-    // It's more prefferable to use InkWell and Ink instead of ListView and ListTile
+    // TODO: It's more prefferable to use InkWell and Ink instead of ListView and ListTile
     return BottomSheetWrapper(
       padding: const EdgeInsets.all(8),
       children: [
