@@ -7,15 +7,18 @@ class FlashcardQuickActionListItem extends StatelessWidget {
     this.label, {
     super.key,
     this.onTap,
+    this.sublabel,
   });
 
   final String label;
+  final String? sublabel;
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return ListItem(
       label: label,
+      sublabel: sublabel,
       onTap: onTap,
       tileColor: AppColors.darkYellow,
       textColor: Colors.black,

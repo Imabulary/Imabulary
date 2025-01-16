@@ -20,6 +20,9 @@ class HomeScreen extends ConsumerWidget {
     final flashcards = ref.watch(findAllFlashcardsProvider(
       const FindAllFlashcardsDTO(pagination: Pagination(limit: 10)),
     ));
+    final sets = ref.watch(
+      findAllSetsProvider(const Pagination()),
+    );
 
     return SafeArea(
       child: Padding(
@@ -41,7 +44,10 @@ class HomeScreen extends ConsumerWidget {
                   const SizedBox(
                     height: 24,
                   ),
-                  const QuickActions(),
+                  QuickActions(
+                    sets: sets,
+                    flashcards: flashcards,
+                  ),
                   const SizedBox(
                     height: 24,
                   ),
@@ -50,19 +56,18 @@ class HomeScreen extends ConsumerWidget {
                     data: (flashcards) => Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        if (flashcards.result.isNotEmpty)
-                          const Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              TypeSetting(
-                                'Your latest scans',
-                                variant: TextVariants.headlineMedium,
-                              ),
-                              SizedBox(
-                                height: 12,
-                              ),
-                            ],
-                          ),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            TypeSetting(
+                              'Your latest scans',
+                              variant: TextVariants.headlineMedium,
+                            ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                          ],
+                        ),
                         FlashCardsList(
                           flashCards: flashcards.result,
                         ),

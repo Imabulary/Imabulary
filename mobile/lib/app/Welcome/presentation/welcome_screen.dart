@@ -4,14 +4,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mobile/app/Welcome/components/anonymus_login_button.dart';
 import 'package:mobile/app/Welcome/components/apple_login_button.dart';
 import 'package:mobile/app/Welcome/components/google_login_button.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen_controller.dart';
 import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/button.dart';
-import 'package:mobile/components/divider.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
@@ -30,11 +28,16 @@ class WelcomeScreen extends ConsumerWidget {
   }
 
   void openTerms(BuildContext context) {
+    String termsAndConditionsUrl =
+        'https://cdn.prod.website-files.com/663dec74d369b9ac82ea80bc/66ddd7c1c5e6c9bbd189dae9_Terms%20of%20use.pdf';
+    if (Platform.isAndroid) {
+      termsAndConditionsUrl =
+          'https://docs.google.com/gview?embedded=true&url=$termsAndConditionsUrl';
+    }
     AutoRouter.of(context).push(
       WebViewRoute(
         title: 'Terms and conditions',
-        url:
-            'https://cdn.prod.website-files.com/663dec74d369b9ac82ea80bc/66ddd7c1c5e6c9bbd189dae9_Terms%20of%20use.pdf',
+        url: termsAndConditionsUrl,
       ),
     );
   }
@@ -55,7 +58,7 @@ class WelcomeScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SvgPicture(
-                  AssetBytesLoader('assets/images/welcome.svg.vec'),
+                  AssetBytesLoader('assets/images/Welcome/welcome.svg.vec'),
                   width: 200,
                 ),
                 const SizedBox(
@@ -78,11 +81,8 @@ class WelcomeScreen extends ConsumerWidget {
                 const Spacer(),
                 if (Platform.isAndroid) const GoogleLoginButton(),
                 if (Platform.isIOS) const AppleLoginButton(),
-                const AppDivider('OR'),
-                const AnonymusLoginButton(),
                 const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
                   children: [
                     Button(
                       onPressed: () => openPrivacyPolicy(context),

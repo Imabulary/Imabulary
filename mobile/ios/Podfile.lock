@@ -1,6 +1,8 @@
 PODS:
   - audio_session (0.0.1):
     - Flutter
+  - Firebase (10.25.0):
+    - Firebase/Core (= 10.25.0)
   - Firebase/Analytics (10.25.0):
     - Firebase/Core
   - Firebase/Auth (10.25.0):
@@ -124,20 +126,20 @@ PODS:
     - Flutter
     - FlutterMacOS
   - PromisesObjC (2.4.0)
-  - Qonversion (5.11.1):
-    - Qonversion/Main (= 5.11.1)
-  - Qonversion/Main (5.11.1)
+  - Qonversion (5.13.0):
+    - Qonversion/Main (= 5.13.0)
+  - Qonversion/Main (5.13.0)
   - qonversion_flutter (5.0.0):
     - Flutter
-    - QonversionSandwich (= 5.0.4)
-  - QonversionSandwich (5.0.4):
-    - Qonversion (= 5.11.1)
+    - QonversionSandwich (= 5.2.0)
+  - QonversionSandwich (5.2.0):
+    - Qonversion (= 5.13.0)
   - RecaptchaInterop (100.0.0)
-  - Sentry/HybridSDK (8.40.1)
-  - sentry_flutter (8.10.1):
+  - Sentry/HybridSDK (8.42.0)
+  - sentry_flutter (8.12.0):
     - Flutter
     - FlutterMacOS
-    - Sentry/HybridSDK (= 8.40.1)
+    - Sentry/HybridSDK (= 8.42.0)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -149,9 +151,11 @@ PODS:
 
 DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
+  - Firebase
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - FirebaseAuth
   - Flutter (from `Flutter`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
@@ -234,16 +238,16 @@ SPEC CHECKSUMS:
   package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  Qonversion: c0d425337e28e5238f3b3698545b14e373368557
-  qonversion_flutter: a5c3a74a74954e42c2047a388d707c80ec281f31
-  QonversionSandwich: 9ec5eddae0d4de7ecfeeefa6669d0d9ba991c643
+  Qonversion: 37addeba74c5b328de9e1173b580c971b6d764ec
+  qonversion_flutter: 85b910b2d763c5c0b9b3f49cae730d1f224acbc7
+  QonversionSandwich: 3ffa118b7214ebd2dcd3f3a1a0a33a39f9c48c8e
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  Sentry: e9215d7b17f7902692b4f8700e061e4f853e3521
-  sentry_flutter: 927eed60d66951d1b0f1db37fe94ff5cb7c80231
+  Sentry: 38ed8bf38eab5812787274bf591e528074c19e02
+  sentry_flutter: 7d1f1df30f3768c411603ed449519bbb90a7d87b
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
   webview_flutter_wkwebview: 0982481e3d9c78fd5c6f62a002fcd24fc791f1e4
 
-PODFILE CHECKSUM: 4c438addb11b6da45ed7ae408823d68256222460
+PODFILE CHECKSUM: dd893b84ffda8a79735f4ac4f5918a1bf3210961
 
 COCOAPODS: 1.16.2
