@@ -104,7 +104,9 @@ flutter:
 
   assets:
     - assets/.env
-    - assets/images/welcome.svg.vec
+    - assets/images/Welcome/welcome.svg.vec
+    - assets/images/NoFlashcards/no_flashcards.svg.vec
+    - assets/images/NoSets/no_sets.svg.vec
     - assets/images/account.png
     - assets/images/logo.png
 

@@ -5,7 +5,7 @@ import 'package:mobile/app/Wallet/domain/award/award.dart';
 part 'auth.freezed.dart';
 part 'auth.g.dart';
 
-enum AppAuthProvider { google, apple, anonymus }
+enum AppAuthProvider { google, apple }
 
 @freezed
 class CreateUserResponse with _$CreateUserResponse {

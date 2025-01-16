@@ -29,8 +29,10 @@ class AddBottomSheet extends ConsumerWidget {
         ? null
         : ref.read(addBottomSheetControllerProvider.notifier).scanPhoto;
 
+    // TODO: It's prefferable to use Column, in this case
     return ListView(
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       children: [
         BottomSheetItem(
           source: ImageSource.camera,
