@@ -54,6 +54,22 @@
           }
         },
         {
+          "client_id": "222626452683-froo8t2urhnuqvc5j3uroqteoros5rvr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.byterhyme.imabulary",
+            "certificate_hash": "0e4b81433a87c933f37a152ae87aafdee3432eaf"
+          }
+        },
+        {
+          "client_id": "222626452683-ucjn8bhn98pvjsvmiipb83r50ufu6m23.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.byterhyme.imabulary",
+            "certificate_hash": "52808bff43b2d72075b9dbe6aac6f45e3d157f81"
+          }
+        },
+        {
           "client_id": "222626452683-0kvtf5sga86suf5q3rf1knks62ebegh4.apps.googleusercontent.com",
           "client_type": 3
         }
