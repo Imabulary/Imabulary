@@ -14,6 +14,7 @@ _$SubscriptionImpl _$$SubscriptionImplFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String,
       price: json['price'] as String,
       benefits: Benefits.fromJson(json['benefits'] as Map<String, dynamic>),
+      icon: json['icon'] as String,
     );
 
 Map<String, dynamic> _$$SubscriptionImplToJson(_$SubscriptionImpl instance) =>
@@ -24,4 +25,5 @@ Map<String, dynamic> _$$SubscriptionImplToJson(_$SubscriptionImpl instance) =>
       'description': instance.description,
       'price': instance.price,
       'benefits': instance.benefits,
+      'icon': instance.icon,
     };

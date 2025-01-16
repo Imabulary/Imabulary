@@ -1,8 +1,10 @@
 import 'package:mobile/app/Subscription/data/products/products_repository.dart';
 import 'package:mobile/app/Subscription/data/qonversion/qonversion_repository.dart';
 import 'package:mobile/app/Subscription/domain/subscription/subscription.dart';
+import 'package:mobile/app/Subscription/utils/constants.dart';
 import 'package:mobile/app/Subscription/utils/subscription_utils.dart';
 import 'package:mobile/utils/either.dart';
+import 'package:mobile/utils/maybe.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 final findAllSubscriptions = FutureProvider.autoDispose((ref) async {
@@ -28,4 +30,18 @@ final findAllSubscriptions = FutureProvider.autoDispose((ref) async {
       return Either<Subscription, Null>.fromRight(null);
     }
   }).toList();
+});
+
+final findImabularyNextSubscription = FutureProvider.autoDispose((ref) async {
+  final subscriptions = await ref.watch(findAllSubscriptions);
+
+  return Maybe.fromValue(subscriptions.value)
+      .map(
+        (subscriptions) => subscriptions!.firstWhere((subscription) {
+          return subscription.isLeft &&
+              subscription.left!.storeId != null &&
+              subscription.left!.storeId == kNextSubscriptionId;
+        }),
+      )
+      .getOrElse(Either<Subscription, Null>.fromRight(null));
 });

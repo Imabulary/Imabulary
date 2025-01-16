@@ -12,10 +12,10 @@ class Subscription with _$Subscription {
     required String id,
     String? storeId,
     required String name,
-    // required SubscriptionType type,
     required String description,
     required String price,
     required Benefits benefits,
+    required String icon,
   }) = _Subscription;
 
   factory Subscription.fromJson(Map<String, dynamic> json) =>

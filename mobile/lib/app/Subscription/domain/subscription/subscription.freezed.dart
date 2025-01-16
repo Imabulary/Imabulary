@@ -27,6 +27,7 @@ mixin _$Subscription {
   String get description => throw _privateConstructorUsedError;
   String get price => throw _privateConstructorUsedError;
   Benefits get benefits => throw _privateConstructorUsedError;
+  String get icon => throw _privateConstructorUsedError;
 
   /// Serializes this Subscription to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,7 +51,8 @@ abstract class $SubscriptionCopyWith<$Res> {
       String name,
       String description,
       String price,
-      Benefits benefits});
+      Benefits benefits,
+      String icon});
 
   $BenefitsCopyWith<$Res> get benefits;
 }
@@ -76,6 +78,7 @@ class _$SubscriptionCopyWithImpl<$Res, $Val extends Subscription>
     Object? description = null,
     Object? price = null,
     Object? benefits = null,
+    Object? icon = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -102,6 +105,10 @@ class _$SubscriptionCopyWithImpl<$Res, $Val extends Subscription>
           ? _value.benefits
           : benefits // ignore: cast_nullable_to_non_nullable
               as Benefits,
+      icon: null == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 
@@ -130,7 +137,8 @@ abstract class _$$SubscriptionImplCopyWith<$Res>
       String name,
       String description,
       String price,
-      Benefits benefits});
+      Benefits benefits,
+      String icon});
 
   @override
   $BenefitsCopyWith<$Res> get benefits;
@@ -155,6 +163,7 @@ class __$$SubscriptionImplCopyWithImpl<$Res>
     Object? description = null,
     Object? price = null,
     Object? benefits = null,
+    Object? icon = null,
   }) {
     return _then(_$SubscriptionImpl(
       id: null == id
@@ -181,6 +190,10 @@ class __$$SubscriptionImplCopyWithImpl<$Res>
           ? _value.benefits
           : benefits // ignore: cast_nullable_to_non_nullable
               as Benefits,
+      icon: null == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -194,7 +207,8 @@ class _$SubscriptionImpl implements _Subscription {
       required this.name,
       required this.description,
       required this.price,
-      required this.benefits});
+      required this.benefits,
+      required this.icon});
 
   factory _$SubscriptionImpl.fromJson(Map<String, dynamic> json) =>
       _$$SubscriptionImplFromJson(json);
@@ -212,10 +226,12 @@ class _$SubscriptionImpl implements _Subscription {
   final String price;
   @override
   final Benefits benefits;
+  @override
+  final String icon;
 
   @override
   String toString() {
-    return 'Subscription(id: $id, storeId: $storeId, name: $name, description: $description, price: $price, benefits: $benefits)';
+    return 'Subscription(id: $id, storeId: $storeId, name: $name, description: $description, price: $price, benefits: $benefits, icon: $icon)';
   }
 
   @override
@@ -230,13 +246,14 @@ class _$SubscriptionImpl implements _Subscription {
                 other.description == description) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.benefits, benefits) ||
-                other.benefits == benefits));
+                other.benefits == benefits) &&
+            (identical(other.icon, icon) || other.icon == icon));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, storeId, name, description, price, benefits);
+  int get hashCode => Object.hash(
+      runtimeType, id, storeId, name, description, price, benefits, icon);
 
   /// Create a copy of Subscription
   /// with the given fields replaced by the non-null parameter values.
@@ -261,7 +278,8 @@ abstract class _Subscription implements Subscription {
       required final String name,
       required final String description,
       required final String price,
-      required final Benefits benefits}) = _$SubscriptionImpl;
+      required final Benefits benefits,
+      required final String icon}) = _$SubscriptionImpl;
 
   factory _Subscription.fromJson(Map<String, dynamic> json) =
       _$SubscriptionImpl.fromJson;
@@ -278,6 +296,8 @@ abstract class _Subscription implements Subscription {
   String get price;
   @override
   Benefits get benefits;
+  @override
+  String get icon;
 
   /// Create a copy of Subscription
   /// with the given fields replaced by the non-null parameter values.

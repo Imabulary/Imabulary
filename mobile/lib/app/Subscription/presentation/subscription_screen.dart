@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Subscription/application/subscription_provider.dart';
-import 'package:mobile/app/Subscription/widgets/subscription_limit_dialog.dart';
-import 'package:mobile/atoms/colors.dart';
+import 'package:mobile/app/Subscription/widgets/subscription_list_item.dart';
 import 'package:mobile/components/app_top_bar.dart';
 import 'package:mobile/components/error_state.dart';
-import 'package:mobile/widgets/list_item.dart';
 
 @RoutePage()
 class SubscriptionScreen extends ConsumerWidget {
@@ -16,8 +14,6 @@ class SubscriptionScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final subscriptions = ref.watch(findAllSubscriptions);
-
-    print(subscriptions.error);
 
     return Layout(
       subscriptions.when(
@@ -28,26 +24,11 @@ class SubscriptionScreen extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final subscription = subscriptions[index];
 
-                if (subscription.isLeft) {
-                  // final isImabularyNext = subscription.left!.
-
-                  return ListItem(
-                    label: subscription.left!.name,
-                    sublabel: '${subscription.left!.price} / month',
-                    tileColor: AppColors.grey,
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        clipBehavior: Clip.hardEdge,
-                        useSafeArea: true,
-                        builder: (context) => SubscriptionLimitDialog(),
-                      );
-                    },
-                  );
-                }
-
-                return subscription.right;
+                return subscription.isLeft
+                    ? SubscriptionListItem(
+                        subscription: subscription.left!,
+                      )
+                    : subscription.right;
               },
               itemCount: subscriptions.length,
               scrollDirection: Axis.vertical,
