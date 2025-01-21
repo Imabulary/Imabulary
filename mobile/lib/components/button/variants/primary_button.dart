@@ -23,6 +23,7 @@ class PrimaryButton extends Button {
     );
     final defaultButtonStyle = ElevatedButton.styleFrom(
       backgroundColor: AppColors.primary,
+      disabledBackgroundColor: AppColors.disabledButtonBackgroundColor,
     );
 
     final style = size == ButtonSize.large

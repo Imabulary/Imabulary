@@ -24,7 +24,6 @@ class Layout extends StatelessWidget {
           child: page,
         ),
       ),
-      backgroundColor: Colors.black,
     );
   }
 }

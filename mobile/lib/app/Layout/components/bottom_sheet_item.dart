@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile/app/Layout/components/not_enough_coins_dialog.dart';
+import 'package:mobile/app/Subscription/widgets/subscription_limit_dialog.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/atoms/type_setting.dart';
 
@@ -35,14 +35,18 @@ class BottomSheetItem extends ConsumerWidget {
         variant: TextVariants.bodySmall,
       ),
       onTap: () {
-        if (isUserHasEnoughCoins) {
-          scanPhoto != null ? scanPhoto!(source, context) : null;
-        } else {
-          showDialog(
-            context: context,
-            builder: (context) => const NotEnoughCoinsDialog(),
-          );
-        }
+        // if (isUserHasEnoughCoins) {
+        scanPhoto != null ? scanPhoto!(source, context) : null;
+        // } else {
+        //   showModalBottomSheet(
+        //     context: context,
+        //     isScrollControlled: true,
+        //     clipBehavior: Clip.hardEdge,
+        //     useSafeArea: true,
+        //     builder: (context) =>
+        //         SubscriptionLimitDialog('You created 5 flashcards today'),
+        //   );
+        // }
       },
     );
   }

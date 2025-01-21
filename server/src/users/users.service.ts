@@ -7,6 +7,8 @@ import { StorageService } from 'src/storage/storage.service';
 import { IBucketFolders } from 'src/storage/utils';
 import { WalletService } from 'src/wallet/wallet.service';
 import { CreateUserDTO } from './dto/user.dto';
+import { ProductsService } from 'src/products/products.service';
+import { subscriptionIds } from 'src/products/utils';
 
 @Injectable()
 export class UsersService {
@@ -15,6 +17,7 @@ export class UsersService {
     private readonly storage: StorageService,
     private readonly feedback: FeedbackService,
     private readonly wallet: WalletService,
+    private readonly products: ProductsService,
   ) {}
 
   async findOneOrCreate(createUserDto: CreateUserDTO) {
@@ -23,8 +26,12 @@ export class UsersService {
     const user = await this.findOne({ externalId: uid, email });
 
     if (!user) {
+      const freeSubscription = await this.products.findOne({
+        internalId: subscriptionIds.IMABULARY_FREE,
+      });
+
       const newUser = await this.prisma.users.create({
-        data: { externalId: uid, email },
+        data: { externalId: uid, email, productId: freeSubscription.id },
       });
 
       await this.wallet.create(newUser.id);

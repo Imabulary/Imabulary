@@ -28,6 +28,7 @@ import {
 } from './dto';
 import { FlashCardsService } from './flashcards.service';
 import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
+import { FlashcardGuard } from 'src/guards/flashcard.guard';
 
 const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
@@ -37,6 +38,7 @@ export class FlashCardsController {
   constructor(private readonly flashCardsService: FlashCardsService) {}
 
   @Post('scan')
+  @UseGuards(FlashcardGuard)
   @UseInterceptors(FileInterceptor('file'))
   scan(
     @Req() request: Request,

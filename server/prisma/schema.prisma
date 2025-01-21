@@ -46,6 +46,8 @@ model Users {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   Wallet     Wallet?
+  productId  String?    @unique
+  Products   Products?  @relation(fields: [productId], references: [id])
 }
 
 model Sets {
@@ -117,4 +119,5 @@ model Products {
   internalId  String  @unique // manually defined id of the product on our side
   externalId  String? @unique // id of the product in Google Play, AppStore, or any other app distribution system
   benefits    Json
+  users       Users[]
 }

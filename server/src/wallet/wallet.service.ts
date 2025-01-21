@@ -1,17 +1,21 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { add, subtract } from 'lodash';
 import { PrismaService } from '../prisma';
 import {
   checkBalanceAvailability,
   DEFAULT_USER_BALANCE,
-  INSUFFICIENT_FUNDS,
   validateWallet,
 } from './utils';
+import { InsufficientFundsException } from './utils/wallet.exception';
+import { WalletRepository } from './wallet.repository';
 
 @Injectable()
 export class WalletService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly walletRepository: WalletRepository,
+  ) {}
 
   create(userId: string) {
     return this.prisma.wallet.create({
@@ -23,7 +27,7 @@ export class WalletService {
     where: Prisma.WalletWhereUniqueInput,
     include?: Prisma.WalletInclude,
   ) {
-    return this.prisma.wallet.findFirst({ where, include });
+    return this.walletRepository.findOne({ where, include });
   }
 
   async findOneAndValidate(userId: string, include?: Prisma.WalletInclude) {
@@ -35,7 +39,7 @@ export class WalletService {
   }
 
   async manage(userId: string, cost: number, operation: 'add' | 'subtract') {
-    const operaions = { add, subtract };
+    const operations = { add, subtract };
 
     await this.prisma.$transaction(async (prisma) => {
       const wallet = await prisma.wallet.findUnique({
@@ -48,12 +52,12 @@ export class WalletService {
         operation === 'subtract' &&
         !checkBalanceAvailability(wallet.balance, cost)
       ) {
-        throw new BadRequestException(INSUFFICIENT_FUNDS);
+        throw new InsufficientFundsException(cost, wallet.balance);
       }
 
       await prisma.wallet.update({
         where: { userId },
-        data: { balance: operaions[operation](wallet.balance, cost) },
+        data: { balance: operations[operation](wallet.balance, cost) },
       });
     });
   }

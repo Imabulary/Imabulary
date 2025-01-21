@@ -18,16 +18,18 @@ export class GeneratePhraseTemplate {
   }
 
   protected getPrompt(word: string) {
-    return `Create a phrase with the word ${word.toLowerCase()}.`;
+    return `Generate a down-to-earth phrase using the provided input: "${word.toLowerCase()}".`;
   }
 
   protected getRules() {
     return [
-      'The length of the phrase must be maximum of 20 words',
-      'The length of the phrase must be minimum of 7 words',
-      'Do not cover a string in quotes',
-      'Asnwer only with the phrase, no additional text is needed',
-      'Keep the phrase simple, do not need to make it creative',
+      'Act as a language learning assistant specializing in creating simple and relatable phrases for learners at A1 to B2 proficiency levels',
+      'The phrase should help users understand and remember the input by reflecting everyday situations',
+      'Ensure the phrase is between 7 and 20 words long, fully formed, and not cut off',
+      'Do not include punctuation marks at the end of the phrase',
+      'Keep the tone neutral, avoiding unnecessary complexity or creativity',
+      'Do not use quotes around the phrase',
+      'Provide only the phrase as the output, with no additional text',
     ].join('. ');
   }
 
@@ -47,6 +49,8 @@ export class GeneratePhraseTemplate {
   }
 
   protected getResult(content: GenerateContentResult) {
+    console.log(get(content, 'response.candidates[0].content.parts'));
+
     const text = get(content, 'response.candidates[0].content.parts[0].text');
 
     if (isEmpty(text)) {

@@ -7,9 +7,14 @@ import { AuthGuard } from '../auth.guard';
 import {
   UNAUTHORIZED_ERROR_MESSAGE,
   UNDEFINED_TOKEN_ERROR_MESSAGE,
-  UNDEFINED_USER_ERROR_MESSAGE,
 } from '../utils';
 import { faker } from '@faker-js/faker';
+import { StorageService } from 'src/storage/storage.service';
+import { FeedbackService } from 'src/feedback/feedback.service';
+import { WalletService } from 'src/wallet';
+import { ProductsService } from 'src/products/products.service';
+import { WalletRepository } from 'src/wallet/wallet.repository';
+import { ProductsRepository } from 'src/products/products.repository';
 
 jest.mock('firebase-admin');
 
@@ -19,7 +24,17 @@ describe('AuthGuard', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthGuard, UsersService, PrismaService],
+      providers: [
+        AuthGuard,
+        UsersService,
+        PrismaService,
+        StorageService,
+        FeedbackService,
+        WalletService,
+        ProductsService,
+        WalletRepository,
+        ProductsRepository,
+      ],
     }).compile();
 
     authGuard = module.get<AuthGuard>(AuthGuard);
@@ -53,8 +68,7 @@ describe('AuthGuard', () => {
     const context = mockContext();
 
     authGuard.canActivate(context).catch((error) => {
-      expect(error.message).toBe(UNAUTHORIZED_ERROR_MESSAGE);
-      expect(error.cause.message).toBe(UNDEFINED_TOKEN_ERROR_MESSAGE);
+      expect(error.message).toBe(UNDEFINED_TOKEN_ERROR_MESSAGE);
     });
   });
 
@@ -66,23 +80,6 @@ describe('AuthGuard', () => {
     authGuard.canActivate(context).catch((error) => {
       expect(error.message).toBe(UNAUTHORIZED_ERROR_MESSAGE);
       expect(error.cause.message).toBe('Invalid token');
-    });
-  });
-
-  it('should throw an UnauthorizedException if the user with the UID extracted from the token does not exist in the database', () => {
-    const context = mockContext(true);
-
-    const externalId = faker.string.uuid();
-
-    mockVerifyToken(externalId);
-
-    users.findOne = jest.fn().mockResolvedValue(null);
-
-    authGuard.canActivate(context).catch((error) => {
-      expect(error.message).toBe(UNAUTHORIZED_ERROR_MESSAGE);
-      expect(error.cause.message).toBe(
-        UNDEFINED_USER_ERROR_MESSAGE.replace(':externalId', externalId),
-      );
     });
   });
 

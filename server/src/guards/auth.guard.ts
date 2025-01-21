@@ -17,16 +17,16 @@ export class AuthGuard implements CanActivate {
   constructor(private readonly users: UsersService) {}
 
   async canActivate(context: ExecutionContext) {
+    const request = context.switchToHttp().getRequest();
+    const token = getMaybe('[0].headers.authorization', context.getArgs())
+      .map<string>((token) => token.split(' ')[1])
+      .unwrapOr(null);
+
+    if (!token) {
+      throw new UnauthorizedException(UNDEFINED_TOKEN_ERROR_MESSAGE);
+    }
+
     try {
-      const request = context.switchToHttp().getRequest();
-      const token = getMaybe('[0].headers.authorization', context.getArgs())
-        .map<string>((token) => token.split(' ')[1])
-        .unwrapOr(null);
-
-      if (!token) {
-        throw new UnauthorizedException(UNDEFINED_TOKEN_ERROR_MESSAGE);
-      }
-
       const decodedToken = await admin.auth().verifyIdToken(token);
       const { uid, email } = decodedToken;
 

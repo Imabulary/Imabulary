@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Home/widgets/FlashcardListItem/flashcard_list_item.dart';
-import 'package:mobile/app/Layout/widgets/FloatingButton/floating_button_controller.dart';
 import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
 import 'package:mobile/app/Main/application/main_provider.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/components/button/button.dart';
 import 'package:mobile/widgets/empty_state.dart';
 
 class FlashCardsList extends ConsumerStatefulWidget {
@@ -55,12 +55,9 @@ class _FlashCardsListState extends ConsumerState<FlashCardsList> {
           Center(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 24),
-              child: ElevatedButton(
+              child: Button(
                 onPressed: redirectToProfileScreen,
-                child: const TypeSetting(
-                  'View all',
-                  style: TextStyle(color: AppColors.primary),
-                ),
+                label: 'View all',
               ),
             ),
           ),

@@ -26,9 +26,11 @@ class ErrorState extends StatelessWidget {
         const SizedBox(
           height: 24,
         ),
-        TypeSetting(error is ServerError
-            ? (error as ServerError).message
-            : ServerError.defaultError),
+        TypeSetting(
+          error is ServerError
+              ? (error as ServerError).message
+              : ServerError.defaultError,
+        ),
         const SizedBox(
           height: 24,
         ),

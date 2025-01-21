@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { subscriptionIds } from '../src/products/utils/';
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -43,7 +44,7 @@ async function main() {
     {
       name: 'Imabulary Free',
       description: 'Best for the beginners',
-      internalId: 'imabulary_free',
+      internalId: subscriptionIds.IMABULARY_FREE,
       benefits: {
         coins: 5,
         sets: 3,
@@ -55,8 +56,8 @@ async function main() {
     {
       name: 'Imabulary NEXT',
       description: 'Best for the quick progress',
-      internalId: 'imabulary_next_monthly',
-      externalId: 'imabulary_next_monthly',
+      internalId: subscriptionIds.IMABULARY_NEXT_MONTHLY,
+      externalId: subscriptionIds.IMABULARY_NEXT_MONTHLY,
       benefits: {
         coins: 500,
         sets: 50,

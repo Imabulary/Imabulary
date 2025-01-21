@@ -9,7 +9,7 @@ export class QuizStatusMisconfigurationException extends HttpException {
       {
         cause: status,
         description:
-          'Please verify that "quizCardStatus" dictionary table have been correctly seeded with the data',
+          'Please verify that "quizCardStatus" dictionary table has been correctly seeded with the data',
       },
     );
   }

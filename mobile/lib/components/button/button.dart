@@ -52,6 +52,7 @@ class Button extends StatelessWidget {
     };
 
     final elevatedStyle = ElevatedButton.styleFrom(
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
       disabledBackgroundColor: AppColors.disabledButtonBackgroundColor,
     );
 
@@ -105,7 +106,7 @@ class Button extends StatelessWidget {
       case ButtonVariant.outlined:
         return OutlinedButton(
           onPressed: onPress,
-          style: customStyle?.merge(outlinedStyle),
+          style: outlinedStyle.merge(customStyle),
           child: child,
         );
       case ButtonVariant.text:

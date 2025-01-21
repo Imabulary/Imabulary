@@ -37,7 +37,7 @@ class SubscriptionAgreement extends StatelessWidget {
           onTap: WelcomeScreenFooterContoller.openPrivacyPolicy(context),
         ),
         TypeSetting(
-          '. You can cancel the subscription anytime',
+          '. You can cancel the subscription anytime.',
           variant: TextVariants.bodySmall,
           style: TextStyle(
             color: AppColors.lightGrey,

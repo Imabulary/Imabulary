@@ -73,7 +73,6 @@ class _AppState extends ConsumerState<App> {
               fontSize: 14, fontWeight: FontWeight.w600),
           bodySmall: GoogleFonts.sourceSans3(fontSize: 12),
         ),
-        appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
         cardTheme: const CardTheme(color: AppColors.muted, elevation: 0),
       ),
       routerConfig: AppRouter(

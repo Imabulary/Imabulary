@@ -5,7 +5,7 @@ import { FeedbackService } from 'src/feedback/feedback.service';
 import { PrismaService } from 'src/prisma';
 import { QuizService } from 'src/quiz/quiz.service';
 import { Filters, ServerPagination } from 'src/shared';
-import { DEFAULT_COST } from 'src/shared/constants';
+import { FLASHCARD_DEFAULT_COST } from 'src/shared/constants';
 import { SoundService } from 'src/sound/sound.service';
 import { StorageService } from 'src/storage/storage.service';
 import { IBucketFolders } from 'src/storage/utils';
@@ -123,6 +123,8 @@ export class FlashCardsService {
           explanation,
         },
       });
+
+      await this.wallet.manage(userId, FLASHCARD_DEFAULT_COST, 'subtract');
 
       return card;
     } catch (error) {
@@ -310,6 +312,7 @@ export class FlashCardsService {
     }
 
     await Promise.all([
+      this.wallet.manage(userId, FLASHCARD_DEFAULT_COST, 'add'),
       this.feedbackService.create(
         {
           cardId,

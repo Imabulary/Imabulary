@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:logging_appenders/logging_appenders.dart';
 import 'package:mobile/utils/builders/log_message_builder.dart';
@@ -45,7 +46,7 @@ class AppLogging {
     Logger.root.onRecord.listen((record) {
       log(logMessageManager.buildLogMessage(record));
 
-      if (record.level >= Level.SEVERE) {
+      if (record.level >= Level.SEVERE && kReleaseMode) {
         Sentry.captureException(
           logMessageManager.buildLogMessage(record, skipStackTrace: true),
           stackTrace: record.stackTrace,
