@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Subscription/application/subscription_provider.dart';
+import 'package:mobile/app/Subscription/components/SubscribeButton/subscribe_button.dart';
 import 'package:mobile/app/Subscription/utils/subscription_utils.dart';
 import 'package:mobile/app/Subscription/widgets/benefits_list.dart';
 import 'package:mobile/app/Subscription/widgets/subscription_agreement.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/components/button/button.dart';
 import 'package:mobile/components/error_state.dart';
 import 'package:mobile/widgets/bottom_dialog.dart';
 
@@ -31,8 +31,10 @@ class SubscriptionLimitDialog extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        TypeSetting('Imabulary ',
-                            variant: TextVariants.headlineMedium),
+                        TypeSetting(
+                          'Imabulary ',
+                          variant: TextVariants.headlineMedium,
+                        ),
                         TypeSetting(
                           'NEXT',
                           variant: TextVariants.headlineMedium,
@@ -72,14 +74,21 @@ class SubscriptionLimitDialog extends ConsumerWidget {
           ),
         ),
       ],
-      footer: Button(
-        label: 'Subscribe',
-        expanded: true,
-        onPressed: () {},
-        variant: ButtonVariant.primary,
-        size: ButtonSize.large,
-        disabled: imabularyNextSubscription.isLoading ||
-            imabularyNextSubscription.hasError,
+      footer: imabularyNextSubscription.when(
+        data: (subscription) => subscription.isLeft
+            ? SubscribeButton(productId: subscription.left!.storeId)
+            : SubscribeButton(
+                productId: null,
+                disabled: true,
+              ),
+        error: (error, stackTrace) => SubscribeButton(
+          productId: null,
+          disabled: true,
+        ),
+        loading: () => SubscribeButton(
+          productId: null,
+          disabled: true,
+        ),
       ),
     );
   }

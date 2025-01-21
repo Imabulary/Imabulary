@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/app/Subscription/components/SubscribeButton/subscribe_button.dart';
 import 'package:mobile/app/Subscription/domain/subscription/subscription.dart';
 import 'package:mobile/app/Subscription/utils/subscription_utils.dart';
 import 'package:mobile/app/Subscription/widgets/benefits_list.dart';
 import 'package:mobile/app/Subscription/widgets/subscription_agreement.dart';
-import 'package:mobile/components/button/button.dart';
 import 'package:mobile/widgets/bottom_dialog.dart';
 
 class SubscriptionInfoDialog extends StatelessWidget {
@@ -16,8 +16,6 @@ class SubscriptionInfoDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(subscription.benefits);
-
     return BottomDialog(
       title: subscription.name,
       subtitle: getSubscriptionSubtitle(subscription.price),
@@ -28,13 +26,7 @@ class SubscriptionInfoDialog extends StatelessWidget {
         ),
         SubscriptionAgreement(),
       ],
-      footer: Button(
-        label: 'Subscribe',
-        expanded: true,
-        onPressed: () {},
-        variant: ButtonVariant.primary,
-        size: ButtonSize.large,
-      ),
+      footer: SubscribeButton(productId: subscription.storeId),
     );
   }
 }

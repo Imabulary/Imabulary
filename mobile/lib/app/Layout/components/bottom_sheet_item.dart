@@ -35,18 +35,18 @@ class BottomSheetItem extends ConsumerWidget {
         variant: TextVariants.bodySmall,
       ),
       onTap: () {
-        // if (isUserHasEnoughCoins) {
-        scanPhoto != null ? scanPhoto!(source, context) : null;
-        // } else {
-        //   showModalBottomSheet(
-        //     context: context,
-        //     isScrollControlled: true,
-        //     clipBehavior: Clip.hardEdge,
-        //     useSafeArea: true,
-        //     builder: (context) =>
-        //         SubscriptionLimitDialog('You created 5 flashcards today'),
-        //   );
-        // }
+        if (isUserHasEnoughCoins) {
+          scanPhoto != null ? scanPhoto!(source, context) : null;
+        } else {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            clipBehavior: Clip.hardEdge,
+            useSafeArea: true,
+            builder: (context) =>
+                SubscriptionLimitDialog('You created 5 flashcards today'),
+          );
+        }
       },
     );
   }

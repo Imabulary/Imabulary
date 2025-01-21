@@ -19,7 +19,7 @@ class Maybe<T> {
     return value != null ? Maybe.some(value) : Maybe.none<T>();
   }
 
-  Maybe<R> map<R>(R Function(T) handler) {
+  Maybe<R> map<R extends Object>(R Function(T) handler) {
     if (_value == null) {
       return Maybe.none<R>();
     }

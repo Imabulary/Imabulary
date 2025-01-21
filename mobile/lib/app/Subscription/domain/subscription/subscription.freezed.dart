@@ -22,8 +22,7 @@ Subscription _$SubscriptionFromJson(Map<String, dynamic> json) {
 mixin _$Subscription {
   String get id => throw _privateConstructorUsedError;
   String? get storeId => throw _privateConstructorUsedError;
-  String get name =>
-      throw _privateConstructorUsedError; // required SubscriptionType type,
+  String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   String get price => throw _privateConstructorUsedError;
   Benefits get benefits => throw _privateConstructorUsedError;
@@ -219,7 +218,6 @@ class _$SubscriptionImpl implements _Subscription {
   final String? storeId;
   @override
   final String name;
-// required SubscriptionType type,
   @override
   final String description;
   @override
@@ -289,7 +287,7 @@ abstract class _Subscription implements Subscription {
   @override
   String? get storeId;
   @override
-  String get name; // required SubscriptionType type,
+  String get name;
   @override
   String get description;
   @override
