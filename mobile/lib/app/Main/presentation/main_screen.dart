@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Home/presentation/home.dart';
 import 'package:mobile/app/Layout/widgets/bottom_navigation.dart';
 import 'package:mobile/app/Profile/presentation/profile_screen.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 
 import '../../Layout/widgets/FloatingButton/floating_button.dart';
 import '../application/main_provider.dart';
@@ -61,6 +62,8 @@ class _MainTabNavigatorState extends ConsumerState<MainScreen>
       bottomNavigationBar: BottomNavigation(
         currentScreen: CurrentScreen.values[currentIndex.$1],
         onNewScreenSelected: (newScreen) {
+          analyticsEngine
+              .trackClick(CurrentScreen.values[currentIndex.$1].analyticEvent);
           ref.read(currentTabIndexProvider.notifier).state =
               (newScreen.value, 0);
         },

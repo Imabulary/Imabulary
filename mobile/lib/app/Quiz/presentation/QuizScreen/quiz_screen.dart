@@ -14,10 +14,12 @@ import 'package:mobile/app/Quiz/presentation/QuizScreen/widgets/quiz_options_gri
 import 'package:mobile/app/Set/application/set_provider.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app_router.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/full_screen_image.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 
 @RoutePage()
 class QuizScreen extends ConsumerStatefulWidget {
@@ -112,6 +114,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     return Layout(
       appBar: QuizAppBarWidget(
         onBackPressed: () {
+          analyticsEngine.trackClick(AnalyticClickEvents.quizReturn);
           ref.invalidate(findSetFlashcardsProvider);
           AutoRouter.of(context).maybePop();
         },
@@ -132,6 +135,10 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
             child: QuizOptionsGridWidget(
               options: options,
               onTap: (selectedOption) {
+                analyticsEngine.trackClick(AnalyticClickEvents.quizOption, {
+                  'question': currentFlashcard.word,
+                  'answer': selectedOption.word,
+                });
                 _saveResult(currentFlashcard, selectedOption);
                 _changeQuestion(flashcardsForQuiz);
               },

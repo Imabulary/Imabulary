@@ -8,7 +8,9 @@ import 'package:mobile/app/Set/utils/map_status.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
 import 'package:mobile/app/Set/widgets/flashcards_group_widget.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/components/button.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 
 @RoutePage()
 class SetScreen extends ConsumerWidget {
@@ -25,10 +27,13 @@ class SetScreen extends ConsumerWidget {
         child: Column(
           children: [
             Button(
-              onPressed: () => SetAppBarController.startQuiz(
-                context,
-                set?.flashcards,
-              ),
+              onPressed: () {
+                analyticsEngine.trackClick(AnalyticClickEvents.setStartQuiz);
+                SetAppBarController.startQuiz(
+                  context,
+                  set?.flashcards,
+                );
+              },
               label: 'Start quiz',
               expanded: true,
             ),

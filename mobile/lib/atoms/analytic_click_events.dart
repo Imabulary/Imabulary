@@ -1,0 +1,61 @@
+enum AnalyticClickEvents {
+  bottomNavAddFlashcard('bottom_navigation_add_flashcard_tapped'),
+  bottomNavProfile('bottom_navigation_profile_tapped'),
+  bottomNavHome('bottom_navigation_home_tapped'),
+  homeAddFirstFlashcard('home_add_first_flashcard_tapped'),
+  homeCreateFirstSet('home_create_first_set_tapped'),
+  homeAddFlashcard('home_add_flashcard_tapped'),
+  homeMySet('home_my_set_tapped'),
+  homeTakeQuiz('home_take_quiz_tapped'),
+  homeViewFlashcards('home_view_flashcards_tapped'),
+  photoOptionsTakePhoto('photo_options_take_photo_tapped'),
+  photoOptionsSelectFromGallery(
+    'photo_options_select_from_gallery_tapped',
+  ),
+  photoOptionsGetBetterResults(
+    'photo_options_how_to_get_better_results_tapped',
+  ),
+  selectObjectInPhotoChooseObject(
+    'select_object_in_photo_choose_object_tapped',
+  ),
+  selectObjectInPhotoNotInThisList(
+    'select_object_in_photo_object_is_not_in_this_list_tapped',
+  ),
+  selectObjectInPhotoSelectObject(
+    'select_object_in_photo_select_object_tapped',
+  ),
+  selectObjectInPhotoCancel('select_object_in_photo_cancel_tapped'),
+  noObjectsRecognizedClose('no_objects_recognized_close_tapped'),
+  flashcardReturn('flashcard_return_tapped'),
+  flashcardEngPronunciation('flashcard_english_pronunciation_tapped'),
+  flashcardOrganize('flashcard_organize_into_set_tapped'),
+  flashcardDislike('flashcard_dislike_tapped'),
+  newSetReturn('new_set_return_tapped'),
+  newSetTypeTitle('new_set_type_title'),
+  newSetTypeDescription('new_set_type_description'),
+  newSetCreateSet('new_set_create_set_tapped'),
+  quizOption('quiz_option_tapped'),
+  quizReturn('quiz_return_tapped'),
+  quizResultFixMistakes('quiz_result_fix_mistakes_tapped'),
+  quizResultFinish('quiz_result_finish_tapped'),
+  setGalleryCreateNewSet('set_gallery_profile_create_new_set_tapped'),
+  setGalleryOneSet('set_gallery_profile_one_set_tapped'),
+  setReturn('set_return_tapped'),
+  setStartQuiz('set_start_quiz_tapped'),
+  setSettings('set_settings_tapped'),
+  setSettingDelete('set_setting_delete_tapped'),
+  setSettingsEdit('set_settings_edit_tapped'),
+  selectSetForQuiz('select_set_for_quiz_tapped'),
+  flashcardGalleryFlashcard('flashcard_gallery_flashcard_tapped'),
+  profileSettings('profile_settings_tapped'),
+  profileSettingsManageAccount('profile_settings_manage_account_tapped'),
+  profileSettingsLogout('profile_settings_logout_tapped'),
+  deleteUserDataDelete('delete_user_data_delete_tapped'),
+  deleteUserDataReturn('delete_user_data_return_tapped'),
+  emailConfirmationDeleteClose('email_confirmation_delete_close_tapped'),
+  emailConfirmationDeleteConfirm('email_confirmation_delete_confirm_tapped'),
+  ;
+
+  const AnalyticClickEvents(this.name);
+  final String name;
+}
