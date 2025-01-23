@@ -15,7 +15,7 @@ import { Request } from 'express';
 import { AuthGuard } from 'src/guards';
 import { PaginationPipe } from 'src/pipes';
 import { ServerPagination } from 'src/shared';
-import { CreateSetDto, UpdateSetDto } from './dto/set.dto';
+import { CreateSetDto, SetsFilters, UpdateSetDto } from './dto/set.dto';
 import { SetsService } from './sets.service';
 
 @UseGuards(AuthGuard)
@@ -34,10 +34,14 @@ export class SetsController {
   findAll(
     @Req() request: Request,
     @Query('pagination', PaginationPipe) pagination: ServerPagination,
+    @Query('filters') filters?: SetsFilters,
   ) {
     const user: Users = request['user'];
 
-    return this.setsService.findAll(user.id, pagination);
+    return this.setsService.findAll(user.id, {
+      pagination,
+      filters,
+    });
   }
 
   @Get(':id')

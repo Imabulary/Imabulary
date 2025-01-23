@@ -53,6 +53,7 @@ model Sets {
   id          String        @id @default(uuid()) @db.VarChar()
   name        String        @db.VarChar()
   description String?       @db.Text()
+  isFinished  Boolean       @default(false)
   user        Users?        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String?       @db.VarChar()
   flashcards  Cards[]

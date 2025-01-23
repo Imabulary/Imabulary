@@ -6,6 +6,7 @@ import {
   MaxFileSizeValidator,
   Param,
   ParseFilePipe,
+  Patch,
   Post,
   Put,
   Query,
@@ -32,7 +33,7 @@ import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 
 const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @Controller('flashcards')
 export class FlashCardsController {
   constructor(private readonly flashCardsService: FlashCardsService) {}
@@ -66,7 +67,11 @@ export class FlashCardsController {
   ) {
     const user: Users = request['user'];
 
-    return this.flashCardsService.findAll(user.id, pagination, filters);
+    return this.flashCardsService.findAll(
+      'ccc02567-0ef8-4b82-8ab4-2065686e2f6e',
+      pagination,
+      filters,
+    );
   }
 
   @Put('/organize')
@@ -118,14 +123,21 @@ export class FlashCardsController {
     return this.flashCardsService.delete(id, user.id);
   }
 
-  @Put('/:id')
+  /**
+   * Updates a flashcard by the provided ID with the provided data in body.
+   */
+  @Patch('/:id')
   update(
     @Req() request: Request,
     @Param('id') id: string,
     @Body() updateFlashcardDto: UpdateFlashcardDTO,
   ) {
-    const user: Users = request['user'];
+    // const user: Users = request['user'];
 
-    return this.flashCardsService.update(id, user.id, updateFlashcardDto);
+    return this.flashCardsService.update(
+      id,
+      'ccc02567-0ef8-4b82-8ab4-2065686e2f6e',
+      updateFlashcardDto,
+    );
   }
 }

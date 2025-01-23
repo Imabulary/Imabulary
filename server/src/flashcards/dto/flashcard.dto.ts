@@ -1,4 +1,4 @@
-import { PartialType, PickType } from '@nestjs/mapped-types';
+import { PartialType, PickType } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   ArrayNotEmpty,
@@ -66,7 +66,7 @@ export class ProcessImageDTO extends PickType(CreateFlashcardDTO, [
 ]) {}
 
 export class UpdateFlashcardDTO {
-  @IsBoolean()
+  @IsBoolean({ message: 'isTouched flag must be a boolean' })
   @IsOptional()
   isTouched?: boolean;
 }
