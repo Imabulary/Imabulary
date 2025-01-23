@@ -24,7 +24,6 @@ class SetQuickAction extends ConsumerWidget {
             data.result.isEmpty ? null : 'Number of sets: ${data.totalItems}',
         onTap: () {
           if (data.result.isEmpty) {
-            analyticsEngine.trackClick(AnalyticClickEvents.homeCreateFirstSet);
             SetsGridController.showSetFormBottomSheet(context)();
           } else {
             analyticsEngine.trackClick(AnalyticClickEvents.homeMySet);

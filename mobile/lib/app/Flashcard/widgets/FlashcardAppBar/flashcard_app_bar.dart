@@ -29,8 +29,6 @@ class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  analyticsEngine
-                      .trackClick(AnalyticClickEvents.flashcardOrganize);
                   FlashcardAppBarController.showSetsBottomSheet(context)();
                 },
                 child: const TypeSetting(
