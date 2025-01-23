@@ -29,6 +29,7 @@ model Cards {
   createdAt              DateTime       @default(now())
   updatedAt              DateTime       @updatedAt
   deletedAt              DateTime?
+  isTouched              Boolean        @default(false)
   user                   Users?         @relation(fields: [userId], references: [id], onDelete: Cascade)
   sets                   Sets[]
   CardsOnSets            CardsOnSets[]

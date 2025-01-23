@@ -64,3 +64,9 @@ export class ProcessImageDTO extends PickType(CreateFlashcardDTO, [
   'imageUrl',
   'isRegeneration',
 ]) {}
+
+export class UpdateFlashcardDTO {
+  @IsBoolean()
+  @IsOptional()
+  isTouched?: boolean;
+}

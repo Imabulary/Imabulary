@@ -1,12 +1,13 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
 export class FlashcardNotFoundException extends HttpException {
-  constructor(flashcardId: string, incidentMethod: string) {
+  constructor(where: Prisma.CardsWhereUniqueInput) {
     super(
       "We couldn't find the flashcard you've requested. Make sure it exists and isn't deleted.",
       HttpStatus.NOT_FOUND,
       {
-        cause: { flashcardId, incidentMethod },
+        cause: { where },
       },
     );
   }

@@ -12,6 +12,7 @@ import { VisionService } from 'src/vision/vision.service';
 import { WalletModule } from 'src/wallet/wallet.module';
 import { FlashCardsController } from './flashcards.controller';
 import { FlashCardsService } from './flashcards.service';
+import { FlashcardsRepository } from './flashcards.repository';
 
 @Module({
   controllers: [FlashCardsController],
@@ -29,6 +30,7 @@ import { FlashCardsService } from './flashcards.service';
     SoundService,
     QuizService,
     NlpService,
+    FlashcardsRepository,
   ],
 })
 export class FlashCardsModule {}

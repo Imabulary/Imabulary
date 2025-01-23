@@ -25,6 +25,7 @@ import {
   CreateFlashcardDTO,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
+  UpdateFlashcardDTO,
 } from './dto';
 import { FlashCardsService } from './flashcards.service';
 import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
@@ -115,5 +116,16 @@ export class FlashCardsController {
     const user: Users = request['user'];
 
     return this.flashCardsService.delete(id, user.id);
+  }
+
+  @Put('/:id')
+  update(
+    @Req() request: Request,
+    @Param('id') id: string,
+    @Body() updateFlashcardDto: UpdateFlashcardDTO,
+  ) {
+    const user: Users = request['user'];
+
+    return this.flashCardsService.update(id, user.id, updateFlashcardDto);
   }
 }
