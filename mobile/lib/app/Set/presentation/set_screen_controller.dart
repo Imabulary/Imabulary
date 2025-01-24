@@ -5,6 +5,8 @@ import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:mobile/app/Set/data/dto/set_dto.dart';
 import 'package:mobile/app/Set/data/set_repository.dart';
 import 'package:mobile/app/Set/domain/set.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/utils/fp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -32,6 +34,7 @@ class SetScreenController extends _$SetScreenController {
 
   // TODO: add tests
   Future create(GlobalKey<FormBuilderState> formKey) async {
+    analyticsEngine.trackClick(AnalyticClickEvents.newSetCreateSet);
     final setRepository = ref.read(setRepositoryProvider);
 
     final setDto = _transform(formKey);
@@ -45,6 +48,7 @@ class SetScreenController extends _$SetScreenController {
   // TODO: add tests
   Future Function(GlobalKey<FormBuilderState> formKey) edit(Set set) {
     return (GlobalKey<FormBuilderState> formKey) async {
+      analyticsEngine.trackClick(AnalyticClickEvents.newSetCreateSet);
       final setRepository = ref.read(setRepositoryProvider);
 
       final setDto = _transform(formKey, set: set);

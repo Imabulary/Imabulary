@@ -8,8 +8,10 @@ import 'package:mobile/app/Quiz/presentation/results/widgets/flashcard_results_w
 import 'package:mobile/app/Set/application/set_provider.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/button.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/utils/fp.dart';
 
 @RoutePage()
@@ -74,6 +76,8 @@ class ResultScreen extends ConsumerWidget {
                           label: 'Fix my mistake',
                           expanded: true,
                           onPressed: () {
+                            analyticsEngine.trackClick(
+                                AnalyticClickEvents.quizResultFixMistakes);
                             AutoRouter.of(context).popUntilRoot();
                             SetAppBarController.startQuiz(
                               context,
@@ -102,7 +106,11 @@ class ResultScreen extends ConsumerWidget {
                 ),
               Button(
                 label: 'Finish',
-                onPressed: () => AutoRouter.of(context).popUntilRoot(),
+                onPressed: () {
+                  analyticsEngine
+                      .trackClick(AnalyticClickEvents.quizResultFinish);
+                  AutoRouter.of(context).popUntilRoot();
+                },
                 expanded: true,
               ),
             ],

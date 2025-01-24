@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 
 // TODO: add tests to test onClick handler and rendering
 class SetAppBar extends ConsumerWidget implements PreferredSizeWidget {
@@ -12,18 +14,23 @@ class SetAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final set = ref.watch(setServiceProvider);
 
-    return AppBar(
-      centerTitle: false,
-      title: TypeSetting(
-        set!.name,
-        variant: TextVariants.headlineLarge,
+    return PopScope(
+      onPopInvokedWithResult: (_, __) {
+        analyticsEngine.trackClick(AnalyticClickEvents.setReturn);
+      },
+      child: AppBar(
+        centerTitle: false,
+        title: TypeSetting(
+          set!.name,
+          variant: TextVariants.headlineLarge,
+        ),
+        actions: [
+          IconButton(
+            onPressed: SetAppBarController.showActionsBottomSheet(context),
+            icon: const Icon(Icons.more_horiz),
+          )
+        ],
       ),
-      actions: [
-        IconButton(
-          onPressed: SetAppBarController.showActionsBottomSheet(context),
-          icon: const Icon(Icons.more_horiz),
-        )
-      ],
     );
   }
 

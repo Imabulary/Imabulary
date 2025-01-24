@@ -5,7 +5,9 @@ import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/components/set_preview.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app_router.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/utils/plularize.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -21,6 +23,7 @@ class SetGridItem extends ConsumerStatefulWidget {
 // TODO: add tests
 class _SetGridItemState extends ConsumerState<SetGridItem> {
   _navigateToSetScreen() {
+    analyticsEngine.trackClick(AnalyticClickEvents.setGalleryOneSet);
     ref.read(setServiceProvider.notifier).openSet(widget.set);
 
     AutoRouter.of(context).push(const SetRoute());
