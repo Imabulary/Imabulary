@@ -25,6 +25,7 @@ mixin _$Profile {
   String get email => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
+  String? get productId => throw _privateConstructorUsedError;
 
   /// Serializes this Profile to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,7 +46,8 @@ abstract class $ProfileCopyWith<$Res> {
       String uid,
       String email,
       DateTime createdAt,
-      DateTime updatedAt});
+      DateTime updatedAt,
+      String? productId});
 }
 
 /// @nodoc
@@ -68,6 +70,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? email = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? productId = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -90,6 +93,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      productId: freezed == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -106,7 +113,8 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       String uid,
       String email,
       DateTime createdAt,
-      DateTime updatedAt});
+      DateTime updatedAt,
+      String? productId});
 }
 
 /// @nodoc
@@ -127,6 +135,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? email = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? productId = freezed,
   }) {
     return _then(_$ProfileImpl(
       id: null == id
@@ -149,6 +158,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      productId: freezed == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -161,7 +174,8 @@ class _$ProfileImpl implements _Profile {
       required this.uid,
       required this.email,
       required this.createdAt,
-      required this.updatedAt});
+      required this.updatedAt,
+      this.productId});
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileImplFromJson(json);
@@ -176,10 +190,12 @@ class _$ProfileImpl implements _Profile {
   final DateTime createdAt;
   @override
   final DateTime updatedAt;
+  @override
+  final String? productId;
 
   @override
   String toString() {
-    return 'Profile(id: $id, uid: $uid, email: $email, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Profile(id: $id, uid: $uid, email: $email, createdAt: $createdAt, updatedAt: $updatedAt, productId: $productId)';
   }
 
   @override
@@ -193,13 +209,15 @@ class _$ProfileImpl implements _Profile {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.productId, productId) ||
+                other.productId == productId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, uid, email, createdAt, updatedAt);
+      Object.hash(runtimeType, id, uid, email, createdAt, updatedAt, productId);
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -223,7 +241,8 @@ abstract class _Profile implements Profile {
       required final String uid,
       required final String email,
       required final DateTime createdAt,
-      required final DateTime updatedAt}) = _$ProfileImpl;
+      required final DateTime updatedAt,
+      final String? productId}) = _$ProfileImpl;
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;
 
@@ -237,6 +256,8 @@ abstract class _Profile implements Profile {
   DateTime get createdAt;
   @override
   DateTime get updatedAt;
+  @override
+  String? get productId;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.

@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/utils/request.dart';
 import 'package:qonversion_flutter/qonversion_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -29,5 +30,5 @@ class QonversionRepository {
 }
 
 @riverpod
-QonversionRepository qonversionRepository(QonversionRepositoryRef ref) =>
+QonversionRepository qonversionRepository(Ref ref) =>
     QonversionRepository(qonversion: Qonversion.getSharedInstance());

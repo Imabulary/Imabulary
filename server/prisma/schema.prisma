@@ -46,7 +46,7 @@ model Users {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   Wallet     Wallet?
-  productId  String?    @unique
+  productId  String?
   Products   Products?  @relation(fields: [productId], references: [id])
 }
 

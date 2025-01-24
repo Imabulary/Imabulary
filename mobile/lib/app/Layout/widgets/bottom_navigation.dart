@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/atoms/colors.dart';
 
 enum CurrentScreen {
   home(0),
@@ -34,7 +35,7 @@ class BottomNavigation extends StatelessWidget {
       ],
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.grey[500],
-      backgroundColor: const Color.fromRGBO(48, 48, 48, 1),
+      backgroundColor: AppColors.muted,
       onTap: (index) {
         onNewScreenSelected(
           CurrentScreen.values.where((screen) => screen.value == index).first,

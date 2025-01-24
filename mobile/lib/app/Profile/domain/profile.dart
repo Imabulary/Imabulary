@@ -11,6 +11,7 @@ class Profile with _$Profile {
     required String email,
     required DateTime createdAt,
     required DateTime updatedAt,
+    String? productId,
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, dynamic> json) =>

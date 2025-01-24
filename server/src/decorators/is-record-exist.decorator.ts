@@ -6,23 +6,33 @@ import {
 } from 'class-validator';
 import { PrismaService } from 'src/prisma';
 
+type IsRecordExistArgs = {
+  entity: string;
+  field?: string;
+};
+
 @ValidatorConstraint({ async: true })
 export class IsRecordExistConstraint implements ValidatorConstraintInterface {
-  private entity: string;
+  private readonly options: IsRecordExistArgs;
 
-  constructor(private readonly prisma: PrismaService, entity: string) {
-    this.entity = entity;
+  constructor(
+    private readonly prisma: PrismaService,
+    options: IsRecordExistArgs,
+  ) {
+    this.options = options;
   }
 
-  async validate(id: string) {
-    const record = await this.prisma[this.entity].findFirst({ where: { id } });
+  async validate(value: string) {
+    const record = await this.prisma[this.options.entity].findFirst({
+      where: { [this.options.field || 'id']: value },
+    });
 
     return !!record;
   }
 }
 
 export function IsRecordExist(
-  entity: string,
+  options: IsRecordExistArgs,
   validationOptions?: ValidationOptions,
 ) {
   return function (object: object, propertyName: string) {
@@ -32,7 +42,7 @@ export function IsRecordExist(
       propertyName,
       options: validationOptions,
       constraints: [],
-      validator: new IsRecordExistConstraint(new PrismaService(), entity),
+      validator: new IsRecordExistConstraint(new PrismaService(), options),
     });
   };
 }

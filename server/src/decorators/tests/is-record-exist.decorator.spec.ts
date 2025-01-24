@@ -19,7 +19,9 @@ describe('IsRecordExistConstraint', () => {
   it('should return false meaning that validation has failed and record does not exist', async () => {
     prisma[entity].findFirst = jest.fn().mockResolvedValue(null);
 
-    const isRecordExistConstraint = new IsRecordExistConstraint(prisma, entity);
+    const isRecordExistConstraint = new IsRecordExistConstraint(prisma, {
+      entity,
+    });
     const result = await isRecordExistConstraint.validate(id);
 
     expect(result).toBe(false);
@@ -30,7 +32,9 @@ describe('IsRecordExistConstraint', () => {
       .fn()
       .mockResolvedValue({ name: 'Lorem Ipsum' });
 
-    const isRecordExistConstraint = new IsRecordExistConstraint(prisma, entity);
+    const isRecordExistConstraint = new IsRecordExistConstraint(prisma, {
+      entity,
+    });
     const result = await isRecordExistConstraint.validate(id);
 
     expect(result).toBe(true);

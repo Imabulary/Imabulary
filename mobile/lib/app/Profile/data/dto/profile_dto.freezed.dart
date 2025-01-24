@@ -179,3 +179,154 @@ abstract class _ProfileDTO implements ProfileDTO {
   _$$ProfileDTOImplCopyWith<_$ProfileDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+UpdateUserDTO _$UpdateUserDTOFromJson(Map<String, dynamic> json) {
+  return _UpdateUserDTO.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UpdateUserDTO {
+  String get productId => throw _privateConstructorUsedError;
+
+  /// Serializes this UpdateUserDTO to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of UpdateUserDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $UpdateUserDTOCopyWith<UpdateUserDTO> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UpdateUserDTOCopyWith<$Res> {
+  factory $UpdateUserDTOCopyWith(
+          UpdateUserDTO value, $Res Function(UpdateUserDTO) then) =
+      _$UpdateUserDTOCopyWithImpl<$Res, UpdateUserDTO>;
+  @useResult
+  $Res call({String productId});
+}
+
+/// @nodoc
+class _$UpdateUserDTOCopyWithImpl<$Res, $Val extends UpdateUserDTO>
+    implements $UpdateUserDTOCopyWith<$Res> {
+  _$UpdateUserDTOCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of UpdateUserDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? productId = null,
+  }) {
+    return _then(_value.copyWith(
+      productId: null == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UpdateUserDTOImplCopyWith<$Res>
+    implements $UpdateUserDTOCopyWith<$Res> {
+  factory _$$UpdateUserDTOImplCopyWith(
+          _$UpdateUserDTOImpl value, $Res Function(_$UpdateUserDTOImpl) then) =
+      __$$UpdateUserDTOImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String productId});
+}
+
+/// @nodoc
+class __$$UpdateUserDTOImplCopyWithImpl<$Res>
+    extends _$UpdateUserDTOCopyWithImpl<$Res, _$UpdateUserDTOImpl>
+    implements _$$UpdateUserDTOImplCopyWith<$Res> {
+  __$$UpdateUserDTOImplCopyWithImpl(
+      _$UpdateUserDTOImpl _value, $Res Function(_$UpdateUserDTOImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UpdateUserDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? productId = null,
+  }) {
+    return _then(_$UpdateUserDTOImpl(
+      productId: null == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UpdateUserDTOImpl implements _UpdateUserDTO {
+  const _$UpdateUserDTOImpl({required this.productId});
+
+  factory _$UpdateUserDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UpdateUserDTOImplFromJson(json);
+
+  @override
+  final String productId;
+
+  @override
+  String toString() {
+    return 'UpdateUserDTO(productId: $productId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdateUserDTOImpl &&
+            (identical(other.productId, productId) ||
+                other.productId == productId));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, productId);
+
+  /// Create a copy of UpdateUserDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdateUserDTOImplCopyWith<_$UpdateUserDTOImpl> get copyWith =>
+      __$$UpdateUserDTOImplCopyWithImpl<_$UpdateUserDTOImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UpdateUserDTOImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UpdateUserDTO implements UpdateUserDTO {
+  const factory _UpdateUserDTO({required final String productId}) =
+      _$UpdateUserDTOImpl;
+
+  factory _UpdateUserDTO.fromJson(Map<String, dynamic> json) =
+      _$UpdateUserDTOImpl.fromJson;
+
+  @override
+  String get productId;
+
+  /// Create a copy of UpdateUserDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UpdateUserDTOImplCopyWith<_$UpdateUserDTOImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

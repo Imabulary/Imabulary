@@ -13,3 +13,13 @@ class ProfileDTO with _$ProfileDTO {
   factory ProfileDTO.fromJson(Map<String, dynamic> json) =>
       _$ProfileDTOFromJson(json);
 }
+
+@freezed
+class UpdateUserDTO with _$UpdateUserDTO {
+  const factory UpdateUserDTO({
+    required String productId,
+  }) = _UpdateUserDTO;
+
+  factory UpdateUserDTO.fromJson(Map<String, dynamic> json) =>
+      _$UpdateUserDTOFromJson(json);
+}

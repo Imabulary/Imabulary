@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Feedback/data/dto/feedback_dto.dart';
 import 'package:mobile/app/Feedback/domain/feedback.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
@@ -39,5 +40,5 @@ class FeedbackRepository {
 }
 
 @riverpod
-FeedbackRepository feedbackRepository(FeedbackRepositoryRef ref) =>
+FeedbackRepository feedbackRepository(Ref ref) =>
     FeedbackRepository(dio: getDioClient());

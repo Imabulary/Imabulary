@@ -26,7 +26,10 @@ class SubscriptionInfoDialog extends StatelessWidget {
         ),
         SubscriptionAgreement(),
       ],
-      footer: SubscribeButton(productId: subscription.storeId),
+      footer: SubscribeButton(
+        qonversionId: subscription.storeId,
+        productId: subscription.id,
+      ),
     );
   }
 }

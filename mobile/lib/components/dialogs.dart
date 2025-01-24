@@ -83,7 +83,7 @@ class Dialogs {
       );
 
   static Widget error(String error) => AppDialog(
-        title: "Oops! We're sorry",
+        title: "Error",
         content: error.isNotEmpty
             ? error
             : "Something hiccuped. Don't worry, we're on it! Try again later.",

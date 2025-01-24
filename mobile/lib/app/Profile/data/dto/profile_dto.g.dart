@@ -17,3 +17,13 @@ Map<String, dynamic> _$$ProfileDTOImplToJson(_$ProfileDTOImpl instance) =>
       'uid': instance.uid,
       'email': instance.email,
     };
+
+_$UpdateUserDTOImpl _$$UpdateUserDTOImplFromJson(Map<String, dynamic> json) =>
+    _$UpdateUserDTOImpl(
+      productId: json['productId'] as String,
+    );
+
+Map<String, dynamic> _$$UpdateUserDTOImplToJson(_$UpdateUserDTOImpl instance) =>
+    <String, dynamic>{
+      'productId': instance.productId,
+    };

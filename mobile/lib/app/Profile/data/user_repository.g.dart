@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'subscribe_button_controller.dart';
+part of 'user_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$subscribeButtonControllerHash() =>
-    r'5ba28a10b07f3191eb25b80702d8374694e65c11';
+String _$userRepositoryHash() => r'e9e1e54f7689a023c44913461efe561a05a0615e';
 
-/// See also [SubscribeButtonController].
-@ProviderFor(SubscribeButtonController)
-final subscribeButtonControllerProvider =
-    AutoDisposeAsyncNotifierProvider<SubscribeButtonController, void>.internal(
-  SubscribeButtonController.new,
-  name: r'subscribeButtonControllerProvider',
+/// See also [userRepository].
+@ProviderFor(userRepository)
+final userRepositoryProvider = AutoDisposeProvider<UserRepository>.internal(
+  userRepository,
+  name: r'userRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$subscribeButtonControllerHash,
+      : _$userRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SubscribeButtonController = AutoDisposeAsyncNotifier<void>;
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef UserRepositoryRef = AutoDisposeProviderRef<UserRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

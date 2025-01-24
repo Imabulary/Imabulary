@@ -3,12 +3,14 @@ import { Prisma } from '@prisma/client';
 import admin from 'firebase-admin';
 import { FeedbackService } from 'src/feedback/feedback.service';
 import { PrismaService } from 'src/prisma';
+import { ProductsService } from 'src/products/products.service';
+import { subscriptionIds } from 'src/products/utils';
 import { StorageService } from 'src/storage/storage.service';
 import { IBucketFolders } from 'src/storage/utils';
 import { WalletService } from 'src/wallet/wallet.service';
-import { CreateUserDTO } from './dto/user.dto';
-import { ProductsService } from 'src/products/products.service';
-import { subscriptionIds } from 'src/products/utils';
+import { CreateUserDTO, UpdateUserDTO } from './dto/user.dto';
+import { UsersRepository } from './users.repository';
+import { UserNotFoundException } from './utils/users.exception';
 
 @Injectable()
 export class UsersService {
@@ -18,12 +20,15 @@ export class UsersService {
     private readonly feedback: FeedbackService,
     private readonly wallet: WalletService,
     private readonly products: ProductsService,
+    private readonly repository: UsersRepository,
   ) {}
 
   async findOneOrCreate(createUserDto: CreateUserDTO) {
     const { uid, email } = createUserDto;
 
-    const user = await this.findOne({ externalId: uid, email });
+    const user = await this.repository.findOne({
+      where: { externalId: uid, email },
+    });
 
     if (!user) {
       const freeSubscription = await this.products.findOne({
@@ -46,7 +51,13 @@ export class UsersService {
     where: Prisma.UsersWhereUniqueInput,
     include?: Prisma.UsersInclude,
   ) {
-    return this.prisma.users.findFirst({ where, include });
+    const user = await this.repository.findOne({ where, include });
+
+    if (!user) {
+      throw new UserNotFoundException(where);
+    }
+
+    return user;
   }
 
   async delete(uid: string) {
@@ -96,5 +107,12 @@ export class UsersService {
     });
 
     return true;
+  }
+
+  async update(userId: string, updateUserDto: UpdateUserDTO) {
+    return this.prisma.users.update({
+      where: { id: userId },
+      data: updateUserDto,
+    });
   }
 }
