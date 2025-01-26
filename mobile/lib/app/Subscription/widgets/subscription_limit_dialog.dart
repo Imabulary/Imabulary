@@ -76,17 +76,20 @@ class SubscriptionLimitDialog extends ConsumerWidget {
       ],
       footer: imabularyNextSubscription.when(
         data: (subscription) => subscription.isLeft
-            ? SubscribeButton(productId: subscription.left!.storeId)
+            ? SubscribeButton(
+                qonversionId: subscription.left!.storeId,
+                productId: subscription.left!.id,
+              )
             : SubscribeButton(
-                productId: null,
+                productId: '',
                 disabled: true,
               ),
         error: (error, stackTrace) => SubscribeButton(
-          productId: null,
+          productId: '',
           disabled: true,
         ),
         loading: () => SubscribeButton(
-          productId: null,
+          productId: '',
           disabled: true,
         ),
       ),

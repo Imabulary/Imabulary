@@ -7,24 +7,25 @@ class ErrorState extends StatelessWidget {
   const ErrorState({
     super.key,
     required this.error,
-    required this.title,
+    this.title,
     required this.onRefresh,
   });
 
   final Object error;
-  final String title;
+  final String? title;
   final void Function() onRefresh;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TypeSetting(
-          title,
+          title ?? 'Error',
           variant: TextVariants.headlineLarge,
         ),
         const SizedBox(
-          height: 24,
+          height: 4,
         ),
         TypeSetting(
           error is ServerError

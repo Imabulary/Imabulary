@@ -7,6 +7,7 @@ import { WalletService } from 'src/wallet/wallet.service';
 import { FeedbackController } from './feedback.controller';
 import { FeedbackService } from './feedback.service';
 import { WalletRepository } from 'src/wallet/wallet.repository';
+import { UsersRepository } from 'src/users/users.repository';
 
 @Module({
   imports: [StorageModule],
@@ -18,6 +19,7 @@ import { WalletRepository } from 'src/wallet/wallet.repository';
     ProductsService,
     ProductsRepository,
     WalletRepository,
+    UsersRepository,
   ],
   controllers: [FeedbackController],
 })

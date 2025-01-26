@@ -50,9 +50,9 @@ class TypeSetting extends Text {
               TextSpan(
                 text: text,
                 style: variants[variant]!.copyWith(
-                  color: AppColors.primary,
+                  color: style?.color ?? AppColors.primary,
                   decoration: TextDecoration.underline,
-                  decorationColor: AppColors.primary,
+                  decorationColor: style?.color ?? AppColors.primary,
                   fontFamily: GoogleFonts.sourceSans3().fontFamily,
                 ),
                 recognizer: TapGestureRecognizer()..onTap = onTap,

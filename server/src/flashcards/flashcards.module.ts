@@ -13,6 +13,7 @@ import { WalletModule } from 'src/wallet/wallet.module';
 import { FlashCardsController } from './flashcards.controller';
 import { FlashCardsService } from './flashcards.service';
 import { ProductsRepository, ProductsService } from 'src/products';
+import { UsersRepository } from 'src/users/users.repository';
 
 @Module({
   controllers: [FlashCardsController],
@@ -32,6 +33,7 @@ import { ProductsRepository, ProductsService } from 'src/products';
     NlpService,
     ProductsService,
     ProductsRepository,
+    UsersRepository,
   ],
 })
 export class FlashCardsModule {}

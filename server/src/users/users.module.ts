@@ -6,6 +6,7 @@ import { StorageService } from 'src/storage/storage.service';
 import { WalletModule } from 'src/wallet/wallet.module';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
+import { UsersRepository } from './users.repository';
 
 @Module({
   controllers: [UsersController],
@@ -17,6 +18,7 @@ import { UsersService } from './users.service';
     FeedbackService,
     ProductsService,
     ProductsRepository,
+    UsersRepository,
   ],
 })
 export class UsersModule {}

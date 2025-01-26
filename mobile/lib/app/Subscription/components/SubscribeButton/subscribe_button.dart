@@ -11,7 +11,7 @@ class SubscribeButton extends ConsumerWidget {
   const SubscribeButton({
     super.key,
     required this.productId,
-    required this.qonversionId,
+    this.qonversionId,
     this.disabled = false,
   });
 
@@ -51,7 +51,7 @@ class SubscribeButton extends ConsumerWidget {
       onPressed: subscribe,
       variant: ButtonVariant.primary,
       size: ButtonSize.large,
-      disabled: disabled ?? isLoading || qonversionId == null,
+      disabled: disabled ?? isLoading,
     );
   }
 }

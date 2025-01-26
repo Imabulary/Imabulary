@@ -7,6 +7,7 @@ import { UsersService } from 'src/users';
 import { WalletModule } from 'src/wallet/wallet.module';
 import { QuizController } from './quiz.controller';
 import { QuizService } from './quiz.service';
+import { UsersRepository } from 'src/users/users.repository';
 
 @Module({
   imports: [StorageModule, WalletModule],
@@ -17,6 +18,7 @@ import { QuizService } from './quiz.service';
     UsersService,
     ProductsService,
     ProductsRepository,
+    UsersRepository,
   ],
   controllers: [QuizController],
 })

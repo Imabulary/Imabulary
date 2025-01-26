@@ -21,6 +21,7 @@ export class UsersService {
     private readonly wallet: WalletService,
     private readonly products: ProductsService,
     private readonly repository: UsersRepository,
+    private readonly product: ProductsService,
   ) {}
 
   async findOneOrCreate(createUserDto: CreateUserDTO) {
@@ -109,10 +110,17 @@ export class UsersService {
     return true;
   }
 
-  async update(userId: string, updateUserDto: UpdateUserDTO) {
+  update(userId: string, updateUserDto: UpdateUserDTO) {
     return this.prisma.users.update({
       where: { id: userId },
       data: updateUserDto,
     });
+  }
+
+  async findSubscription(userId: string) {
+    const user = await this.findOne({ id: userId });
+    const subscription = await this.product.findOne({ id: user.productId });
+
+    return subscription;
   }
 }

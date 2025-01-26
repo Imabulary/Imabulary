@@ -7,6 +7,7 @@ import { UsersService } from 'src/users';
 import { WalletModule } from 'src/wallet/wallet.module';
 import { SetsController } from './sets.controller';
 import { SetsService } from './sets.service';
+import { UsersRepository } from 'src/users/users.repository';
 
 @Module({
   controllers: [SetsController],
@@ -18,6 +19,7 @@ import { SetsService } from './sets.service';
     UsersService,
     ProductsService,
     ProductsRepository,
+    UsersRepository,
   ],
 })
 export class SetsModule {}

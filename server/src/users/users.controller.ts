@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Patch,
   Post,
   Req,
@@ -34,5 +35,13 @@ export class UsersController {
     const user: Users = request['user'];
 
     return this.usersService.update(user.id, updateUserDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('/subscription')
+  findSubscription(@Req() request: Request) {
+    const user: Users = request['user'];
+
+    return this.usersService.findSubscription(user.id);
   }
 }
