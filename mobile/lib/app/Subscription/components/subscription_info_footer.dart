@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:mobile/utils/url_launcher.dart';
 
 class SubscriptionInfoFooter extends StatelessWidget {
   const SubscriptionInfoFooter({super.key});
@@ -23,14 +23,14 @@ class SubscriptionInfoFooter extends StatelessWidget {
         const SizedBox(
           height: 4,
         ),
+        TypeSetting(
+          'You can manage your payment method on the ',
+          variant: TextVariants.bodySmall,
+          style: TextStyle(color: AppColors.lightGrey),
+          textAlign: TextAlign.justify,
+        ),
         Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            TypeSetting(
-              'You can manage your payment method on the ',
-              variant: TextVariants.bodySmall,
-              style: TextStyle(color: AppColors.lightGrey),
-            ),
             TypeSetting(
               'Subscriptions page',
               type: TextType.link,
@@ -38,24 +38,22 @@ class SubscriptionInfoFooter extends StatelessWidget {
               style: TextStyle(color: AppColors.lightGrey),
               onTap: () async {
                 if (Platform.isAndroid) {
-                  // Open Google Play subscriptions page
-                  await launchUrl(Uri.parse(
+                  await UrlLauncher.launch(
                     'https://play.google.com/store/account/subscriptions',
-                  ));
+                  );
                 } else if (Platform.isIOS) {
-                  // Open App Store subscriptions page
-                  await launchUrl(Uri.parse(
+                  await UrlLauncher.launch(
                     'https://apps.apple.com/account/subscriptions',
-                  ));
+                  );
                 }
               },
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.justify,
             ),
             TypeSetting(
               ' in ${Platform.isAndroid ? 'Google Play' : 'AppStore'}',
               variant: TextVariants.bodySmall,
               style: TextStyle(color: AppColors.lightGrey),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.justify,
             ),
           ],
         ),

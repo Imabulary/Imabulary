@@ -7,8 +7,8 @@ part 'profile.g.dart';
 class Profile with _$Profile {
   const factory Profile({
     required String id,
-    required String uid,
-    required String email,
+    required String externalId,
+    String? email,
     required DateTime createdAt,
     required DateTime updatedAt,
     String? productId,

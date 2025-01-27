@@ -28,9 +28,9 @@ class SubscribeButtonController extends _$SubscribeButtonController {
         (product) => product.qonversionId == id,
       );
 
-      final productPurchasModel = product.toPurchaseModel();
+      final result = await qonversionRepository.purchase(product);
 
-      await qonversionRepository.purchase(productPurchasModel);
+      print(result);
 
       return userRepository.update(UpdateUserDTO(productId: productId));
     });

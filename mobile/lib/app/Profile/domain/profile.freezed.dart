@@ -21,8 +21,8 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Profile {
   String get id => throw _privateConstructorUsedError;
-  String get uid => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
+  String get externalId => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
   String? get productId => throw _privateConstructorUsedError;
@@ -43,8 +43,8 @@ abstract class $ProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String uid,
-      String email,
+      String externalId,
+      String? email,
       DateTime createdAt,
       DateTime updatedAt,
       String? productId});
@@ -66,8 +66,8 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
   @override
   $Res call({
     Object? id = null,
-    Object? uid = null,
-    Object? email = null,
+    Object? externalId = null,
+    Object? email = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? productId = freezed,
@@ -77,14 +77,14 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
+      externalId: null == externalId
+          ? _value.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -110,8 +110,8 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String uid,
-      String email,
+      String externalId,
+      String? email,
       DateTime createdAt,
       DateTime updatedAt,
       String? productId});
@@ -131,8 +131,8 @@ class __$$ProfileImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? uid = null,
-    Object? email = null,
+    Object? externalId = null,
+    Object? email = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? productId = freezed,
@@ -142,14 +142,14 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
+      externalId: null == externalId
+          ? _value.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -171,8 +171,8 @@ class __$$ProfileImplCopyWithImpl<$Res>
 class _$ProfileImpl implements _Profile {
   const _$ProfileImpl(
       {required this.id,
-      required this.uid,
-      required this.email,
+      required this.externalId,
+      this.email,
       required this.createdAt,
       required this.updatedAt,
       this.productId});
@@ -183,9 +183,9 @@ class _$ProfileImpl implements _Profile {
   @override
   final String id;
   @override
-  final String uid;
+  final String externalId;
   @override
-  final String email;
+  final String? email;
   @override
   final DateTime createdAt;
   @override
@@ -195,7 +195,7 @@ class _$ProfileImpl implements _Profile {
 
   @override
   String toString() {
-    return 'Profile(id: $id, uid: $uid, email: $email, createdAt: $createdAt, updatedAt: $updatedAt, productId: $productId)';
+    return 'Profile(id: $id, externalId: $externalId, email: $email, createdAt: $createdAt, updatedAt: $updatedAt, productId: $productId)';
   }
 
   @override
@@ -204,7 +204,8 @@ class _$ProfileImpl implements _Profile {
         (other.runtimeType == runtimeType &&
             other is _$ProfileImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.externalId, externalId) ||
+                other.externalId == externalId) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -216,8 +217,8 @@ class _$ProfileImpl implements _Profile {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, uid, email, createdAt, updatedAt, productId);
+  int get hashCode => Object.hash(
+      runtimeType, id, externalId, email, createdAt, updatedAt, productId);
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -238,8 +239,8 @@ class _$ProfileImpl implements _Profile {
 abstract class _Profile implements Profile {
   const factory _Profile(
       {required final String id,
-      required final String uid,
-      required final String email,
+      required final String externalId,
+      final String? email,
       required final DateTime createdAt,
       required final DateTime updatedAt,
       final String? productId}) = _$ProfileImpl;
@@ -249,9 +250,9 @@ abstract class _Profile implements Profile {
   @override
   String get id;
   @override
-  String get uid;
+  String get externalId;
   @override
-  String get email;
+  String? get email;
   @override
   DateTime get createdAt;
   @override

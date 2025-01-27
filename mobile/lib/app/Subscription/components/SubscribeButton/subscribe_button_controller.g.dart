@@ -7,7 +7,7 @@ part of 'subscribe_button_controller.dart';
 // **************************************************************************
 
 String _$subscribeButtonControllerHash() =>
-    r'5ba28a10b07f3191eb25b80702d8374694e65c11';
+    r'17a017a5bfccda7d4275e2968f6cc90eb9c387ea';
 
 /// See also [SubscribeButtonController].
 @ProviderFor(SubscribeButtonController)

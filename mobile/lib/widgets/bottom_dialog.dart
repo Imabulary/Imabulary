@@ -21,6 +21,7 @@ class BottomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomSheetWrapper(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,

@@ -22,9 +22,9 @@ class QonversionRepository {
     });
   }
 
-  Future<Map<String, QEntitlement>> purchase(QPurchaseModel product) {
+  Future<Map<String, QEntitlement>> purchase(QProduct product) {
     return request(() async {
-      return Qonversion.getSharedInstance().purchase(product);
+      return qonversion.purchaseProduct(product);
     });
   }
 }
