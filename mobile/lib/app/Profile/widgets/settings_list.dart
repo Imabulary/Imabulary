@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Auth/data/auth_repository.dart';
 import 'package:mobile/app/Profile/widgets/ProfileManageAccount/profile_manage_account.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/bottom_sheet_wrapper.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 
 class SettingsList extends ConsumerWidget {
   const SettingsList({super.key});
@@ -19,7 +21,11 @@ class SettingsList extends ConsumerWidget {
         const ProfileManageAccount(),
         ListTile(
           key: const Key('logout'),
-          onTap: signOut,
+          onTap: () {
+            analyticsEngine
+                .trackClick(AnalyticClickEvents.profileSettingsLogout);
+            signOut();
+          },
           title: const TypeSetting('Log out'),
         )
       ],

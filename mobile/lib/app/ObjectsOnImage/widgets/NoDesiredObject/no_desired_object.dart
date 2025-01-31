@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Feedback/data/dto/feedback_dto.dart';
 import 'package:mobile/app/ObjectsOnImage/widgets/NoDesiredObject/no_desired_object_controller.dart';
 import 'package:mobile/app/ObjectsOnImage/widgets/NoDesiredObjectDialog/no_desired_obect_dialog.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/colors.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 import 'package:mobile/widgets/list_item.dart';
 
@@ -41,6 +43,8 @@ class NoDesiredObject extends ConsumerWidget {
     return ListItem(
       onTap: createNoDiseredObjectFeedback != null
           ? () {
+              analyticsEngine.trackClick(
+                  AnalyticClickEvents.selectObjectInPhotoNotInThisList);
               createNoDiseredObjectFeedback(CreateNoDiseredObjectDTO(
                 imageUrl: imageUrl,
                 objectsOnImage: objectsOnImage,
