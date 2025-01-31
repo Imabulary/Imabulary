@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
 import 'package:mobile/app/Layout/components/better_results_dialog.dart';
 import 'package:mobile/app/Layout/components/bottom_sheet_item.dart';
+import 'package:mobile/app/Layout/components/general_feedback_bottom_sheet.dart';
 import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet_controller.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
 import 'package:mobile/atoms/type_setting.dart';
@@ -45,6 +46,17 @@ class AddBottomSheet extends ConsumerWidget {
           scanPhoto: scanPhoto,
           icon: Icons.collections_outlined,
           title: 'Choose from gallery',
+        ),
+        ListTile(
+          title: const TypeSetting('Provide feedback'),
+          leading: const Icon(Icons.feedback_outlined),
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              builder: (_) => const GeneralFeedbackBottomSheet(),
+            );
+          },
         ),
         ListTile(
           title: const TypeSetting('How to get better results?'),

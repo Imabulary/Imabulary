@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Layout/presentation/layout.dart';
 import 'package:mobile/app/Quiz/domain/quiz.dart';
 import 'package:mobile/app/Quiz/domain/result.dart';
+import 'package:mobile/app/Quiz/presentation/results/dialogs/quiz_feedback_dialog.dart';
 import 'package:mobile/app/Quiz/presentation/results/widgets/flashcard_results_widget.dart';
 import 'package:mobile/app/Set/application/set_provider.dart';
 import 'package:mobile/app/Set/domain/set.dart';
@@ -13,7 +14,7 @@ import 'package:mobile/components/button.dart';
 import 'package:mobile/utils/fp.dart';
 
 @RoutePage()
-class ResultScreen extends ConsumerWidget {
+class ResultScreen extends ConsumerStatefulWidget {
   const ResultScreen({
     super.key,
     required this.results,
@@ -24,13 +25,27 @@ class ResultScreen extends ConsumerWidget {
   final List<SetFlashcard> flashcards;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ResultScreen> createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends ConsumerState<ResultScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialog(context: context, builder: (_) => const QuizFeedbackDialog());
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final setFlashcards = ref.watch(findSetFlashcardsProvider);
 
     final correctAnswers =
-        results.where((result) => result.answer == result.correctAnswer);
+        widget.results.where((result) => result.answer == result.correctAnswer);
     final wrongAnswers =
-        results.where((result) => result.answer != result.correctAnswer);
+        widget.results.where((result) => result.answer != result.correctAnswer);
 
     return Layout(
       SingleChildScrollView(
@@ -77,7 +92,7 @@ class ResultScreen extends ConsumerWidget {
                             AutoRouter.of(context).popUntilRoot();
                             SetAppBarController.startQuiz(
                               context,
-                              flashcards,
+                              widget.flashcards,
                               flashcardsForQuiz: groupedFlashcards[
                                   QuizStatuses.still_learning.name],
                             );

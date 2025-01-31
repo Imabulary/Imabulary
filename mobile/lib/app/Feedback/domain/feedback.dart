@@ -31,7 +31,7 @@ class FeedbackCategory with _$FeedbackCategory {
       _$FeedbackCategoryFromJson(json);
 }
 
-final kOtherFeedbackCategory = FeedbackCategory(
+const kOtherFeedbackCategory = FeedbackCategory(
   id: 'other',
   name: 'Other',
   slug: 'other',

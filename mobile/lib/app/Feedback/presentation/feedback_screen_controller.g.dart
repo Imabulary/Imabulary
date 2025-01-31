@@ -7,7 +7,7 @@ part of 'feedback_screen_controller.dart';
 // **************************************************************************
 
 String _$feedbackScreenControllerHash() =>
-    r'97dfae1ce714360f2cbd6d11bf2e4f6ce8de1359';
+    r'74f420400e5f668870372858d7bcd4c7f10f9158';
 
 /// See also [FeedbackScreenController].
 @ProviderFor(FeedbackScreenController)
@@ -24,4 +24,4 @@ final feedbackScreenControllerProvider =
 
 typedef _$FeedbackScreenController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

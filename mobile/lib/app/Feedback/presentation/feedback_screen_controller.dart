@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobile/app/Feedback/application/feedback_service.dart';
+import 'package:mobile/app/Feedback/data/feedback_repository.dart';
 import 'package:mobile/app/Feedback/domain/feedback.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
@@ -51,5 +52,32 @@ class FeedbackScreenController extends _$FeedbackScreenController {
         );
 
         feedbackServiceNotifier.clear();
+      };
+
+  Future Function() likeFlashcard(String flashcardId) => () async {
+        final feedbackRepository = ref.watch(feedbackRepositoryProvider);
+
+        state = const AsyncLoading();
+        state = await AsyncValue.guard(
+          () => feedbackRepository.like(
+            LikeFlashcardDTO(cardId: flashcardId, isAppropriate: true),
+          ),
+        );
+      };
+
+  Future Function() submitFeedback({
+    required String message,
+    required Size screenSize,
+  }) =>
+      () async {
+        final feedbackRepository = ref.watch(feedbackRepositoryProvider);
+
+        state = const AsyncLoading();
+        state = await AsyncValue.guard(
+          () => feedbackRepository.submitFeedback(
+            message: message,
+            screenSize: screenSize,
+          ),
+        );
       };
 }

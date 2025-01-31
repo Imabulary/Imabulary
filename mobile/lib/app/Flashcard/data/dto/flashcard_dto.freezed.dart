@@ -772,3 +772,173 @@ abstract class _DislikeFlashcardDTO implements DislikeFlashcardDTO {
   _$$DislikeFlashcardDTOImplCopyWith<_$DislikeFlashcardDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+LikeFlashcardDTO _$LikeFlashcardDTOFromJson(Map<String, dynamic> json) {
+  return _LikeFlashcardDTO.fromJson(json);
+}
+
+/// @nodoc
+mixin _$LikeFlashcardDTO {
+  String get cardId => throw _privateConstructorUsedError;
+  bool get isAppropriate => throw _privateConstructorUsedError;
+
+  /// Serializes this LikeFlashcardDTO to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of LikeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LikeFlashcardDTOCopyWith<LikeFlashcardDTO> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LikeFlashcardDTOCopyWith<$Res> {
+  factory $LikeFlashcardDTOCopyWith(
+          LikeFlashcardDTO value, $Res Function(LikeFlashcardDTO) then) =
+      _$LikeFlashcardDTOCopyWithImpl<$Res, LikeFlashcardDTO>;
+  @useResult
+  $Res call({String cardId, bool isAppropriate});
+}
+
+/// @nodoc
+class _$LikeFlashcardDTOCopyWithImpl<$Res, $Val extends LikeFlashcardDTO>
+    implements $LikeFlashcardDTOCopyWith<$Res> {
+  _$LikeFlashcardDTOCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LikeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cardId = null,
+    Object? isAppropriate = null,
+  }) {
+    return _then(_value.copyWith(
+      cardId: null == cardId
+          ? _value.cardId
+          : cardId // ignore: cast_nullable_to_non_nullable
+              as String,
+      isAppropriate: null == isAppropriate
+          ? _value.isAppropriate
+          : isAppropriate // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$LikeFlashcardDTOImplCopyWith<$Res>
+    implements $LikeFlashcardDTOCopyWith<$Res> {
+  factory _$$LikeFlashcardDTOImplCopyWith(_$LikeFlashcardDTOImpl value,
+          $Res Function(_$LikeFlashcardDTOImpl) then) =
+      __$$LikeFlashcardDTOImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String cardId, bool isAppropriate});
+}
+
+/// @nodoc
+class __$$LikeFlashcardDTOImplCopyWithImpl<$Res>
+    extends _$LikeFlashcardDTOCopyWithImpl<$Res, _$LikeFlashcardDTOImpl>
+    implements _$$LikeFlashcardDTOImplCopyWith<$Res> {
+  __$$LikeFlashcardDTOImplCopyWithImpl(_$LikeFlashcardDTOImpl _value,
+      $Res Function(_$LikeFlashcardDTOImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LikeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cardId = null,
+    Object? isAppropriate = null,
+  }) {
+    return _then(_$LikeFlashcardDTOImpl(
+      cardId: null == cardId
+          ? _value.cardId
+          : cardId // ignore: cast_nullable_to_non_nullable
+              as String,
+      isAppropriate: null == isAppropriate
+          ? _value.isAppropriate
+          : isAppropriate // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LikeFlashcardDTOImpl implements _LikeFlashcardDTO {
+  const _$LikeFlashcardDTOImpl(
+      {required this.cardId, required this.isAppropriate});
+
+  factory _$LikeFlashcardDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LikeFlashcardDTOImplFromJson(json);
+
+  @override
+  final String cardId;
+  @override
+  final bool isAppropriate;
+
+  @override
+  String toString() {
+    return 'LikeFlashcardDTO(cardId: $cardId, isAppropriate: $isAppropriate)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LikeFlashcardDTOImpl &&
+            (identical(other.cardId, cardId) || other.cardId == cardId) &&
+            (identical(other.isAppropriate, isAppropriate) ||
+                other.isAppropriate == isAppropriate));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, cardId, isAppropriate);
+
+  /// Create a copy of LikeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LikeFlashcardDTOImplCopyWith<_$LikeFlashcardDTOImpl> get copyWith =>
+      __$$LikeFlashcardDTOImplCopyWithImpl<_$LikeFlashcardDTOImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LikeFlashcardDTOImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _LikeFlashcardDTO implements LikeFlashcardDTO {
+  const factory _LikeFlashcardDTO(
+      {required final String cardId,
+      required final bool isAppropriate}) = _$LikeFlashcardDTOImpl;
+
+  factory _LikeFlashcardDTO.fromJson(Map<String, dynamic> json) =
+      _$LikeFlashcardDTOImpl.fromJson;
+
+  @override
+  String get cardId;
+  @override
+  bool get isAppropriate;
+
+  /// Create a copy of LikeFlashcardDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LikeFlashcardDTOImplCopyWith<_$LikeFlashcardDTOImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
