@@ -6,6 +6,7 @@ import 'package:mobile/app/Quiz/presentation/results/domain/quiz_feedback_level.
 import 'package:mobile/app/Quiz/presentation/results/widgets/quiz_feedback_emoji_tile.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/components/dialogs.dart';
 
 class QuizFeedbackDialog extends ConsumerStatefulWidget {
   const QuizFeedbackDialog({super.key, required this.setId});
@@ -31,26 +32,10 @@ class _QuizFeedbackDialogState extends ConsumerState<QuizFeedbackDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const TypeSetting(
-            'Amazing! 🎉',
-            style: TextStyle(color: AppColors.white),
-            variant: TextVariants.headlineLarge,
-          ),
-          IconButton(
-            onPressed: () => context.router.maybePop(),
-            icon: const Icon(
-              Icons.close,
-              size: 24,
-              color: AppColors.biege,
-            ),
-          ),
-        ],
-      ),
-      content: Column(
+    return AppDialog(
+      title: 'Amazing! 🎉',
+      noActions: true,
+      customContent: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           const TypeSetting(

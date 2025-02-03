@@ -1,14 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile/app/Feedback/presentation/feedback_screen_controller.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/components/voiceover_button.dart';
 import 'package:mobile/app/Flashcard/widgets/FlashcardAppBar/flashcard_app_bar.dart';
 import 'package:mobile/app/Flashcard/widgets/SecondNegativeFeedbackDialog/second_negative_feedback_dialog.dart';
 import 'package:mobile/app_router.dart';
-import 'package:mobile/atoms/app_images.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/full_screen_image.dart';
@@ -159,10 +157,10 @@ class FlashcardScreen extends ConsumerWidget {
           children: [
             IconButton(
               onPressed: onLike,
-              icon: SvgPicture.asset(
-                AppImages.like,
-                height: 24,
-                width: 24,
+              icon: const Icon(
+                Icons.thumb_up_alt_outlined,
+                size: 24,
+                color: AppColors.black,
               ),
             ),
             Container(
@@ -173,10 +171,10 @@ class FlashcardScreen extends ConsumerWidget {
             IconButton(
               onPressed: () =>
                   _handleDislike(context, flashcard.is_regenerated),
-              icon: SvgPicture.asset(
-                AppImages.dislike,
-                height: 24,
-                width: 24,
+              icon: const Icon(
+                Icons.thumb_down_alt_outlined,
+                size: 24,
+                color: AppColors.black,
               ),
             ),
           ],
