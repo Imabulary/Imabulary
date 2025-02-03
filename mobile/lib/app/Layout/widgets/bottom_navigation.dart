@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 
 enum CurrentScreen {
   home(0),
@@ -7,6 +8,15 @@ enum CurrentScreen {
   const CurrentScreen(this.value);
 
   final int value;
+
+  AnalyticClickEvents get analyticEvent {
+    switch (this) {
+      case CurrentScreen.home:
+        return AnalyticClickEvents.bottomNavHome;
+      case CurrentScreen.profile:
+        return AnalyticClickEvents.bottomNavProfile;
+    }
+  }
 }
 
 class BottomNavigation extends StatelessWidget {

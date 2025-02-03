@@ -120,7 +120,7 @@ class FlashCardRepository with FlashcardMixin {
   ImageProcessingResult regenerate(String flashcardId) {
     return request(() async {
       final response = await dio.post(
-        '$endpoint/${flashcardId}/regenerate',
+        '$endpoint/$flashcardId/regenerate',
       );
 
       return parseImageProcessingPayload(response);
@@ -130,7 +130,7 @@ class FlashCardRepository with FlashcardMixin {
   Future<bool> delete(String flashcardId) {
     return request(() async {
       final response = await dio.delete(
-        '$endpoint/${flashcardId}',
+        '$endpoint/$flashcardId',
       );
 
       return response.data['result'];

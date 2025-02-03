@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/components/DeleteActionItem/delete_action_item_controller.dart';
 import 'package:mobile/app/Set/presentation/set_screen_controller.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 
 // TODO: add 4 tests, on error, on loading, on data and to verify whether the item is rendered correctly
@@ -31,7 +33,12 @@ class DeleteActionItem extends ConsumerWidget {
     final delete = ref.read(deleteActionItemControllerProvider.notifier).delete;
 
     return ListTile(
-      onTap: state.isLoading ? null : () => delete(set!.id),
+      onTap: state.isLoading
+          ? null
+          : () {
+              analyticsEngine.trackClick(AnalyticClickEvents.setSettingsEdit);
+              delete(set!.id);
+            },
       leading: const Icon(Icons.delete_forever),
       title: const TypeSetting('Delete'),
       subtitle: const TypeSetting(

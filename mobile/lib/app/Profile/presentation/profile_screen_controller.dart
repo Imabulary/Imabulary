@@ -46,7 +46,7 @@ class ProfileScreenController extends _$ProfileScreenController {
       final setsRepository = ref.watch(setRepositoryProvider);
 
       final sets = await setsRepository.findAll(
-        Pagination(page: page),
+        pagination: Pagination(page: page),
       );
 
       _appendItemsToPage(sets, pagingController, page);

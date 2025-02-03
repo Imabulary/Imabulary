@@ -18,12 +18,16 @@ class SetRepository {
 
   String get endpoint => '${dotenv.env['API_URL']}/sets';
 
-  Future<ServerResponse<List<Set>>> findAll(Pagination pagination) {
+  Future<ServerResponse<List<Set>>> findAll({
+    required Pagination pagination,
+    bool? isFinished,
+  }) {
     return request(() async {
       final response = await client.get(
         endpoint,
         queryParameters: {
           "pagination": pagination.toJson(),
+          if (isFinished != null) "isFinished": isFinished,
         },
       );
 

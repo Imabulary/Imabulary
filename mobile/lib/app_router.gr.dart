@@ -80,6 +80,7 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           results: args.results,
           flashcards: args.flashcards,
+          setId: args.setId,
         ),
       );
     },
@@ -296,6 +297,7 @@ class ResultRoute extends PageRouteInfo<ResultRouteArgs> {
     Key? key,
     required List<Result> results,
     required List<({String image_url, String quizStatusId})> flashcards,
+    required String setId,
     List<PageRouteInfo>? children,
   }) : super(
           ResultRoute.name,
@@ -303,6 +305,7 @@ class ResultRoute extends PageRouteInfo<ResultRouteArgs> {
             key: key,
             results: results,
             flashcards: flashcards,
+            setId: setId,
           ),
           initialChildren: children,
         );
@@ -317,6 +320,7 @@ class ResultRouteArgs {
     this.key,
     required this.results,
     required this.flashcards,
+    required this.setId,
   });
 
   final Key? key;
@@ -325,9 +329,11 @@ class ResultRouteArgs {
 
   final List<({String image_url, String quizStatusId})> flashcards;
 
+  final String setId;
+
   @override
   String toString() {
-    return 'ResultRouteArgs{key: $key, results: $results, flashcards: $flashcards}';
+    return 'ResultRouteArgs{key: $key, results: $results, flashcards: $flashcards, setId: $setId}';
   }
 }
 

@@ -8,8 +8,10 @@ import 'package:mobile/app/Profile/widgets/set_grid_item.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 
 class SetsGrid extends ConsumerStatefulWidget {
   const SetsGrid({super.key});
@@ -51,7 +53,11 @@ class _SetsGridState extends ConsumerState<SetsGrid> {
     return Column(
       children: [
         ElevatedButton.icon(
-          onPressed: SetsGridController.showSetFormBottomSheet(context),
+          onPressed: () {
+            analyticsEngine
+                .trackClick(AnalyticClickEvents.setGalleryCreateNewSet);
+            SetsGridController.showSetFormBottomSheet(context)();
+          },
           icon: const Icon(Icons.add),
           label: const TypeSetting(
             'Create new set',

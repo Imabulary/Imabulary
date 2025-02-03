@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobile/app/Feedback/application/feedback_service.dart';
+import 'package:mobile/app/Feedback/data/feedback_repository.dart';
 import 'package:mobile/app/Feedback/domain/feedback.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
 import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
+import 'package:mobile/app/Quiz/presentation/results/domain/quiz_feedback_level.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'feedback_screen_controller.g.dart';
@@ -51,5 +53,52 @@ class FeedbackScreenController extends _$FeedbackScreenController {
         );
 
         feedbackServiceNotifier.clear();
+      };
+
+  Future Function() likeFlashcard(String flashcardId) => () async {
+        final feedbackRepository = ref.watch(feedbackRepositoryProvider);
+
+        state = const AsyncLoading();
+        state = await AsyncValue.guard(
+          () => feedbackRepository.like(
+            LikeFlashcardDTO(cardId: flashcardId, isAppropriate: true),
+          ),
+        );
+      };
+
+  Future Function() submitFeedback({
+    required String title,
+    required String message,
+    required Size screenSize,
+  }) =>
+      () async {
+        final feedbackRepository = ref.watch(feedbackRepositoryProvider);
+
+        state = const AsyncLoading();
+        state = await AsyncValue.guard(
+          () => feedbackRepository.submitFeedback(
+            title: title,
+            message: message,
+            screenSize: screenSize,
+          ),
+        );
+      };
+
+  Future Function() submitQuizFeedback({
+    required QuizFeedbackLevel level,
+    required String setId,
+    required Size screenSize,
+  }) =>
+      () async {
+        final feedbackRepository = ref.watch(feedbackRepositoryProvider);
+
+        state = const AsyncLoading();
+        state = await AsyncValue.guard(
+          () => feedbackRepository.submitQuizFeedback(
+            level: level,
+            setId: setId,
+            screenSize: screenSize,
+          ),
+        );
       };
 }
