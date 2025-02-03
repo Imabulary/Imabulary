@@ -5,11 +5,14 @@ import 'package:mobile/app/Set/components/quiz_flashcards_amount_warning.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/widgets/actions_list.dart';
 import 'package:mobile/app_router.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 
 const kMinimalAmountOfFlashcardsToStartQuiz = 2;
 
 class SetAppBarController {
   static void Function() showActionsBottomSheet(BuildContext context) => () {
+        analyticsEngine.trackClick(AnalyticClickEvents.setSettings);
         showModalBottomSheet(
           clipBehavior: Clip.hardEdge,
           context: context,

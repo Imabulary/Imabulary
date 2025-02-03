@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:mobile/app/Auth/application/auth_provider.dart';
 import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/firebase_options.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/utils/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -27,6 +29,7 @@ Future main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
 
     runApp(const ProviderScope(child: App()));
   });
@@ -70,7 +73,11 @@ class _AppState extends ConsumerState<App> {
       ),
       routerConfig: AppRouter(
         user: ref.watch(authStateProvider).value,
-      ).config(),
+      ).config(
+        navigatorObservers: () => [
+          FirebaseAnalyticsObserver(analytics: analyticsEngine.analytics),
+        ],
+      ),
     );
   }
 }

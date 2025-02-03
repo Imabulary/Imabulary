@@ -8,8 +8,10 @@ import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/presentation/set_screen_controller.dart';
 import 'package:mobile/app_router.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 import 'package:mobile/shared/constants.dart';
 
@@ -70,6 +72,12 @@ class SetForm extends ConsumerWidget {
               FormBuilderValidators.required(),
               FormBuilderValidators.maxLength(kMaxSetNameLength),
             ]),
+            onSubmitted: (value) {
+              analyticsEngine.trackClick(
+                AnalyticClickEvents.newSetTypeTitle,
+                {'title': value},
+              );
+            },
           ),
           const SizedBox(height: 16),
           FormBuilderTextField(
@@ -85,6 +93,12 @@ class SetForm extends ConsumerWidget {
               kMaxSetDescriptionLength,
               checkNullOrEmpty: false,
             ),
+            onSubmitted: (value) {
+              analyticsEngine.trackClick(
+                AnalyticClickEvents.newSetTypeDescription,
+                {'description': value},
+              );
+            },
           ),
           const SizedBox(height: 16),
           ElevatedButton(

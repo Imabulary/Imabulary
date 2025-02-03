@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/bottom_sheet_wrapper.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/widgets/list_item.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 
@@ -40,6 +42,11 @@ class SetsQuizzesList extends ConsumerWidget {
             itemCount: sets.length,
             itemBuilder: (context, index) => ListItem(
               onTap: () {
+                analyticsEngine
+                    .trackClick(AnalyticClickEvents.selectSetForQuiz, {
+                  'set_id': sets[index].id,
+                  'set_name': sets[index].name,
+                });
                 setService.openSet(sets[index]);
                 SetAppBarController.startQuiz(
                   context,
