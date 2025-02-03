@@ -1,9 +1,13 @@
 import 'package:mobile/atoms/app_images.dart';
 
 enum QuizFeedbackLevel {
-  bad,
-  decent,
-  loveIt;
+  bad(1),
+  decent(2),
+  loveIt(3);
+
+  const QuizFeedbackLevel(this.value);
+
+  final int value;
 
   String get name {
     switch (this) {

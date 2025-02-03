@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,10 +8,12 @@ import 'package:mobile/app/Quiz/domain/result.dart';
 import 'package:mobile/app/Quiz/presentation/results/dialogs/quiz_feedback_dialog.dart';
 import 'package:mobile/app/Quiz/presentation/results/widgets/flashcard_results_widget.dart';
 import 'package:mobile/app/Set/application/set_provider.dart';
+import 'package:mobile/app/Set/data/set_repository.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/button.dart';
+import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/utils/fp.dart';
 
 @RoutePage()
@@ -19,8 +22,10 @@ class ResultScreen extends ConsumerStatefulWidget {
     super.key,
     required this.results,
     required this.flashcards,
+    required this.setId,
   });
 
+  final String setId;
   final List<Result> results;
   final List<SetFlashcard> flashcards;
 
@@ -33,8 +38,30 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      showDialog(context: context, builder: (_) => const QuizFeedbackDialog());
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final finishedSets = await ref.read(setRepositoryProvider).findAll(
+            pagination: const Pagination(),
+            isFinished: true,
+          );
+      if (finishedSets.result.isEmpty) {
+        showDialog(
+          context: context,
+          builder: (_) => QuizFeedbackDialog(setId: widget.setId),
+        ).then((value) {
+          if (value == true) {
+            Flushbar(
+              dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+              borderRadius: BorderRadius.circular(8),
+              message: 'Thank you for helping us get better! 😊',
+              messageText: const TypeSetting(
+                'Thank you for helping us get better! 😊',
+              ),
+              duration: const Duration(seconds: 5),
+              flushbarPosition: FlushbarPosition.TOP,
+            ).show(context);
+          }
+        });
+      }
     });
   }
 

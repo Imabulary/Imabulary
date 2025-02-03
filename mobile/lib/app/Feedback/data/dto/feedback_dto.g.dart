@@ -37,6 +37,7 @@ _$FeedbackDTOImpl _$$FeedbackDTOImplFromJson(Map<String, dynamic> json) =>
       userEmail: json['userEmail'] as String?,
       accountType: json['accountType'] as String?,
       subscriptionStatus: json['subscriptionStatus'] as String?,
+      additionalData: json['additionalData'] as Map<String, dynamic>?,
       country: json['country'] as String,
     );
 
@@ -55,5 +56,6 @@ Map<String, dynamic> _$$FeedbackDTOImplToJson(_$FeedbackDTOImpl instance) =>
       'userEmail': instance.userEmail,
       'accountType': instance.accountType,
       'subscriptionStatus': instance.subscriptionStatus,
+      'additionalData': instance.additionalData,
       'country': instance.country,
     };

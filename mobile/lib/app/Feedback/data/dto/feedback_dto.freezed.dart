@@ -217,6 +217,8 @@ mixin _$FeedbackDTO {
   String? get userEmail => throw _privateConstructorUsedError;
   String? get accountType => throw _privateConstructorUsedError;
   String? get subscriptionStatus => throw _privateConstructorUsedError;
+  Map<String, dynamic>? get additionalData =>
+      throw _privateConstructorUsedError;
   String get country => throw _privateConstructorUsedError;
 
   /// Serializes this FeedbackDTO to a JSON map.
@@ -249,6 +251,7 @@ abstract class $FeedbackDTOCopyWith<$Res> {
       String? userEmail,
       String? accountType,
       String? subscriptionStatus,
+      Map<String, dynamic>? additionalData,
       String country});
 }
 
@@ -280,6 +283,7 @@ class _$FeedbackDTOCopyWithImpl<$Res, $Val extends FeedbackDTO>
     Object? userEmail = freezed,
     Object? accountType = freezed,
     Object? subscriptionStatus = freezed,
+    Object? additionalData = freezed,
     Object? country = null,
   }) {
     return _then(_value.copyWith(
@@ -335,6 +339,10 @@ class _$FeedbackDTOCopyWithImpl<$Res, $Val extends FeedbackDTO>
           ? _value.subscriptionStatus
           : subscriptionStatus // ignore: cast_nullable_to_non_nullable
               as String?,
+      additionalData: freezed == additionalData
+          ? _value.additionalData
+          : additionalData // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
       country: null == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
@@ -365,6 +373,7 @@ abstract class _$$FeedbackDTOImplCopyWith<$Res>
       String? userEmail,
       String? accountType,
       String? subscriptionStatus,
+      Map<String, dynamic>? additionalData,
       String country});
 }
 
@@ -394,6 +403,7 @@ class __$$FeedbackDTOImplCopyWithImpl<$Res>
     Object? userEmail = freezed,
     Object? accountType = freezed,
     Object? subscriptionStatus = freezed,
+    Object? additionalData = freezed,
     Object? country = null,
   }) {
     return _then(_$FeedbackDTOImpl(
@@ -449,6 +459,10 @@ class __$$FeedbackDTOImplCopyWithImpl<$Res>
           ? _value.subscriptionStatus
           : subscriptionStatus // ignore: cast_nullable_to_non_nullable
               as String?,
+      additionalData: freezed == additionalData
+          ? _value._additionalData
+          : additionalData // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
       country: null == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
@@ -474,7 +488,9 @@ class _$FeedbackDTOImpl implements _FeedbackDTO {
       this.userEmail,
       this.accountType,
       this.subscriptionStatus,
-      required this.country});
+      final Map<String, dynamic>? additionalData,
+      required this.country})
+      : _additionalData = additionalData;
 
   factory _$FeedbackDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$FeedbackDTOImplFromJson(json);
@@ -505,12 +521,22 @@ class _$FeedbackDTOImpl implements _FeedbackDTO {
   final String? accountType;
   @override
   final String? subscriptionStatus;
+  final Map<String, dynamic>? _additionalData;
+  @override
+  Map<String, dynamic>? get additionalData {
+    final value = _additionalData;
+    if (value == null) return null;
+    if (_additionalData is EqualUnmodifiableMapView) return _additionalData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
   final String country;
 
   @override
   String toString() {
-    return 'FeedbackDTO(message: $message, deviceType: $deviceType, deviceModel: $deviceModel, osName: $osName, osVersion: $osVersion, appVersion: $appVersion, buildNumber: $buildNumber, networkType: $networkType, screenResolution: $screenResolution, userId: $userId, userEmail: $userEmail, accountType: $accountType, subscriptionStatus: $subscriptionStatus, country: $country)';
+    return 'FeedbackDTO(message: $message, deviceType: $deviceType, deviceModel: $deviceModel, osName: $osName, osVersion: $osVersion, appVersion: $appVersion, buildNumber: $buildNumber, networkType: $networkType, screenResolution: $screenResolution, userId: $userId, userEmail: $userEmail, accountType: $accountType, subscriptionStatus: $subscriptionStatus, additionalData: $additionalData, country: $country)';
   }
 
   @override
@@ -541,6 +567,8 @@ class _$FeedbackDTOImpl implements _FeedbackDTO {
                 other.accountType == accountType) &&
             (identical(other.subscriptionStatus, subscriptionStatus) ||
                 other.subscriptionStatus == subscriptionStatus) &&
+            const DeepCollectionEquality()
+                .equals(other._additionalData, _additionalData) &&
             (identical(other.country, country) || other.country == country));
   }
 
@@ -561,6 +589,7 @@ class _$FeedbackDTOImpl implements _FeedbackDTO {
       userEmail,
       accountType,
       subscriptionStatus,
+      const DeepCollectionEquality().hash(_additionalData),
       country);
 
   /// Create a copy of FeedbackDTO
@@ -594,6 +623,7 @@ abstract class _FeedbackDTO implements FeedbackDTO {
       final String? userEmail,
       final String? accountType,
       final String? subscriptionStatus,
+      final Map<String, dynamic>? additionalData,
       required final String country}) = _$FeedbackDTOImpl;
 
   factory _FeedbackDTO.fromJson(Map<String, dynamic> json) =
@@ -625,6 +655,8 @@ abstract class _FeedbackDTO implements FeedbackDTO {
   String? get accountType;
   @override
   String? get subscriptionStatus;
+  @override
+  Map<String, dynamic>? get additionalData;
   @override
   String get country;
 

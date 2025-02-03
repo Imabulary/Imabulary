@@ -9,6 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mobile/app/Feedback/data/dto/feedback_dto.dart';
 import 'package:mobile/app/Feedback/domain/feedback.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
+import 'package:mobile/app/Quiz/presentation/results/domain/quiz_feedback_level.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
 import 'package:mobile/utils/api.dart';
 import 'package:mobile/utils/request.dart';
@@ -58,12 +59,13 @@ class FeedbackRepository {
   }
 
   Future<void> submitFeedback({
+    required String title,
     required String message,
     required Size screenSize,
   }) async {
     final deviceInfo = DeviceInfoPlugin();
     final packageInfo = await PackageInfo.fromPlatform();
-    // final connectivity = await Connectivity().checkConnectivity();
+    final connectivity = await Connectivity().checkConnectivity();
     final user = FirebaseAuth.instance.currentUser;
 
     Map<String, dynamic> deviceData = {};
@@ -77,12 +79,12 @@ class FeedbackRepository {
         'osVersion': androidInfo.version.release,
       };
     } else if (Platform.isIOS) {
-      // final iosInfo = await deviceInfo.iosInfo;
+      final iosInfo = await deviceInfo.iosInfo;
       deviceData = {
         'deviceType': 'smartphone',
-        // 'deviceModel': iosInfo.model,
+        'deviceModel': iosInfo.model,
         'osName': 'iOS',
-        // 'osVersion': iosInfo.systemVersion,
+        'osVersion': iosInfo.systemVersion,
       };
     }
 
@@ -94,8 +96,7 @@ class FeedbackRepository {
       osVersion: deviceData['osVersion'],
       appVersion: packageInfo.version,
       buildNumber: packageInfo.buildNumber,
-      // networkType: connectivity.toString(),
-      networkType: 'wifi',
+      networkType: connectivity.toString(),
       screenResolution: '${screenSize.width}x${screenSize.height}',
       userId: user?.uid ?? 'anonymous',
       userEmail: user?.email,
@@ -103,14 +104,69 @@ class FeedbackRepository {
     );
 
     await Sentry.captureMessage(
-      'User Feedback',
+      title,
       level: SentryLevel.info,
       withScope: (scope) {
-        scope.setExtra('feedback', feedbackData.toJson());
+        scope.setContexts('feedback', feedbackData.toJson());
       },
     );
+  }
 
-    // TODO: Send email
+  Future<void> submitQuizFeedback({
+    required QuizFeedbackLevel level,
+    required String setId,
+    required Size screenSize,
+  }) async {
+    final deviceInfo = DeviceInfoPlugin();
+    final packageInfo = await PackageInfo.fromPlatform();
+    final connectivity = await Connectivity().checkConnectivity();
+    final user = FirebaseAuth.instance.currentUser;
+
+    Map<String, dynamic> deviceData = {};
+
+    if (Platform.isAndroid) {
+      final androidInfo = await deviceInfo.androidInfo;
+      deviceData = {
+        'deviceType': 'smartphone',
+        'deviceModel': androidInfo.model,
+        'osName': 'Android',
+        'osVersion': androidInfo.version.release,
+      };
+    } else if (Platform.isIOS) {
+      final iosInfo = await deviceInfo.iosInfo;
+      deviceData = {
+        'deviceType': 'smartphone',
+        'deviceModel': iosInfo.model,
+        'osName': 'iOS',
+        'osVersion': iosInfo.systemVersion,
+      };
+    }
+
+    final feedbackData = FeedbackDTO(
+        message: 'Quiz feedback',
+        deviceType: deviceData['deviceType'],
+        deviceModel: deviceData['deviceModel'],
+        osName: deviceData['osName'],
+        osVersion: deviceData['osVersion'],
+        appVersion: packageInfo.version,
+        buildNumber: packageInfo.buildNumber,
+        networkType: connectivity.toString(),
+        screenResolution: '${screenSize.width}x${screenSize.height}',
+        userId: user?.uid ?? 'anonymous',
+        userEmail: user?.email,
+        country: Platform.localeName.split('_').last,
+        additionalData: {
+          'level': level.toString(),
+          'setId': setId,
+        });
+
+    await Sentry.captureMessage(
+      'First quiz feedback',
+      level: SentryLevel.info,
+      withScope: (scope) {
+        scope.setContexts('feedback', feedbackData.toJson());
+      },
+    );
   }
 }
 

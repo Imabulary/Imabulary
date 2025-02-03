@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,10 +67,11 @@ class _GeneralFeedbackBottomSheetState
                       ref
                           .watch(feedbackScreenControllerProvider.notifier)
                           .submitFeedback(
+                            title: 'General Feedback',
                             message: _feedbackMessageController.text,
                             screenSize: MediaQuery.sizeOf(context),
                           )();
-                      Navigator.pop(context);
+                      context.router.maybePop(true);
                     },
               variat: ButtonVariant.outlined,
               label: 'Submit',

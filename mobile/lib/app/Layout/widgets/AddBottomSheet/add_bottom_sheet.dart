@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -55,7 +56,21 @@ class AddBottomSheet extends ConsumerWidget {
               context: context,
               isScrollControlled: true,
               builder: (_) => const GeneralFeedbackBottomSheet(),
-            );
+            ).then((value) {
+              Navigator.pop(context);
+              if (value == true) {
+                Flushbar(
+                  dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+                  borderRadius: BorderRadius.circular(8),
+                  message: 'Thank you for helping us get better! 😊',
+                  messageText: const TypeSetting(
+                    'Thank you for helping us get better! 😊',
+                  ),
+                  duration: const Duration(seconds: 5),
+                  flushbarPosition: FlushbarPosition.TOP,
+                ).show(context);
+              }
+            });
           },
         ),
         ListTile(

@@ -8,7 +8,7 @@ import 'package:mobile/utils/fp.dart';
 
 final findAllSetsProvider = FutureProvider.autoDispose.family(
   (ref, Pagination pagination) =>
-      ref.watch(setRepositoryProvider).findAll(pagination),
+      ref.watch(setRepositoryProvider).findAll(pagination: pagination),
 );
 
 final findSetFlashcardsProvider = FutureProvider.autoDispose(

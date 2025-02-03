@@ -62,7 +62,12 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
       ref.invalidate(findSetFlashcardsProvider);
 
       AutoRouter.of(context).push(
-          ResultRoute(results: _results, flashcards: set?.flashcards ?? []));
+        ResultRoute(
+          results: _results,
+          flashcards: set?.flashcards ?? [],
+          setId: set?.id ?? '',
+        ),
+      );
     }
   }
 

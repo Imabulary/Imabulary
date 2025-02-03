@@ -30,6 +30,7 @@ class FeedbackDTO with _$FeedbackDTO {
     String? userEmail,
     String? accountType,
     String? subscriptionStatus,
+    Map<String, dynamic>? additionalData,
     required String country,
   }) = _FeedbackDTO;
 
