@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/app/Profile/widgets/DeleteDataDialog/delete_data_dialog.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/bottom_sheet_wrapper.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 
 class ProfileManageAccountController {
   static void Function() showSetsBottomSheet(BuildContext context) => () {
@@ -19,6 +21,9 @@ class ProfileManageAccountController {
                       children: [
                         GestureDetector(
                           onTap: () {
+                            analyticsEngine.trackClick(
+                              AnalyticClickEvents.deleteUserDataReturn,
+                            );
                             AutoRouter.of(context).maybePop();
                           },
                           child: const Icon(
@@ -47,6 +52,8 @@ class ProfileManageAccountController {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
+                    analyticsEngine
+                        .trackClick(AnalyticClickEvents.deleteUserDataDelete);
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {

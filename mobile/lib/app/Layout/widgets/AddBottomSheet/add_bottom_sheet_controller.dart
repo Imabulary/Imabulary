@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_mixin.dart';
 import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'add_bottom_sheet_controller.g.dart';
@@ -16,6 +18,15 @@ class AddBottomSheetController extends _$AddBottomSheetController
 
   Future scanPhoto(ImageSource source, BuildContext context) async {
     try {
+      switch (source) {
+        case ImageSource.camera:
+          analyticsEngine.trackClick(AnalyticClickEvents.photoOptionsTakePhoto);
+          break;
+        case ImageSource.gallery:
+          analyticsEngine
+              .trackClick(AnalyticClickEvents.photoOptionsSelectFromGallery);
+          break;
+      }
       final flashCardRepository = ref.read(flashCardRepositoryProvider);
 
       final image = await flashCardRepository.pickPhoto(source);
