@@ -20,6 +20,7 @@ export class CreateSetDto {
 }
 
 export class UpdateSetDto extends PartialType(CreateSetDto) {
+  @Type(() => Boolean)
   @IsBoolean({ message: 'isFinished flag must be a boolean' })
   @IsOptional()
   isFinished?: boolean;

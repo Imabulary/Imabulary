@@ -18,6 +18,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import type { Users } from '@prisma/client';
 import { Request } from 'express';
+import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 import { AuthGuard } from 'src/guards';
 import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
 import { PaginationPipe } from 'src/pipes/pagination.pipe';
@@ -29,11 +30,10 @@ import {
   UpdateFlashcardDTO,
 } from './dto';
 import { FlashCardsService } from './flashcards.service';
-import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 
 const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 @Controller('flashcards')
 export class FlashCardsController {
   constructor(private readonly flashCardsService: FlashCardsService) {}
@@ -67,11 +67,7 @@ export class FlashCardsController {
   ) {
     const user: Users = request['user'];
 
-    return this.flashCardsService.findAll(
-      'ccc02567-0ef8-4b82-8ab4-2065686e2f6e',
-      pagination,
-      filters,
-    );
+    return this.flashCardsService.findAll(user.id, pagination, filters);
   }
 
   @Put('/organize')
@@ -132,12 +128,8 @@ export class FlashCardsController {
     @Param('id') id: string,
     @Body() updateFlashcardDto: UpdateFlashcardDTO,
   ) {
-    // const user: Users = request['user'];
+    const user: Users = request['user'];
 
-    return this.flashCardsService.update(
-      id,
-      'ccc02567-0ef8-4b82-8ab4-2065686e2f6e',
-      updateFlashcardDto,
-    );
+    return this.flashCardsService.update(id, user.id, updateFlashcardDto);
   }
 }
