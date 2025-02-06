@@ -36,6 +36,7 @@ class _GeneralFeedbackBottomSheetState
           controller: _feedbackMessageController,
           onTapOutside: (_) => FocusScope.of(context).unfocus(),
           onSubmitted: (_) => FocusScope.of(context).unfocus(),
+          textInputAction: TextInputAction.done,
           decoration: const InputDecoration(
             labelText: 'Message',
             hintText: 'Hi, I want to share...',
@@ -61,18 +62,17 @@ class _GeneralFeedbackBottomSheetState
             ),
             const SizedBox(width: 8),
             Button(
-              onPressed: _feedbackMessageController.text.isEmpty
-                  ? null
-                  : () {
-                      ref
-                          .watch(feedbackScreenControllerProvider.notifier)
-                          .submitFeedback(
-                            title: 'General Feedback',
-                            message: _feedbackMessageController.text,
-                            screenSize: MediaQuery.sizeOf(context),
-                          )();
-                      context.router.maybePop(true);
-                    },
+              disabled: _feedbackMessageController.text.isEmpty,
+              onPressed: () {
+                ref
+                    .watch(feedbackScreenControllerProvider.notifier)
+                    .submitFeedback(
+                      title: 'General Feedback',
+                      message: _feedbackMessageController.text,
+                      screenSize: MediaQuery.sizeOf(context),
+                    )();
+                context.router.maybePop(true);
+              },
               variat: ButtonVariant.outlined,
               label: 'Submit',
             ),

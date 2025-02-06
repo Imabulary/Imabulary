@@ -81,7 +81,7 @@ class Button extends StatelessWidget {
     switch (variat) {
       case ButtonVariant.elevated:
         return ElevatedButton.icon(
-          icon: Icon(icon),
+          icon: icon == null ? null : Icon(icon),
           onPressed: onPress,
           style: elevatedStyle.merge(customStyle),
           label: expanded
@@ -99,7 +99,7 @@ class Button extends StatelessWidget {
         );
       case ButtonVariant.text:
         return TextButton.icon(
-          icon: Icon(icon),
+          icon: icon == null ? null : Icon(icon),
           onPressed: onPress,
           label: expanded
               ? SizedBox(width: double.infinity, child: Center(child: child))
