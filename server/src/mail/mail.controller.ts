@@ -9,8 +9,12 @@ export class MailController {
   constructor(private readonly mailService: MailService) {}
 
   @Post('feedback/form')
-  sendFormFeedbackEmail() {}
+  sendFormFeedbackEmail() {
+    // TODO: implement
+  }
 
   @Post('feedback/quiz')
-  sendQuizFeedbackEmail(@Body() sendQuizFeedbackDto: SendQuizFeedbackDTO) {}
+  sendQuizFeedbackEmail(@Body() sendQuizFeedbackDto: SendQuizFeedbackDTO) {
+    return this.mailService.sendQuizFeedbackEmail(sendQuizFeedbackDto);
+  }
 }

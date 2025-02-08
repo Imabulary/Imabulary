@@ -25,6 +25,30 @@ export class MailService implements OnModuleInit {
 
     smtpClient.subject = 'You have a new quiz feedback in Imabulary app!';
 
+    smtpClient.htmlContent = `
+      <html>
+        <body>
+          <b>Rating</b>
+          <span>{{params.rating}}</span>
+          <br>
+          <b>Set ID</b>
+          <span>{{params.setId}}</span>
+          <br>
+          <b>Firebase User ID</b>
+          <span>{{params.firebaseUserId}}</span>
+        </body>
+      </html>
+    `;
+
+    smtpClient.to = [
+      {
+        email: this.configService.get('TEAM_EMAIL'),
+        name: 'Team Imabulary',
+      },
+    ];
+
+    smtpClient.params = sendQuizFeedbackDto;
+
     await this.brevoClient.sendTransacEmail(smtpClient);
 
     return true;
