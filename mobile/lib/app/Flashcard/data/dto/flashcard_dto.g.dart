@@ -62,7 +62,7 @@ _$LikeFlashcardDTOImpl _$$LikeFlashcardDTOImplFromJson(
         Map<String, dynamic> json) =>
     _$LikeFlashcardDTOImpl(
       cardId: json['cardId'] as String,
-      isAppropriate: json['isAppropriate'] as bool,
+      isAppropriate: json['isAppropriate'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$LikeFlashcardDTOImplToJson(

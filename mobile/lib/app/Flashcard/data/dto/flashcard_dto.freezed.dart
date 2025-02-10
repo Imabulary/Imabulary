@@ -876,7 +876,7 @@ class __$$LikeFlashcardDTOImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LikeFlashcardDTOImpl implements _LikeFlashcardDTO {
   const _$LikeFlashcardDTOImpl(
-      {required this.cardId, required this.isAppropriate});
+      {required this.cardId, this.isAppropriate = true});
 
   factory _$LikeFlashcardDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$LikeFlashcardDTOImplFromJson(json);
@@ -884,6 +884,7 @@ class _$LikeFlashcardDTOImpl implements _LikeFlashcardDTO {
   @override
   final String cardId;
   @override
+  @JsonKey()
   final bool isAppropriate;
 
   @override
@@ -925,7 +926,7 @@ class _$LikeFlashcardDTOImpl implements _LikeFlashcardDTO {
 abstract class _LikeFlashcardDTO implements LikeFlashcardDTO {
   const factory _LikeFlashcardDTO(
       {required final String cardId,
-      required final bool isAppropriate}) = _$LikeFlashcardDTOImpl;
+      final bool isAppropriate}) = _$LikeFlashcardDTOImpl;
 
   factory _LikeFlashcardDTO.fromJson(Map<String, dynamic> json) =
       _$LikeFlashcardDTOImpl.fromJson;

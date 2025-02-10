@@ -1,5 +1,3 @@
-import 'package:mobile/atoms/app_images.dart';
-
 enum QuizFeedbackLevel {
   bad(1),
   decent(2),
@@ -20,14 +18,14 @@ enum QuizFeedbackLevel {
     }
   }
 
-  String get imagePath {
+  String get emoji {
     switch (this) {
       case QuizFeedbackLevel.bad:
-        return AppImages.badEmoji;
+        return '😞';
       case QuizFeedbackLevel.decent:
-        return AppImages.decentEmoji;
+        return '🙂';
       case QuizFeedbackLevel.loveIt:
-        return AppImages.loveItEmoji;
+        return '😍';
     }
   }
 }

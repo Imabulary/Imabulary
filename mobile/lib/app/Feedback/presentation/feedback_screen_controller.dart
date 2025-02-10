@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:mobile/app/Auth/application/auth_provider.dart';
 import 'package:mobile/app/Feedback/application/feedback_service.dart';
+import 'package:mobile/app/Feedback/data/dto/feedback_dto.dart';
 import 'package:mobile/app/Feedback/data/feedback_repository.dart';
+import 'package:mobile/app/Feedback/data/technical_data_repository.dart';
 import 'package:mobile/app/Feedback/domain/feedback.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_service.dart';
 import 'package:mobile/app/Flashcard/data/dto/flashcard_dto.dart';
@@ -66,21 +71,42 @@ class FeedbackScreenController extends _$FeedbackScreenController {
         );
       };
 
-  Future Function() submitFeedback({
+  Future Function() submitGeneralFeedback({
     required String title,
     required String message,
     required Size screenSize,
   }) =>
       () async {
         final feedbackRepository = ref.watch(feedbackRepositoryProvider);
+        final user = ref.read(authStateProvider).value;
 
         state = const AsyncLoading();
         state = await AsyncValue.guard(
-          () => feedbackRepository.submitFeedback(
-            title: title,
-            message: message,
-            screenSize: screenSize,
-          ),
+          () async {
+            final technicalData = await ref
+                .read(technicalDataRepositoryProvider)
+                .getTechnicalData(screenSize);
+
+            final feedbackData = FeedbackDTO(
+              message: message,
+              deviceType: technicalData.deviceType,
+              deviceModel: technicalData.deviceModel,
+              osName: technicalData.osName,
+              osVersion: technicalData.osVersion,
+              appVersion: technicalData.appVersion,
+              buildNumber: technicalData.appBuildNumber,
+              networkType: technicalData.networkType,
+              screenResolution: technicalData.screenResolution,
+              userId: user?.uid ?? 'anonymous',
+              userEmail: user?.email,
+              country: Platform.localeName.split('_').last,
+            );
+
+            return feedbackRepository.submitFeedback(
+              title: 'General Feedback',
+              feedbackData: feedbackData,
+            );
+          },
         );
       };
 
@@ -91,14 +117,38 @@ class FeedbackScreenController extends _$FeedbackScreenController {
   }) =>
       () async {
         final feedbackRepository = ref.watch(feedbackRepositoryProvider);
+        final user = ref.read(authStateProvider).value;
 
         state = const AsyncLoading();
         state = await AsyncValue.guard(
-          () => feedbackRepository.submitQuizFeedback(
-            level: level,
-            setId: setId,
-            screenSize: screenSize,
-          ),
+          () async {
+            final technicalData = await ref
+                .read(technicalDataRepositoryProvider)
+                .getTechnicalData(screenSize);
+
+            final feedbackData = FeedbackDTO(
+                message: 'Quiz feedback',
+                deviceType: technicalData.deviceType,
+                deviceModel: technicalData.deviceModel,
+                osName: technicalData.osName,
+                osVersion: technicalData.osVersion,
+                appVersion: technicalData.appVersion,
+                buildNumber: technicalData.appBuildNumber,
+                networkType: technicalData.networkType,
+                screenResolution: technicalData.screenResolution,
+                userId: user?.uid ?? 'anonymous',
+                userEmail: user?.email,
+                country: Platform.localeName.split('_').last,
+                additionalData: {
+                  'level': level.toString(),
+                  'setId': setId,
+                });
+
+            return feedbackRepository.submitFeedback(
+              title: 'First quiz feedback',
+              feedbackData: feedbackData,
+            );
+          },
         );
       };
 }

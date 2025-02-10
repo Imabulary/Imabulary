@@ -66,7 +66,7 @@ class _GeneralFeedbackBottomSheetState
               onPressed: () {
                 ref
                     .watch(feedbackScreenControllerProvider.notifier)
-                    .submitFeedback(
+                    .submitGeneralFeedback(
                       title: 'General Feedback',
                       message: _feedbackMessageController.text,
                       screenSize: MediaQuery.sizeOf(context),
