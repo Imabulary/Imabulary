@@ -12,11 +12,11 @@ class NoDesiredObectDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const TypeSetting(
-        'We are sorry',
+        'We\'re sorry',
         variant: TextVariants.headlineLarge,
       ),
       content: const TypeSetting(
-        "Our AI couldn't identify the object. Try a clearer photo, and let's see the magic happen! Do not worry, you were not charged for this image.",
+        "Our AI couldn't identify the object. Please try another photo instead, and let us know if the issue continues. Don't worry, you were not charged for this image.",
       ),
       actions: [
         TextButton(
