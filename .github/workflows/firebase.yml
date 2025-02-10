@@ -80,6 +80,7 @@ jobs:
         with:
           name: General_APK
           path: ./mobile/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 2
 
       - name: Upload APK to Firebase
         if: ${{ !env.ACT }}
