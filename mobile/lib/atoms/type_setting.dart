@@ -44,6 +44,7 @@ class TypeSetting extends Text {
         color: style?.color ?? Colors.white,
         fontWeight: style?.fontWeight,
         fontStyle: style?.fontStyle,
+        fontSize: style?.fontSize,
         fontFamily: GoogleFonts.sourceSans3().fontFamily,
       ),
     );

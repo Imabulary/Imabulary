@@ -6,7 +6,9 @@ class Input extends StatelessWidget {
     super.key,
     required this.name,
     required this.label,
+    this.maxLines,
     this.helperText,
+    this.helperMaxLines,
     this.clearable = false,
     this.formKey,
     this.validator,
@@ -16,7 +18,9 @@ class Input extends StatelessWidget {
 
   final String name;
   final String label;
+  final int? maxLines;
   final String? helperText;
+  final int? helperMaxLines;
   final bool clearable;
   final GlobalKey<FormBuilderState>? formKey;
   final FormFieldValidator? validator;
@@ -29,10 +33,12 @@ class Input extends StatelessWidget {
       onChanged: onChanged,
       name: name,
       validator: validator,
+      maxLines: maxLines,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
         labelText: label,
         helperText: helperText,
+        helperMaxLines: helperMaxLines,
         suffixIcon: clearable
             ? IconButton(
                 onPressed: () {

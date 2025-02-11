@@ -7,7 +7,7 @@ part of 'feedback_screen_controller.dart';
 // **************************************************************************
 
 String _$feedbackScreenControllerHash() =>
-    r'f0d65113dea17711465c6d1a88cb174823134d19';
+    r'da028568f96b06cd181f1e2223e797e78400b9d4';
 
 /// See also [FeedbackScreenController].
 @ProviderFor(FeedbackScreenController)

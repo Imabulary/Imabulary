@@ -23,10 +23,9 @@ class QuizFeedbackEmojiTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
             children: [
-              Image.asset(
-                level.imagePath,
-                width: 40,
-                height: 40,
+              TypeSetting(
+                level.emoji,
+                style: const TextStyle(fontSize: 40),
               ),
               const SizedBox(height: 4),
               TypeSetting(
