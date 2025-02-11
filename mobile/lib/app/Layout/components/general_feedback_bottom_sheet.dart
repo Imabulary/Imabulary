@@ -2,11 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mobile/app/Feedback/presentation/feedback_screen_controller.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/bottom_sheet_wrapper.dart';
 import 'package:mobile/components/button.dart';
+import 'package:mobile/widgets/input.dart';
 
 class GeneralFeedbackBottomSheet extends ConsumerStatefulWidget {
   const GeneralFeedbackBottomSheet({super.key});
@@ -31,25 +33,19 @@ class _GeneralFeedbackBottomSheetState
           style: TextStyle(color: AppColors.white),
         ),
         const SizedBox(height: 16),
-        FormBuilderTextField(
-          name: 'message',
-          controller: _feedbackMessageController,
-          onTapOutside: (_) => FocusScope.of(context).unfocus(),
-          onSubmitted: (_) => FocusScope.of(context).unfocus(),
-          textInputAction: TextInputAction.done,
-          decoration: const InputDecoration(
-            labelText: 'Message',
-            hintText: 'Hi, I want to share...',
-            hintStyle: TextStyle(color: AppColors.biege),
-            helperText:
-                'Note: To improve your experience, we collect basic technical data (e.g., OS, phone model) along with your feedback. Privacy Policy',
-            helperMaxLines: 4,
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.biege),
-            ),
-          ),
-          style: const TextStyle(color: AppColors.lightGrey),
+        Input(
+          name: 'Message',
+          label: 'Message',
           maxLines: 4,
+          helperText:
+              'Note: To improve your experience, we collect basic technical data (e.g., OS, phone model) along with your feedback. Privacy Policy',
+          helperMaxLines: 4,
+          validator: FormBuilderValidators.required(),
+          onChanged: (value) {
+            if (value != null) {
+              _feedbackMessageController.text = value;
+            }
+          },
         ),
         const SizedBox(height: 24),
         Row(
