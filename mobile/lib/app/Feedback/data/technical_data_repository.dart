@@ -5,64 +5,96 @@ import 'package:flutter/material.dart';
 import 'package:mobile/app/Feedback/data/dto/technical_data_dto.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'technical_data_repository.g.dart';
+abstract class DeviceInfoRetriever {
+  Future retrieveDeviceInfo(Size screenSize, PackageInfo packageInfo,
+      ConnectivityResult connectivity);
+}
 
-class TechnicalDataRepository {
+class AndroidDeviceInfoRetriever implements DeviceInfoRetriever {
   final DeviceInfoPlugin _deviceInfo;
-  final Connectivity _connectivity;
 
-  TechnicalDataRepository({
-    DeviceInfoPlugin? deviceInfo,
-    Connectivity? connectivity,
-  })  : _deviceInfo = deviceInfo ?? DeviceInfoPlugin(),
-        _connectivity = connectivity ?? Connectivity();
+  AndroidDeviceInfoRetriever(this._deviceInfo);
 
-  Future<TechnicalDataDto> getTechnicalData(
-    Size screenSize,
-  ) async {
-    final packageInfo = await PackageInfo.fromPlatform();
-    final connectivity = await _connectivity.checkConnectivity();
-
-    Map<String, String> deviceData = await _getDeviceInfo();
-
+  @override
+  Future retrieveDeviceInfo(Size screenSize, PackageInfo packageInfo,
+      ConnectivityResult connectivity) async {
+    final androidInfo = await _deviceInfo.androidInfo;
     return TechnicalDataDto(
-      deviceType: deviceData['deviceType'] ?? 'unknown',
-      deviceModel: deviceData['deviceModel'] ?? 'unknown',
-      osName: deviceData['osName'] ?? 'unknown',
-      osVersion: deviceData['osVersion'] ?? 'unknown',
+      deviceType: 'smartphone',
+      deviceModel: androidInfo.model,
+      osName: 'Android',
+      osVersion: androidInfo.version.release,
       appVersion: packageInfo.version,
       appBuildNumber: packageInfo.buildNumber,
       networkType: connectivity.toString(),
       screenResolution: '${screenSize.width}x${screenSize.height}',
     );
   }
+}
 
-  Future<Map<String, String>> _getDeviceInfo() async {
-    if (Platform.isAndroid) {
-      final androidInfo = await _deviceInfo.androidInfo;
-      return {
-        'deviceType': 'smartphone',
-        'deviceModel': androidInfo.model,
-        'osName': 'Android',
-        'osVersion': androidInfo.version.release,
-      };
-    } else if (Platform.isIOS) {
-      final iosInfo = await _deviceInfo.iosInfo;
-      return {
-        'deviceType': 'smartphone',
-        'deviceModel': iosInfo.model,
-        'osName': 'iOS',
-        'osVersion': iosInfo.systemVersion,
-      };
-    }
-    return {};
+class IOSDeviceInfoRetriever implements DeviceInfoRetriever {
+  final DeviceInfoPlugin _deviceInfo;
+
+  IOSDeviceInfoRetriever(this._deviceInfo);
+
+  @override
+  Future retrieveDeviceInfo(Size screenSize, PackageInfo packageInfo,
+      ConnectivityResult connectivity) async {
+    final iosInfo = await _deviceInfo.iosInfo;
+    return TechnicalDataDto(
+      deviceType: 'smartphone',
+      deviceModel: iosInfo.model,
+      osName: 'iOS',
+      osVersion: iosInfo.systemVersion,
+      appVersion: packageInfo.version,
+      appBuildNumber: packageInfo.buildNumber,
+      networkType: connectivity.toString(),
+      screenResolution: '${screenSize.width}x${screenSize.height}',
+    );
   }
 }
 
-@riverpod
-TechnicalDataRepository technicalDataRepository(
-    TechnicalDataRepositoryRef ref) {
-  return TechnicalDataRepository();
+class UnknownDeviceInfoRetriever implements DeviceInfoRetriever {
+  @override
+  Future retrieveDeviceInfo(Size screenSize, PackageInfo packageInfo,
+      ConnectivityResult connectivity) async {
+    return TechnicalDataDto(
+      deviceType: 'unknown',
+      deviceModel: 'unknown',
+      osName: 'unknown',
+      osVersion: 'unknown',
+      appVersion: packageInfo.version,
+      appBuildNumber: packageInfo.buildNumber,
+      networkType: connectivity.toString(),
+      screenResolution: '${screenSize.width}x${screenSize.height}',
+    );
+  }
+}
+
+class TechnicalDataRepository {
+  final DeviceInfoRetriever _deviceInfoRetriever;
+
+  TechnicalDataRepository(this._deviceInfoRetriever);
+
+  Future getTechnicalData(Size screenSize) async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    final connectivity = await Connectivity().checkConnectivity();
+    return _deviceInfoRetriever.retrieveDeviceInfo(
+      screenSize,
+      packageInfo,
+      connectivity.first,
+    );
+  }
+
+  static TechnicalDataRepository getRepository() {
+    final deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      return TechnicalDataRepository(AndroidDeviceInfoRetriever(deviceInfo));
+    } else if (Platform.isIOS) {
+      return TechnicalDataRepository(IOSDeviceInfoRetriever(deviceInfo));
+    } else {
+      return TechnicalDataRepository(UnknownDeviceInfoRetriever());
+    }
+  }
 }
