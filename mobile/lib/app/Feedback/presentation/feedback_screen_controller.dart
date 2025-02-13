@@ -83,8 +83,7 @@ class FeedbackScreenController extends _$FeedbackScreenController {
         state = const AsyncLoading();
         state = await AsyncValue.guard(
           () async {
-            final technicalData = await ref
-                .read(technicalDataRepositoryProvider)
+            final technicalData = await TechnicalDataRepository.getRepository()
                 .getTechnicalData(screenSize);
 
             final feedbackData = FeedbackDTO(
@@ -122,8 +121,7 @@ class FeedbackScreenController extends _$FeedbackScreenController {
         state = const AsyncLoading();
         state = await AsyncValue.guard(
           () async {
-            final technicalData = await ref
-                .read(technicalDataRepositoryProvider)
+            final technicalData = await TechnicalDataRepository.getRepository()
                 .getTechnicalData(screenSize);
 
             final feedbackData = FeedbackDTO(
