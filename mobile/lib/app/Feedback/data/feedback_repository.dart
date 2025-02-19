@@ -53,6 +53,7 @@ class FeedbackRepository {
   Future<void> submitFeedback({
     required String title,
     required FeedbackDTO feedbackData,
+    bool isQuizFeedback = false,
   }) async {
     await Sentry.captureMessage(
       title,
@@ -61,6 +62,13 @@ class FeedbackRepository {
         scope.setContexts('feedback', feedbackData.toJson());
       },
     );
+
+    await request(() async {
+      await dio.post(
+        '$endpoint/${isQuizFeedback ? 'quiz' : 'form'}',
+        data: feedbackData.toJson(),
+      );
+    });
   }
 }
 

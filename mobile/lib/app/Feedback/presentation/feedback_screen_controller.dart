@@ -143,9 +143,9 @@ class FeedbackScreenController extends _$FeedbackScreenController {
                 });
 
             return feedbackRepository.submitFeedback(
-              title: 'First quiz feedback',
-              feedbackData: feedbackData,
-            );
+                title: 'First quiz feedback',
+                feedbackData: feedbackData,
+                isQuizFeedback: true);
           },
         );
       };
