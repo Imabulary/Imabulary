@@ -1,4 +1,4 @@
-# Build and start containers for development
+# Build and start containers for development 
 devBuild() {
   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
   runMigration
