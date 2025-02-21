@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
-import 'package:mobile/app/Layout/components/better_results_dialog.dart';
 import 'package:mobile/app/Layout/components/bottom_sheet_item.dart';
 import 'package:mobile/app/Layout/components/general_feedback_bottom_sheet.dart';
 import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet_controller.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
-import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 
 class AddBottomSheet extends ConsumerWidget {
@@ -75,18 +72,6 @@ class AddBottomSheet extends ConsumerWidget {
             });
           },
         ),
-        ListTile(
-          title: const TypeSetting('How to get better results?'),
-          leading: const Icon(Icons.help_outline),
-          onTap: () {
-            analyticsEngine
-                .trackClick(AnalyticClickEvents.photoOptionsGetBetterResults);
-            showDialog(
-              context: context,
-              builder: (context) => const BetterResultsDialog(),
-            );
-          },
-        )
       ],
     );
   }

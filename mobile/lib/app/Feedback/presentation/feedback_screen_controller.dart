@@ -117,35 +117,38 @@ class FeedbackScreenController extends _$FeedbackScreenController {
       () async {
         final feedbackRepository = ref.watch(feedbackRepositoryProvider);
         final user = ref.read(authStateProvider).value;
+        final technicalDataRepository = TechnicalDataRepository.getRepository();
 
         state = const AsyncLoading();
         state = await AsyncValue.guard(
           () async {
-            final technicalData = await TechnicalDataRepository.getRepository()
-                .getTechnicalData(screenSize);
+            final technicalData =
+                await technicalDataRepository.getTechnicalData(screenSize);
 
             final feedbackData = FeedbackDTO(
-                message: 'Quiz feedback',
-                deviceType: technicalData.deviceType,
-                deviceModel: technicalData.deviceModel,
-                osName: technicalData.osName,
-                osVersion: technicalData.osVersion,
-                appVersion: technicalData.appVersion,
-                buildNumber: technicalData.appBuildNumber,
-                networkType: technicalData.networkType,
-                screenResolution: technicalData.screenResolution,
-                userId: user?.uid ?? 'anonymous',
-                userEmail: user?.email,
-                country: Platform.localeName.split('_').last,
-                additionalData: {
-                  'level': level.toString(),
-                  'setId': setId,
-                });
+              message: 'Quiz feedback',
+              deviceType: technicalData.deviceType,
+              deviceModel: technicalData.deviceModel,
+              osName: technicalData.osName,
+              osVersion: technicalData.osVersion,
+              appVersion: technicalData.appVersion,
+              buildNumber: technicalData.appBuildNumber,
+              networkType: technicalData.networkType,
+              screenResolution: technicalData.screenResolution,
+              userId: user?.uid ?? 'anonymous',
+              userEmail: user?.email,
+              country: Platform.localeName.split('_').last,
+              additionalData: {
+                'level': level.value,
+                'setId': setId,
+              },
+            );
 
             return feedbackRepository.submitFeedback(
-                title: 'First quiz feedback',
-                feedbackData: feedbackData,
-                isQuizFeedback: true);
+              title: 'First quiz feedback',
+              feedbackData: feedbackData,
+              isQuizFeedback: true,
+            );
           },
         );
       };

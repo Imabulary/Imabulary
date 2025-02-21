@@ -27,7 +27,9 @@ class SetRepository {
         endpoint,
         queryParameters: {
           "pagination": pagination.toJson(),
-          if (isFinished != null) "isFinished": isFinished,
+          "filters": {
+            if (isFinished != null) "isFinished": isFinished,
+          }
         },
       );
 

@@ -92,7 +92,7 @@ class Button extends StatelessWidget {
         return OutlinedButton.icon(
           icon: icon == null ? null : Icon(icon),
           onPressed: onPress,
-          style: customStyle?.merge(outlinedStyle),
+          style: outlinedStyle.merge(customStyle),
           label: expanded
               ? SizedBox(width: double.infinity, child: Center(child: child))
               : child,

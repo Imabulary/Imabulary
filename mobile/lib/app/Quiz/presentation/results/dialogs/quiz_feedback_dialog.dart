@@ -18,20 +18,10 @@ class QuizFeedbackDialog extends ConsumerStatefulWidget {
 }
 
 class _QuizFeedbackDialogState extends ConsumerState<QuizFeedbackDialog> {
-  void sendFeedback(
-    BuildContext context,
-    QuizFeedbackLevel level,
-  ) {
-    ref.watch(feedbackScreenControllerProvider.notifier).submitQuizFeedback(
-          level: level,
-          setId: 'setId',
-          screenSize: MediaQuery.sizeOf(context),
-        );
-    context.router.maybePop(true);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final notifier = ref.watch(feedbackScreenControllerProvider.notifier);
+
     return AppDialog(
       title: 'Amazing! 🎉',
       noActions: true,
@@ -50,7 +40,14 @@ class _QuizFeedbackDialogState extends ConsumerState<QuizFeedbackDialog> {
                 .map(
                   (level) => QuizFeedbackEmojiTile(
                     level: level,
-                    onTap: () => sendFeedback(context, level),
+                    onTap: () async {
+                      await notifier.submitQuizFeedback(
+                        level: level,
+                        setId: widget.setId,
+                        screenSize: MediaQuery.sizeOf(context),
+                      );
+                      context.router.maybePop(true);
+                    },
                   ),
                 )
                 .toList(),
