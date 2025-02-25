@@ -1,14 +1,13 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile/app/Flashcard/application/flashcard_providers.dart';
-import 'package:mobile/app/Layout/components/better_results_dialog.dart';
 import 'package:mobile/app/Layout/components/bottom_sheet_item.dart';
+import 'package:mobile/app/Layout/components/general_feedback_bottom_sheet.dart';
 import 'package:mobile/app/Layout/widgets/AddBottomSheet/add_bottom_sheet_controller.dart';
 import 'package:mobile/app/Wallet/application/wallet_providers.dart';
-import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/type_setting.dart';
-import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/utils/async_value_ui.dart';
 
 class AddBottomSheet extends ConsumerWidget {
@@ -49,17 +48,30 @@ class AddBottomSheet extends ConsumerWidget {
           title: 'Choose from gallery',
         ),
         ListTile(
-          title: const TypeSetting('How to get better results?'),
-          leading: const Icon(Icons.help_outline),
+          title: const TypeSetting('Provide feedback'),
+          leading: const Icon(Icons.feedback_outlined),
           onTap: () {
-            analyticsEngine
-                .trackClick(AnalyticClickEvents.photoOptionsGetBetterResults);
-            showDialog(
+            showModalBottomSheet(
               context: context,
-              builder: (context) => const BetterResultsDialog(),
-            );
+              isScrollControlled: true,
+              builder: (_) => const GeneralFeedbackBottomSheet(),
+            ).then((value) {
+              Navigator.pop(context);
+              if (value == true) {
+                Flushbar(
+                  dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+                  borderRadius: BorderRadius.circular(8),
+                  message: 'Thank you for helping us get better! 😊',
+                  messageText: const TypeSetting(
+                    'Thank you for helping us get better! 😊',
+                  ),
+                  duration: const Duration(seconds: 5),
+                  flushbarPosition: FlushbarPosition.TOP,
+                ).show(context);
+              }
+            });
           },
-        )
+        ),
       ],
     );
   }

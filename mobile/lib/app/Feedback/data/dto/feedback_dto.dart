@@ -13,3 +13,27 @@ class CreateNoDiseredObjectDTO with _$CreateNoDiseredObjectDTO {
   factory CreateNoDiseredObjectDTO.fromJson(Map<String, dynamic> json) =>
       _$CreateNoDiseredObjectDTOFromJson(json);
 }
+
+@freezed
+class FeedbackDTO with _$FeedbackDTO {
+  const factory FeedbackDTO({
+    required String message,
+    required String deviceType,
+    required String deviceModel,
+    required String osName,
+    required String osVersion,
+    required String appVersion,
+    required String buildNumber,
+    required String networkType,
+    required String screenResolution,
+    required String userId,
+    String? userEmail,
+    String? accountType,
+    String? subscriptionStatus,
+    Map<String, dynamic>? additionalData,
+    required String country,
+  }) = _FeedbackDTO;
+
+  factory FeedbackDTO.fromJson(Map<String, dynamic> json) =>
+      _$FeedbackDTOFromJson(json);
+}

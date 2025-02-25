@@ -7,7 +7,7 @@ part of 'add_bottom_sheet_controller.dart';
 // **************************************************************************
 
 String _$addBottomSheetControllerHash() =>
-    r'48e69bab8f1a83ebcf8d7be5b95367eb5d009ebc';
+    r'bff16fb88111719b8416b4ced6f70e37f7dbe64a';
 
 /// See also [AddBottomSheetController].
 @ProviderFor(AddBottomSheetController)
@@ -24,4 +24,4 @@ final addBottomSheetControllerProvider =
 
 typedef _$AddBottomSheetController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Flashcard/components/dislike_button.dart';
 import 'package:mobile/app/Flashcard/widgets/FlashcardAppBar/flashcard_app_bar_controller.dart';
 import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/colors.dart';
@@ -36,7 +35,6 @@ class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
                   style: TextStyle(color: AppColors.primary),
                 ),
               ),
-              const DislikeButton()
             ],
           ),
         ),

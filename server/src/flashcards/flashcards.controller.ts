@@ -6,6 +6,7 @@ import {
   MaxFileSizeValidator,
   Param,
   ParseFilePipe,
+  Patch,
   Post,
   Put,
   Query,
@@ -17,6 +18,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import type { Users } from '@prisma/client';
 import { Request } from 'express';
+import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 import { AuthGuard } from 'src/guards';
 import { ImageCompressPipe, ImageCompressionResult } from 'src/pipes';
 import { PaginationPipe } from 'src/pipes/pagination.pipe';
@@ -25,9 +27,9 @@ import {
   CreateFlashcardDTO,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
+  UpdateFlashcardDTO,
 } from './dto';
 import { FlashCardsService } from './flashcards.service';
-import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 
 const MAX_PICTURE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 megabytes
 
@@ -115,5 +117,19 @@ export class FlashCardsController {
     const user: Users = request['user'];
 
     return this.flashCardsService.delete(id, user.id);
+  }
+
+  /**
+   * Updates a flashcard by the provided ID with the provided data in body.
+   */
+  @Patch('/:id')
+  update(
+    @Req() request: Request,
+    @Param('id') id: string,
+    @Body() updateFlashcardDto: UpdateFlashcardDTO,
+  ) {
+    const user: Users = request['user'];
+
+    return this.flashCardsService.update(id, user.id, updateFlashcardDto);
   }
 }

@@ -7,7 +7,7 @@ part of 'welcome_screen_controller.dart';
 // **************************************************************************
 
 String _$welcomeScreenControllerHash() =>
-    r'a2752b791d55b3b06fc859691e196a370d551c28';
+    r'ce4df258451ccb7eb69fee89fa00913560a999ba';
 
 /// See also [WelcomeScreenController].
 @ProviderFor(WelcomeScreenController)
@@ -24,4 +24,4 @@ final welcomeScreenControllerProvider =
 
 typedef _$WelcomeScreenController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

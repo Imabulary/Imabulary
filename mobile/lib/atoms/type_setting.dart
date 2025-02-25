@@ -8,6 +8,7 @@ enum TextVariants {
   headlineSmall,
   bodyLarge,
   labelLarge,
+  bodyMedium,
   bodySmall
 }
 
@@ -31,6 +32,7 @@ class TypeSetting extends Text {
       TextVariants.headlineMedium: Theme.of(context).textTheme.headlineMedium,
       TextVariants.headlineSmall: Theme.of(context).textTheme.headlineSmall,
       TextVariants.bodyLarge: Theme.of(context).textTheme.bodyLarge,
+      TextVariants.bodyMedium: Theme.of(context).textTheme.bodyMedium,
       TextVariants.labelLarge: Theme.of(context).textTheme.labelLarge,
       TextVariants.bodySmall: Theme.of(context).textTheme.bodySmall,
     };
@@ -42,6 +44,7 @@ class TypeSetting extends Text {
         color: style?.color ?? Colors.white,
         fontWeight: style?.fontWeight,
         fontStyle: style?.fontStyle,
+        fontSize: style?.fontSize,
         fontFamily: GoogleFonts.sourceSans3().fontFamily,
       ),
     );

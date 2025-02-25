@@ -1,5 +1,12 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
+import { PartialType } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class CreateSetDto {
   @Length(0, 255, { message: 'Name length cannot exceed 255 characters' })
@@ -12,4 +19,16 @@ export class CreateSetDto {
   description?: string;
 }
 
-export class UpdateSetDto extends PartialType(CreateSetDto) {}
+export class UpdateSetDto extends PartialType(CreateSetDto) {
+  @Type(() => Boolean)
+  @IsBoolean({ message: 'isFinished flag must be a boolean' })
+  @IsOptional()
+  isFinished?: boolean;
+}
+
+export class SetsFilters {
+  @Type(() => Boolean)
+  @IsBoolean({ message: 'isFinished flag must be a boolean' })
+  @IsOptional()
+  isFinished?: boolean;
+}

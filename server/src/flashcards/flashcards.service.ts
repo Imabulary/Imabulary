@@ -1,33 +1,33 @@
 import { File } from '@google-cloud/storage';
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { isEmpty } from 'lodash';
 import { AssistantService } from 'src/assistant/assistant.service';
+import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
 import { FeedbackService } from 'src/feedback/feedback.service';
+import { NlpService } from 'src/nlp';
 import { PrismaService } from 'src/prisma';
 import { QuizService } from 'src/quiz/quiz.service';
 import { Filters, ServerPagination } from 'src/shared';
-import { DEFAULT_COST } from 'src/shared/constants';
 import { SoundService } from 'src/sound/sound.service';
 import { StorageService } from 'src/storage/storage.service';
 import { IBucketFolders } from 'src/storage/utils';
 import { TranslatorService } from 'src/translator/translator.service';
+import { isSingle } from 'src/utils';
 import { VisionService } from 'src/vision/vision.service';
-import { WalletService } from 'src/wallet/wallet.service';
 import {
   CreateFlashcardDTO,
   DisorganizeFlashcardsDTO,
   OrganizeFlashcardsDTO,
   ProcessImageDTO,
+  UpdateFlashcardDTO,
 } from './dto';
-import { Prisma } from '@prisma/client';
 import {
   FlashcardNotFoundException,
   FlashcardRegeneratedException,
   FlashcardWithFeedbackException,
 } from './utils';
-import { isEmpty } from 'lodash';
-import { DislikeFlashcardDTO } from 'src/feedback/dto/feedback.dto';
-import { NlpService } from 'src/nlp';
-import { isSingle } from 'src/utils';
+import { FlashcardsRepository } from './flashcards.repository';
 
 @Injectable()
 export class FlashCardsService {
@@ -40,8 +40,8 @@ export class FlashCardsService {
     private readonly translator: TranslatorService,
     private readonly sound: SoundService,
     private readonly feedbackService: FeedbackService,
-    private readonly wallet: WalletService,
     private readonly quizService: QuizService,
+    private readonly flashcardsRepository: FlashcardsRepository,
   ) {}
 
   async scan(userId: string, fileName: string, file: Buffer) {
@@ -228,11 +228,7 @@ export class FlashCardsService {
 
   // TODO: add tests
   async delete(id: string, userId: string) {
-    const flashcard = await this.findOne({ id, userId });
-
-    if (!flashcard) {
-      throw new FlashcardNotFoundException(id, 'FlashCardsService.delete');
-    }
+    await this.findOne({ id, userId });
 
     await Promise.all([
       this.prisma.cards.update({
@@ -288,10 +284,6 @@ export class FlashCardsService {
 
     const flashcard = await this.findOne({ id: cardId });
 
-    if (!flashcard) {
-      throw new FlashcardNotFoundException(cardId, 'FlashCardsService.dislike');
-    }
-
     const existingFeedback = await this.feedbackService.findOne({
       cardId: flashcard.id,
     });
@@ -324,7 +316,28 @@ export class FlashCardsService {
     return true;
   }
 
-  findOne(where: Prisma.CardsWhereUniqueInput) {
-    return this.prisma.cards.findFirst({ where });
+  async findOne(where: Prisma.CardsWhereUniqueInput) {
+    const flashcard = await this.flashcardsRepository.findOne(where);
+
+    if (!flashcard) {
+      throw new FlashcardNotFoundException(where);
+    }
+
+    return flashcard;
+  }
+
+  async update(
+    id: string,
+    userId: string,
+    updateFlashcardDto: UpdateFlashcardDTO,
+  ) {
+    const { isTouched } = updateFlashcardDto;
+    const flashcard = await this.findOne({ id, userId });
+
+    if (isTouched && !flashcard.isTouched) {
+      return this.flashcardsRepository.update({ id, userId }, { isTouched });
+    }
+
+    return flashcard;
   }
 }
