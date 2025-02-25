@@ -65,8 +65,6 @@ class FeedbackRepository {
       },
     );
 
-    print('FIRED!!!!!');
-
     final data = isQuizFeedback
         ? {
             "setId": feedbackData.additionalData?['setId'] ?? '',
