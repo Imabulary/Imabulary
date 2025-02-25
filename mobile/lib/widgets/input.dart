@@ -6,7 +6,9 @@ class Input extends StatelessWidget {
     super.key,
     required this.name,
     required this.label,
+    this.controller,
     this.maxLines,
+    this.helper,
     this.helperText,
     this.helperMaxLines,
     this.clearable = false,
@@ -16,9 +18,11 @@ class Input extends StatelessWidget {
     this.onClear,
   });
 
+  final TextEditingController? controller;
   final String name;
   final String label;
   final int? maxLines;
+  final Widget? helper;
   final String? helperText;
   final int? helperMaxLines;
   final bool clearable;
@@ -30,13 +34,16 @@ class Input extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+      controller: controller,
       onChanged: onChanged,
       name: name,
       validator: validator,
       maxLines: maxLines,
+      textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
         labelText: label,
+        helper: helper,
         helperText: helperText,
         helperMaxLines: helperMaxLines,
         suffixIcon: clearable

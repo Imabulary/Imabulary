@@ -77,36 +77,41 @@ class FeedbackScreenController extends _$FeedbackScreenController {
     required Size screenSize,
   }) =>
       () async {
-        final feedbackRepository = ref.watch(feedbackRepositoryProvider);
-        final user = ref.read(authStateProvider).value;
+        try {
+          final feedbackRepository = ref.watch(feedbackRepositoryProvider);
+          final user = ref.read(authStateProvider).value;
 
-        state = const AsyncLoading();
-        state = await AsyncValue.guard(
-          () async {
-            final technicalData = await TechnicalDataRepository.getRepository()
-                .getTechnicalData(screenSize);
+          state = const AsyncLoading();
+          state = await AsyncValue.guard(
+            () async {
+              final technicalData =
+                  await TechnicalDataRepository.getRepository()
+                      .getTechnicalData(screenSize);
 
-            final feedbackData = FeedbackDTO(
-              message: message,
-              deviceType: technicalData.deviceType,
-              deviceModel: technicalData.deviceModel,
-              osName: technicalData.osName,
-              osVersion: technicalData.osVersion,
-              appVersion: technicalData.appVersion,
-              buildNumber: technicalData.appBuildNumber,
-              networkType: technicalData.networkType,
-              screenResolution: technicalData.screenResolution,
-              userId: user?.uid ?? 'anonymous',
-              userEmail: user?.email,
-              country: Platform.localeName.split('_').last,
-            );
+              final feedbackData = FeedbackDTO(
+                message: message,
+                deviceType: technicalData.deviceType,
+                deviceModel: technicalData.deviceModel,
+                osName: technicalData.osName,
+                osVersion: technicalData.osVersion,
+                appVersion: technicalData.appVersion,
+                buildNumber: technicalData.appBuildNumber,
+                networkType: technicalData.networkType,
+                screenResolution: technicalData.screenResolution,
+                userId: user?.uid ?? 'anonymous',
+                userEmail: user?.email,
+                country: Platform.localeName.split('_').last,
+              );
 
-            return feedbackRepository.submitFeedback(
-              title: 'General Feedback',
-              feedbackData: feedbackData,
-            );
-          },
-        );
+              feedbackRepository.submitFeedback(
+                title: 'General Feedback',
+                feedbackData: feedbackData,
+              );
+            },
+          );
+        } catch (error) {
+          state = AsyncError(error, StackTrace.current);
+        }
       };
 
   Future Function() submitQuizFeedback({
@@ -144,7 +149,7 @@ class FeedbackScreenController extends _$FeedbackScreenController {
               },
             );
 
-            return feedbackRepository.submitFeedback(
+            feedbackRepository.submitFeedback(
               title: 'First quiz feedback',
               feedbackData: feedbackData,
               isQuizFeedback: true,

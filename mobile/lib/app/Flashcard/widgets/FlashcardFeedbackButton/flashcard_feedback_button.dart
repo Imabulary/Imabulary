@@ -7,8 +7,17 @@ import 'package:mobile/app/Flashcard/widgets/SecondNegativeFeedbackDialog/second
 import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 
-class FlashcardFeedbackButton extends ConsumerWidget {
+class FlashcardFeedbackButton extends ConsumerStatefulWidget {
   const FlashcardFeedbackButton({super.key});
+
+  @override
+  ConsumerState<FlashcardFeedbackButton> createState() =>
+      _FlashcardFeedbackButtonState();
+}
+
+class _FlashcardFeedbackButtonState
+    extends ConsumerState<FlashcardFeedbackButton> {
+  var feedbackSent = false;
 
   void _handleDislike(
     BuildContext context,
@@ -22,12 +31,13 @@ class FlashcardFeedbackButton extends ConsumerWidget {
 
       return;
     }
+    feedbackSent = true;
 
     AutoRouter.of(context).push(const FeedbackRoute());
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final flashcard = ref.watch(flashcardServiceProvider);
     final state = ref.watch(feedbackScreenControllerProvider);
     final notifier = ref.watch(feedbackScreenControllerProvider.notifier);
@@ -39,37 +49,46 @@ class FlashcardFeedbackButton extends ConsumerWidget {
         ? null
         : notifier.likeFlashcard(flashcard?.id ?? '');
 
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.primary,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-            onPressed: onLike,
-            icon: const Icon(
-              Icons.thumb_up_alt_outlined,
-              size: 24,
-              color: AppColors.black,
+    return AnimatedOpacity(
+      opacity: feedbackSent ? 0 : 1,
+      duration: const Duration(milliseconds: 300),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              onPressed: onLike == null
+                  ? null
+                  : () {
+                      onLike();
+                      feedbackSent = true;
+                    },
+              icon: const Icon(
+                Icons.thumb_up_alt_outlined,
+                size: 24,
+                color: AppColors.black,
+              ),
             ),
-          ),
-          Container(
-            width: 48,
-            height: 1,
-            color: AppColors.black.withOpacity(0.1),
-          ),
-          IconButton(
-            onPressed: () =>
-                _handleDislike(context, flashcard?.is_regenerated ?? false),
-            icon: const Icon(
-              Icons.thumb_down_alt_outlined,
-              size: 24,
-              color: AppColors.black,
+            Container(
+              width: 48,
+              height: 1,
+              color: AppColors.black.withOpacity(0.1),
             ),
-          ),
-        ],
+            IconButton(
+              onPressed: () =>
+                  _handleDislike(context, flashcard?.is_regenerated ?? false),
+              icon: const Icon(
+                Icons.thumb_down_alt_outlined,
+                size: 24,
+                color: AppColors.black,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

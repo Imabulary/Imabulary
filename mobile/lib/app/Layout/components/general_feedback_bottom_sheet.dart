@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mobile/app/Feedback/presentation/feedback_screen_controller.dart';
+import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/bottom_sheet_wrapper.dart';
@@ -19,8 +21,7 @@ class GeneralFeedbackBottomSheet extends ConsumerStatefulWidget {
 
 class _GeneralFeedbackBottomSheetState
     extends ConsumerState<GeneralFeedbackBottomSheet> {
-  final TextEditingController _feedbackMessageController =
-      TextEditingController();
+  var _feedbackMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +37,39 @@ class _GeneralFeedbackBottomSheetState
           name: 'Message',
           label: 'Message',
           maxLines: 4,
-          helperText:
-              'Note: To improve your experience, we collect basic technical data (e.g., OS, phone model) along with your feedback. Privacy Policy',
+          helper: RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                    style: Theme.of(context).textTheme.bodySmall,
+                    text:
+                        'Note: To improve your experience, we collect basic technical data (e.g., OS, phone model) along with your feedback. '),
+                TextSpan(
+                    text: 'Privacy Policy',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(decoration: TextDecoration.underline),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        AutoRouter.of(context).push(
+                          WebViewRoute(
+                            title: 'Privacy Policy',
+                            url:
+                                'https://www.termsfeed.com/live/60e494f3-2d53-476c-b63c-5bdabd589f2d',
+                          ),
+                        );
+                      }),
+              ],
+            ),
+          ),
           helperMaxLines: 4,
           validator: FormBuilderValidators.required(),
           onChanged: (value) {
             if (value != null) {
-              _feedbackMessageController.text = value;
+              setState(() {
+                _feedbackMessage = value;
+              });
             }
           },
         ),
@@ -57,13 +84,13 @@ class _GeneralFeedbackBottomSheetState
             ),
             const SizedBox(width: 8),
             Button(
-              disabled: _feedbackMessageController.text.isEmpty,
+              disabled: _feedbackMessage.isEmpty,
               onPressed: () {
                 ref
                     .watch(feedbackScreenControllerProvider.notifier)
                     .submitGeneralFeedback(
                       title: 'General Feedback',
-                      message: _feedbackMessageController.text,
+                      message: _feedbackMessage,
                       screenSize: MediaQuery.sizeOf(context),
                     )();
                 context.router.maybePop(true);
