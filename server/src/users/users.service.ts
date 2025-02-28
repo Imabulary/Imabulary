@@ -7,6 +7,7 @@ import { StorageService } from 'src/storage/storage.service';
 import { IBucketFolders } from 'src/storage/utils';
 import { WalletService } from 'src/wallet/wallet.service';
 import { CreateUserDTO } from './dto/user.dto';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class UsersService {
@@ -20,7 +21,9 @@ export class UsersService {
   async findOneOrCreate(createUserDto: CreateUserDTO) {
     const { uid, email } = createUserDto;
 
-    const user = await this.findOne({ externalId: uid, email });
+    const user = await this.findOne(
+      !isEmpty(email) ? { externalId: uid, email } : { externalId: uid },
+    );
 
     if (!user) {
       const newUser = await this.prisma.users.create({
