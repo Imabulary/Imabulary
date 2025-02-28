@@ -24,7 +24,7 @@ class DeleteDataDialog extends ConsumerWidget {
     final isUserEmailExists = user.value?.email != null;
 
     return AppDialog(
-      disabled: formState.isButtonEnabled,
+      disabled: !formState.isButtonEnabled,
       onSubmit: () {
         analyticsEngine
             .trackClick(AnalyticClickEvents.emailConfirmationDeleteConfirm);
