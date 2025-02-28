@@ -28,7 +28,8 @@ class AndroidDeviceInfoRetriever implements DeviceInfoRetriever {
       appVersion: packageInfo.version,
       appBuildNumber: packageInfo.buildNumber,
       networkType: connectivity.toString(),
-      screenResolution: '${screenSize.width}x${screenSize.height}',
+      screenResolution:
+          '${screenSize.width.round()}x${screenSize.height.round()}',
     );
   }
 }
@@ -50,7 +51,8 @@ class IOSDeviceInfoRetriever implements DeviceInfoRetriever {
       appVersion: packageInfo.version,
       appBuildNumber: packageInfo.buildNumber,
       networkType: connectivity.toString(),
-      screenResolution: '${screenSize.width}x${screenSize.height}',
+      screenResolution:
+          '${screenSize.width.round()}x${screenSize.height.round()}',
     );
   }
 }
@@ -67,7 +69,8 @@ class UnknownDeviceInfoRetriever implements DeviceInfoRetriever {
       appVersion: packageInfo.version,
       appBuildNumber: packageInfo.buildNumber,
       networkType: connectivity.toString(),
-      screenResolution: '${screenSize.width}x${screenSize.height}',
+      screenResolution:
+          '${screenSize.width.round()}x${screenSize.height.round()}',
     );
   }
 }
