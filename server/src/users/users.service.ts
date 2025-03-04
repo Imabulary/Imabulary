@@ -21,13 +21,13 @@ export class UsersService {
   async findOneOrCreate(createUserDto: CreateUserDTO) {
     const { uid, email } = createUserDto;
 
-    const user = await this.findOne(
-      !isEmpty(email) ? { externalId: uid, email } : { externalId: uid },
-    );
+    const user = await this.findOne({ externalId: uid });
 
     if (!user) {
       const newUser = await this.prisma.users.create({
-        data: { externalId: uid, email },
+        data: !isEmpty(email)
+          ? { externalId: uid, email }
+          : { externalId: uid },
       });
 
       await this.wallet.create(newUser.id);
