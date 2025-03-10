@@ -38,15 +38,26 @@ model Cards {
 }
 
 model Users {
-  id         String     @id @default(uuid()) @db.VarChar()
-  externalId String     @unique
-  email      String?    @unique // email is optional because Apple doesn't provide user's email
-  flashcards Cards[]
-  sets       Sets[]
-  feedbacks  Feedback[]
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  Wallet     Wallet?
+  id            String          @id @default(uuid()) @db.VarChar()
+  externalId    String          @unique
+  email         String?         @unique // email is optional because Apple doesn't provide user's email
+  flashcards    Cards[]
+  sets          Sets[]
+  feedbacks     Feedback[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  Wallet        Wallet?
+  Subscriptions Subscriptions[]
+}
+
+model Subscriptions {
+  id           Int      @id @default(autoincrement())
+  registeredAt DateTime @default(now())
+  user         Users    @relation(fields: [usersId], references: [id])
+  usersId      String   @db.VarChar()
+  expiry       DateTime
+  planName     String
+  price        Float
 }
 
 model Sets {

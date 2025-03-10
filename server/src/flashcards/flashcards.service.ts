@@ -65,6 +65,30 @@ export class FlashCardsService {
   ) {
     let audioFile: File;
 
+
+    const wallet = await this.prisma.wallet.findFirst({
+      where:{
+        userId
+      }
+    })
+
+
+    if (wallet.balance <= 0) {
+      throw new Error("Wallet balance is less than 0")
+    }
+
+    await this.prisma.wallet.update({
+      where:{
+        userId,
+      },
+      data:{
+        balance: wallet.balance - 2
+      }
+    })
+
+
+    
+    
     try {
       const audioSpeechStream = await this.sound.synthesizeSpeech(
         objectOnImage,

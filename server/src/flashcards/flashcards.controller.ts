@@ -108,7 +108,7 @@ export class FlashCardsController {
     @Body() createFlashcardDto: CreateFlashcardDTO,
   ) {
     const user: Users = request['user'];
-
+    
     return this.flashCardsService.create(createFlashcardDto, user.id);
   }
 
