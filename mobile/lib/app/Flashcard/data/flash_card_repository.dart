@@ -136,6 +136,15 @@ class FlashCardRepository with FlashcardMixin {
       return response.data['result'];
     });
   }
+
+  Future<void> update(String id, FlashCard flashcard) {
+    return request(() async {
+      await dio.patch(
+        '$endpoint/$id',
+        data: flashcard.toJson(),
+      );
+    });
+  }
 }
 
 @riverpod

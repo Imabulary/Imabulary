@@ -41,7 +41,7 @@ class QuizQuickAction extends ConsumerWidget {
                     setService.openSet(availableSets[0]);
                     SetAppBarController.startQuiz(
                       context,
-                      availableSets[0].flashcards,
+                      availableSets[0],
                     );
                   } else {
                     QuizQuickActionController.showAvailableSets(

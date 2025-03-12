@@ -33,12 +33,14 @@ class SetScreen extends ConsumerWidget {
             Button(
               disabled: !isEnoughFlashcards,
               onPressed: () {
+                if (set == null) return;
                 analyticsEngine.trackClick(AnalyticClickEvents.setStartQuiz);
                 SetAppBarController.startQuiz(
                   context,
-                  set?.flashcards,
+                  set,
                 );
               },
+              disabled: set == null,
               label: 'Start quiz',
               expanded: true,
             ),

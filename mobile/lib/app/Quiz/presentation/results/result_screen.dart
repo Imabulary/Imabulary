@@ -10,6 +10,7 @@ import 'package:mobile/app/Quiz/presentation/results/widgets/flashcard_results_w
 import 'package:mobile/app/Set/application/set_provider.dart';
 import 'package:mobile/app/Set/data/set_repository.dart';
 import 'package:mobile/app/Set/domain/set.dart';
+import 'package:mobile/app/Set/presentation/set_screen_controller.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
 import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/type_setting.dart';
@@ -23,13 +24,11 @@ class ResultScreen extends ConsumerStatefulWidget {
   const ResultScreen({
     super.key,
     required this.results,
-    required this.flashcards,
-    required this.setId,
+    required this.set,
   });
 
-  final String setId;
+  final Set set;
   final List<Result> results;
-  final List<SetFlashcard> flashcards;
 
   @override
   ConsumerState<ResultScreen> createState() => _ResultScreenState();
@@ -48,7 +47,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
       if (finishedSets.result.isEmpty) {
         showDialog(
           context: context,
-          builder: (_) => QuizFeedbackDialog(setId: widget.setId),
+          builder: (_) => QuizFeedbackDialog(setId: widget.set.id),
         ).then((value) {
           if (value == true) {
             Flushbar(
@@ -64,6 +63,9 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
           }
         });
       }
+      ref.watch(setScreenControllerProvider.notifier).updateSet(
+            widget.set.copyWith(isFinished: true),
+          );
     });
   }
 
@@ -123,7 +125,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                             AutoRouter.of(context).popUntilRoot();
                             SetAppBarController.startQuiz(
                               context,
-                              widget.flashcards,
+                              widget.set,
                               flashcardsForQuiz: groupedFlashcards[
                                   QuizStatuses.still_learning.name],
                             );

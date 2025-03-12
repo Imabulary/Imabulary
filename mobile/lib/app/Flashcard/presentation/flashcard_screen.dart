@@ -120,7 +120,9 @@ class FlashcardScreen extends ConsumerWidget {
           ),
         ),
       ),
-      floatingActionButton: const FlashcardFeedbackButton(),
+      floatingActionButton: FlashcardFeedbackButton(
+        flashcard: flashcard,
+      ),
     );
   }
 }

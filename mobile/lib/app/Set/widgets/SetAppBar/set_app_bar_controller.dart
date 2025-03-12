@@ -21,19 +21,22 @@ class SetAppBarController {
       };
 
   static Future<void> startQuiz(
-      BuildContext context, List<SetFlashcard>? flashcards,
-      {List<FlashCard>? flashcardsForQuiz}) {
+    BuildContext context,
+    Set currentSet, {
+    List<FlashCard>? flashcardsForQuiz,
+  }) {
     {
-      if (flashcards == null ||
-          flashcards.length < kMinimalAmountOfFlashcardsToStartQuiz) {
+      if (currentSet.flashcards == null ||
+          currentSet.flashcards!.length <
+              kMinimalAmountOfFlashcardsToStartQuiz) {
         return showDialog(
           context: context,
           builder: (context) => const QuizFlashcardsAmountWarning(),
         );
       }
 
-      return AutoRouter.of(context)
-          .push(QuizRoute(flashcards: flashcardsForQuiz));
+      return AutoRouter.of(context).push(
+          QuizRoute(flashcards: flashcardsForQuiz, currentSet: currentSet));
     }
   }
 }

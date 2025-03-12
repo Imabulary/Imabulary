@@ -23,6 +23,7 @@ _$FlashCardImpl _$$FlashCardImplFromJson(Map<String, dynamic> json) =>
       image_name: json['image_name'] as String?,
       audio_url: json['audio_url'] as String?,
       audio_name: json['audio_name'] as String?,
+      isTouched: json['isTouched'] as bool?,
       QuizStatus: json['QuizStatus'] == null
           ? null
           : ServerEnum.fromJson(json['QuizStatus'] as Map<String, dynamic>),
@@ -45,5 +46,6 @@ Map<String, dynamic> _$$FlashCardImplToJson(_$FlashCardImpl instance) =>
       'image_name': instance.image_name,
       'audio_url': instance.audio_url,
       'audio_name': instance.audio_name,
+      'isTouched': instance.isTouched,
       'QuizStatus': instance.QuizStatus,
     };

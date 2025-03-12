@@ -26,6 +26,7 @@ class FeedbackScreenController extends _$FeedbackScreenController {
   Future Function() dislike(GlobalKey<FormBuilderState> formKey) => () async {
         final flashcardRepository = ref.read(flashCardRepositoryProvider);
         final selectedCategories = ref.watch(feedbackServiceProvider);
+        final flashcardService = ref.read(flashcardServiceProvider.notifier);
         final feedbackServiceNotifier = ref.watch(
           feedbackServiceProvider.notifier,
         );
@@ -56,19 +57,25 @@ class FeedbackScreenController extends _$FeedbackScreenController {
             ),
           ),
         );
+        state = await AsyncValue.guard(() => flashcardService.touchFlashcard());
 
         feedbackServiceNotifier.clear();
       };
 
   Future Function() likeFlashcard(String flashcardId) => () async {
         final feedbackRepository = ref.watch(feedbackRepositoryProvider);
+        final flashcardService = ref.read(flashcardServiceProvider.notifier);
 
         state = const AsyncLoading();
         state = await AsyncValue.guard(
           () => feedbackRepository.like(
-            LikeFlashcardDTO(cardId: flashcardId, isAppropriate: true),
+            LikeFlashcardDTO(
+              cardId: flashcardId,
+              isAppropriate: true,
+            ),
           ),
         );
+        state = await AsyncValue.guard(() => flashcardService.touchFlashcard());
       };
 
   Future Function() submitGeneralFeedback({
