@@ -28,12 +28,14 @@ class SetScreen extends ConsumerWidget {
           children: [
             Button(
               onPressed: () {
+                if (set == null) return;
                 analyticsEngine.trackClick(AnalyticClickEvents.setStartQuiz);
                 SetAppBarController.startQuiz(
                   context,
-                  set?.flashcards,
+                  set,
                 );
               },
+              disabled: set == null,
               label: 'Start quiz',
               expanded: true,
             ),

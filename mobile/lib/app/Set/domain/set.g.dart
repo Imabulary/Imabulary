@@ -13,6 +13,7 @@ _$SetImpl _$$SetImplFromJson(Map<String, dynamic> json) => _$SetImpl(
       userId: json['userId'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
+      is_finished: json['is_finished'] as bool? ?? false,
       flashcards: (json['flashcards'] as List<dynamic>?)
           ?.map((e) => _$recordConvert(
                 e,
@@ -31,6 +32,7 @@ Map<String, dynamic> _$$SetImplToJson(_$SetImpl instance) => <String, dynamic>{
       'userId': instance.userId,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
+      'is_finished': instance.is_finished,
       'flashcards': instance.flashcards
           ?.map((e) => <String, dynamic>{
                 'image_url': e.image_url,

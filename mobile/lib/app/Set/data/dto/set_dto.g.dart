@@ -9,12 +9,14 @@ part of 'set_dto.dart';
 _$SetDTOImpl _$$SetDTOImplFromJson(Map<String, dynamic> json) => _$SetDTOImpl(
       name: json['name'] as String?,
       description: json['description'] as String?,
+      is_finished: json['is_finished'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$SetDTOImplToJson(_$SetDTOImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
+      'is_finished': instance.is_finished,
     };
 
 _$FindAllSetsDTOImpl _$$FindAllSetsDTOImplFromJson(Map<String, dynamic> json) =>

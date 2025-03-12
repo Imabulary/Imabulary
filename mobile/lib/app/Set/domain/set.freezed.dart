@@ -30,6 +30,7 @@ mixin _$Set {
   String get userId => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
+  bool get is_finished => throw _privateConstructorUsedError;
   List<({String image_url, String quizStatusId})>? get flashcards =>
       throw _privateConstructorUsedError;
 
@@ -58,6 +59,7 @@ abstract class $SetCopyWith<$Res> {
       String userId,
       DateTime createdAt,
       DateTime updatedAt,
+      bool is_finished,
       List<({String image_url, String quizStatusId})>? flashcards});
 }
 
@@ -81,6 +83,7 @@ class _$SetCopyWithImpl<$Res, $Val extends Set> implements $SetCopyWith<$Res> {
     Object? userId = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? is_finished = null,
     Object? flashcards = freezed,
   }) {
     return _then(_value.copyWith(
@@ -108,6 +111,10 @@ class _$SetCopyWithImpl<$Res, $Val extends Set> implements $SetCopyWith<$Res> {
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      is_finished: null == is_finished
+          ? _value.is_finished
+          : is_finished // ignore: cast_nullable_to_non_nullable
+              as bool,
       flashcards: freezed == flashcards
           ? _value.flashcards
           : flashcards // ignore: cast_nullable_to_non_nullable
@@ -133,6 +140,7 @@ abstract class _$$SetImplCopyWith<$Res> implements $SetCopyWith<$Res> {
       String userId,
       DateTime createdAt,
       DateTime updatedAt,
+      bool is_finished,
       List<({String image_url, String quizStatusId})>? flashcards});
 }
 
@@ -153,6 +161,7 @@ class __$$SetImplCopyWithImpl<$Res> extends _$SetCopyWithImpl<$Res, _$SetImpl>
     Object? userId = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? is_finished = null,
     Object? flashcards = freezed,
   }) {
     return _then(_$SetImpl(
@@ -180,6 +189,10 @@ class __$$SetImplCopyWithImpl<$Res> extends _$SetCopyWithImpl<$Res, _$SetImpl>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      is_finished: null == is_finished
+          ? _value.is_finished
+          : is_finished // ignore: cast_nullable_to_non_nullable
+              as bool,
       flashcards: freezed == flashcards
           ? _value._flashcards
           : flashcards // ignore: cast_nullable_to_non_nullable
@@ -202,6 +215,7 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
       required this.userId,
       required this.createdAt,
       required this.updatedAt,
+      this.is_finished = false,
       final List<({String image_url, String quizStatusId})>? flashcards})
       : _flashcards = flashcards;
 
@@ -224,6 +238,9 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
   final DateTime createdAt;
   @override
   final DateTime updatedAt;
+  @override
+  @JsonKey()
+  final bool is_finished;
   final List<({String image_url, String quizStatusId})>? _flashcards;
   @override
   List<({String image_url, String quizStatusId})>? get flashcards {
@@ -236,7 +253,7 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Set(id: $id, name: $name, description: $description, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt, flashcards: $flashcards)';
+    return 'Set(id: $id, name: $name, description: $description, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt, is_finished: $is_finished, flashcards: $flashcards)';
   }
 
   @override
@@ -250,6 +267,7 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
       ..add(DiagnosticsProperty('userId', userId))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt))
+      ..add(DiagnosticsProperty('is_finished', is_finished))
       ..add(DiagnosticsProperty('flashcards', flashcards));
   }
 
@@ -267,14 +285,24 @@ class _$SetImpl with DiagnosticableTreeMixin implements _Set {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
+            (identical(other.is_finished, is_finished) ||
+                other.is_finished == is_finished) &&
             const DeepCollectionEquality()
                 .equals(other._flashcards, _flashcards));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, description, userId,
-      createdAt, updatedAt, const DeepCollectionEquality().hash(_flashcards));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      description,
+      userId,
+      createdAt,
+      updatedAt,
+      is_finished,
+      const DeepCollectionEquality().hash(_flashcards));
 
   /// Create a copy of Set
   /// with the given fields replaced by the non-null parameter values.
@@ -304,6 +332,7 @@ abstract class _Set implements Set {
       required final String userId,
       required final DateTime createdAt,
       required final DateTime updatedAt,
+      final bool is_finished,
       final List<({String image_url, String quizStatusId})>?
           flashcards}) = _$SetImpl;
 
@@ -325,6 +354,8 @@ abstract class _Set implements Set {
   DateTime get createdAt;
   @override
   DateTime get updatedAt;
+  @override
+  bool get is_finished;
   @override
   List<({String image_url, String quizStatusId})>? get flashcards;
 

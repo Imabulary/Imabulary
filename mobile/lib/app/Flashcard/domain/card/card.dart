@@ -24,6 +24,7 @@ class FlashCard with _$FlashCard {
     String? image_name,
     String? audio_url,
     String? audio_name,
+    bool? is_touched,
     ServerEnum? QuizStatus,
   }) = _FlashCard;
 

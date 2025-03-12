@@ -1,4 +1,5 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:mobile/app/Flashcard/data/flash_card_repository.dart';
 import 'package:mobile/app/Flashcard/domain/card/card.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -14,6 +15,18 @@ class FlashcardService extends _$FlashcardService {
 
   void openFlashcard(FlashCard flashCard) {
     state = flashCard;
+  }
+
+  Future<void> touchFlashcard() async {
+    if (state == null) return;
+
+    final flashcardRepository = ref.read(flashCardRepositoryProvider);
+    final updatedCard = state!.copyWith(
+      is_touched: true,
+    );
+
+    await flashcardRepository.update(state?.id ?? '', updatedCard);
+    state = updatedCard;
   }
 }
 

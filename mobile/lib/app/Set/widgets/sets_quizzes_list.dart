@@ -50,7 +50,7 @@ class SetsQuizzesList extends ConsumerWidget {
                 setService.openSet(sets[index]);
                 SetAppBarController.startQuiz(
                   context,
-                  sets[index].flashcards,
+                  sets[index],
                 );
               },
               contentPadding: const EdgeInsets.only(

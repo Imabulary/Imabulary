@@ -25,6 +25,7 @@ class Set with _$Set {
     required String userId,
     required DateTime createdAt,
     required DateTime updatedAt,
+    @Default(false) bool is_finished,
     List<SetFlashcard>? flashcards,
   }) = _Set;
 
