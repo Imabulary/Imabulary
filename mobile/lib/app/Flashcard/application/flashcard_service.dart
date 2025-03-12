@@ -22,7 +22,7 @@ class FlashcardService extends _$FlashcardService {
 
     final flashcardRepository = ref.read(flashCardRepositoryProvider);
     final updatedCard = state!.copyWith(
-      is_touched: true,
+      isTouched: true,
     );
 
     await flashcardRepository.update(state?.id ?? '', updatedCard);

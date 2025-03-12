@@ -139,7 +139,7 @@ class FlashCardRepository with FlashcardMixin {
 
   Future<void> update(String id, FlashCard flashcard) {
     return request(() async {
-      await dio.put(
+      await dio.patch(
         '$endpoint/$id',
         data: flashcard.toJson(),
       );

@@ -64,7 +64,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
         });
       }
       ref.watch(setScreenControllerProvider.notifier).updateSet(
-            widget.set.copyWith(is_finished: true),
+            widget.set.copyWith(isFinished: true),
           );
     });
   }

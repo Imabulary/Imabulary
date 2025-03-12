@@ -6,7 +6,7 @@ part of 'flashcard_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$flashcardServiceHash() => r'b46c629157998afd0eef0a911e4b678e128aba46';
+String _$flashcardServiceHash() => r'93fc715c4fd2fad0bbbcf47c20122c163fc62c18';
 
 /// State might be `null` if user is not on the flashcard page
 ///

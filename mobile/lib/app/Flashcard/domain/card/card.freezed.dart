@@ -35,7 +35,7 @@ mixin _$FlashCard {
   String? get image_name => throw _privateConstructorUsedError;
   String? get audio_url => throw _privateConstructorUsedError;
   String? get audio_name => throw _privateConstructorUsedError;
-  bool? get is_touched => throw _privateConstructorUsedError;
+  bool? get isTouched => throw _privateConstructorUsedError;
   ServerEnum? get QuizStatus => throw _privateConstructorUsedError;
 
   /// Serializes this FlashCard to a JSON map.
@@ -69,7 +69,7 @@ abstract class $FlashCardCopyWith<$Res> {
       String? image_name,
       String? audio_url,
       String? audio_name,
-      bool? is_touched,
+      bool? isTouched,
       ServerEnum? QuizStatus});
 
   $ServerEnumCopyWith<$Res>? get QuizStatus;
@@ -105,7 +105,7 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
     Object? image_name = freezed,
     Object? audio_url = freezed,
     Object? audio_name = freezed,
-    Object? is_touched = freezed,
+    Object? isTouched = freezed,
     Object? QuizStatus = freezed,
   }) {
     return _then(_value.copyWith(
@@ -169,9 +169,9 @@ class _$FlashCardCopyWithImpl<$Res, $Val extends FlashCard>
           ? _value.audio_name
           : audio_name // ignore: cast_nullable_to_non_nullable
               as String?,
-      is_touched: freezed == is_touched
-          ? _value.is_touched
-          : is_touched // ignore: cast_nullable_to_non_nullable
+      isTouched: freezed == isTouched
+          ? _value.isTouched
+          : isTouched // ignore: cast_nullable_to_non_nullable
               as bool?,
       QuizStatus: freezed == QuizStatus
           ? _value.QuizStatus
@@ -219,7 +219,7 @@ abstract class _$$FlashCardImplCopyWith<$Res>
       String? image_name,
       String? audio_url,
       String? audio_name,
-      bool? is_touched,
+      bool? isTouched,
       ServerEnum? QuizStatus});
 
   @override
@@ -254,7 +254,7 @@ class __$$FlashCardImplCopyWithImpl<$Res>
     Object? image_name = freezed,
     Object? audio_url = freezed,
     Object? audio_name = freezed,
-    Object? is_touched = freezed,
+    Object? isTouched = freezed,
     Object? QuizStatus = freezed,
   }) {
     return _then(_$FlashCardImpl(
@@ -318,9 +318,9 @@ class __$$FlashCardImplCopyWithImpl<$Res>
           ? _value.audio_name
           : audio_name // ignore: cast_nullable_to_non_nullable
               as String?,
-      is_touched: freezed == is_touched
-          ? _value.is_touched
-          : is_touched // ignore: cast_nullable_to_non_nullable
+      isTouched: freezed == isTouched
+          ? _value.isTouched
+          : isTouched // ignore: cast_nullable_to_non_nullable
               as bool?,
       QuizStatus: freezed == QuizStatus
           ? _value.QuizStatus
@@ -349,7 +349,7 @@ class _$FlashCardImpl implements _FlashCard {
       this.image_name,
       this.audio_url,
       this.audio_name,
-      this.is_touched,
+      this.isTouched,
       this.QuizStatus});
 
   factory _$FlashCardImpl.fromJson(Map<String, dynamic> json) =>
@@ -386,13 +386,13 @@ class _$FlashCardImpl implements _FlashCard {
   @override
   final String? audio_name;
   @override
-  final bool? is_touched;
+  final bool? isTouched;
   @override
   final ServerEnum? QuizStatus;
 
   @override
   String toString() {
-    return 'FlashCard(id: $id, word: $word, phrase: $phrase, translated_phrase: $translated_phrase, translated_word: $translated_word, target_language: $target_language, source_language: $source_language, image_url: $image_url, is_regenerated: $is_regenerated, speech_part: $speech_part, translated_explanation: $translated_explanation, explanation: $explanation, image_name: $image_name, audio_url: $audio_url, audio_name: $audio_name, is_touched: $is_touched, QuizStatus: $QuizStatus)';
+    return 'FlashCard(id: $id, word: $word, phrase: $phrase, translated_phrase: $translated_phrase, translated_word: $translated_word, target_language: $target_language, source_language: $source_language, image_url: $image_url, is_regenerated: $is_regenerated, speech_part: $speech_part, translated_explanation: $translated_explanation, explanation: $explanation, image_name: $image_name, audio_url: $audio_url, audio_name: $audio_name, isTouched: $isTouched, QuizStatus: $QuizStatus)';
   }
 
   @override
@@ -427,8 +427,8 @@ class _$FlashCardImpl implements _FlashCard {
                 other.audio_url == audio_url) &&
             (identical(other.audio_name, audio_name) ||
                 other.audio_name == audio_name) &&
-            (identical(other.is_touched, is_touched) ||
-                other.is_touched == is_touched) &&
+            (identical(other.isTouched, isTouched) ||
+                other.isTouched == isTouched) &&
             (identical(other.QuizStatus, QuizStatus) ||
                 other.QuizStatus == QuizStatus));
   }
@@ -452,7 +452,7 @@ class _$FlashCardImpl implements _FlashCard {
       image_name,
       audio_url,
       audio_name,
-      is_touched,
+      isTouched,
       QuizStatus);
 
   /// Create a copy of FlashCard
@@ -488,7 +488,7 @@ abstract class _FlashCard implements FlashCard {
       final String? image_name,
       final String? audio_url,
       final String? audio_name,
-      final bool? is_touched,
+      final bool? isTouched,
       final ServerEnum? QuizStatus}) = _$FlashCardImpl;
 
   factory _FlashCard.fromJson(Map<String, dynamic> json) =
@@ -525,7 +525,7 @@ abstract class _FlashCard implements FlashCard {
   @override
   String? get audio_name;
   @override
-  bool? get is_touched;
+  bool? get isTouched;
   @override
   ServerEnum? get QuizStatus;
 

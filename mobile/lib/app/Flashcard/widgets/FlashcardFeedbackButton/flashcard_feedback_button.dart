@@ -8,22 +8,13 @@ import 'package:mobile/app/Flashcard/widgets/SecondNegativeFeedbackDialog/second
 import 'package:mobile/app_router.dart';
 import 'package:mobile/atoms/colors.dart';
 
-class FlashcardFeedbackButton extends ConsumerStatefulWidget {
+class FlashcardFeedbackButton extends ConsumerWidget {
   const FlashcardFeedbackButton({
     super.key,
     required this.flashcard,
   });
 
   final FlashCard? flashcard;
-
-  @override
-  ConsumerState<FlashcardFeedbackButton> createState() =>
-      _FlashcardFeedbackButtonState();
-}
-
-class _FlashcardFeedbackButtonState
-    extends ConsumerState<FlashcardFeedbackButton> {
-  var feedbackSent = false;
 
   void _handleDislike(
     BuildContext context,
@@ -37,13 +28,12 @@ class _FlashcardFeedbackButtonState
 
       return;
     }
-    feedbackSent = true;
 
     AutoRouter.of(context).push(const FeedbackRoute());
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final flashcard = ref.watch(flashcardServiceProvider);
     final state = ref.watch(feedbackScreenControllerProvider);
     final notifier = ref.watch(feedbackScreenControllerProvider.notifier);
@@ -56,7 +46,7 @@ class _FlashcardFeedbackButtonState
         : notifier.likeFlashcard(flashcard?.id ?? '');
 
     return AnimatedOpacity(
-      opacity: flashcard?.is_touched ?? false ? 0 : 1,
+      opacity: flashcard?.isTouched ?? false ? 0 : 1,
       duration: const Duration(milliseconds: 300),
       child: Container(
         decoration: BoxDecoration(
@@ -67,12 +57,7 @@ class _FlashcardFeedbackButtonState
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              onPressed: onLike == null
-                  ? null
-                  : () {
-                      onLike();
-                      feedbackSent = true;
-                    },
+              onPressed: onLike,
               icon: const Icon(
                 Icons.thumb_up_alt_outlined,
                 size: 24,
