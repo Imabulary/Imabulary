@@ -31,7 +31,7 @@ class SetScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Button(
-              disabled: !isEnoughFlashcards,
+              disabled: !isEnoughFlashcards || set == null,
               onPressed: () {
                 if (set == null) return;
                 analyticsEngine.trackClick(AnalyticClickEvents.setStartQuiz);
@@ -40,7 +40,6 @@ class SetScreen extends ConsumerWidget {
                   set,
                 );
               },
-              disabled: set == null,
               label: 'Start quiz',
               expanded: true,
             ),
