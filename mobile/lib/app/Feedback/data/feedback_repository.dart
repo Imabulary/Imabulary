@@ -57,36 +57,37 @@ class FeedbackRepository {
     required FeedbackDTO feedbackData,
     bool isQuizFeedback = false,
   }) async {
-    await Sentry.captureMessage(
-      title,
-      level: SentryLevel.info,
-      withScope: (scope) {
-        scope.setContexts('feedback', feedbackData.toJson());
-      },
-    );
+    return request(() async {
+      final data = isQuizFeedback
+          ? {
+              "setId": feedbackData.additionalData?['setId'] ?? '',
+              "rating": feedbackData.additionalData?['level'] ?? 1
+            }
+          : {
+              "feedback": feedbackData.message,
+              "deviceType": feedbackData.deviceType,
+              "deviceModel": feedbackData.deviceModel,
+              "osName": feedbackData.osName,
+              "osVersion": feedbackData.osVersion,
+              "appVersion":
+                  "${feedbackData.appVersion} (${feedbackData.buildNumber})",
+              "connectionType": feedbackData.networkType,
+              "screenResolution": feedbackData.screenResolution,
+            };
 
-    final data = isQuizFeedback
-        ? {
-            "setId": feedbackData.additionalData?['setId'] ?? '',
-            "rating": feedbackData.additionalData?['level'] ?? 1
-          }
-        : {
-            "feedback": feedbackData.message,
-            "deviceType": feedbackData.deviceType,
-            "deviceModel": feedbackData.deviceModel,
-            "osName": feedbackData.osName,
-            "osVersion": feedbackData.osVersion,
-            "appVersion":
-                "${feedbackData.appVersion} (${feedbackData.buildNumber})",
-            "connectionType": feedbackData.networkType,
-            "screenResolution": feedbackData.screenResolution,
-          };
-
-    await request(() async {
-      await dio.post(
-        '$apiUrl/mail/feedback/${isQuizFeedback ? 'quiz' : 'form'}',
-        data: data,
-      );
+      await Future.wait([
+        Sentry.captureMessage(
+          title,
+          level: SentryLevel.info,
+          withScope: (scope) {
+            scope.setContexts('feedback', feedbackData.toJson());
+          },
+        ),
+        dio.post(
+          '$apiUrl/mail/feedback/${isQuizFeedback ? 'quiz' : 'form'}',
+          data: data,
+        )
+      ]);
     });
   }
 }

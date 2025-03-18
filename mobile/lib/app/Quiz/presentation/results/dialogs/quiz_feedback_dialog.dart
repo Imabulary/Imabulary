@@ -8,30 +8,13 @@ import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/dialogs.dart';
 
-class QuizFeedbackDialog extends ConsumerStatefulWidget {
+class QuizFeedbackDialog extends ConsumerWidget {
   const QuizFeedbackDialog({super.key, required this.setId});
 
   final String setId;
 
   @override
-  ConsumerState<QuizFeedbackDialog> createState() => _QuizFeedbackDialogState();
-}
-
-class _QuizFeedbackDialogState extends ConsumerState<QuizFeedbackDialog> {
-  void sendFeedback(
-    BuildContext context,
-    QuizFeedbackLevel level,
-  ) {
-    ref.watch(feedbackScreenControllerProvider.notifier).submitQuizFeedback(
-          level: level,
-          setId: 'setId',
-          screenSize: MediaQuery.sizeOf(context),
-        )();
-    context.router.maybePop(true);
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(feedbackScreenControllerProvider.notifier);
 
     return AppDialog(
@@ -53,9 +36,9 @@ class _QuizFeedbackDialogState extends ConsumerState<QuizFeedbackDialog> {
                   (level) => QuizFeedbackEmojiTile(
                     level: level,
                     onTap: () async {
-                      notifier.submitQuizFeedback(
+                      await notifier.submitQuizFeedback(
                         level: level,
-                        setId: widget.setId,
+                        setId: setId,
                         screenSize: MediaQuery.sizeOf(context),
                       );
                       context.router.maybePop(true);

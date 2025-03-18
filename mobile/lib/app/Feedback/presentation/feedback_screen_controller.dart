@@ -121,47 +121,46 @@ class FeedbackScreenController extends _$FeedbackScreenController {
         }
       };
 
-  Future Function() submitQuizFeedback({
+  Future submitQuizFeedback({
     required QuizFeedbackLevel level,
     required String setId,
     required Size screenSize,
-  }) =>
+  }) async {
+    final feedbackRepository = ref.watch(feedbackRepositoryProvider);
+    final user = ref.read(authStateProvider).value;
+    final technicalDataRepository = TechnicalDataRepository.getRepository();
+
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
       () async {
-        final feedbackRepository = ref.watch(feedbackRepositoryProvider);
-        final user = ref.read(authStateProvider).value;
-        final technicalDataRepository = TechnicalDataRepository.getRepository();
+        final technicalData =
+            await technicalDataRepository.getTechnicalData(screenSize);
 
-        state = const AsyncLoading();
-        state = await AsyncValue.guard(
-          () async {
-            final technicalData =
-                await technicalDataRepository.getTechnicalData(screenSize);
-
-            final feedbackData = FeedbackDTO(
-              message: 'Quiz feedback',
-              deviceType: technicalData.deviceType,
-              deviceModel: technicalData.deviceModel,
-              osName: technicalData.osName,
-              osVersion: technicalData.osVersion,
-              appVersion: technicalData.appVersion,
-              buildNumber: technicalData.appBuildNumber,
-              networkType: technicalData.networkType,
-              screenResolution: technicalData.screenResolution,
-              userId: user?.uid ?? 'anonymous',
-              userEmail: user?.email,
-              country: Platform.localeName.split('_').last,
-              additionalData: {
-                'level': level.value,
-                'setId': setId,
-              },
-            );
-
-            feedbackRepository.submitFeedback(
-              title: 'First quiz feedback',
-              feedbackData: feedbackData,
-              isQuizFeedback: true,
-            );
+        final feedbackData = FeedbackDTO(
+          message: 'Quiz feedback',
+          deviceType: technicalData.deviceType,
+          deviceModel: technicalData.deviceModel,
+          osName: technicalData.osName,
+          osVersion: technicalData.osVersion,
+          appVersion: technicalData.appVersion,
+          buildNumber: technicalData.appBuildNumber,
+          networkType: technicalData.networkType,
+          screenResolution: technicalData.screenResolution,
+          userId: user?.uid ?? 'anonymous',
+          userEmail: user?.email,
+          country: Platform.localeName.split('_').last,
+          additionalData: {
+            'level': level.value,
+            'setId': setId,
           },
         );
-      };
+
+        await feedbackRepository.submitFeedback(
+          title: 'First quiz feedback',
+          feedbackData: feedbackData,
+          isQuizFeedback: true,
+        );
+      },
+    );
+  }
 }
