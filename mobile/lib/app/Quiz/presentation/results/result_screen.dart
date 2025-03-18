@@ -8,6 +8,7 @@ import 'package:mobile/app/Quiz/domain/result.dart';
 import 'package:mobile/app/Quiz/presentation/results/dialogs/quiz_feedback_dialog.dart';
 import 'package:mobile/app/Quiz/presentation/results/widgets/flashcard_results_widget.dart';
 import 'package:mobile/app/Set/application/set_provider.dart';
+import 'package:mobile/app/Set/data/dto/set_dto.dart';
 import 'package:mobile/app/Set/data/set_repository.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/presentation/set_screen_controller.dart';
@@ -64,7 +65,8 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
         });
       }
       ref.watch(setScreenControllerProvider.notifier).updateSet(
-            widget.set.copyWith(isFinished: true),
+            widget.set.id,
+            SetDTO(isFinished: true),
           );
     });
   }
