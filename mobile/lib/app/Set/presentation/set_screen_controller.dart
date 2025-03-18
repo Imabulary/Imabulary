@@ -62,14 +62,12 @@ class SetScreenController extends _$SetScreenController {
     };
   }
 
-  Future<void> updateSet(Set set) async {
+  Future<void> updateSet(String setId, SetDTO setDto) async {
     final setRepository = ref.read(setRepositoryProvider);
-
-    final setDto = SetDTO.fromJson(set.toJson());
 
     state = const AsyncLoading();
     state = await AsyncValue.guard(
-      () => setRepository.update(set.id, setDto),
+      () => setRepository.update(setId, setDto),
     );
   }
 
