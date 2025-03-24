@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/app/Flashcard/components/dislike_button.dart';
 import 'package:mobile/app/Flashcard/widgets/FlashcardAppBar/flashcard_app_bar_controller.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/colors.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/button.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 
 class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
   const FlashcardAppBar({super.key});
@@ -14,7 +15,10 @@ class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: Button(
         variat: ButtonVariant.icon,
-        onPressed: () => AutoRouter.of(context).popUntilRoot(),
+        onPressed: () {
+          analyticsEngine.trackClick(AnalyticClickEvents.flashcardReturn);
+          AutoRouter.of(context).popUntilRoot();
+        },
         icon: Icons.arrow_back,
       ),
       actions: [
@@ -23,15 +27,14 @@ class FlashcardAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Row(
             children: [
               ElevatedButton(
-                onPressed: FlashcardAppBarController.showSetsBottomSheet(
-                  context,
-                ),
+                onPressed: () {
+                  FlashcardAppBarController.showSetsBottomSheet(context)();
+                },
                 child: const TypeSetting(
                   'Organize',
                   style: TextStyle(color: AppColors.primary),
                 ),
               ),
-              const DislikeButton()
             ],
           ),
         ),

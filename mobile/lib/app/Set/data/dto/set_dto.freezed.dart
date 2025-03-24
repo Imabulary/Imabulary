@@ -22,6 +22,7 @@ SetDTO _$SetDTOFromJson(Map<String, dynamic> json) {
 mixin _$SetDTO {
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  bool get isFinished => throw _privateConstructorUsedError;
 
   /// Serializes this SetDTO to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +38,7 @@ abstract class $SetDTOCopyWith<$Res> {
   factory $SetDTOCopyWith(SetDTO value, $Res Function(SetDTO) then) =
       _$SetDTOCopyWithImpl<$Res, SetDTO>;
   @useResult
-  $Res call({String? name, String? description});
+  $Res call({String? name, String? description, bool isFinished});
 }
 
 /// @nodoc
@@ -57,6 +58,7 @@ class _$SetDTOCopyWithImpl<$Res, $Val extends SetDTO>
   $Res call({
     Object? name = freezed,
     Object? description = freezed,
+    Object? isFinished = null,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -67,6 +69,10 @@ class _$SetDTOCopyWithImpl<$Res, $Val extends SetDTO>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      isFinished: null == isFinished
+          ? _value.isFinished
+          : isFinished // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -78,7 +84,7 @@ abstract class _$$SetDTOImplCopyWith<$Res> implements $SetDTOCopyWith<$Res> {
       __$$SetDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? name, String? description});
+  $Res call({String? name, String? description, bool isFinished});
 }
 
 /// @nodoc
@@ -96,6 +102,7 @@ class __$$SetDTOImplCopyWithImpl<$Res>
   $Res call({
     Object? name = freezed,
     Object? description = freezed,
+    Object? isFinished = null,
   }) {
     return _then(_$SetDTOImpl(
       name: freezed == name
@@ -106,6 +113,10 @@ class __$$SetDTOImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      isFinished: null == isFinished
+          ? _value.isFinished
+          : isFinished // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -113,7 +124,7 @@ class __$$SetDTOImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$SetDTOImpl implements _SetDTO {
-  const _$SetDTOImpl({this.name, this.description});
+  const _$SetDTOImpl({this.name, this.description, this.isFinished = false});
 
   factory _$SetDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$SetDTOImplFromJson(json);
@@ -122,10 +133,13 @@ class _$SetDTOImpl implements _SetDTO {
   final String? name;
   @override
   final String? description;
+  @override
+  @JsonKey()
+  final bool isFinished;
 
   @override
   String toString() {
-    return 'SetDTO(name: $name, description: $description)';
+    return 'SetDTO(name: $name, description: $description, isFinished: $isFinished)';
   }
 
   @override
@@ -135,12 +149,14 @@ class _$SetDTOImpl implements _SetDTO {
             other is _$SetDTOImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.isFinished, isFinished) ||
+                other.isFinished == isFinished));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, description);
+  int get hashCode => Object.hash(runtimeType, name, description, isFinished);
 
   /// Create a copy of SetDTO
   /// with the given fields replaced by the non-null parameter values.
@@ -159,8 +175,10 @@ class _$SetDTOImpl implements _SetDTO {
 }
 
 abstract class _SetDTO implements SetDTO {
-  const factory _SetDTO({final String? name, final String? description}) =
-      _$SetDTOImpl;
+  const factory _SetDTO(
+      {final String? name,
+      final String? description,
+      final bool isFinished}) = _$SetDTOImpl;
 
   factory _SetDTO.fromJson(Map<String, dynamic> json) = _$SetDTOImpl.fromJson;
 
@@ -168,6 +186,8 @@ abstract class _SetDTO implements SetDTO {
   String? get name;
   @override
   String? get description;
+  @override
+  bool get isFinished;
 
   /// Create a copy of SetDTO
   /// with the given fields replaced by the non-null parameter values.

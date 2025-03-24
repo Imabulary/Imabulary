@@ -57,3 +57,17 @@ Map<String, dynamic> _$$DislikeFlashcardDTOImplToJson(
       'text': instance.text,
       'categories': instance.categories,
     };
+
+_$LikeFlashcardDTOImpl _$$LikeFlashcardDTOImplFromJson(
+        Map<String, dynamic> json) =>
+    _$LikeFlashcardDTOImpl(
+      cardId: json['cardId'] as String,
+      isAppropriate: json['isAppropriate'] as bool? ?? true,
+    );
+
+Map<String, dynamic> _$$LikeFlashcardDTOImplToJson(
+        _$LikeFlashcardDTOImpl instance) =>
+    <String, dynamic>{
+      'cardId': instance.cardId,
+      'isAppropriate': instance.isAppropriate,
+    };

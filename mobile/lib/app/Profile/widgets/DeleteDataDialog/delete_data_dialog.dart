@@ -3,8 +3,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/app/Auth/application/auth_provider.dart';
 import 'package:mobile/app/Profile/widgets/DeleteDataDialog/delete_data_dialog_controller.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/components/button.dart';
 import 'package:mobile/components/dialogs.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/widgets/input.dart';
 
 class DeleteDataDialog extends ConsumerWidget {
@@ -22,8 +24,12 @@ class DeleteDataDialog extends ConsumerWidget {
     final isUserEmailExists = user.value?.email != null;
 
     return AppDialog(
-      disabled: formState.isButtonEnabled,
-      onSubmit: () => deleteController.deleteUser(context),
+      disabled: !formState.isButtonEnabled,
+      onSubmit: () {
+        analyticsEngine
+            .trackClick(AnalyticClickEvents.emailConfirmationDeleteConfirm);
+        deleteController.deleteUser(context);
+      },
       submitText: "Delete",
       submitColor: ButtonColor.danger,
       title:

@@ -48,7 +48,6 @@ jobs:
           echo "${{ secrets.SA_CREDS_JSON }}" | base64 -d > ./server/service-account.json
           echo "${{ secrets.SENTRYCLIRC }}" > ./server/.sentryclirc
           echo "$ENV_FILE" | base64 -d > ./server/.env
-          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> ./server/.env
           docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" ./server/
           docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags
 

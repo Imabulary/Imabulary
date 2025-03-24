@@ -6,7 +6,7 @@ part of 'flashcard_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$flashcardServiceHash() => r'33a4f26f10d5aed9756da72deda8323ddafa8ea6';
+String _$flashcardServiceHash() => r'93fc715c4fd2fad0bbbcf47c20122c163fc62c18';
 
 /// State might be `null` if user is not on the flashcard page
 ///
@@ -43,4 +43,4 @@ final flashcardPagingControllerProvider = NotifierProvider<
 typedef _$FlashcardPagingController
     = Notifier<PagingController<int, FlashCard>?>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

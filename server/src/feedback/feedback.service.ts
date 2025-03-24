@@ -88,11 +88,13 @@ export class FeedbackService {
         ...feedbackDto,
         metadata,
         userId,
-        category: {
-          connect: categories.map((categoryId) => ({
-            id: categoryId,
-          })),
-        },
+        category: !isEmpty(categories)
+          ? {
+              connect: categories.map((categoryId) => ({
+                id: categoryId,
+              })),
+            }
+          : undefined,
       },
     });
   }

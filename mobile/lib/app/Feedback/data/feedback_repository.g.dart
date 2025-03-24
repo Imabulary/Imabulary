@@ -7,7 +7,7 @@ part of 'feedback_repository.dart';
 // **************************************************************************
 
 String _$feedbackRepositoryHash() =>
-    r'2f21338e68b76c0d49a5fd8d23886ef80aff3179';
+    r'b73e454bb247c5aff5f78f8ff659bb05595169ee';
 
 /// See also [feedbackRepository].
 @ProviderFor(feedbackRepository)
@@ -22,6 +22,8 @@ final feedbackRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef FeedbackRepositoryRef = AutoDisposeProviderRef<FeedbackRepository>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

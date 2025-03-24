@@ -14,16 +14,24 @@ import 'package:mobile/app/Quiz/presentation/QuizScreen/widgets/quiz_options_gri
 import 'package:mobile/app/Set/application/set_provider.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app_router.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/atoms/type_setting.dart';
 import 'package:mobile/components/full_screen_image.dart';
 import 'package:mobile/shared/models/Pagination/pagination.dart';
 import 'package:mobile/shared/models/ServerError/server_error.dart';
+import 'package:mobile/utils/analytics_engine.dart';
+import 'package:mobile/app/Set/domain/set.dart';
 
 @RoutePage()
 class QuizScreen extends ConsumerStatefulWidget {
-  const QuizScreen({super.key, this.flashcards});
+  const QuizScreen({
+    super.key,
+    this.flashcards,
+    required this.currentSet,
+  });
 
   final List<FlashCard>? flashcards;
+  final Set currentSet;
 
   @override
   ConsumerState<QuizScreen> createState() => _QuizScreenState();
@@ -58,11 +66,16 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
 
     if (_results.length == flashcards.length) {
       final set = ref.read(setServiceProvider);
+      if (set == null) return;
 
       ref.invalidate(findSetFlashcardsProvider);
 
       AutoRouter.of(context).push(
-          ResultRoute(results: _results, flashcards: set?.flashcards ?? []));
+        ResultRoute(
+          results: _results,
+          set: set,
+        ),
+      );
     }
   }
 
@@ -112,6 +125,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
     return Layout(
       appBar: QuizAppBarWidget(
         onBackPressed: () {
+          analyticsEngine.trackClick(AnalyticClickEvents.quizReturn);
           ref.invalidate(findSetFlashcardsProvider);
           AutoRouter.of(context).maybePop();
         },
@@ -132,6 +146,10 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
             child: QuizOptionsGridWidget(
               options: options,
               onTap: (selectedOption) {
+                analyticsEngine.trackClick(AnalyticClickEvents.quizOption, {
+                  'question': currentFlashcard.word,
+                  'answer': selectedOption.word,
+                });
                 _saveResult(currentFlashcard, selectedOption);
                 _changeQuestion(flashcardsForQuiz);
               },

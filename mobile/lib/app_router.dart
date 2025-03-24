@@ -17,6 +17,7 @@ import 'package:mobile/app/Wallet/presentation/wallet_screen.dart';
 import 'package:mobile/app/Welcome/presentation/welcome_screen.dart';
 import 'package:mobile/app/Main/presentation/main_screen.dart';
 import 'package:mobile/shared/screens/web_view_screen.dart';
+import 'package:mobile/app/Set/domain/set.dart';
 
 part 'app_router.gr.dart';
 

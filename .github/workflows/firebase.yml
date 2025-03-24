@@ -81,6 +81,7 @@ jobs:
         with:
           name: QA_APK
           path: ./mobile/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 2
 
       # Build APK for general users
       - name: Populate general env variables
@@ -100,6 +101,7 @@ jobs:
         with:
           name: General_APK
           path: ./mobile/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 2
 
       - name: Upload General APK to Firebase
         if: ${{ !env.ACT }}

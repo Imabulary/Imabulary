@@ -1,4 +1,4 @@
-import { Transform } from 'class-transformer';
+import { Type } from 'class-transformer';
 import {
   ArrayNotEmpty,
   IsArray,
@@ -29,7 +29,7 @@ export class CreateFeedbackDto extends DislikeFlashcardDTO {
   @IsOptional()
   cardId?: string;
 
-  @Transform((value) => value || false)
+  @Type(() => Boolean)
   @IsBoolean()
   @IsOptional()
   isAppropriate?: boolean;

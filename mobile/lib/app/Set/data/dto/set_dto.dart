@@ -9,6 +9,7 @@ class SetDTO with _$SetDTO {
   const factory SetDTO({
     String? name,
     String? description,
+    @Default(false) bool isFinished,
   }) = _SetDTO;
 
   factory SetDTO.fromJson(Map<String, dynamic> json) => _$SetDTOFromJson(json);

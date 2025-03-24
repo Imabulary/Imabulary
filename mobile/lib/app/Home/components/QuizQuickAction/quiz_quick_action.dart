@@ -6,7 +6,9 @@ import 'package:mobile/app/Home/utils/constants.dart';
 import 'package:mobile/app/Set/application/set_service.dart';
 import 'package:mobile/app/Set/domain/set.dart';
 import 'package:mobile/app/Set/widgets/SetAppBar/set_app_bar_controller.dart';
+import 'package:mobile/atoms/analytic_click_events.dart';
 import 'package:mobile/shared/models/ServerResponse/server_response.dart';
+import 'package:mobile/utils/analytics_engine.dart';
 import 'package:mobile/utils/fp.dart';
 
 class QuizQuickAction extends ConsumerWidget {
@@ -34,11 +36,12 @@ class QuizQuickAction extends ConsumerWidget {
             : QuizQuickActionListItem(
                 'Take a Quiz',
                 onTap: () {
+                  analyticsEngine.trackClick(AnalyticClickEvents.homeTakeQuiz);
                   if (isSingle(availableSets)) {
                     setService.openSet(availableSets[0]);
                     SetAppBarController.startQuiz(
                       context,
-                      availableSets[0].flashcards,
+                      availableSets[0],
                     );
                   } else {
                     QuizQuickActionController.showAvailableSets(

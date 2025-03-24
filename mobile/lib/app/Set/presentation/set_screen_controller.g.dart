@@ -7,7 +7,7 @@ part of 'set_screen_controller.dart';
 // **************************************************************************
 
 String _$setScreenControllerHash() =>
-    r'5a1fa967569ac5f2051e59222e1f21b1de4a6cd9';
+    r'9451e4777c2fbfefafc690c77380ffe1fe415bbc';
 
 /// See also [SetScreenController].
 @ProviderFor(SetScreenController)
@@ -24,4 +24,4 @@ final setScreenControllerProvider =
 
 typedef _$SetScreenController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
