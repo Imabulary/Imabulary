@@ -207,3 +207,6 @@ override.tf.json
 *.out
 
 .sentryclirc
+
+build-info/
+debug-info/
